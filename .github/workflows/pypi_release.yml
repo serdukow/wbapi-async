@@ -29,7 +29,7 @@ jobs:
           venv/bin/pip install dist/*.whl
           venv/bin/python - <<EOF
           from importlib.metadata import version
-          print(version("wbapi2-api"))
+          print(version("wbapi2"))
           EOF
 
       - uses: actions/upload-artifact@v4
