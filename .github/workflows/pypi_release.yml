@@ -45,8 +45,6 @@ jobs:
 
     steps:
       - uses: actions/download-artifact@v4
-        env:
-          TWINE_VERBOSE: "1"
         with:
           name: dist
           path: dist
