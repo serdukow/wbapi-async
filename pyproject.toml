@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "wild-api"
+name = "wbapi2"
 version = "0.1.0"
 description = "WB API"
 authors = [
@@ -49,19 +49,19 @@ lint = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/serdukow/wild-api"
-Documentation = "https://github.com/serdukow/wild-api#readme"
-Repository = "https://github.com/serdukow/wild-api"
+Homepage = "https://github.com/serdukow/wbapi2"
+Documentation = "https://github.com/serdukow/wbapi2#readme"
+Repository = "https://github.com/serdukow/wbapi2"
 
 [tool.hatch.build.targets.sdist]
 only-include = [
-    "src/wild_api",
+    "src/wb_api",
     "README.md",
     "pyproject.toml"
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/wild_api"]
+packages = ["src/wb_api"]
 
 [tool.ruff]
 exclude = [
@@ -84,7 +84,7 @@ select = ["E", "F", "I", "UP", "C4", "B", "RUF100"]
 fixable = ["ALL"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["wild_api"]
+known-first-party = ["wb_api"]
 force-sort-within-sections = true
 order-by-type = true
 combine-as-imports = true
