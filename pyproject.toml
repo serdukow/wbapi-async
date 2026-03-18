@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "aiowbapi"
+name = "wild-api"
 version = "0.1.0"
 description = "Asynchronous client for Wildberries API "
 authors = [
@@ -49,19 +49,19 @@ lint = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/serdukow/aiowbapi"
-Documentation = "https://github.com/serdukow/aiowbapi#readme"
-Repository = "https://github.com/serdukow/aiowbapi"
+Homepage = "https://github.com/serdukow/wild-api"
+Documentation = "https://github.com/serdukow/wild-api#readme"
+Repository = "https://github.com/serdukow/wild-api"
 
 [tool.hatch.build.targets.sdist]
 only-include = [
-    "src/aiowbapi",
+    "src/wild_api",
     "README.md",
     "pyproject.toml"
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/aiowbapi"]
+packages = ["src/wild_api"]
 
 [tool.ruff]
 exclude = [
@@ -84,7 +84,7 @@ select = ["E", "F", "I", "UP", "C4", "B", "RUF100"]
 fixable = ["ALL"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["aiowbapi"]
+known-first-party = ["wild_api"]
 force-sort-within-sections = true
 order-by-type = true
 combine-as-imports = true
