@@ -546,7 +546,7 @@ wheels = [
 ]
 
 [[package]]
-name = "wild_api"
+name = "wbapi_async"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
