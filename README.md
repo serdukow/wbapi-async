@@ -1,12 +1,10 @@
 <p align="center">
-  <a href="https://api.moysklad.ru"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Wildberries_2023_Pink.svg" alt="WbAPI"></a>
+  <a href="https://dev.wildberries.ru/"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Wildberries_2023_Pink.svg" alt="WbAPI"></a>
 </p>
 
 <div align="center">
 
-<p align="center">
-Asynchronous client for Wildberries API
-</p>
+## Asynchronous client for Wildberries API
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://img.shields.io/pypi/v/wild-api.svg)](https://pypi.org/project/wild-api/)
