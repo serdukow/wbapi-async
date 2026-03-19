@@ -29,26 +29,25 @@ import asyncio
 from wbapi_async import WbAPI
 
 async def main():
-    api = WbAPI(token="your_token_here")
+    async with WbAPI(token="your_token_here") as api:
+        # Connection check
+        check = await api.connection_check()
+        print(check)
 
-    # Connection check
-    check = await api.connection_check()
-    print(check)
+        # Get products with prices
+        products = await api.get_products_with_prices(limit=100)
+        print(products)
 
-    # Get products with prices
-    products = await api.get_products_with_prices(limit=100)
-    print(products)
+        # Get sales report
+        sales = await api.get_sales(date_from="2026-01-01")
+        print(sales)
 
-    # Get sales report
-    sales = await api.get_sales(date_from="2026-01-01")
-    print(sales)
-
-    # Get realization report
-    report = await api.get_realization_sales_report(
-        date_from="2026-01-01",
-        date_to="2026-01-31",
-    )
-    print(report)
+        # Get realization report
+        report = await api.get_realization_sales_report(
+            date_from="2026-01-01",
+            date_to="2026-01-31",
+        )
+        print(report)
 
 asyncio.run(main())
 ```
