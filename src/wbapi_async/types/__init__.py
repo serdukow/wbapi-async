@@ -6,4 +6,11 @@ from .request_limit import RequestLimit
 from .size import Size
 
 
-__all__ = ("BaseType", "Error", "Size", "ProductWithPrice", "ConnectionCheck", "RequestLimit")
+__all__ = (
+    "BaseType",
+    "ConnectionCheck",
+    "Error",
+    "ProductWithPrice",
+    "RequestLimit",
+    "Size",
+)
