@@ -9,6 +9,8 @@ from ..enums.realization_sales_report_period import RealizationSalesReportPeriod
 from ..enums.sales_funnel_order_field import SalesFunnelOrderField
 from ..methods.base import WbMethod
 from ..methods.connection_check import ConnectionCheck as ConnectionCheckMethod
+from ..methods.get_campaigns_lists import GetCampaignsLists
+from ..methods.get_campaigns_statistics import GetCampaignsStatistics
 from ..methods.get_product_cards_list import (
     CardListCursor,
     CardListFilter,
@@ -26,6 +28,8 @@ from ..methods.get_products_with_prices import GetProductsWithPrices
 from ..methods.get_realization_sales_report import GetRealizationSalesReport
 from ..methods.get_sales import GetSales
 from ..types import (
+    CampaignsList,
+    CampaignStatistics,
     ConnectionCheck,
     ProductCard,
     ProductCardStatistics,
@@ -275,4 +279,34 @@ class WbAPI:
                 ),
             ),
         )
+        return await self(call)
+
+    async def get_campaigns_lists(self) -> CampaignsList:
+        """
+        Returns campaigns lists grouped by type and status.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns/paths/~1adv~1v1~1promotion~1count/get
+
+        :return: :class:`CampaignsList`
+        """
+        call = GetCampaignsLists()
+        return await self(call)
+
+    async def get_campaigns_statistics(
+        self,
+        ids: list[int],
+        begin_date: str,
+        end_date: str,
+    ) -> list[CampaignStatistics]:
+        """
+        Generates statistics for campaigns regardless of their type.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Statistics/paths/~1adv~1v3~1fullstats/get
+
+        :param ids: Campaign IDs (max 50)
+        :param begin_date: Start date (YYYY-MM-DD)
+        :param end_date: End date (YYYY-MM-DD)
+        :return: List of :class:`CampaignStatistics`
+        """
+        call = GetCampaignsStatistics(ids=ids, begin_date=begin_date, end_date=end_date)
         return await self(call)
