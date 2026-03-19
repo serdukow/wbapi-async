@@ -22,7 +22,7 @@
 pip install wbapi-async
 ```
 
-## Simple Example
+## Quick Start
 
 ```python
 import asyncio
