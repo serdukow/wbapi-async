@@ -81,7 +81,7 @@ class TestGetProductDetail:
     async def test_returns_list(self, api: MockedAPI) -> None:
         api.add_response(RESPONSE)
 
-        result = await api.get_product_detail(nm=999000111)
+        result = await api.get_product_detail(nm=999000111, dest=-1)
 
         assert isinstance(result, list)
         assert len(result) == 1
@@ -91,7 +91,7 @@ class TestGetProductDetail:
     async def test_product_fields(self, api: MockedAPI) -> None:
         api.add_response(RESPONSE)
 
-        result = await api.get_product_detail(nm=999000111)
+        result = await api.get_product_detail(nm=999000111, dest=-1)
 
         product = result[0]
         assert product.id == 999000111
@@ -103,7 +103,7 @@ class TestGetProductDetail:
     async def test_nested_size_price(self, api: MockedAPI) -> None:
         api.add_response(RESPONSE)
 
-        result = await api.get_product_detail(nm=999000111)
+        result = await api.get_product_detail(nm=999000111, dest=-1)
 
         size = result[0].sizes[0]
         assert size.price.basic == 150000
@@ -114,7 +114,7 @@ class TestGetProductDetail:
     async def test_request_url(self, api: MockedAPI) -> None:
         api.add_response(RESPONSE)
 
-        await api.get_product_detail(nm=999000111)
+        await api.get_product_detail(nm=999000111, dest=-1)
 
         req = api.get_last_request()
         assert req.url == "https://card.wb.ru/cards/v4/detail"
