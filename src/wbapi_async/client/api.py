@@ -1,10 +1,12 @@
 from typing import Any
 
 from ..client.session.base import BaseSession
+from ..enums.realization_sales_report_period import RealizationSalesReportPeriod
 from ..methods.base import WbMethod
 from ..methods.connection_check import ConnectionCheck as ConnectionCheckMethod
 from ..methods.get_products_with_prices import GetProductsWithPrices
-from ..types import ConnectionCheck, ProductWithPrice
+from ..methods.get_realization_sales_report import GetRealizationSalesReport
+from ..types import ConnectionCheck, ProductWithPrice, RealizationSalesReport
 from ..utils.token import validate_token
 
 
@@ -58,4 +60,33 @@ class WbAPI:
         :return: :class:`ProductWithPrice`: Product data
         """
         call = GetProductsWithPrices(limit=limit, offset=offset, filter_nm_id=filter_nm_id)
+        return await self(call)
+
+    async def get_realization_sales_report(
+        self,
+        date_from: str,
+        date_to: str,
+        limit: int = 100000,
+        rrdid: int = 0,
+        period: RealizationSalesReportPeriod = RealizationSalesReportPeriod.WEEKLY,
+    ) -> list[RealizationSalesReport]:
+        """
+        Details for the realization reports.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1v5~1supplier~1reportDetailByPeriod/get
+
+        :param date_from: Starting date of the report (RFC3339)
+        :param date_to: Report end date (RFC3339)
+        :param limit: Number of strings in the response (max 100000)
+        :param rrdid: Unique ID of the report line for pagination (start with 0)
+        :param period: Report periodicity: "weekly" or "daily"
+        :return: List of :class:`RealizationSalesReport`
+        """
+        call = GetRealizationSalesReport(
+            date_from=date_from,
+            date_to=date_to,
+            limit=limit,
+            rrdid=rrdid,
+            period=period,
+        )
         return await self(call)

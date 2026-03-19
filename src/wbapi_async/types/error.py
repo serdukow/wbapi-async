@@ -12,6 +12,6 @@ class Error(BaseType):
     code: str | None = Field(None, alias="code")
     request_id: str | None = Field(None, alias="requestId")
     origin: str | None = Field(None, alias="origin")
-    status: str | None = Field(None, alias="status")
+    status: int | str | None = Field(None, alias="status")
     status_text: str | None = Field(None, alias="statusText")
     timestamp: str | None = Field(None, alias="timestamp")
