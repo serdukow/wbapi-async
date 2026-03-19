@@ -24,6 +24,7 @@ from ..methods.get_product_cards_statistics import (
     SalesFunnelPeriod,
 )
 from ..methods.get_product_data import GetProductData, OrderBy, Period
+from ..methods.get_product_detail import GetProductDetail
 from ..methods.get_products_with_prices import GetProductsWithPrices
 from ..methods.get_realization_sales_report import GetRealizationSalesReport
 from ..methods.get_sales import GetSales
@@ -34,11 +35,13 @@ from ..types import (
     ProductCard,
     ProductCardStatistics,
     ProductDataItem,
+    ProductDetail,
     ProductWithPrice,
     RealizationSalesReport,
     Sale,
 )
 from ..utils.token import validate_token
+from ..utils.unofficial import unofficial
 
 
 class WbAPI:
@@ -309,4 +312,24 @@ class WbAPI:
         :return: List of :class:`CampaignStatistics`
         """
         call = GetCampaignsStatistics(ids=ids, begin_date=begin_date, end_date=end_date)
+        return await self(call)
+
+    @unofficial
+    async def get_product_detail(
+        self,
+        nm: int,
+        dest: int,
+        spp: int | None = None,
+        rate: int | None = None,
+    ) -> list[ProductDetail]:
+        """
+        Returns product detail by WB article. No official documentation available.
+
+        :param nm: WB article (nmID)
+        :param dest: Destination region ID
+        :param spp: SPP discount
+        :param rate: Rate
+        :return: List of :class:`ProductDetail`
+        """
+        call = GetProductDetail(nm=nm, dest=dest, spp=spp, rate=rate)
         return await self(call)

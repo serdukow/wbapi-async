@@ -73,12 +73,18 @@ class BaseSession:
             return await self._request(method, url, params=params, json=json, limit=limit)
 
         if response.status_code >= 400:
-            raise WbAPIError(
-                http_status=response.status_code,
-                **response.json(),
-            ) from None
+            try:
+                body = response.json()
+            except Exception:
+                body = {}
+            raise WbAPIError(http_status=response.status_code, **body) from None
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None
+        try:
+            return response.json()
+        except Exception:
+            return None
 
     async def get(
         self,

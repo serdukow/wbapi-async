@@ -6,6 +6,7 @@ from .error import Error
 from .product_card import ProductCard
 from .product_cards_statistics import ProductCardStatistics
 from .product_data import ProductDataItem
+from .product_detail import ProductDetail
 from .product_with_price import ProductWithPrice
 from .realization_sales_report import RealizationSalesReport
 from .request_limit import RequestLimit
@@ -19,6 +20,7 @@ __all__ = (
     "ConnectionCheck",
     "Error",
     "ProductCard",
+    "ProductDetail",
     "ProductCardStatistics",
     "ProductDataItem",
     "ProductWithPrice",

@@ -29,6 +29,9 @@ class WbMethod(BaseModel, ABC):
         # Dot-path into response.data, e.g. "data.listGoods" or "items".
         # None = deserialize entire response.data as __return__.
         __data_key__: ClassVar[str | None]
+        # Full URL override — skips build_url and set_token (unofficial APIs).
+        __url__: ClassVar[str | None]
+        __unofficial__: ClassVar[bool]
     else:
 
         @property
@@ -53,6 +56,14 @@ class WbMethod(BaseModel, ABC):
         @property
         def __data_key__(self) -> str | None:
             return None
+
+        @property
+        def __url__(self) -> str | None:
+            return None
+
+        @property
+        def __unofficial__(self) -> bool:
+            return False
 
     def _extract(self, data: Any) -> Any:
         """Walk dot-path from __data_key__ and return the target value."""
@@ -81,9 +92,13 @@ class WbMethod(BaseModel, ABC):
             raise ValueError(f"Unsupported HTTP method: {http_method}")
 
     async def emit(self, wb_api: WbAPI) -> Any:
-        wb_api.session.headers.set_token(wb_api._token)
+        unofficial = getattr(self, "__unofficial__", False)
+        if not unofficial:
+            wb_api.session.headers.set_token(wb_api._token)
 
-        url = wb_api.session.build_url(self.__api__, self.__method__)
+        url = getattr(self, "__url__", None) or wb_api.session.build_url(
+            self.__api__, self.__method__
+        )
         request_limit: RequestLimit | None = getattr(self, "request_limit", None)
         http_method = getattr(self, "__http_method__", "GET").upper()
         excluded_fields = {"request_limit"}
