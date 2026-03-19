@@ -54,7 +54,7 @@ Repository = "https://github.com/serdukow/wbapi-async"
 
 [tool.hatch.build.targets.sdist]
 only-include = [
-    "src/wbapi",
+    "src/wbapi_async",
     "README.md",
     "pyproject.toml"
 ]
