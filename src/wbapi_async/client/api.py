@@ -6,14 +6,21 @@ from ..enums.product_data_order_field import ProductDataOrderField
 from ..enums.product_data_order_mode import ProductDataOrderMode
 from ..enums.product_data_stock_type import ProductDataStockType
 from ..enums.realization_sales_report_period import RealizationSalesReportPeriod
+from ..enums.sales_funnel_order_field import SalesFunnelOrderField
 from ..methods.base import WbMethod
 from ..methods.connection_check import ConnectionCheck as ConnectionCheckMethod
+from ..methods.get_product_cards_statistics import (
+    GetProductCardsStatistics,
+    SalesFunnelOrderBy,
+    SalesFunnelPeriod,
+)
 from ..methods.get_product_data import GetProductData, OrderBy, Period
 from ..methods.get_products_with_prices import GetProductsWithPrices
 from ..methods.get_realization_sales_report import GetRealizationSalesReport
 from ..methods.get_sales import GetSales
 from ..types import (
     ConnectionCheck,
+    ProductCardStatistics,
     ProductDataItem,
     ProductWithPrice,
     RealizationSalesReport,
@@ -164,5 +171,60 @@ class WbAPI:
             subject_id=subject_id,
             brand_name=brand_name,
             tag_id=tag_id,
+        )
+        return await self(call)
+
+    async def get_product_cards_statistics_per_period(
+        self,
+        date_from: str,
+        date_to: str,
+        past_date_from: str | None = None,
+        past_date_to: str | None = None,
+        order_by_field: SalesFunnelOrderField = SalesFunnelOrderField.OPEN_CARD,
+        order_by_mode: ProductDataOrderMode = ProductDataOrderMode.DESC,
+        limit: int = 50,
+        offset: int = 0,
+        nm_ids: list[int] | None = None,
+        brand_names: list[str] | None = None,
+        subject_ids: list[int] | None = None,
+        tag_ids: list[int] | None = None,
+        skip_deleted_nm: bool | None = None,
+    ) -> list[ProductCardStatistics]:
+        """
+        Generates a report on products by comparing key metrics for current and past periods.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Sales-Funnel/operation/postSalesFunnelProducts
+
+        :param date_from: Selected period start date (YYYY-MM-DD)
+        :param date_to: Selected period end date (YYYY-MM-DD)
+        :param past_date_from: Past period start date for comparison (YYYY-MM-DD)
+        :param past_date_to: Past period end date for comparison (YYYY-MM-DD)
+        :param order_by_field: Field to sort by
+        :param order_by_mode: Sort order (asc/desc)
+        :param limit: Number of product cards in response (max 1000)
+        :param offset: How many results to skip
+        :param nm_ids: WB articles to include (empty = all products)
+        :param brand_names: Brand filter
+        :param subject_ids: Subject ID filter
+        :param tag_ids: Tag ID filter
+        :param skip_deleted_nm: Skip deleted items
+        :return: List of :class:`ProductCardStatistics`
+        """
+        past_period = (
+            SalesFunnelPeriod(start=past_date_from, end=past_date_to)
+            if past_date_from and past_date_to
+            else None
+        )
+        call = GetProductCardsStatistics(
+            selected_period=SalesFunnelPeriod(start=date_from, end=date_to),
+            past_period=past_period,
+            order_by=SalesFunnelOrderBy(field=order_by_field, mode=order_by_mode),
+            limit=limit,
+            offset=offset,
+            nm_ids=nm_ids,
+            brand_names=brand_names,
+            subject_ids=subject_ids,
+            tag_ids=tag_ids,
+            skip_deleted_nm=skip_deleted_nm,
         )
         return await self(call)
