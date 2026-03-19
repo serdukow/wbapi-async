@@ -19,11 +19,36 @@
 ## Install
 
 ```console
-pip install wild-api
+pip install wbapi-async
 ```
 
 ## Simple Example
 
-```Python
-coming soon...
+```python
+import asyncio
+from wbapi_async import WbAPI
+
+async def main():
+    api = WbAPI(token="your_token_here")
+
+    # Connection check
+    check = await api.connection_check()
+    print(check)
+
+    # Get products with prices
+    products = await api.get_products_with_prices(limit=100)
+    print(products)
+
+    # Get sales report
+    sales = await api.get_sales(date_from="2026-01-01")
+    print(sales)
+
+    # Get realization report
+    report = await api.get_realization_sales_report(
+        date_from="2026-01-01",
+        date_to="2026-01-31",
+    )
+    print(report)
+
+asyncio.run(main())
 ```
