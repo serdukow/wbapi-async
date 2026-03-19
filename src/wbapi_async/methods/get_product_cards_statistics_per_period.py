@@ -18,7 +18,7 @@ class SalesFunnelOrderBy(BaseType):
     mode: ProductDataOrderMode = Field(ProductDataOrderMode.DESC, alias="mode")
 
 
-class GetProductCardsStatistics(WbMethod):
+class GetProductCardsStatisticsPerPeriod(WbMethod):
     """
     Generates a report on products by comparing key metrics for the current period with a past one.
 

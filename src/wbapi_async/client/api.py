@@ -18,8 +18,8 @@ from ..methods.get_product_cards_list import (
     CardListSort,
     GetProductCardsList,
 )
-from ..methods.get_product_cards_statistics import (
-    GetProductCardsStatistics,
+from ..methods.get_product_cards_statistics_per_period import (
+    GetProductCardsStatisticsPerPeriod,
     SalesFunnelOrderBy,
     SalesFunnelPeriod,
 )
@@ -230,7 +230,7 @@ class WbAPI:
             if past_date_from and past_date_to
             else None
         )
-        call = GetProductCardsStatistics(
+        call = GetProductCardsStatisticsPerPeriod(
             selected_period=SalesFunnelPeriod(start=date_from, end=date_to),
             past_period=past_period,
             order_by=SalesFunnelOrderBy(field=order_by_field, mode=order_by_mode),
