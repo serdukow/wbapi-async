@@ -1,13 +1,24 @@
 from typing import Any
 
 from ..client.session.base import BaseSession
+from ..enums.product_data_availability import ProductDataAvailability
+from ..enums.product_data_order_field import ProductDataOrderField
+from ..enums.product_data_order_mode import ProductDataOrderMode
+from ..enums.product_data_stock_type import ProductDataStockType
 from ..enums.realization_sales_report_period import RealizationSalesReportPeriod
 from ..methods.base import WbMethod
 from ..methods.connection_check import ConnectionCheck as ConnectionCheckMethod
+from ..methods.get_product_data import GetProductData, OrderBy, Period
 from ..methods.get_products_with_prices import GetProductsWithPrices
 from ..methods.get_realization_sales_report import GetRealizationSalesReport
 from ..methods.get_sales import GetSales
-from ..types import ConnectionCheck, ProductWithPrice, RealizationSalesReport, Sale
+from ..types import (
+    ConnectionCheck,
+    ProductDataItem,
+    ProductWithPrice,
+    RealizationSalesReport,
+    Sale,
+)
 from ..utils.token import validate_token
 
 
@@ -103,4 +114,55 @@ class WbAPI:
         :return: List of :class:`Sale`
         """
         call = GetSales(date_from=date_from, flag=flag)
+        return await self(call)
+
+    async def get_product_data(
+        self,
+        date_from: str,
+        date_to: str,
+        stock_type: ProductDataStockType,
+        order_by_field: ProductDataOrderField,
+        order_by_mode: ProductDataOrderMode,
+        availability_filters: list[ProductDataAvailability],
+        skip_deleted_nm: bool = False,
+        limit: int = 100,
+        offset: int = 0,
+        nm_ids: list[int] | None = None,
+        subject_id: int | None = None,
+        brand_name: str | None = None,
+        tag_id: int | None = None,
+    ) -> list[ProductDataItem]:
+        """
+        Forms a dataset for inventory by products.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1products/post
+
+        :param date_from: Start date of the period (YYYY-MM-DD)
+        :param date_to: End date of the period (YYYY-MM-DD)
+        :param stock_type: Type of products storage warehouse
+        :param order_by_field: Field to sort by
+        :param order_by_mode: Sort order (asc/desc)
+        :param availability_filters: Item availability filters
+        :param skip_deleted_nm: Skip deleted items
+        :param limit: Number of items in response (max 1000)
+        :param offset: Offset for pagination
+        :param nm_ids: List of WB article numbers for filtering
+        :param subject_id: Subject ID filter
+        :param brand_name: Brand filter
+        :param tag_id: Tag ID filter
+        :return: List of :class:`ProductDataItem`
+        """
+        call = GetProductData(
+            current_period=Period(start=date_from, end=date_to),
+            stock_type=stock_type,
+            skip_deleted_nm=skip_deleted_nm,
+            order_by=OrderBy(field=order_by_field, mode=order_by_mode),
+            availability_filters=availability_filters,
+            limit=limit,
+            offset=offset,
+            nm_ids=nm_ids,
+            subject_id=subject_id,
+            brand_name=brand_name,
+            tag_id=tag_id,
+        )
         return await self(call)
