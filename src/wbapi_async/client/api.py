@@ -7,6 +7,7 @@ from ..enums.product_data_order_mode import ProductDataOrderMode
 from ..enums.product_data_stock_type import ProductDataStockType
 from ..enums.realization_sales_report_period import RealizationSalesReportPeriod
 from ..enums.sales_funnel_order_field import SalesFunnelOrderField
+from ..enums.supply_status import SupplyStatus
 from ..methods.base import WbMethod
 from ..methods.connection_check import ConnectionCheck as ConnectionCheckMethod
 from ..methods.get_campaigns_lists import GetCampaignsLists
@@ -28,6 +29,8 @@ from ..methods.get_product_detail import GetProductDetail
 from ..methods.get_products_with_prices import GetProductsWithPrices
 from ..methods.get_realization_sales_report import GetRealizationSalesReport
 from ..methods.get_sales import GetSales
+from ..methods.get_supplies_list import GetSuppliesList, SupplyDateFilter
+from ..methods.get_supply_products import GetSupplyProducts
 from ..types import (
     CampaignsList,
     CampaignStatistics,
@@ -39,6 +42,8 @@ from ..types import (
     ProductWithPrice,
     RealizationSalesReport,
     Sale,
+    Supply,
+    SupplyProduct,
 )
 from ..utils.token import validate_token
 from ..utils.unofficial import unofficial
@@ -147,7 +152,7 @@ class WbAPI:
         order_by_mode: ProductDataOrderMode,
         availability_filters: list[ProductDataAvailability],
         skip_deleted_nm: bool = False,
-        limit: int = 100,
+        limit: int | None = 100,
         offset: int = 0,
         nm_ids: list[int] | None = None,
         subject_id: int | None = None,
@@ -197,7 +202,7 @@ class WbAPI:
         past_date_to: str | None = None,
         order_by_field: SalesFunnelOrderField = SalesFunnelOrderField.OPEN_CARD,
         order_by_mode: ProductDataOrderMode = ProductDataOrderMode.DESC,
-        limit: int = 50,
+        limit: int | None = 50,
         offset: int = 0,
         nm_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
@@ -332,4 +337,48 @@ class WbAPI:
         :return: List of :class:`ProductDetail`
         """
         call = GetProductDetail(nm=nm, dest=dest, spp=spp, rate=rate)
+        return await self(call)
+
+    async def get_supplies_list(
+        self,
+        dates: list[SupplyDateFilter],
+        limit: int | None = 1000,
+        offset: int = 0,
+        status_ids: list[SupplyStatus] | None = None,
+    ) -> list[Supply]:
+        """
+        Returns a list of supplies (last 1000 by default).
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbw#tag/Supplies-Information/paths/~1api~1v1~1supplies/post
+
+        :param dates: Date filters (from, till, type)
+        :param limit: Number of objects in response (1–1000)
+        :param offset: How many results to skip
+        :param status_ids: Filter by supply statuses
+        :return: List of :class:`Supply`
+        """
+        call = GetSuppliesList(dates=dates, limit=limit, offset=offset, status_ids=status_ids)
+        return await self(call)
+
+    async def get_supply_products(
+        self,
+        supply_id: int,
+        limit: int | None = 100,
+        offset: int = 0,
+        is_preorder_id: bool | None = None,
+    ) -> list[SupplyProduct]:
+        """
+        Returns information about the products in a supply.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbw#tag/Supplies-Information/paths/~1api~1v1~1supplies~1%7BID%7D~1goods/get
+
+        :param supply_id: Supply ID or order ID
+        :param limit: Number of objects in response (1–1000)
+        :param offset: How many results to skip
+        :param is_preorder_id: True — search by order ID, False — search by supply ID
+        :return: List of :class:`SupplyProduct`
+        """
+        call = GetSupplyProducts(
+            supply_id=supply_id, limit=limit, offset=offset, is_preorder_id=is_preorder_id
+        )
         return await self(call)

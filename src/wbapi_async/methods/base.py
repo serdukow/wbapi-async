@@ -32,6 +32,8 @@ class WbMethod(BaseModel, ABC):
         # Full URL override — skips build_url and set_token (unofficial APIs).
         __url__: ClassVar[str | None]
         __unofficial__: ClassVar[bool]
+        # Method path template with {field} placeholders, e.g. "api/v1/supplies/{supply_id}/goods".
+        __method_template__: ClassVar[str | None]
     else:
 
         @property
@@ -65,6 +67,20 @@ class WbMethod(BaseModel, ABC):
         def __unofficial__(self) -> bool:
             return False
 
+        @property
+        def __method_template__(self) -> str | None:
+            return None
+
+    def _get_url(self, wb_api: WbAPI) -> str:
+        if url := getattr(self, "__url__", None):
+            return url
+        template = getattr(self, "__method_template__", None)
+        if template:
+            fields = {name: getattr(self, name) for name in self.__class__.model_fields}
+            method = template.format(**fields)
+            return wb_api.session.build_url(self.__api__, method)
+        return wb_api.session.build_url(self.__api__, self.__method__)
+
     def _extract(self, data: Any) -> Any:
         """Walk dot-path from __data_key__ and return the target value."""
         key: str | None = getattr(self, "__data_key__", None)
@@ -96,9 +112,7 @@ class WbMethod(BaseModel, ABC):
         if not unofficial:
             wb_api.session.headers.set_token(wb_api._token)
 
-        url = getattr(self, "__url__", None) or wb_api.session.build_url(
-            self.__api__, self.__method__
-        )
+        url = self._get_url(wb_api)
         request_limit: RequestLimit | None = getattr(self, "request_limit", None)
         http_method = getattr(self, "__http_method__", "GET").upper()
         excluded_fields = {"request_limit"}

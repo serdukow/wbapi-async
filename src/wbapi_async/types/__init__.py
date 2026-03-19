@@ -11,6 +11,8 @@ from .product_with_price import ProductWithPrice
 from .realization_sales_report import RealizationSalesReport
 from .request_limit import RequestLimit
 from .sale import Sale
+from .supply import Supply
+from .supply_product import SupplyProduct
 
 
 __all__ = (
@@ -27,4 +29,6 @@ __all__ = (
     "RealizationSalesReport",
     "RequestLimit",
     "Sale",
+    "Supply",
+    "SupplyProduct",
 )

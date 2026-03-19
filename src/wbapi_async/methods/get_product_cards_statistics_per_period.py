@@ -34,7 +34,7 @@ class GetProductCardsStatisticsPerPeriod(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=3, interval=20000, burst=3)
 
     selected_period: SalesFunnelPeriod = Field(alias="selectedPeriod")
-    limit: int = Field(50, alias="limit")
+    limit: int | None = Field(50, alias="limit")
     offset: int = Field(0, alias="offset")
 
     past_period: SalesFunnelPeriod | None = Field(None, alias="pastPeriod")

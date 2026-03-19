@@ -40,7 +40,7 @@ class GetProductData(WbMethod):
     skip_deleted_nm: bool = Field(alias="skipDeletedNm")
     order_by: OrderBy = Field(alias="orderBy")
     availability_filters: list[ProductDataAvailability] = Field(alias="availabilityFilters")
-    limit: int = Field(100, alias="limit")
+    limit: int | None = Field(100, alias="limit")
     offset: int = Field(0, alias="offset")
 
     nm_ids: list[int] | None = Field(None, alias="nmIDs")
