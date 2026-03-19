@@ -29,6 +29,9 @@ class WbMethod(BaseModel, ABC):
         # Dot-path into response.data, e.g. "data.listGoods" or "items".
         # None = deserialize entire response.data as __return__.
         __data_key__: ClassVar[str | None]
+        # Cursor-based pagination: response field used as next date_from value.
+        # E.g. __cursor_field__ = "lastChangeDate" for /api/v1/supplier/sales.
+        __cursor_field__: ClassVar[str | None]
     else:
 
         @property
@@ -52,6 +55,10 @@ class WbMethod(BaseModel, ABC):
 
         @property
         def __data_key__(self) -> str | None:
+            return None
+
+        @property
+        def __cursor_field__(self) -> str | None:
             return None
 
     def _extract(self, data: Any) -> Any:
@@ -119,6 +126,21 @@ class WbMethod(BaseModel, ABC):
 
         return_type = self.__return__
         if isinstance(raw, list):
+            cursor_field: str | None = getattr(self, "__cursor_field__", None)
+            if cursor_field is not None:
+                result: list[Any] = []
+                while raw:
+                    result.extend(TypeAdapter(list[return_type]).validate_python(raw))  # type: ignore[valid-type]
+                    next_cursor = raw[-1][cursor_field]
+                    page_copy = self.model_copy(update={"date_from": next_cursor})
+                    next_params = page_copy.model_dump(
+                        by_alias=True, exclude_none=True, exclude=excluded_fields
+                    )
+                    data = await self._dispatch(
+                        wb_api, http_method, url, next_params, request_limit
+                    )
+                    raw = self._extract(data)
+                return result
             return TypeAdapter(list[return_type]).validate_python(raw)  # type: ignore[valid-type]
         return return_type.model_validate(raw)
 

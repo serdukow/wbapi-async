@@ -6,7 +6,8 @@ from ..methods.base import WbMethod
 from ..methods.connection_check import ConnectionCheck as ConnectionCheckMethod
 from ..methods.get_products_with_prices import GetProductsWithPrices
 from ..methods.get_realization_sales_report import GetRealizationSalesReport
-from ..types import ConnectionCheck, ProductWithPrice, RealizationSalesReport
+from ..methods.get_sales import GetSales
+from ..types import ConnectionCheck, ProductWithPrice, RealizationSalesReport, Sale
 from ..utils.token import validate_token
 
 
@@ -89,4 +90,17 @@ class WbAPI:
             rrdid=rrdid,
             period=period,
         )
+        return await self(call)
+
+    async def get_sales(self, date_from: str, flag: int = 0) -> list[Sale]:
+        """
+        Returns sale and return information.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1sales/get
+
+        :param date_from: Date and time of last change (RFC3339)
+        :param flag: 0 — changes since dateFrom, 1 — all sales on dateFrom date
+        :return: List of :class:`Sale`
+        """
+        call = GetSales(date_from=date_from, flag=flag)
         return await self(call)

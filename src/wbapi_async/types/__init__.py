@@ -4,6 +4,7 @@ from .error import Error
 from .product_with_price import ProductWithPrice
 from .realization_sales_report import RealizationSalesReport
 from .request_limit import RequestLimit
+from .sale import Sale
 from .size import Size
 
 
@@ -14,5 +15,6 @@ __all__ = (
     "ProductWithPrice",
     "RealizationSalesReport",
     "RequestLimit",
+    "Sale",
     "Size",
 )

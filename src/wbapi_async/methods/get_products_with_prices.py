@@ -6,6 +6,12 @@ from .base import WbMethod
 
 
 class GetProductsWithPrices(WbMethod):
+    """
+    Returns product data.
+
+    Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/get
+    """
+
     __return__ = ProductWithPrice
     __api__ = "discounts-prices-api"
     __method__ = "api/v2/list/goods/filter"
