@@ -36,6 +36,11 @@ class ProductDetailSize(BaseType):
     payload: str | None = Field(None, alias="payload")
 
 
+class ProductDetailColor(BaseType):
+    name: str | None = Field(None, alias="name")
+    id: int | None = Field(None, alias="id")
+
+
 class ProductDetail(BaseType):
     id: int | None = Field(None, alias="id")
     root: int | None = Field(None, alias="root")
@@ -43,7 +48,7 @@ class ProductDetail(BaseType):
     brand: str | None = Field(None, alias="brand")
     brand_id: int | None = Field(None, alias="brandId")
     site_brand_id: int | None = Field(None, alias="siteBrandId")
-    colors: list[str] | None = Field(None, alias="colors")
+    colors: list[ProductDetailColor] | None = Field(None, alias="colors")
     subject_id: int | None = Field(None, alias="subjectId")
     subject_parent_id: int | None = Field(None, alias="subjectParentId")
     name: str | None = Field(None, alias="name")
