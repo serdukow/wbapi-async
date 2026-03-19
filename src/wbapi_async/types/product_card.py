@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import Field
 
 from .base import BaseType
@@ -27,7 +29,7 @@ class ProductCardDimensions(BaseType):
 class ProductCardCharacteristic(BaseType):
     id: int | None = Field(None, alias="id")
     name: str | None = Field(None, alias="name")
-    value: list[str] | None = Field(None, alias="value")
+    value: Any | None = Field(None, alias="value")
 
 
 class ProductCardSize(BaseType):
