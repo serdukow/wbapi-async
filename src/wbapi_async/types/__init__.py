@@ -1,6 +1,7 @@
 from .base import BaseType
 from .connection_check import ConnectionCheck
 from .error import Error
+from .product_card import ProductCard
 from .product_cards_statistics import ProductCardStatistics
 from .product_data import ProductDataItem
 from .product_with_price import ProductWithPrice
@@ -14,6 +15,7 @@ __all__ = (
     "BaseType",
     "ConnectionCheck",
     "Error",
+    "ProductCard",
     "ProductCardStatistics",
     "ProductDataItem",
     "ProductWithPrice",

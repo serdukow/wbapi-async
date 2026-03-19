@@ -104,7 +104,7 @@ class TestGetProductCardsStatistics:
             }
         )
 
-        result = await api.get_product_cards_statistics(
+        result = await api.get_product_cards_statistics_per_period(
             date_from="2023-06-01",
             date_to="2024-03-01",
         )

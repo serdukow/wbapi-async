@@ -9,6 +9,13 @@ from ..enums.realization_sales_report_period import RealizationSalesReportPeriod
 from ..enums.sales_funnel_order_field import SalesFunnelOrderField
 from ..methods.base import WbMethod
 from ..methods.connection_check import ConnectionCheck as ConnectionCheckMethod
+from ..methods.get_product_cards_list import (
+    CardListCursor,
+    CardListFilter,
+    CardListSettings,
+    CardListSort,
+    GetProductCardsList,
+)
 from ..methods.get_product_cards_statistics import (
     GetProductCardsStatistics,
     SalesFunnelOrderBy,
@@ -20,6 +27,7 @@ from ..methods.get_realization_sales_report import GetRealizationSalesReport
 from ..methods.get_sales import GetSales
 from ..types import (
     ConnectionCheck,
+    ProductCard,
     ProductCardStatistics,
     ProductDataItem,
     ProductWithPrice,
@@ -226,5 +234,45 @@ class WbAPI:
             subject_ids=subject_ids,
             tag_ids=tag_ids,
             skip_deleted_nm=skip_deleted_nm,
+        )
+        return await self(call)
+
+    async def get_product_cards_list(
+        self,
+        with_photo: int = -1,
+        locale: str | None = None,
+        text_search: str | None = None,
+        tag_ids: list[int] | None = None,
+        object_ids: list[int] | None = None,
+        brands: list[str] | None = None,
+        imt_id: int | None = None,
+        ascending: bool = False,
+        limit: int = 100,
+        updated_at: str | None = None,
+        nm_id: int | None = None,
+    ) -> list[ProductCard]:
+        """
+        Returns the list of created product cards.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1list/post
+        """
+        call = GetProductCardsList(
+            locale=locale,
+            settings=CardListSettings(
+                sort=CardListSort(ascending=ascending),
+                filter=CardListFilter(
+                    with_photo=with_photo,
+                    text_search=text_search,
+                    tag_ids=tag_ids,
+                    object_ids=object_ids,
+                    brands=brands,
+                    imt_id=imt_id,
+                ),
+                cursor=CardListCursor(
+                    limit=limit,
+                    updated_at=updated_at,
+                    nm_id=nm_id,
+                ),
+            ),
         )
         return await self(call)
