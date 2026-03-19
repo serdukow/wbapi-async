@@ -5,9 +5,8 @@ from aiolimiter import AsyncLimiter
 import httpx
 from httpx import RequestError
 
-from ...enums import Method
 from ...exceptions import WbAPIError
-from ...types import Request, RequestLimit, Response
+from ...types import RequestLimit
 from .headers import Headers
 
 
@@ -40,37 +39,29 @@ class BaseSession:
 
     @staticmethod
     def _get_limiter(limit: RequestLimit) -> AsyncLimiter:
-        """
-        The WB API has request rate limits.
-        To evenly distribute the load, the token bucket algorithm is used.
-        Limits for specific API methods are specified in the documentation.
-
-        Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Introduction/Rate-Limits
-        :param limit:
-        :return:
-        """
-        # interval is in milliseconds.
-        # burst is the token bucket capacity (max simultaneous requests).
         key = (limit.burst, limit.interval)
         if key not in _limiters:
             _limiters[key] = AsyncLimiter(max_rate=limit.burst, time_period=limit.interval / 1000)
         return _limiters[key]
 
-    async def make_request(
+    async def _request(
         self,
-        request: Request,
+        method: str,
+        url: str,
+        *,
+        params: dict[str, Any] | None = None,
+        json: Any | None = None,
         limit: RequestLimit | None = None,
-    ) -> Response:
+    ) -> Any:
         if limit is not None:
             await self._get_limiter(limit).acquire()
 
         try:
             response = await self._client.request(
-                method=request.method.upper(),
-                url=request.url,
-                params=request.params,
-                json=request.json_data,
-                content=request.data,
+                method=method,
+                url=url,
+                params=params,
+                json=json,
                 headers=self.headers.model_dump(),
             )
         except RequestError:
@@ -79,7 +70,7 @@ class BaseSession:
         if response.status_code == 429:
             retry_after = int(response.headers.get("X-Ratelimit-Retry", 1))
             await asyncio.sleep(retry_after)
-            return await self.make_request(request, limit=limit)
+            return await self._request(method, url, params=params, json=json, limit=limit)
 
         if response.status_code >= 400:
             raise WbAPIError(
@@ -87,8 +78,7 @@ class BaseSession:
                 **response.json(),
             ) from None
 
-        data = response.json() if response.content else None
-        return Response(status=response.status_code, ok=True, data=data)
+        return response.json() if response.content else None
 
     async def get(
         self,
@@ -96,31 +86,26 @@ class BaseSession:
         *,
         params: dict[str, Any] | None = None,
         limit: RequestLimit | None = None,
-    ) -> Response:
-        req = Request(method=Method.GET, url=url, params=params)
-        return await self.make_request(req, limit=limit)
+    ) -> Any:
+        return await self._request("GET", url, params=params, limit=limit)
 
     async def post(
         self,
         url: str,
         *,
         json: Any | None = None,
-        data: str | bytes | None = None,
         limit: RequestLimit | None = None,
-    ) -> Response:
-        req = Request(method=Method.POST, url=url, json_data=json, data=data)
-        return await self.make_request(req, limit=limit)
+    ) -> Any:
+        return await self._request("POST", url, json=json, limit=limit)
 
     async def put(
         self,
         url: str,
         *,
         json: Any | None = None,
-        data: str | bytes | None = None,
         limit: RequestLimit | None = None,
-    ) -> Response:
-        req = Request(method=Method.PUT, url=url, json_data=json, data=data)
-        return await self.make_request(req, limit=limit)
+    ) -> Any:
+        return await self._request("PUT", url, json=json, limit=limit)
 
     async def delete(
         self,
@@ -128,6 +113,5 @@ class BaseSession:
         *,
         params: dict[str, Any] | None = None,
         limit: RequestLimit | None = None,
-    ) -> Response:
-        req = Request(method=Method.DELETE, url=url, params=params)
-        return await self.make_request(req, limit=limit)
+    ) -> Any:
+        return await self._request("DELETE", url, params=params, limit=limit)
