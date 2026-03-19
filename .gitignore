@@ -69,6 +69,7 @@ docs/_build/
 .idea_modules/
 # VSCode
 .vscode/
+.claude/
 
 ### macOS Patch ###
 ._*
@@ -86,6 +87,7 @@ parts/
 sdist/
 var/
 share/python-wheels/
+node_modules/
 
 
 ### LSP config files ###

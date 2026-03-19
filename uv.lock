@@ -546,8 +546,8 @@ wheels = [
 ]
 
 [[package]]
-name = "wbapi_async"
-version = "0.1.0"
+name = "wbapi-async"
+version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "aiolimiter" },
