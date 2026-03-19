@@ -1,36 +1,39 @@
 from typing import Any
 
 from ..client.session.base import BaseSession
-from ..enums.product_data_availability import ProductDataAvailability
-from ..enums.product_data_order_field import ProductDataOrderField
-from ..enums.product_data_order_mode import ProductDataOrderMode
-from ..enums.product_data_stock_type import ProductDataStockType
-from ..enums.realization_sales_report_period import RealizationSalesReportPeriod
-from ..enums.sales_funnel_order_field import SalesFunnelOrderField
-from ..enums.supply_status import SupplyStatus
-from ..methods.base import WbMethod
-from ..methods.connection_check import ConnectionCheck as ConnectionCheckMethod
-from ..methods.get_campaigns_lists import GetCampaignsLists
-from ..methods.get_campaigns_statistics import GetCampaignsStatistics
-from ..methods.get_product_cards_list import (
+from ..enums import (
+    ProductDataAvailability,
+    ProductDataOrderField,
+    ProductDataOrderMode,
+    ProductDataStockType,
+    RealizationSalesReportPeriod,
+    SalesFunnelOrderField,
+    SupplyStatus,
+)
+from ..methods import (
     CardListCursor,
     CardListFilter,
     CardListSettings,
     CardListSort,
+    ConnectionCheck as ConnectionCheckMethod,
+    GetCampaignsLists,
+    GetCampaignsStatistics,
     GetProductCardsList,
-)
-from ..methods.get_product_cards_statistics_per_period import (
     GetProductCardsStatisticsPerPeriod,
+    GetProductData,
+    GetProductDetail,
+    GetProductsWithPrices,
+    GetRealizationSalesReport,
+    GetSales,
+    GetSuppliesList,
+    GetSupplyProducts,
+    OrderBy,
+    Period,
     SalesFunnelOrderBy,
     SalesFunnelPeriod,
+    SupplyDateFilter,
+    WbMethod,
 )
-from ..methods.get_product_data import GetProductData, OrderBy, Period
-from ..methods.get_product_detail import GetProductDetail
-from ..methods.get_products_with_prices import GetProductsWithPrices
-from ..methods.get_realization_sales_report import GetRealizationSalesReport
-from ..methods.get_sales import GetSales
-from ..methods.get_supplies_list import GetSuppliesList, SupplyDateFilter
-from ..methods.get_supply_products import GetSupplyProducts
 from ..types import (
     CampaignsList,
     CampaignStatistics,

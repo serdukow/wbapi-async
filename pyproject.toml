@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "wbapi-async"
-version = "0.0.5"
+version = "0.0.6"
 description = "Asynchronous client for Wildberries API"
 authors = [
     { name = "Andrei Serdiukov", email = "asyncdf@gmail.com" },
