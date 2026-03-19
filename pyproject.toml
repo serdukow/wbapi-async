@@ -106,6 +106,7 @@ docstring-code-line-length = 60
 
 [tool.pytest.ini_options]
 addopts = "-vv -s --log-cli-level=DEBUG"
+asyncio_mode = "auto"
 markers = [
     "unit: unit tests",
     "integration: integration tests",
