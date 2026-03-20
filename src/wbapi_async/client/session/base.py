@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from typing import Any
 
 from aiolimiter import AsyncLimiter
@@ -8,6 +9,10 @@ from httpx import RequestError
 from ...exceptions import WbAPIError
 from ...types import RequestLimit
 from .headers import Headers
+
+
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 
 # Shared limiters keyed by (burst, interval) — one token bucket per unique
