@@ -118,6 +118,15 @@ class BaseSession:
     ) -> Any:
         return await self._request("PUT", url, json=json, limit=limit)
 
+    async def patch(
+        self,
+        url: str,
+        *,
+        json: Any | None = None,
+        limit: RequestLimit | None = None,
+    ) -> Any:
+        return await self._request("PATCH", url, json=json, limit=limit)
+
     async def delete(
         self,
         url: str,
