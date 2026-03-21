@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "wbapi-async"
-version = "0.0.7"
+version = "0.0.8"
 description = "Asynchronous client for Wildberries API"
 authors = [
     { name = "Andrei Serdiukov", email = "asyncdf@gmail.com" },
@@ -13,7 +13,7 @@ maintainers = [
     { name = "Andrei Serdiukov", email = "asyncdf@gmail.com" },
 ]
 readme = "README.md"
-requires-python = ">=3.10,<3.14"
+requires-python = ">=3.11,<3.14"
 license = {text = "MIT"}
 keywords = ["wb", "wildberries", "api", "client", "async"]
 classifiers = [
