@@ -1,18 +1,19 @@
 from pydantic import Field
 
-from ..types.get_product_sizes_with_prices_item import GetProductSizesWithPricesItem
+from ..types.product_sizes_with_prices_item import ProductSizesWithPricesItem
 from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 
 class GetProductSizesWithPrices(WbMethod):
     """
-    Get Product Sizes with Prices
+    Returns sizes data for the product. Only for products from categories where size price setting
+    isavailable. For these products `"editableSizePrice":true`.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1size~1nm/get
     """
 
-    __return__ = GetProductSizesWithPricesItem
+    __return__ = ProductSizesWithPricesItem
     __api__ = "discounts-prices-api"
     __method__ = "api/v2/list/goods/size/nm"
     __data_key__ = "data.listGoods"

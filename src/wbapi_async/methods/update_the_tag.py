@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class UpdateTheTag(WbMethod):
     """
-    Update the Tag
+    Changes tag data: name and color
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1%7Bid%7D/patch
     """

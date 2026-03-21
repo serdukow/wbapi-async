@@ -7,7 +7,8 @@ from .base import WbMethod
 
 class UpdateWarehouse(WbMethod):
     """
-    Update Warehouse
+    Updates the seller's warehouse details. Changing the linked office is allowed once per day. You
+    cannotlink an office that is already in use.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses~1%7BwarehouseId%7D/put
     """

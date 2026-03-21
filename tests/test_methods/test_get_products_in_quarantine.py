@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.get_products_in_quarantine_item import GetProductsInQuarantineItem
+from wbapi_async.types.products_in_quarantine_item import ProductsInQuarantineItem
 from tests.mocked_api import MockedAPI
 
 
@@ -30,7 +30,7 @@ class TestGetProductsInQuarantine:
 
         assert isinstance(result, list)
         assert len(result) == 1
-        assert isinstance(result[0], GetProductsInQuarantineItem)
+        assert isinstance(result[0], ProductsInQuarantineItem)
         assert result[0].nm_id == 1
         assert result[0].size_id == 1
         assert result[0].tech_size_name == "techSizeName"

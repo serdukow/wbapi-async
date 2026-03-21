@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.get_offices_response import GetOfficesResponse
+from wbapi_async.types.offices_response import OfficesResponse
 from tests.mocked_api import MockedAPI
 
 
@@ -27,7 +27,7 @@ class TestGetOffices:
 
         assert isinstance(result, list)
         assert len(result) == 1
-        assert isinstance(result[0], GetOfficesResponse)
+        assert isinstance(result[0], OfficesResponse)
         assert result[0].address == "address"
         assert result[0].name == "name"
         assert result[0].city == "city"

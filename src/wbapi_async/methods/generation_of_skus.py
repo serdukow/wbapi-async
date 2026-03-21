@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class GenerationOfSkus(WbMethod):
     """
-    Generation of SKUs
+    Generates array of unique SKUs to create size of the product card
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1barcodes/post
     """

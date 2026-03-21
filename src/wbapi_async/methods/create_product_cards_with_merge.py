@@ -9,7 +9,9 @@ from .base import WbMethod
 
 class CreateProductCardsWithMerge(WbMethod):
     """
-    Create Product Cards with Merge
+    The method creates product cards by merging it with existing individual cards and groups of
+    mergedcards. There can be no more than 30 cards in one group of merged product cards,
+    respectively,you can create no more than 29 product cards in one request.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload~1add/post
     """

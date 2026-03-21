@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class DeleteWarehouse(WbMethod):
     """
-    Delete Warehouse
+    Deletes the seller's warehouse.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses~1%7BwarehouseId%7D/delete
     """

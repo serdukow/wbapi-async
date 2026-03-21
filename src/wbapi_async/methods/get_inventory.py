@@ -1,18 +1,18 @@
 from pydantic import Field
 
-from ..types.get_inventory_item import GetInventoryItem
+from ..types.inventory_item import InventoryItem
 from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 
 class GetInventory(WbMethod):
     """
-    Get Inventory
+    Returns product inventory.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses-Inventory/paths/~1api~1v3~1stocks~1%7BwarehouseId%7D/post
     """
 
-    __return__ = GetInventoryItem
+    __return__ = InventoryItem
     __api__ = "marketplace-api"
     __method__ = ""
     __method_template__ = "api/v3/stocks/{warehouse_id}"

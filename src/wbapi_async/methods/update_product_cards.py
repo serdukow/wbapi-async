@@ -5,7 +5,7 @@ from .base import WbMethod
 
 class UpdateProductCards(WbMethod):
     """
-    Update Product Cards
+    Edits product cards. Also use it to add new sizes.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1update/post
     """

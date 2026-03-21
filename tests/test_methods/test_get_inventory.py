@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.get_inventory_item import GetInventoryItem
+from wbapi_async.types.inventory_item import InventoryItem
 from tests.mocked_api import MockedAPI
 
 
@@ -21,6 +21,6 @@ class TestGetInventory:
 
         assert isinstance(result, list)
         assert len(result) == 1
-        assert isinstance(result[0], GetInventoryItem)
+        assert isinstance(result[0], InventoryItem)
         assert result[0].chrt_id == 1
         assert result[0].amount == 1

@@ -1,18 +1,18 @@
 from pydantic import Field
 
-from ..types.get_products_in_quarantine_item import GetProductsInQuarantineItem
+from ..types.products_in_quarantine_item import ProductsInQuarantineItem
 from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 
 class GetProductsInQuarantine(WbMethod):
     """
-    Get Products in Quarantine
+    Returns information about products in quarantine.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1quarantine~1goods/get
     """
 
-    __return__ = GetProductsInQuarantineItem
+    __return__ = ProductsInQuarantineItem
     __api__ = "discounts-prices-api"
     __method__ = "api/v2/quarantine/goods"
     __data_key__ = "data.quarantineGoods"

@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.get_product_sizes_with_prices_item import GetProductSizesWithPricesItem
+from wbapi_async.types.product_sizes_with_prices_item import ProductSizesWithPricesItem
 from tests.mocked_api import MockedAPI
 
 
@@ -33,7 +33,7 @@ class TestGetProductSizesWithPrices:
 
         assert isinstance(result, list)
         assert len(result) == 1
-        assert isinstance(result[0], GetProductSizesWithPricesItem)
+        assert isinstance(result[0], ProductSizesWithPricesItem)
         assert result[0].nm_id == 1
         assert result[0].size_id == 1
         assert result[0].vendor_code == "vendorCode"

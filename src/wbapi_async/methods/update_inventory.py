@@ -9,7 +9,7 @@ from .base import WbMethod
 
 class UpdateInventory(WbMethod):
     """
-    Update Inventory
+    Updates product inventory.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses-Inventory/paths/~1api~1v3~1stocks~1%7BwarehouseId%7D/put
     """

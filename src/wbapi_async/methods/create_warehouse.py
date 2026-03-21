@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class CreateWarehouse(WbMethod):
     """
-    Create Warehouse
+    Creates a seller's warehouse. You cannot link an office that is already in use.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses/post
     """

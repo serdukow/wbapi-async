@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class UploadMediaFilesViaLinks(WbMethod):
     """
-    Upload Media Files via Links
+    The method uploads a set of media files to a product card by specifying links in the request.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Media-Files/paths/~1content~1v3~1media~1save/post
     """

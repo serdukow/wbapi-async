@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class CreateATag(WbMethod):
     """
-    Create a Tag
+    Creates a tag.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag/post
     """

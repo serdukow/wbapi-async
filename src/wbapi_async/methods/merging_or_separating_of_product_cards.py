@@ -7,7 +7,8 @@ from .base import WbMethod
 
 class MergingOrSeparatingOfProductCards(WbMethod):
     """
-    Merging or Separating of Product Cards
+    The method merges and separates product cards. Product cards are merged if they have the same
+    `imtID`.<br><br>
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1moveNm/post
     """

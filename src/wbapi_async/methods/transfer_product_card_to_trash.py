@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class TransferProductCardToTrash(WbMethod):
     """
-    Transfer Product Card to Trash
+    Transfers the product card to the trash. In doing so, the product card would not be deleted.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1delete~1trash/post
     """

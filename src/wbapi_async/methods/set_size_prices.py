@@ -9,7 +9,7 @@ from .base import WbMethod
 
 class SetSizePrices(WbMethod):
     """
-    Set Size Prices
+    Sets different prices for different sizes.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task~1size/post
     """

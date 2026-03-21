@@ -9,7 +9,7 @@ from .base import WbMethod
 
 class ProductCardsList(WbMethod):
     """
-    Product Cards List
+    <div class="description_auth">
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1list/post
     """

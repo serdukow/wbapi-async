@@ -9,7 +9,7 @@ from .base import WbMethod
 
 class UpdateContactsList(WbMethod):
     """
-    Update Contacts List
+    Updates the seller's warehouse contact list. <br>
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1dbw~1warehouses~1%7BwarehouseId%7D~1contacts/put
     """

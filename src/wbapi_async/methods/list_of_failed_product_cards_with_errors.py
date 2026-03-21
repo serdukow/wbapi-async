@@ -11,7 +11,9 @@ from .base import WbMethod
 
 class ListOfFailedProductCardsWithErrors(WbMethod):
     """
-    List of Failed Product Cards with Errors
+    Returns the list of product cards
+    ([drafts](https://seller.wildberries.ru/new-goods/error-cards))and the list of errors
+    encounteredduring product card creation or editing.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1error~1list/post
     """

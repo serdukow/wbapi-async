@@ -5,7 +5,7 @@ from .base import WbMethod
 
 class CreateProductCards(WbMethod):
     """
-    Create Product Cards
+    Creates products cards. You can specify product description and characteristics.<br>
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload/post
     """

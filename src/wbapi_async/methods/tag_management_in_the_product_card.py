@@ -9,7 +9,7 @@ from .base import WbMethod
 
 class TagManagementInTheProductCard(WbMethod):
     """
-    Tag Management in the Product Card
+    The method allows to add tags to the product card and remove tags from the product card.<br>
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1nomenclature~1link/post
     """

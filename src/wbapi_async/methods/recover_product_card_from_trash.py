@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class RecoverProductCardFromTrash(WbMethod):
     """
-    Recover Product Card from Trash
+    Returns the product card from trash
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1recover/post
     """

@@ -9,7 +9,7 @@ from .base import WbMethod
 
 class SetPricesAndDiscounts(WbMethod):
     """
-    Set Prices and Discounts
+    Sets prices and discounts.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task/post
     """

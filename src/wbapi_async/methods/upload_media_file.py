@@ -7,7 +7,7 @@ from .base import WbMethod
 
 class UploadMediaFile(WbMethod):
     """
-    Upload Media File
+    Uploads and adds one media file for the product card.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Media-Files/paths/~1content~1v3~1media~1file/post
     """
