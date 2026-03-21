@@ -179,7 +179,7 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload~1add/post
 
         :param imt_id: `imtID` of an individual product card or group of merged product cards to
-                       :param imt_id: whichthe created cards are added
+                       whichthe created cards are added
         :param cards_to_add: Added product cards
         :return: list[CreateProductCardsWithMergeResponse]
         """
@@ -277,7 +277,7 @@ class WbAPI:
 
         :param subject_id: Subject ID
         :param next: Pagination parameter. Use the `next` value from the response to get the next
-                     :param next: databatch
+                     databatch
         :return: list[BrandsItem]
         """
         call = GetBrands(subject_id=subject_id, next=next)
@@ -417,7 +417,7 @@ class WbAPI:
 
         :param limit: Number of elements per page (pagination)
         :param offset: How many results to skip. For example, with value `10`, the response will
-                       :param offset: startwith the 11 element
+                       startwith the 11 element
         :param upload_id: Download ID
         :return: list[ProcessedUploadDetailsItem]
         """
@@ -453,7 +453,7 @@ class WbAPI:
 
         :param limit: Number of elements per page (pagination)
         :param offset: How many results to skip. For example, with value `10`, the response will
-                       :param offset: startwith the 11 element
+                       startwith the 11 element
         :param nm_id: WB article
         :return: list[ProductSizesWithPricesItem]
         """
@@ -472,7 +472,7 @@ class WbAPI:
 
         :param limit: Number of elements per page (pagination)
         :param offset: How many results to skip. For example, with value `10`, the response will
-                       :param offset: startwith the 11 element
+                       startwith the 11 element
         :return: list[ProductsInQuarantineItem]
         """
         call = GetProductsInQuarantine(limit=limit, offset=offset)
@@ -506,7 +506,7 @@ class WbAPI:
 
         :param limit: Number of elements per page (pagination)
         :param offset: How many results to skip. For example, with value `10`, the response will
-                       :param offset: startwith the 11 element
+                       startwith the 11 element
         :param filter_nm_id: WB article for search
         :return: list[ProductsWithPricesItem]
         """
@@ -575,10 +575,10 @@ class WbAPI:
 
         :param locale: Language for response of the `name` field:
         :param name: Search by item name (Socks), the search works by substring and can be
-                     :param name: conductedin any of the supported languages
+                     conductedin any of the supported languages
         :param limit: Number of search results, maximum 1,000
         :param offset: How many results to skip. For example, with value `10`, the response will
-                       :param offset: startwith the 11 element
+                       startwith the 11 element
         :param parent_id: Subject parent category ID
         :return: list[SubjectsListItem]
         """
@@ -616,7 +616,7 @@ class WbAPI:
 
         :param limit: Number of elements per page (pagination)
         :param offset: How many results to skip. For example, with value `10`, the response will
-                       :param offset: startwith the 11 element
+                       startwith the 11 element
         :param upload_id: Download ID
         :return: list[UnprocessedUploadDetailsItem]
         """
@@ -758,7 +758,7 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task/post
 
         :param data: Products, prices and discounts. Maximum 1,000 products. Both price and
-                     :param data: discountcan not be empty
+                     discountcan not be empty
         :return: list[SetPricesAndDiscountsResponse]
         """
         call = SetPricesAndDiscounts(data=data)
@@ -942,7 +942,7 @@ class WbAPI:
 
         :param nm_id: Wildberries article
         :param data: Links to images in the order that they are on the card, and a video at any
-                     :param data: positionof the array
+                     positionof the array
         :return: list[UploadMediaFilesViaLinksResponse]
         """
         call = UploadMediaFilesViaLinks(nm_id=nm_id, data=data)
