@@ -142,9 +142,15 @@ class WbAPI:
         subject_id: int = None,
         next: int | None = None,
     ) -> list[BrandsItem]:
-        """Brands
+        """
+        Brands
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1api~1content~1v1~1brands/get
+
+        :param subject_id: Subject ID
+        :param next: Pagination parameter. Use the `next` value from the response to get the next
+                     databatch
+        :return: list[BrandsItem]
         """
         call = Brands(subject_id=subject_id, next=next)
         return await self(call)
@@ -153,9 +159,13 @@ class WbAPI:
         self,
         locale: str | None = None,
     ) -> list[ColorResponse]:
-        """Color
+        """
+        Color
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1colors/get
+
+        :param locale: Language for response of the `subjectName` and `name` fields:
+        :return: list[ColorResponse]
         """
         call = Color(locale=locale)
         return await self(call)
@@ -164,9 +174,13 @@ class WbAPI:
         self,
         warehouse_id: int,
     ) -> list[ContactsListItem]:
-        """Contacts List
+        """
+        Contacts List
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1dbw~1warehouses~1%7BwarehouseId%7D~1contacts/get
+
+        :param warehouse_id: The seller's warehouse ID
+        :return: list[ContactsListItem]
         """
         call = ContactsList(warehouse_id=warehouse_id)
         return await self(call)
@@ -175,9 +189,13 @@ class WbAPI:
         self,
         locale: str | None = None,
     ) -> list[CountryOfOriginResponse]:
-        """Country of Origin
+        """
+        Country of Origin
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1countries/get
+
+        :param locale: Language for response of the `subjectName` and `name` fields:
+        :return: list[CountryOfOriginResponse]
         """
         call = CountryOfOrigin(locale=locale)
         return await self(call)
@@ -187,9 +205,14 @@ class WbAPI:
         color: str | None = None,
         name: str | None = None,
     ) -> list[CreateATagResponse]:
-        """Create a Tag
+        """
+        Create a Tag
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag/post
+
+        :param color: Tag color.
+        :param name: Tag name
+        :return: list[CreateATagResponse]
         """
         call = CreateATag(color=color, name=name)
         return await self(call)
@@ -197,9 +220,11 @@ class WbAPI:
     async def create_product_cards(
         self,
     ) -> list[CreateProductCardsResponse]:
-        """Create Product Cards
+        """
+        Create Product Cards
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload/post
+        :return: list[CreateProductCardsResponse]
         """
         call = CreateProductCards()
         return await self(call)
@@ -209,9 +234,15 @@ class WbAPI:
         imt_id: int | None = None,
         cards_to_add: list[dict[str, Any]] | None = None,
     ) -> list[CreateProductCardsWithMergeResponse]:
-        """Create Product Cards with Merge
+        """
+        Create Product Cards with Merge
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload~1add/post
+
+        :param imt_id: `imtID` of an individual product card or group of merged product cards to
+                       whichthe created cards are added
+        :param cards_to_add: Added product cards
+        :return: list[CreateProductCardsWithMergeResponse]
         """
         call = CreateProductCardsWithMerge(imt_id=imt_id, cards_to_add=cards_to_add)
         return await self(call)
@@ -221,9 +252,14 @@ class WbAPI:
         name: str = None,
         office_id: int = None,
     ) -> list[CreateWarehouseResponse]:
-        """Create Warehouse
+        """
+        Create Warehouse
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses/post
+
+        :param name: Seller's warehouse name
+        :param office_id: Office ID
+        :return: list[CreateWarehouseResponse]
         """
         call = CreateWarehouse(name=name, office_id=office_id)
         return await self(call)
@@ -233,9 +269,14 @@ class WbAPI:
         warehouse_id: int,
         chrt_ids: list[int] = None,
     ) -> None:
-        """Delete Inventory
+        """
+        Delete Inventory
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses-Inventory/paths/~1api~1v3~1stocks~1%7BwarehouseId%7D/delete
+
+        :param warehouse_id: The seller's warehouse ID
+        :param chrt_ids: Size IDs array
+        :return: None
         """
         call = DeleteInventory(warehouse_id=warehouse_id, chrt_ids=chrt_ids)
         return await self(call)
@@ -244,9 +285,13 @@ class WbAPI:
         self,
         id: int,
     ) -> list[DeleteTheTagResponse]:
-        """Delete the Tag
+        """
+        Delete the Tag
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1%7Bid%7D/delete
+
+        :param id: Numeric tag ID
+        :return: list[DeleteTheTagResponse]
         """
         call = DeleteTheTag(id=id)
         return await self(call)
@@ -255,9 +300,13 @@ class WbAPI:
         self,
         warehouse_id: int,
     ) -> None:
-        """Delete Warehouse
+        """
+        Delete Warehouse
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses~1%7BwarehouseId%7D/delete
+
+        :param warehouse_id: The seller's warehouse ID
+        :return: None
         """
         call = DeleteWarehouse(warehouse_id=warehouse_id)
         return await self(call)
@@ -266,9 +315,13 @@ class WbAPI:
         self,
         locale: str | None = None,
     ) -> list[GenderItem]:
-        """Gender
+        """
+        Gender
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1kinds/get
+
+        :param locale: Language for response of the `subjectName` and `name` fields:
+        :return: list[GenderItem]
         """
         call = Gender(locale=locale)
         return await self(call)
@@ -277,9 +330,13 @@ class WbAPI:
         self,
         count: int | None = None,
     ) -> list[GenerationOfSkusItem]:
-        """Generation of SKUs
+        """
+        Generation of SKUs
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1barcodes/post
+
+        :param count: Number of SKUs to be generated, maximum 5,000
+        :return: list[GenerationOfSkusItem]
         """
         call = GenerationOfSkus(count=count)
         return await self(call)
@@ -289,9 +346,14 @@ class WbAPI:
         warehouse_id: int,
         chrt_ids: list[int] = None,
     ) -> list[GetInventoryItem]:
-        """Get Inventory
+        """
+        Get Inventory
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses-Inventory/paths/~1api~1v3~1stocks~1%7BwarehouseId%7D/post
+
+        :param warehouse_id: The seller's warehouse ID
+        :param chrt_ids: Size IDs array
+        :return: list[GetInventoryItem]
         """
         call = GetInventory(warehouse_id=warehouse_id, chrt_ids=chrt_ids)
         return await self(call)
@@ -299,9 +361,11 @@ class WbAPI:
     async def get_offices(
         self,
     ) -> list[GetOfficesResponse]:
-        """Get Offices
+        """
+        Get Offices
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1offices/get
+        :return: list[GetOfficesResponse]
         """
         call = GetOffices()
         return await self(call)
@@ -312,9 +376,16 @@ class WbAPI:
         offset: int | None = None,
         nm_id: int = None,
     ) -> list[GetProductSizesWithPricesItem]:
-        """Get Product Sizes with Prices
+        """
+        Get Product Sizes with Prices
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1size~1nm/get
+
+        :param limit: Number of elements per page (pagination)
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :param nm_id: WB article
+        :return: list[GetProductSizesWithPricesItem]
         """
         call = GetProductSizesWithPrices(limit=limit, offset=offset, nm_id=nm_id)
         return await self(call)
@@ -324,9 +395,15 @@ class WbAPI:
         limit: int = None,
         offset: int | None = None,
     ) -> list[GetProductsInQuarantineItem]:
-        """Get Products in Quarantine
+        """
+        Get Products in Quarantine
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1quarantine~1goods/get
+
+        :param limit: Number of elements per page (pagination)
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :return: list[GetProductsInQuarantineItem]
         """
         call = GetProductsInQuarantine(limit=limit, offset=offset)
         return await self(call)
@@ -337,9 +414,16 @@ class WbAPI:
         offset: int | None = None,
         filter_nm_id: int | None = None,
     ) -> list[GetProductsWithPricesItem]:
-        """Get Products with Prices
+        """
+        Get Products with Prices
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/get
+
+        :param limit: Number of elements per page (pagination)
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :param filter_nm_id: WB article for search
+        :return: list[GetProductsWithPricesItem]
         """
         call = GetProductsWithPrices(limit=limit, offset=offset, filter_nm_id=filter_nm_id)
         return await self(call)
@@ -348,9 +432,13 @@ class WbAPI:
         self,
         nm_list: list[int] = None,
     ) -> list[GetProductsWithPricesByArticlesItem]:
-        """Get Products with Prices by Articles
+        """
+        Get Products with Prices by Articles
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/post
+
+        :param nm_list: WB articles for search
+        :return: list[GetProductsWithPricesByArticlesItem]
         """
         call = GetProductsWithPricesByArticles(nm_list=nm_list)
         return await self(call)
@@ -358,9 +446,11 @@ class WbAPI:
     async def get_warehouses(
         self,
     ) -> list[GetWarehousesResponse]:
-        """Get Warehouses
+        """
+        Get Warehouses
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses/get
+        :return: list[GetWarehousesResponse]
         """
         call = GetWarehouses()
         return await self(call)
@@ -371,9 +461,15 @@ class WbAPI:
         search: int | None = None,
         locale: str | None = None,
     ) -> list[HscodesItem]:
-        """HS-codes
+        """
+        HS-codes
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1tnved/get
+
+        :param subject_id: Subject ID
+        :param search: Search by HS-code. Works only with the subjectID parameter
+        :param locale: Language for response of the `subjectName` and `name` fields:
+        :return: list[HscodesItem]
         """
         call = Hscodes(subject_id=subject_id, search=search, locale=locale)
         return await self(call)
@@ -381,9 +477,11 @@ class WbAPI:
     async def limits_for_the_product_cards(
         self,
     ) -> list[LimitsForTheProductCardsResponse]:
-        """Limits for the Product Cards
+        """
+        Limits for the Product Cards
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1limits/get
+        :return: list[LimitsForTheProductCardsResponse]
         """
         call = LimitsForTheProductCards()
         return await self(call)
@@ -394,9 +492,15 @@ class WbAPI:
         cursor: dict[str, Any] | None = None,
         order: dict[str, Any] | None = None,
     ) -> list[ListOfFailedProductCardsWithErrorsItem]:
-        """List of Failed Product Cards with Errors
+        """
+        List of Failed Product Cards with Errors
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1error~1list/post
+
+        :param locale: Language of subject names:
+        :param cursor: Paginator
+        :param order: The order of return of batches
+        :return: list[ListOfFailedProductCardsWithErrorsItem]
         """
         call = ListOfFailedProductCardsWithErrors(locale=locale, cursor=cursor, order=order)
         return await self(call)
@@ -404,9 +508,11 @@ class WbAPI:
     async def merging_or_separating_of_product_cards(
         self,
     ) -> list[MergingOrSeparatingOfProductCardsResponse]:
-        """Merging or Separating of Product Cards
+        """
+        Merging or Separating of Product Cards
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1moveNm/post
+        :return: list[MergingOrSeparatingOfProductCardsResponse]
         """
         call = MergingOrSeparatingOfProductCards()
         return await self(call)
@@ -417,9 +523,16 @@ class WbAPI:
         offset: int | None = None,
         upload_id: int = None,
     ) -> list[ProcessedUploadDetailsItem]:
-        """Processed Upload Details
+        """
+        Processed Upload Details
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1history~1goods~1task/get
+
+        :param limit: Number of elements per page (pagination)
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :param upload_id: Download ID
+        :return: list[ProcessedUploadDetailsItem]
         """
         call = ProcessedUploadDetails(limit=limit, offset=offset, upload_id=upload_id)
         return await self(call)
@@ -428,9 +541,13 @@ class WbAPI:
         self,
         upload_id: int = None,
     ) -> list[ProcessedUploadStateResponse]:
-        """Processed Upload State
+        """
+        Processed Upload State
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1history~1tasks/get
+
+        :param upload_id: Download ID
+        :return: list[ProcessedUploadStateResponse]
         """
         call = ProcessedUploadState(upload_id=upload_id)
         return await self(call)
@@ -440,9 +557,14 @@ class WbAPI:
         locale: str | None = None,
         settings: dict[str, Any] | None = None,
     ) -> list[ProductCardsInTrashListItem]:
-        """Product Cards in Trash List
+        """
+        Product Cards in Trash List
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1trash/post
+
+        :param locale: Language for response of the `name`, `value` and `object` fields:
+        :param settings: Settings
+        :return: list[ProductCardsInTrashListItem]
         """
         call = ProductCardsInTrashList(locale=locale, settings=settings)
         return await self(call)
@@ -452,9 +574,14 @@ class WbAPI:
         locale: str | None = None,
         settings: dict[str, Any] | None = None,
     ) -> list[ProductCardsListItem]:
-        """Product Cards List
+        """
+        Product Cards List
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1list/post
+
+        :param locale: Language for response of the `name`, `value` and `object` fields:
+        :param settings: Settings
+        :return: list[ProductCardsListItem]
         """
         call = ProductCardsList(locale=locale, settings=settings)
         return await self(call)
@@ -463,9 +590,13 @@ class WbAPI:
         self,
         locale: str | None = None,
     ) -> list[ProductsParentCategoriesResponse]:
-        """Products Parent Categories
+        """
+        Products Parent Categories
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1object~1parent~1all/get
+
+        :param locale: Language for response of the `name` field:
+        :return: list[ProductsParentCategoriesResponse]
         """
         call = ProductsParentCategories(locale=locale)
         return await self(call)
@@ -474,9 +605,13 @@ class WbAPI:
         self,
         nm_i_ds: list[int] | None = None,
     ) -> list[RecoverProductCardFromTrashResponse]:
-        """Recover Product Card from Trash
+        """
+        Recover Product Card from Trash
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1recover/post
+
+        :param nm_i_ds: Wildberries articles
+        :return: list[RecoverProductCardFromTrashResponse]
         """
         call = RecoverProductCardFromTrash(nm_i_ds=nm_i_ds)
         return await self(call)
@@ -485,9 +620,13 @@ class WbAPI:
         self,
         locale: str | None = None,
     ) -> list[SeasonItem]:
-        """Season
+        """
+        Season
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1seasons/get
+
+        :param locale: Language for response of the `subjectName` and `name` fields:
+        :return: list[SeasonItem]
         """
         call = Season(locale=locale)
         return await self(call)
@@ -496,9 +635,14 @@ class WbAPI:
         self,
         data: list[Any] = None,
     ) -> list[SetPricesAndDiscountsResponse]:
-        """Set Prices and Discounts
+        """
+        Set Prices and Discounts
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task/post
+
+        :param data: Products, prices and discounts. Maximum 1,000 products. Both price and
+                     discountcan not be empty
+        :return: list[SetPricesAndDiscountsResponse]
         """
         call = SetPricesAndDiscounts(data=data)
         return await self(call)
@@ -507,9 +651,13 @@ class WbAPI:
         self,
         data: list[Any] = None,
     ) -> list[SetSizePricesResponse]:
-        """Set Size Prices
+        """
+        Set Size Prices
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task~1size/post
+
+        :param data: Sizes and prices. Maximum 1,000 sizes
+        :return: list[SetSizePricesResponse]
         """
         call = SetSizePrices(data=data)
         return await self(call)
@@ -518,9 +666,13 @@ class WbAPI:
         self,
         data: list[Any] = None,
     ) -> list[SetWbClubDiscountsResponse]:
-        """Set WB Club Discounts
+        """
+        Set WB Club Discounts
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task~1club-discount/post
+
+        :param data: Products and WB Club discounts. Maximum 1,000 products.
+        :return: list[SetWbClubDiscountsResponse]
         """
         call = SetWbClubDiscounts(data=data)
         return await self(call)
@@ -530,9 +682,14 @@ class WbAPI:
         subject_id: int,
         locale: str | None = None,
     ) -> list[SubjectCharacteristicsItem]:
-        """Subject Characteristics
+        """
+        Subject Characteristics
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1object~1charcs~1%7BsubjectId%7D/get
+
+        :param subject_id: Subject ID
+        :param locale: Language for response of the `subjectName` and `name` fields:
+        :return: list[SubjectCharacteristicsItem]
         """
         call = SubjectCharacteristics(subject_id=subject_id, locale=locale)
         return await self(call)
@@ -545,12 +702,26 @@ class WbAPI:
         offset: int | None = 0,
         parent_id: int | None = None,
     ) -> list[SubjectsListItem]:
-        """Subjects List
+        """
+        Subjects List
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1object~1all/get
+
+        :param locale: Language for response of the `name` field:
+        :param name: Search by item name (Socks), the search works by substring and can be
+                     conductedin any of the supported languages
+        :param limit: Number of search results, maximum 1,000
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :param parent_id: Subject parent category ID
+        :return: list[SubjectsListItem]
         """
         call = SubjectsList(
-            locale=locale, name=name, limit=limit, offset=offset, parent_id=parent_id
+            locale=locale,
+            name=name,
+            limit=limit,
+            offset=offset,
+            parent_id=parent_id,
         )
         return await self(call)
 
@@ -559,9 +730,14 @@ class WbAPI:
         nm_id: int | None = None,
         tags_i_ds: list[int] | None = None,
     ) -> list[TagManagementInTheProductCardResponse]:
-        """Tag Management in the Product Card
+        """
+        Tag Management in the Product Card
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1nomenclature~1link/post
+
+        :param nm_id: WB article
+        :param tags_i_ds: An array of numeric tag IDs.<br>
+        :return: list[TagManagementInTheProductCardResponse]
         """
         call = TagManagementInTheProductCard(nm_id=nm_id, tags_i_ds=tags_i_ds)
         return await self(call)
@@ -569,9 +745,11 @@ class WbAPI:
     async def tags_list(
         self,
     ) -> list[TagsListResponse]:
-        """Tags List
+        """
+        Tags List
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tags/get
+        :return: list[TagsListResponse]
         """
         call = TagsList()
         return await self(call)
@@ -580,9 +758,13 @@ class WbAPI:
         self,
         nm_i_ds: list[int] | None = None,
     ) -> list[TransferProductCardToTrashResponse]:
-        """Transfer Product Card to Trash
+        """
+        Transfer Product Card to Trash
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1delete~1trash/post
+
+        :param nm_i_ds: Wildberries articles
+        :return: list[TransferProductCardToTrashResponse]
         """
         call = TransferProductCardToTrash(nm_i_ds=nm_i_ds)
         return await self(call)
@@ -593,9 +775,16 @@ class WbAPI:
         offset: int | None = None,
         upload_id: int = None,
     ) -> list[UnprocessedUploadDetailsItem]:
-        """Unprocessed Upload Details
+        """
+        Unprocessed Upload Details
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1buffer~1goods~1task/get
+
+        :param limit: Number of elements per page (pagination)
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :param upload_id: Download ID
+        :return: list[UnprocessedUploadDetailsItem]
         """
         call = UnprocessedUploadDetails(limit=limit, offset=offset, upload_id=upload_id)
         return await self(call)
@@ -604,9 +793,13 @@ class WbAPI:
         self,
         upload_id: int = None,
     ) -> list[UnprocessedUploadStateResponse]:
-        """Unprocessed Upload State
+        """
+        Unprocessed Upload State
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1buffer~1tasks/get
+
+        :param upload_id: Download ID
+        :return: list[UnprocessedUploadStateResponse]
         """
         call = UnprocessedUploadState(upload_id=upload_id)
         return await self(call)
@@ -616,9 +809,13 @@ class WbAPI:
         warehouse_id: int,
         contacts: list[dict[str, Any]] | None = None,
     ) -> None:
-        """Update Contacts List
+        """
+        Update Contacts List
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1dbw~1warehouses~1%7BwarehouseId%7D~1contacts/put
+
+        :param warehouse_id: The seller's warehouse ID
+        :return: None
         """
         call = UpdateContactsList(warehouse_id=warehouse_id, contacts=contacts)
         return await self(call)
@@ -628,9 +825,14 @@ class WbAPI:
         warehouse_id: int,
         stocks: list[dict[str, Any]] = None,
     ) -> None:
-        """Update Inventory
+        """
+        Update Inventory
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses-Inventory/paths/~1api~1v3~1stocks~1%7BwarehouseId%7D/put
+
+        :param warehouse_id: The seller's warehouse ID
+        :param stocks: Array of size IDs and amounts
+        :return: None
         """
         call = UpdateInventory(warehouse_id=warehouse_id, stocks=stocks)
         return await self(call)
@@ -638,9 +840,11 @@ class WbAPI:
     async def update_product_cards(
         self,
     ) -> list[UpdateProductCardsResponse]:
-        """Update Product Cards
+        """
+        Update Product Cards
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1update/post
+        :return: list[UpdateProductCardsResponse]
         """
         call = UpdateProductCards()
         return await self(call)
@@ -651,9 +855,15 @@ class WbAPI:
         color: str | None = None,
         name: str | None = None,
     ) -> list[UpdateTheTagResponse]:
-        """Update the Tag
+        """
+        Update the Tag
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1%7Bid%7D/patch
+
+        :param id: Numeric tag ID
+        :param color: Tag color
+        :param name: Tag name
+        :return: list[UpdateTheTagResponse]
         """
         call = UpdateTheTag(id=id, color=color, name=name)
         return await self(call)
@@ -664,9 +874,15 @@ class WbAPI:
         name: str = None,
         office_id: int = None,
     ) -> None:
-        """Update Warehouse
+        """
+        Update Warehouse
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses~1%7BwarehouseId%7D/put
+
+        :param warehouse_id: The seller's warehouse ID
+        :param name: Seller's warehouse name
+        :param office_id: Office ID
+        :return: None
         """
         call = UpdateWarehouse(warehouse_id=warehouse_id, name=name, office_id=office_id)
         return await self(call)
@@ -676,9 +892,14 @@ class WbAPI:
         x_nm_id: str = None,
         x_photo_number: int = None,
     ) -> list[UploadMediaFileResponse]:
-        """Upload Media File
+        """
+        Upload Media File
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Media-Files/paths/~1content~1v3~1media~1file/post
+
+        :param x_nm_id: Wildberries article
+        :param x_photo_number: Number of media file, starting from `1`. To add the video set `1`.
+        :return: list[UploadMediaFileResponse]
         """
         call = UploadMediaFile(x_nm_id=x_nm_id, x_photo_number=x_photo_number)
         return await self(call)
@@ -688,9 +909,15 @@ class WbAPI:
         nm_id: int | None = None,
         data: list[str] | None = None,
     ) -> list[UploadMediaFilesViaLinksResponse]:
-        """Upload Media Files via Links
+        """
+        Upload Media Files via Links
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Media-Files/paths/~1content~1v3~1media~1save/post
+
+        :param nm_id: Wildberries article
+        :param data: Links to images in the order that they are on the card, and a video at any
+                     positionof the array
+        :return: list[UploadMediaFilesViaLinksResponse]
         """
         call = UploadMediaFilesViaLinks(nm_id=nm_id, data=data)
         return await self(call)
@@ -699,9 +926,13 @@ class WbAPI:
         self,
         locale: str | None = None,
     ) -> list[VatRateItem]:
-        """VAT Rate
+        """
+        VAT Rate
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1vat/get
+
+        :param locale: Language for response of the `subjectName` and `name` fields:
+        :return: list[VatRateItem]
         """
         call = VatRate(locale=locale)
         return await self(call)
