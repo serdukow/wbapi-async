@@ -1,52 +1,105 @@
 from typing import Any
 
 from ..client.session.base import BaseSession
-from ..enums import (
-    ProductDataAvailability,
-    ProductDataOrderField,
-    ProductDataOrderMode,
-    ProductDataStockType,
-    RealizationSalesReportPeriod,
-    SalesFunnelOrderField,
-    SupplyStatus,
-)
 from ..methods import (
-    CardListCursor,
-    CardListFilter,
-    CardListSettings,
-    CardListSort,
-    ConnectionCheck as ConnectionCheckMethod,
-    GetCampaignsLists,
-    GetCampaignsStatistics,
-    GetProductCardsList,
-    GetProductCardsStatisticsPerPeriod,
-    GetProductData,
+    Brands,
+    Color,
+    ContactsList,
+    CountryOfOrigin,
+    CreateATag,
+    CreateProductCards,
+    CreateProductCardsWithMerge,
+    CreateWarehouse,
+    DeleteInventory,
+    DeleteTheTag,
+    DeleteWarehouse,
+    Gender,
+    GenerationOfSkus,
+    GetInventory,
+    GetOffices,
     GetProductDetail,
+    GetProductsInQuarantine,
+    GetProductSizesWithPrices,
     GetProductsWithPrices,
-    GetRealizationSalesReport,
-    GetSales,
-    GetSuppliesList,
-    GetSupplyProducts,
-    OrderBy,
-    Period,
-    SalesFunnelOrderBy,
-    SalesFunnelPeriod,
-    SupplyDateFilter,
+    GetProductsWithPricesByArticles,
+    GetWarehouses,
+    Hscodes,
+    LimitsForTheProductCards,
+    ListOfFailedProductCardsWithErrors,
+    MergingOrSeparatingOfProductCards,
+    ProcessedUploadDetails,
+    ProcessedUploadState,
+    ProductCardsInTrashList,
+    ProductCardsList,
+    ProductsParentCategories,
+    RecoverProductCardFromTrash,
+    Season,
+    SetPricesAndDiscounts,
+    SetSizePrices,
+    SetWbClubDiscounts,
+    SubjectCharacteristics,
+    SubjectsList,
+    TagManagementInTheProductCard,
+    TagsList,
+    TransferProductCardToTrash,
+    UnprocessedUploadDetails,
+    UnprocessedUploadState,
+    UpdateContactsList,
+    UpdateInventory,
+    UpdateProductCards,
+    UpdateTheTag,
+    UpdateWarehouse,
+    UploadMediaFile,
+    UploadMediaFilesViaLinks,
+    VatRate,
     WbMethod,
 )
 from ..types import (
-    CampaignsList,
-    CampaignStatistics,
-    ConnectionCheck,
-    ProductCard,
-    ProductCardStatistics,
-    ProductDataItem,
+    BrandsItem,
+    ColorResponse,
+    ContactsListItem,
+    CountryOfOriginResponse,
+    CreateATagResponse,
+    CreateProductCardsResponse,
+    CreateProductCardsWithMergeResponse,
+    CreateWarehouseResponse,
+    DeleteTheTagResponse,
+    GenderItem,
+    GenerationOfSkusItem,
+    GetInventoryItem,
+    GetOfficesResponse,
+    GetProductsInQuarantineItem,
+    GetProductSizesWithPricesItem,
+    GetProductsWithPricesByArticlesItem,
+    GetProductsWithPricesItem,
+    GetWarehousesResponse,
+    HscodesItem,
+    LimitsForTheProductCardsResponse,
+    ListOfFailedProductCardsWithErrorsItem,
+    MergingOrSeparatingOfProductCardsResponse,
+    ProcessedUploadDetailsItem,
+    ProcessedUploadStateResponse,
+    ProductCardsInTrashListItem,
+    ProductCardsListItem,
     ProductDetail,
-    ProductWithPrice,
-    RealizationSalesReport,
-    Sale,
-    Supply,
-    SupplyProduct,
+    ProductsParentCategoriesResponse,
+    RecoverProductCardFromTrashResponse,
+    SeasonItem,
+    SetPricesAndDiscountsResponse,
+    SetSizePricesResponse,
+    SetWbClubDiscountsResponse,
+    SubjectCharacteristicsItem,
+    SubjectsListItem,
+    TagManagementInTheProductCardResponse,
+    TagsListResponse,
+    TransferProductCardToTrashResponse,
+    UnprocessedUploadDetailsItem,
+    UnprocessedUploadStateResponse,
+    UpdateProductCardsResponse,
+    UpdateTheTagResponse,
+    UploadMediaFileResponse,
+    UploadMediaFilesViaLinksResponse,
+    VatRateItem,
 )
 from ..utils.token import validate_token
 from ..utils.unofficial import unofficial
@@ -84,243 +137,576 @@ class WbAPI:
     async def __call__(self, method: WbMethod) -> Any:
         return await method.emit(self)
 
-    async def connection_check(self) -> ConnectionCheck:
-        call = ConnectionCheckMethod()
+    async def brands(
+        self,
+        subject_id: int = None,
+        next: int | None = None,
+    ) -> list[BrandsItem]:
+        """Brands
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1api~1content~1v1~1brands/get
+        """
+        call = Brands(subject_id=subject_id, next=next)
+        return await self(call)
+
+    async def color(
+        self,
+        locale: str | None = None,
+    ) -> list[ColorResponse]:
+        """Color
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1colors/get
+        """
+        call = Color(locale=locale)
+        return await self(call)
+
+    async def contacts_list(
+        self,
+        warehouse_id: int,
+    ) -> list[ContactsListItem]:
+        """Contacts List
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1dbw~1warehouses~1%7BwarehouseId%7D~1contacts/get
+        """
+        call = ContactsList(warehouse_id=warehouse_id)
+        return await self(call)
+
+    async def country_of_origin(
+        self,
+        locale: str | None = None,
+    ) -> list[CountryOfOriginResponse]:
+        """Country of Origin
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1countries/get
+        """
+        call = CountryOfOrigin(locale=locale)
+        return await self(call)
+
+    async def create_a_tag(
+        self,
+        color: str | None = None,
+        name: str | None = None,
+    ) -> list[CreateATagResponse]:
+        """Create a Tag
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag/post
+        """
+        call = CreateATag(color=color, name=name)
+        return await self(call)
+
+    async def create_product_cards(
+        self,
+    ) -> list[CreateProductCardsResponse]:
+        """Create Product Cards
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload/post
+        """
+        call = CreateProductCards()
+        return await self(call)
+
+    async def create_product_cards_with_merge(
+        self,
+        imt_id: int | None = None,
+        cards_to_add: list[dict[str, Any]] | None = None,
+    ) -> list[CreateProductCardsWithMergeResponse]:
+        """Create Product Cards with Merge
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload~1add/post
+        """
+        call = CreateProductCardsWithMerge(imt_id=imt_id, cards_to_add=cards_to_add)
+        return await self(call)
+
+    async def create_warehouse(
+        self,
+        name: str = None,
+        office_id: int = None,
+    ) -> list[CreateWarehouseResponse]:
+        """Create Warehouse
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses/post
+        """
+        call = CreateWarehouse(name=name, office_id=office_id)
+        return await self(call)
+
+    async def delete_inventory(
+        self,
+        warehouse_id: int,
+        chrt_ids: list[int] = None,
+    ) -> None:
+        """Delete Inventory
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses-Inventory/paths/~1api~1v3~1stocks~1%7BwarehouseId%7D/delete
+        """
+        call = DeleteInventory(warehouse_id=warehouse_id, chrt_ids=chrt_ids)
+        return await self(call)
+
+    async def delete_the_tag(
+        self,
+        id: int,
+    ) -> list[DeleteTheTagResponse]:
+        """Delete the Tag
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1%7Bid%7D/delete
+        """
+        call = DeleteTheTag(id=id)
+        return await self(call)
+
+    async def delete_warehouse(
+        self,
+        warehouse_id: int,
+    ) -> None:
+        """Delete Warehouse
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses~1%7BwarehouseId%7D/delete
+        """
+        call = DeleteWarehouse(warehouse_id=warehouse_id)
+        return await self(call)
+
+    async def gender(
+        self,
+        locale: str | None = None,
+    ) -> list[GenderItem]:
+        """Gender
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1kinds/get
+        """
+        call = Gender(locale=locale)
+        return await self(call)
+
+    async def generation_of_skus(
+        self,
+        count: int | None = None,
+    ) -> list[GenerationOfSkusItem]:
+        """Generation of SKUs
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1barcodes/post
+        """
+        call = GenerationOfSkus(count=count)
+        return await self(call)
+
+    async def get_inventory(
+        self,
+        warehouse_id: int,
+        chrt_ids: list[int] = None,
+    ) -> list[GetInventoryItem]:
+        """Get Inventory
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses-Inventory/paths/~1api~1v3~1stocks~1%7BwarehouseId%7D/post
+        """
+        call = GetInventory(warehouse_id=warehouse_id, chrt_ids=chrt_ids)
+        return await self(call)
+
+    async def get_offices(
+        self,
+    ) -> list[GetOfficesResponse]:
+        """Get Offices
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1offices/get
+        """
+        call = GetOffices()
+        return await self(call)
+
+    async def get_product_sizes_with_prices(
+        self,
+        limit: int = None,
+        offset: int | None = None,
+        nm_id: int = None,
+    ) -> list[GetProductSizesWithPricesItem]:
+        """Get Product Sizes with Prices
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1size~1nm/get
+        """
+        call = GetProductSizesWithPrices(limit=limit, offset=offset, nm_id=nm_id)
+        return await self(call)
+
+    async def get_products_in_quarantine(
+        self,
+        limit: int = None,
+        offset: int | None = None,
+    ) -> list[GetProductsInQuarantineItem]:
+        """Get Products in Quarantine
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1quarantine~1goods/get
+        """
+        call = GetProductsInQuarantine(limit=limit, offset=offset)
         return await self(call)
 
     async def get_products_with_prices(
-        self, limit: int | None = 1000, offset: int | None = 0, filter_nm_id: int | None = None
-    ) -> list[ProductWithPrice]:
-        """
-        Returns product data.
+        self,
+        limit: int = None,
+        offset: int | None = None,
+        filter_nm_id: int | None = None,
+    ) -> list[GetProductsWithPricesItem]:
+        """Get Products with Prices
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/get
-
-        :param limit: Number of elements per page (pagination)
-        :param offset: How many results to skip
-        :param filter_nm_id: WB article for search
-        :return: :class:`ProductWithPrice`: Product data
         """
         call = GetProductsWithPrices(limit=limit, offset=offset, filter_nm_id=filter_nm_id)
         return await self(call)
 
-    async def get_realization_sales_report(
+    async def get_products_with_prices_by_articles(
         self,
-        date_from: str,
-        date_to: str,
-        limit: int = 100000,
-        rrdid: int = 0,
-        period: RealizationSalesReportPeriod = RealizationSalesReportPeriod.WEEKLY,
-    ) -> list[RealizationSalesReport]:
-        """
-        Details for the realization reports.
+        nm_list: list[int] = None,
+    ) -> list[GetProductsWithPricesByArticlesItem]:
+        """Get Products with Prices by Articles
 
-        Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1v5~1supplier~1reportDetailByPeriod/get
-
-        :param date_from: Starting date of the report (RFC3339)
-        :param date_to: Report end date (RFC3339)
-        :param limit: Number of strings in the response (max 100000)
-        :param rrdid: Unique ID of the report line for pagination (start with 0)
-        :param period: Report periodicity: "weekly" or "daily"
-        :return: List of :class:`RealizationSalesReport`
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/post
         """
-        call = GetRealizationSalesReport(
-            date_from=date_from,
-            date_to=date_to,
-            limit=limit,
-            rrdid=rrdid,
-            period=period,
-        )
+        call = GetProductsWithPricesByArticles(nm_list=nm_list)
         return await self(call)
 
-    async def get_sales(self, date_from: str, flag: int = 0) -> list[Sale]:
-        """
-        Returns sale and return information.
+    async def get_warehouses(
+        self,
+    ) -> list[GetWarehousesResponse]:
+        """Get Warehouses
 
-        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1sales/get
-
-        :param date_from: Date and time of last change (RFC3339)
-        :param flag: 0 — changes since dateFrom, 1 — all sales on dateFrom date
-        :return: List of :class:`Sale`
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses/get
         """
-        call = GetSales(date_from=date_from, flag=flag)
+        call = GetWarehouses()
         return await self(call)
 
-    async def get_product_data(
+    async def hscodes(
         self,
-        date_from: str,
-        date_to: str,
-        stock_type: ProductDataStockType,
-        order_by_field: ProductDataOrderField,
-        order_by_mode: ProductDataOrderMode,
-        availability_filters: list[ProductDataAvailability],
-        skip_deleted_nm: bool = False,
-        limit: int | None = 100,
-        offset: int = 0,
-        nm_ids: list[int] | None = None,
-        subject_id: int | None = None,
-        brand_name: str | None = None,
-        tag_id: int | None = None,
-    ) -> list[ProductDataItem]:
-        """
-        Forms a dataset for inventory by products.
-
-        Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1products/post
-
-        :param date_from: Start date of the period (YYYY-MM-DD)
-        :param date_to: End date of the period (YYYY-MM-DD)
-        :param stock_type: Type of products storage warehouse
-        :param order_by_field: Field to sort by
-        :param order_by_mode: Sort order (asc/desc)
-        :param availability_filters: Item availability filters
-        :param skip_deleted_nm: Skip deleted items
-        :param limit: Number of items in response (max 1000)
-        :param offset: Offset for pagination
-        :param nm_ids: List of WB article numbers for filtering
-        :param subject_id: Subject ID filter
-        :param brand_name: Brand filter
-        :param tag_id: Tag ID filter
-        :return: List of :class:`ProductDataItem`
-        """
-        call = GetProductData(
-            current_period=Period(start=date_from, end=date_to),
-            stock_type=stock_type,
-            skip_deleted_nm=skip_deleted_nm,
-            order_by=OrderBy(field=order_by_field, mode=order_by_mode),
-            availability_filters=availability_filters,
-            limit=limit,
-            offset=offset,
-            nm_ids=nm_ids,
-            subject_id=subject_id,
-            brand_name=brand_name,
-            tag_id=tag_id,
-        )
-        return await self(call)
-
-    async def get_product_cards_statistics_per_period(
-        self,
-        date_from: str,
-        date_to: str,
-        past_date_from: str | None = None,
-        past_date_to: str | None = None,
-        order_by_field: SalesFunnelOrderField = SalesFunnelOrderField.OPEN_CARD,
-        order_by_mode: ProductDataOrderMode = ProductDataOrderMode.DESC,
-        limit: int | None = 50,
-        offset: int = 0,
-        nm_ids: list[int] | None = None,
-        brand_names: list[str] | None = None,
-        subject_ids: list[int] | None = None,
-        tag_ids: list[int] | None = None,
-        skip_deleted_nm: bool | None = None,
-    ) -> list[ProductCardStatistics]:
-        """
-        Generates a report on products by comparing key metrics for current and past periods.
-
-        Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Sales-Funnel/operation/postSalesFunnelProducts
-
-        :param date_from: Selected period start date (YYYY-MM-DD)
-        :param date_to: Selected period end date (YYYY-MM-DD)
-        :param past_date_from: Past period start date for comparison (YYYY-MM-DD)
-        :param past_date_to: Past period end date for comparison (YYYY-MM-DD)
-        :param order_by_field: Field to sort by
-        :param order_by_mode: Sort order (asc/desc)
-        :param limit: Number of product cards in response (max 1000)
-        :param offset: How many results to skip
-        :param nm_ids: WB articles to include (empty = all products)
-        :param brand_names: Brand filter
-        :param subject_ids: Subject ID filter
-        :param tag_ids: Tag ID filter
-        :param skip_deleted_nm: Skip deleted items
-        :return: List of :class:`ProductCardStatistics`
-        """
-        past_period = (
-            SalesFunnelPeriod(start=past_date_from, end=past_date_to)
-            if past_date_from and past_date_to
-            else None
-        )
-        call = GetProductCardsStatisticsPerPeriod(
-            selected_period=SalesFunnelPeriod(start=date_from, end=date_to),
-            past_period=past_period,
-            order_by=SalesFunnelOrderBy(field=order_by_field, mode=order_by_mode),
-            limit=limit,
-            offset=offset,
-            nm_ids=nm_ids,
-            brand_names=brand_names,
-            subject_ids=subject_ids,
-            tag_ids=tag_ids,
-            skip_deleted_nm=skip_deleted_nm,
-        )
-        return await self(call)
-
-    async def get_product_cards_list(
-        self,
-        with_photo: int = -1,
+        subject_id: int = None,
+        search: int | None = None,
         locale: str | None = None,
-        text_search: str | None = None,
-        tag_ids: list[int] | None = None,
-        object_ids: list[int] | None = None,
-        brands: list[str] | None = None,
-        imt_id: int | None = None,
-        ascending: bool = False,
-        limit: int = 100,
-        updated_at: str | None = None,
-        nm_id: int | None = None,
-    ) -> list[ProductCard]:
+    ) -> list[HscodesItem]:
+        """HS-codes
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1tnved/get
         """
-        Returns the list of created product cards.
+        call = Hscodes(subject_id=subject_id, search=search, locale=locale)
+        return await self(call)
+
+    async def limits_for_the_product_cards(
+        self,
+    ) -> list[LimitsForTheProductCardsResponse]:
+        """Limits for the Product Cards
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1limits/get
+        """
+        call = LimitsForTheProductCards()
+        return await self(call)
+
+    async def list_of_failed_product_cards_with_errors(
+        self,
+        locale: str | None = None,
+        cursor: dict[str, Any] | None = None,
+        order: dict[str, Any] | None = None,
+    ) -> list[ListOfFailedProductCardsWithErrorsItem]:
+        """List of Failed Product Cards with Errors
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1error~1list/post
+        """
+        call = ListOfFailedProductCardsWithErrors(locale=locale, cursor=cursor, order=order)
+        return await self(call)
+
+    async def merging_or_separating_of_product_cards(
+        self,
+    ) -> list[MergingOrSeparatingOfProductCardsResponse]:
+        """Merging or Separating of Product Cards
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1moveNm/post
+        """
+        call = MergingOrSeparatingOfProductCards()
+        return await self(call)
+
+    async def processed_upload_details(
+        self,
+        limit: int = None,
+        offset: int | None = None,
+        upload_id: int = None,
+    ) -> list[ProcessedUploadDetailsItem]:
+        """Processed Upload Details
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1history~1goods~1task/get
+        """
+        call = ProcessedUploadDetails(limit=limit, offset=offset, upload_id=upload_id)
+        return await self(call)
+
+    async def processed_upload_state(
+        self,
+        upload_id: int = None,
+    ) -> list[ProcessedUploadStateResponse]:
+        """Processed Upload State
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1history~1tasks/get
+        """
+        call = ProcessedUploadState(upload_id=upload_id)
+        return await self(call)
+
+    async def product_cards_in_trash_list(
+        self,
+        locale: str | None = None,
+        settings: dict[str, Any] | None = None,
+    ) -> list[ProductCardsInTrashListItem]:
+        """Product Cards in Trash List
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1trash/post
+        """
+        call = ProductCardsInTrashList(locale=locale, settings=settings)
+        return await self(call)
+
+    async def product_cards_list(
+        self,
+        locale: str | None = None,
+        settings: dict[str, Any] | None = None,
+    ) -> list[ProductCardsListItem]:
+        """Product Cards List
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1list/post
         """
-        call = GetProductCardsList(
-            locale=locale,
-            settings=CardListSettings(
-                sort=CardListSort(ascending=ascending),
-                filter=CardListFilter(
-                    with_photo=with_photo,
-                    text_search=text_search,
-                    tag_ids=tag_ids,
-                    object_ids=object_ids,
-                    brands=brands,
-                    imt_id=imt_id,
-                ),
-                cursor=CardListCursor(
-                    limit=limit,
-                    updated_at=updated_at,
-                    nm_id=nm_id,
-                ),
-            ),
+        call = ProductCardsList(locale=locale, settings=settings)
+        return await self(call)
+
+    async def products_parent_categories(
+        self,
+        locale: str | None = None,
+    ) -> list[ProductsParentCategoriesResponse]:
+        """Products Parent Categories
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1object~1parent~1all/get
+        """
+        call = ProductsParentCategories(locale=locale)
+        return await self(call)
+
+    async def recover_product_card_from_trash(
+        self,
+        nm_i_ds: list[int] | None = None,
+    ) -> list[RecoverProductCardFromTrashResponse]:
+        """Recover Product Card from Trash
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1recover/post
+        """
+        call = RecoverProductCardFromTrash(nm_i_ds=nm_i_ds)
+        return await self(call)
+
+    async def season(
+        self,
+        locale: str | None = None,
+    ) -> list[SeasonItem]:
+        """Season
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1seasons/get
+        """
+        call = Season(locale=locale)
+        return await self(call)
+
+    async def set_prices_and_discounts(
+        self,
+        data: list[Any] = None,
+    ) -> list[SetPricesAndDiscountsResponse]:
+        """Set Prices and Discounts
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task/post
+        """
+        call = SetPricesAndDiscounts(data=data)
+        return await self(call)
+
+    async def set_size_prices(
+        self,
+        data: list[Any] = None,
+    ) -> list[SetSizePricesResponse]:
+        """Set Size Prices
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task~1size/post
+        """
+        call = SetSizePrices(data=data)
+        return await self(call)
+
+    async def set_wb_club_discounts(
+        self,
+        data: list[Any] = None,
+    ) -> list[SetWbClubDiscountsResponse]:
+        """Set WB Club Discounts
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task~1club-discount/post
+        """
+        call = SetWbClubDiscounts(data=data)
+        return await self(call)
+
+    async def subject_characteristics(
+        self,
+        subject_id: int,
+        locale: str | None = None,
+    ) -> list[SubjectCharacteristicsItem]:
+        """Subject Characteristics
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1object~1charcs~1%7BsubjectId%7D/get
+        """
+        call = SubjectCharacteristics(subject_id=subject_id, locale=locale)
+        return await self(call)
+
+    async def subjects_list(
+        self,
+        locale: str | None = None,
+        name: str | None = None,
+        limit: int | None = 30,
+        offset: int | None = 0,
+        parent_id: int | None = None,
+    ) -> list[SubjectsListItem]:
+        """Subjects List
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1object~1all/get
+        """
+        call = SubjectsList(
+            locale=locale, name=name, limit=limit, offset=offset, parent_id=parent_id
         )
         return await self(call)
 
-    async def get_campaigns_lists(self) -> CampaignsList:
-        """
-        Returns campaigns lists grouped by type and status.
-
-        Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns/paths/~1adv~1v1~1promotion~1count/get
-
-        :return: :class:`CampaignsList`
-        """
-        call = GetCampaignsLists()
-        return await self(call)
-
-    async def get_campaigns_statistics(
+    async def tag_management_in_the_product_card(
         self,
-        ids: list[int],
-        begin_date: str,
-        end_date: str,
-    ) -> list[CampaignStatistics]:
-        """
-        Generates statistics for campaigns regardless of their type.
+        nm_id: int | None = None,
+        tags_i_ds: list[int] | None = None,
+    ) -> list[TagManagementInTheProductCardResponse]:
+        """Tag Management in the Product Card
 
-        Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Statistics/paths/~1adv~1v3~1fullstats/get
-
-        :param ids: Campaign IDs (max 50)
-        :param begin_date: Start date (YYYY-MM-DD)
-        :param end_date: End date (YYYY-MM-DD)
-        :return: List of :class:`CampaignStatistics`
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1nomenclature~1link/post
         """
-        call = GetCampaignsStatistics(ids=ids, begin_date=begin_date, end_date=end_date)
+        call = TagManagementInTheProductCard(nm_id=nm_id, tags_i_ds=tags_i_ds)
         return await self(call)
+
+    async def tags_list(
+        self,
+    ) -> list[TagsListResponse]:
+        """Tags List
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tags/get
+        """
+        call = TagsList()
+        return await self(call)
+
+    async def transfer_product_card_to_trash(
+        self,
+        nm_i_ds: list[int] | None = None,
+    ) -> list[TransferProductCardToTrashResponse]:
+        """Transfer Product Card to Trash
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1delete~1trash/post
+        """
+        call = TransferProductCardToTrash(nm_i_ds=nm_i_ds)
+        return await self(call)
+
+    async def unprocessed_upload_details(
+        self,
+        limit: int = None,
+        offset: int | None = None,
+        upload_id: int = None,
+    ) -> list[UnprocessedUploadDetailsItem]:
+        """Unprocessed Upload Details
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1buffer~1goods~1task/get
+        """
+        call = UnprocessedUploadDetails(limit=limit, offset=offset, upload_id=upload_id)
+        return await self(call)
+
+    async def unprocessed_upload_state(
+        self,
+        upload_id: int = None,
+    ) -> list[UnprocessedUploadStateResponse]:
+        """Unprocessed Upload State
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1buffer~1tasks/get
+        """
+        call = UnprocessedUploadState(upload_id=upload_id)
+        return await self(call)
+
+    async def update_contacts_list(
+        self,
+        warehouse_id: int,
+        contacts: list[dict[str, Any]] | None = None,
+    ) -> None:
+        """Update Contacts List
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1dbw~1warehouses~1%7BwarehouseId%7D~1contacts/put
+        """
+        call = UpdateContactsList(warehouse_id=warehouse_id, contacts=contacts)
+        return await self(call)
+
+    async def update_inventory(
+        self,
+        warehouse_id: int,
+        stocks: list[dict[str, Any]] = None,
+    ) -> None:
+        """Update Inventory
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses-Inventory/paths/~1api~1v3~1stocks~1%7BwarehouseId%7D/put
+        """
+        call = UpdateInventory(warehouse_id=warehouse_id, stocks=stocks)
+        return await self(call)
+
+    async def update_product_cards(
+        self,
+    ) -> list[UpdateProductCardsResponse]:
+        """Update Product Cards
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1update/post
+        """
+        call = UpdateProductCards()
+        return await self(call)
+
+    async def update_the_tag(
+        self,
+        id: int,
+        color: str | None = None,
+        name: str | None = None,
+    ) -> list[UpdateTheTagResponse]:
+        """Update the Tag
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1%7Bid%7D/patch
+        """
+        call = UpdateTheTag(id=id, color=color, name=name)
+        return await self(call)
+
+    async def update_warehouse(
+        self,
+        warehouse_id: int,
+        name: str = None,
+        office_id: int = None,
+    ) -> None:
+        """Update Warehouse
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1warehouses~1%7BwarehouseId%7D/put
+        """
+        call = UpdateWarehouse(warehouse_id=warehouse_id, name=name, office_id=office_id)
+        return await self(call)
+
+    async def upload_media_file(
+        self,
+        x_nm_id: str = None,
+        x_photo_number: int = None,
+    ) -> list[UploadMediaFileResponse]:
+        """Upload Media File
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Media-Files/paths/~1content~1v3~1media~1file/post
+        """
+        call = UploadMediaFile(x_nm_id=x_nm_id, x_photo_number=x_photo_number)
+        return await self(call)
+
+    async def upload_media_files_via_links(
+        self,
+        nm_id: int | None = None,
+        data: list[str] | None = None,
+    ) -> list[UploadMediaFilesViaLinksResponse]:
+        """Upload Media Files via Links
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Media-Files/paths/~1content~1v3~1media~1save/post
+        """
+        call = UploadMediaFilesViaLinks(nm_id=nm_id, data=data)
+        return await self(call)
+
+    async def vat_rate(
+        self,
+        locale: str | None = None,
+    ) -> list[VatRateItem]:
+        """VAT Rate
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories--Subjects--and-Characteristics/paths/~1content~1v2~1directory~1vat/get
+        """
+        call = VatRate(locale=locale)
+        return await self(call)
+
+    # --- unofficial methods (hand-written, not generated) ---
 
     @unofficial
     async def get_product_detail(
@@ -340,48 +726,4 @@ class WbAPI:
         :return: List of :class:`ProductDetail`
         """
         call = GetProductDetail(nm=nm, dest=dest, spp=spp, rate=rate)
-        return await self(call)
-
-    async def get_supplies_list(
-        self,
-        dates: list[SupplyDateFilter],
-        limit: int | None = 1000,
-        offset: int = 0,
-        status_ids: list[SupplyStatus] | None = None,
-    ) -> list[Supply]:
-        """
-        Returns a list of supplies (last 1000 by default).
-
-        Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbw#tag/Supplies-Information/paths/~1api~1v1~1supplies/post
-
-        :param dates: Date filters (from, till, type)
-        :param limit: Number of objects in response (1–1000)
-        :param offset: How many results to skip
-        :param status_ids: Filter by supply statuses
-        :return: List of :class:`Supply`
-        """
-        call = GetSuppliesList(dates=dates, limit=limit, offset=offset, status_ids=status_ids)
-        return await self(call)
-
-    async def get_supply_products(
-        self,
-        supply_id: int,
-        limit: int | None = 100,
-        offset: int = 0,
-        is_preorder_id: bool | None = None,
-    ) -> list[SupplyProduct]:
-        """
-        Returns information about the products in a supply.
-
-        Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbw#tag/Supplies-Information/paths/~1api~1v1~1supplies~1%7BID%7D~1goods/get
-
-        :param supply_id: Supply ID or order ID
-        :param limit: Number of objects in response (1–1000)
-        :param offset: How many results to skip
-        :param is_preorder_id: True — search by order ID, False — search by supply ID
-        :return: List of :class:`SupplyProduct`
-        """
-        call = GetSupplyProducts(
-            supply_id=supply_id, limit=limit, offset=offset, is_preorder_id=is_preorder_id
-        )
         return await self(call)

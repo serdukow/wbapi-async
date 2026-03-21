@@ -144,6 +144,10 @@ class WbMethod(BaseModel, ABC):
 
         params = self.model_dump(by_alias=True, exclude_none=True, exclude=excluded_fields)
         data = await self._dispatch(wb_api, http_method, url, params, request_limit)
+
+        if getattr(self, "__empty_response__", False) or data is None:
+            return None
+
         raw = self._extract(data)
 
         return_type = self.__return__

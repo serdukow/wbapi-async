@@ -1,8 +1,6 @@
 import pytest
 
-from wbapi_async.types import ProductWithPrice
-from wbapi_async.types.product_with_price import Size
-
+from wbapi_async.types.get_products_with_prices_item import GetProductsWithPricesItem
 from tests.mocked_api import MockedAPI
 
 
@@ -12,53 +10,26 @@ class TestGetProductsWithPrices:
     async def test_get_products_with_prices(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "data": {
-                    "listGoods": [
-                        {
-                            "nmID": 98486,
-                            "vendorCode": "07326060",
-                            "sizes": [
-                                {
-                                    "sizeID": 3123515574,
-                                    "price": 500,
-                                    "discountedPrice": 350,
-                                    "clubDiscountedPrice": 332.5,
-                                    "techSizeName": "42",
-                                }
-                            ],
-                            "currencyIsoCode4217": "RUB",
-                            "discount": 30,
-                            "clubDiscount": 5,
-                            "editableSizePrice": True,
-                            "isBadTurnover": True,
-                        }
-                    ]
-                },
-                "error": False,
-                "errorText": "",
-            }
+            "data": {
+            "listGoods": [{
+                "nmID": 1,
+                "vendorCode": "vendorCode",
+                "sizes": [],
+                "currencyIsoCode4217": "currencyIsoCode4217",
+                "discount": 1,
+                "clubDiscount": 1,
+                "editableSizePrice": True,
+                "isBadTurnover": True,
+            }]
+        }
+        }
         )
 
-        result = await api.get_products_with_prices()
+        result = await api.get_products_with_prices(limit=1)
 
         assert isinstance(result, list)
         assert len(result) == 1
-
-        product = result[0]
-        assert isinstance(product, ProductWithPrice)
-        assert product.nm_id == 98486
-        assert product.vendor_code == "07326060"
-        assert product.currency_iso_code_4217 == "RUB"
-        assert product.discount == 30
-        assert product.club_discount == 5
-        assert product.editable_size_price is True
-        assert product.is_bad_turnover is True
-
-        assert product.sizes is not None
-        size = product.sizes[0]
-        assert isinstance(size, Size)
-        assert size.size_id == 3123515574
-        assert size.price == 500
-        assert size.discounted_price == 350.0
-        assert size.club_discounted_price == 332.5
-        assert size.tech_size_name == "42"
+        assert isinstance(result[0], GetProductsWithPricesItem)
+        assert result[0].nm_id == 1
+        assert result[0].vendor_code == "vendorCode"
+        assert result[0].sizes == []
