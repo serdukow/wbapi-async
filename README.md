@@ -16,6 +16,9 @@
 > [!CAUTION]
 > The library is under active development and **is not recommended for use in production environments**
 
+> [!NOTE]
+> API methods, types, and tests are [automatically generated](https://github.com/serdukow/wbapi-codegen) from the official [Wildberries OpenAPI specs](https://dev.wildberries.ru/openapi) — so the library is always up to date with the latest endpoints and changes.
+
 ## Install
 
 ```console
