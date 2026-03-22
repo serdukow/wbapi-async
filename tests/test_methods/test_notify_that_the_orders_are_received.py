@@ -1,0 +1,28 @@
+import pytest
+
+from wbapi_async.types.notify_that_the_orders_are_received_item import NotifyThatTheOrdersAreReceivedItem
+from tests.mocked_api import MockedAPI
+
+
+@pytest.mark.unit
+class TestNotifyThatTheOrdersAreReceived:
+
+    async def test_notify_that_the_orders_are_received(self, api: MockedAPI) -> None:
+        api.add_response(
+            {
+            "results": [{
+                "errors": [],
+                "isError": True,
+                "orderId": 1,
+            }]
+        }
+        )
+
+        result = await api.notify_that_the_orders_are_received(orders=[])
+
+        assert isinstance(result, list)
+        assert len(result) == 1
+        assert isinstance(result[0], NotifyThatTheOrdersAreReceivedItem)
+        assert result[0].errors == []
+        assert result[0].is_error == True
+        assert result[0].order_id == 1

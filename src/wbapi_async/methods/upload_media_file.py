@@ -1,7 +1,7 @@
 from pydantic import Field
 
-from ..types.request_limit import RequestLimit
 from ..types.upload_media_file_response import UploadMediaFileResponse
+from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 

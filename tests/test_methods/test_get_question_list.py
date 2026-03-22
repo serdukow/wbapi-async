@@ -1,0 +1,35 @@
+import pytest
+
+from wbapi_async.types.question_list_item import QuestionListItem
+from tests.mocked_api import MockedAPI
+
+
+@pytest.mark.unit
+class TestGetQuestionList:
+
+    async def test_get_question_list(self, api: MockedAPI) -> None:
+        api.add_response(
+            {
+            "data": {
+            "questions": [{
+                "id": "id",
+                "text": "text",
+                "createdDate": "createdDate",
+                "state": "state",
+                "answer": {},
+                "productDetails": {},
+                "wasViewed": True,
+                "isWarned": True,
+            }]
+        }
+        }
+        )
+
+        result = await api.get_question_list(is_answered=True, take=1, skip=1)
+
+        assert isinstance(result, list)
+        assert len(result) == 1
+        assert isinstance(result[0], QuestionListItem)
+        assert result[0].id == "id"
+        assert result[0].text == "text"
+        assert result[0].created_date == "createdDate"

@@ -1,7 +1,7 @@
 from pydantic import Field
 
-from ..types.request_limit import RequestLimit
 from ..types.transfer_product_card_to_trash_response import TransferProductCardToTrashResponse
+from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 

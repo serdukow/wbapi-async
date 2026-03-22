@@ -1,7 +1,7 @@
 from pydantic import Field
 
-from ..types.request_limit import RequestLimit
 from ..types.vat_rate_item import VatRateItem
+from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 

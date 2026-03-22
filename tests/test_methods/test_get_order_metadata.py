@@ -1,0 +1,27 @@
+import pytest
+
+from wbapi_async.types.order_metadata_item import OrderMetadataItem
+from tests.mocked_api import MockedAPI
+
+
+@pytest.mark.unit
+class TestGetOrderMetadata:
+
+    async def test_get_order_metadata(self, api: MockedAPI) -> None:
+        api.add_response(
+            {
+            "meta": {
+            "sgtin": {
+            "value": [{
+
+            }]
+        }
+        }
+        }
+        )
+
+        result = await api.get_order_metadata(order_id=1)
+
+        assert isinstance(result, list)
+        assert len(result) == 1
+        assert isinstance(result[0], OrderMetadataItem)

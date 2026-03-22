@@ -1,7 +1,7 @@
 from pydantic import Field
 
-from ..types.request_limit import RequestLimit
 from ..types.update_the_tag_response import UpdateTheTagResponse
+from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 
