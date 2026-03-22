@@ -130,9 +130,7 @@ class WbMethod(BaseModel, ABC):
 
             while True:
                 page_copy = self.model_copy(update={"limit": page_size, "offset": current_offset})
-                params = page_copy.model_dump(
-                    by_alias=True, exclude_none=True, exclude=excluded_fields
-                )
+                params = page_copy.model_dump(by_alias=True, exclude_none=True, exclude=excluded_fields)
                 data = await self._dispatch(wb_api, http_method, url, params, request_limit)
                 page = self._extract(data)
                 if not isinstance(page, list) or not page:

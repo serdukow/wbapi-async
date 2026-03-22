@@ -1,14 +1,14 @@
-from .height_2 import Height2
-from .order_2 import Order2
-from .sort_4 import Sort4
-from .type_2 import Type2
-from .width_2 import Width2
+from .height_stickers import HeightStickers
+from .order_deductions import OrderDeductions
+from .sort_list import SortList
+from .type_stickers import TypeStickers
+from .width_stickers import WidthStickers
 
 
 __all__ = (
-    "Height2",
-    "Order2",
-    "Sort4",
-    "Type2",
-    "Width2",
+    "HeightStickers",
+    "OrderDeductions",
+    "SortList",
+    "TypeStickers",
+    "WidthStickers",
 )

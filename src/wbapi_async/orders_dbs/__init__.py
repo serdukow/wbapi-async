@@ -1,6 +1,4 @@
-from .types.add_custom_declaration_to_the_orders_response import (
-    AddCustomDeclarationToTheOrdersResponse,
-)
+from .types.add_custom_declaration_to_the_orders_response import AddCustomDeclarationToTheOrdersResponse
 from .types.add_data_matrix_codes_to_assembly_orders_chestny_znak_item import (
     AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem,
 )

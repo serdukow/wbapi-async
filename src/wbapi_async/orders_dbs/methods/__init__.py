@@ -17,9 +17,7 @@ from .get_stickers_for_assembly_orders_with_delivery_to_pickup_point import (
     GetStickersForAssemblyOrdersWithDeliveryToPickupPoint,
 )
 from .notify_that_the_buyer_has_declined_the_order import NotifyThatTheBuyerHasDeclinedTheOrder
-from .notify_that_the_order_has_been_accepted_by_the_buyer import (
-    NotifyThatTheOrderHasBeenAcceptedByTheBuyer,
-)
+from .notify_that_the_order_has_been_accepted_by_the_buyer import NotifyThatTheOrderHasBeenAcceptedByTheBuyer
 from .notify_that_the_orders_are_declined import NotifyThatTheOrdersAreDeclined
 from .notify_that_the_orders_are_received import NotifyThatTheOrdersAreReceived
 

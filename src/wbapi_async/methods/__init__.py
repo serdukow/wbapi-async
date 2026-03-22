@@ -2,17 +2,13 @@ from ..analytics.methods.create_the_report import CreateTheReport
 from ..analytics.methods.get_the_report import GetTheReport
 from ..analytics.methods.get_the_reports_list import GetTheReportsList
 from ..analytics.methods.group_data import GroupData
-from ..analytics.methods.grouped_product_cards_statistics_per_days import (
-    GroupedProductCardsStatisticsPerDays,
-)
+from ..analytics.methods.grouped_product_cards_statistics_per_days import GroupedProductCardsStatisticsPerDays
 from ..analytics.methods.main_page import MainPage
 from ..analytics.methods.orders_and_positions_by_product_search_texts import (
     OrdersAndPositionsByProductSearchTexts,
 )
 from ..analytics.methods.pagination_by_groups import PaginationByGroups
-from ..analytics.methods.pagination_by_products_within_a_group import (
-    PaginationByProductsWithinAGroup,
-)
+from ..analytics.methods.pagination_by_products_within_a_group import PaginationByProductsWithinAGroup
 from ..analytics.methods.product_cards_statistics_per_days import ProductCardsStatisticsPerDays
 from ..analytics.methods.product_cards_statistics_per_period import ProductCardsStatisticsPerPeriod
 from ..analytics.methods.product_data import ProductData
@@ -42,9 +38,7 @@ from ..communications.methods.get_the_feedback_by_id import GetTheFeedbackById
 from ..communications.methods.get_the_question_by_id import GetTheQuestionById
 from ..communications.methods.get_unanswered_feedbacks import GetUnansweredFeedbacks
 from ..communications.methods.get_unanswered_questions import GetUnansweredQuestions
-from ..communications.methods.get_unseen_feedbacks_and_questions import (
-    GetUnseenFeedbacksAndQuestions,
-)
+from ..communications.methods.get_unseen_feedbacks_and_questions import GetUnseenFeedbacksAndQuestions
 from ..communications.methods.pin_feedback import PinFeedback
 from ..communications.methods.reply_to_feedback import ReplyToFeedback
 from ..communications.methods.return_product_by_feedback_id import ReturnProductByFeedbackId
@@ -78,9 +72,7 @@ from ..in_store_pickup.methods.assign_a_data_matrix_code_to_the_assembly_order i
     AssignADataMatrixCodeToTheAssemblyOrder,
 )
 from ..in_store_pickup.methods.cancel_the_assembly_orders import CancelTheAssemblyOrders
-from ..in_store_pickup.methods.check_if_the_order_belongs_to_the_buyer import (
-    CheckIfTheOrderBelongsToTheBuyer,
-)
+from ..in_store_pickup.methods.check_if_the_order_belongs_to_the_buyer import CheckIfTheOrderBelongsToTheBuyer
 from ..in_store_pickup.methods.get_assembly_order_metadata import GetAssemblyOrderMetadata
 from ..in_store_pickup.methods.get_new_assembly_orders_list import GetNewAssemblyOrdersList
 from ..in_store_pickup.methods.get_retrieve_information_on_completed_assembly_orders import (
@@ -98,9 +90,7 @@ from ..in_store_pickup.methods.notify_that_the_buyer_refused_the_order import (
 from ..in_store_pickup.methods.notify_that_the_orders_were_received_by_the_buyers import (
     NotifyThatTheOrdersWereReceivedByTheBuyers,
 )
-from ..orders_dbs.methods.add_custom_declaration_to_the_orders import (
-    AddCustomDeclarationToTheOrders,
-)
+from ..orders_dbs.methods.add_custom_declaration_to_the_orders import AddCustomDeclarationToTheOrders
 from ..orders_dbs.methods.add_data_matrix_codes_to_assembly_orders_chestny_znak import (
     AddDataMatrixCodesToAssemblyOrdersChestnyZnak,
 )
@@ -137,9 +127,7 @@ from ..orders_dbw.methods.cancel_the_order import CancelTheOrder
 from ..orders_dbw.methods.courier_info import CourierInfo
 from ..orders_dbw.methods.delete_order_metadata import DeleteOrderMetadata
 from ..orders_dbw.methods.delivery_date_and_time import DeliveryDateAndTime
-from ..orders_dbw.methods.get_information_on_completed_orders import (
-    GetInformationOnCompletedOrders,
-)
+from ..orders_dbw.methods.get_information_on_completed_orders import GetInformationOnCompletedOrders
 from ..orders_dbw.methods.get_new_orders import GetNewOrders
 from ..orders_dbw.methods.get_order_metadata import GetOrderMetadata
 from ..orders_dbw.methods.get_orders_statuses import GetOrdersStatuses
@@ -154,9 +142,7 @@ from ..orders_fbs.methods.add_custom_declaration_number_to_the_order import (
 from ..orders_fbs.methods.add_data_matrix_code_to_the_assembly_order import (
     AddDataMatrixCodeToTheAssemblyOrder,
 )
-from ..orders_fbs.methods.add_expiration_date_to_the_assembly_order import (
-    AddExpirationDateToTheAssemblyOrder,
-)
+from ..orders_fbs.methods.add_expiration_date_to_the_assembly_order import AddExpirationDateToTheAssemblyOrder
 from ..orders_fbs.methods.add_gtin_to_the_assembly_order import AddGtinToTheAssemblyOrder
 from ..orders_fbs.methods.add_imei_to_the_assembly_order import AddImeiToTheAssemblyOrder
 from ..orders_fbs.methods.add_uin_unique_identification_number_to_the_assembly_order import (
@@ -170,9 +156,7 @@ from ..orders_fbs.methods.delete_boxes_from_the_supply import DeleteBoxesFromThe
 from ..orders_fbs.methods.delete_the_pass import DeleteThePass
 from ..orders_fbs.methods.delete_the_supply import DeleteTheSupply
 from ..orders_fbs.methods.get_a_supplies_list import GetASuppliesList
-from ..orders_fbs.methods.get_all_assembly_orders_for_reshipment import (
-    GetAllAssemblyOrdersForReshipment,
-)
+from ..orders_fbs.methods.get_all_assembly_orders_for_reshipment import GetAllAssemblyOrdersForReshipment
 from ..orders_fbs.methods.get_assembly_orders import GetAssemblyOrders
 from ..orders_fbs.methods.get_assembly_orders_metadata import GetAssemblyOrdersMetadata
 from ..orders_fbs.methods.get_assembly_orders_statuses import GetAssemblyOrdersStatuses
@@ -190,9 +174,7 @@ from ..orders_fbs.methods.get_the_supply_box_qr_code_stickers import GetTheSuppl
 from ..orders_fbs.methods.get_the_supply_qr_code import GetTheSupplyQrCode
 from ..orders_fbs.methods.move_the_supply_to_the_delivery import MoveTheSupplyToTheDelivery
 from ..orders_fbs.methods.orders_with_client_information import OrdersWithClientInformation
-from ..orders_fbs.methods.status_history_for_crossborder_orders import (
-    StatusHistoryForCrossborderOrders,
-)
+from ..orders_fbs.methods.status_history_for_crossborder_orders import StatusHistoryForCrossborderOrders
 from ..orders_fbs.methods.update_pass import UpdatePass
 from ..orders_fbw.methods.acceptance_options import AcceptanceOptions
 from ..orders_fbw.methods.get_supply_package import GetSupplyPackage
@@ -232,12 +214,8 @@ from ..products.methods.get_unprocessed_upload_details import GetUnprocessedUplo
 from ..products.methods.get_unprocessed_upload_state import GetUnprocessedUploadState
 from ..products.methods.get_vat_rate import GetVatRate
 from ..products.methods.get_warehouses import GetWarehouses
-from ..products.methods.list_of_failed_product_cards_with_errors import (
-    ListOfFailedProductCardsWithErrors,
-)
-from ..products.methods.merging_or_separating_of_product_cards import (
-    MergingOrSeparatingOfProductCards,
-)
+from ..products.methods.list_of_failed_product_cards_with_errors import ListOfFailedProductCardsWithErrors
+from ..products.methods.merging_or_separating_of_product_cards import MergingOrSeparatingOfProductCards
 from ..products.methods.product_cards_in_trash_list import ProductCardsInTrashList
 from ..products.methods.product_cards_list import ProductCardsList
 from ..products.methods.recover_product_card_from_trash import RecoverProductCardFromTrash
@@ -253,9 +231,7 @@ from ..products.methods.update_the_tag import UpdateTheTag
 from ..products.methods.update_warehouse import UpdateWarehouse
 from ..products.methods.upload_media_file import UploadMediaFile
 from ..products.methods.upload_media_files_via_links import UploadMediaFilesViaLinks
-from ..promotion.methods.active_and_inactive_search_cluster_lists import (
-    ActiveAndInactiveSearchClusterLists,
-)
+from ..promotion.methods.active_and_inactive_search_cluster_lists import ActiveAndInactiveSearchClusterLists
 from ..promotion.methods.add_product_to_the_promotion import AddProductToThePromotion
 from ..promotion.methods.changing_campaigns_bids import ChangingCampaignsBids
 from ..promotion.methods.changing_placements_in_campaigns_with_custom_bid import (
@@ -273,9 +249,7 @@ from ..promotion.methods.get_campaigns_information import GetCampaignsInformatio
 from ..promotion.methods.get_campaigns_lists import GetCampaignsLists
 from ..promotion.methods.get_campaigns_statistics import GetCampaignsStatistics
 from ..promotion.methods.get_delete_campaign import GetDeleteCampaign
-from ..promotion.methods.get_information_about_media_campaign import (
-    GetInformationAboutMediaCampaign,
-)
+from ..promotion.methods.get_information_about_media_campaign import GetInformationAboutMediaCampaign
 from ..promotion.methods.get_launch_campaign import GetLaunchCampaign
 from ..promotion.methods.get_list_of_media_campaigns import GetListOfMediaCampaigns
 from ..promotion.methods.get_list_of_products_for_participating_in_the_promotion import (
@@ -309,9 +283,7 @@ from ..reports.methods.get_check_the_status import GetCheckTheStatus
 from ..reports.methods.get_create_the_report import GetCreateTheReport
 from ..reports.methods.get_generate_the_report import GetGenerateTheReport
 from ..reports.methods.get_hidden_from_the_catalog import GetHiddenFromTheCatalog
-from ..reports.methods.get_logistics_and_storage_costs_multiplier import (
-    GetLogisticsAndStorageCostsMultiplier,
-)
+from ..reports.methods.get_logistics_and_storage_costs_multiplier import GetLogisticsAndStorageCostsMultiplier
 from ..reports.methods.get_orders import GetOrders
 from ..reports.methods.get_parent_categories_of_the_brand import GetParentCategoriesOfTheBrand
 from ..reports.methods.get_product_labeling import GetProductLabeling
@@ -324,9 +296,7 @@ from ..reports.methods.get_substitutions_and_incorrect_attachments import (
 )
 from ..reports.methods.get_warehouse import GetWarehouse
 from ..reports.methods.get_warehouse_measurements import GetWarehouseMeasurements
-from ..reports.methods.report_on_products_with_mandatory_labeling import (
-    ReportOnProductsWithMandatoryLabeling,
-)
+from ..reports.methods.report_on_products_with_mandatory_labeling import ReportOnProductsWithMandatoryLabeling
 from ..tariffs.methods.get_box_tariffs import GetBoxTariffs
 from ..tariffs.methods.get_pallet_tariffs import GetPalletTariffs
 from ..tariffs.methods.get_product_category_commission import GetProductCategoryCommission

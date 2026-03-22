@@ -1,9 +1,7 @@
 from .add_data_matrix_code_to_the_order import AddDataMatrixCodeToTheOrder
 from .add_gtin_to_the_order import AddGtinToTheOrder
 from .add_imei_to_the_order import AddImeiToTheOrder
-from .add_uin_unique_identification_number_to_the_order import (
-    AddUinUniqueIdentificationNumberToTheOrder,
-)
+from .add_uin_unique_identification_number_to_the_order import AddUinUniqueIdentificationNumberToTheOrder
 from .buyer_information import BuyerInformation
 from .cancel_the_order import CancelTheOrder
 from .courier_info import CourierInfo

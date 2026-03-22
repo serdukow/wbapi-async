@@ -24,4 +24,4 @@ class GetRealizationSalesReport(WbMethod):
     date_to: str = Field(alias="dateTo")
     limit: int | None = Field(100000)
     rrdid: int | None = Field(0)
-    period: Period | None = Field("weekly")
+    period: Period | None = Field(Period.WEEKLY)

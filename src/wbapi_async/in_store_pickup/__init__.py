@@ -11,9 +11,7 @@ from .types.assign_a_data_matrix_code_to_the_assembly_order_response import (
     AssignADataMatrixCodeToTheAssemblyOrderResponse,
 )
 from .types.cancel_the_assembly_orders_item import CancelTheAssemblyOrdersItem
-from .types.check_if_the_order_belongs_to_the_buyer_response import (
-    CheckIfTheOrderBelongsToTheBuyerResponse,
-)
+from .types.check_if_the_order_belongs_to_the_buyer_response import CheckIfTheOrderBelongsToTheBuyerResponse
 from .types.delete_assembly_order_metadata_item import DeleteAssemblyOrderMetadataItem
 from .types.new_assembly_orders_list_item import NewAssemblyOrdersListItem
 from .types.notify_that_the_assembly_order_is_ready_for_pickup_response import (
@@ -22,9 +20,7 @@ from .types.notify_that_the_assembly_order_is_ready_for_pickup_response import (
 from .types.notify_that_the_assembly_orders_are_ready_for_pickup_item import (
     NotifyThatTheAssemblyOrdersAreReadyForPickupItem,
 )
-from .types.notify_that_the_buyer_refused_the_order_response import (
-    NotifyThatTheBuyerRefusedTheOrderResponse,
-)
+from .types.notify_that_the_buyer_refused_the_order_response import NotifyThatTheBuyerRefusedTheOrderResponse
 from .types.notify_that_the_orders_were_received_by_the_buyers_item import (
     NotifyThatTheOrdersWereReceivedByTheBuyersItem,
 )

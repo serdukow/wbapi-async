@@ -1,6 +1,6 @@
 from pydantic import Field
 
-from ...enums import Order2, Sort4
+from ...enums import OrderDeductions, SortList
 from ...methods.base import WbMethod
 from ...types import DocumentsListItem, RequestLimit
 
@@ -22,8 +22,8 @@ class GetDocumentsList(WbMethod):
     locale: str | None = Field("en")
     begin_time: str | None = Field(None, alias="beginTime")
     end_time: str | None = Field(None, alias="endTime")
-    sort: Sort4 | None = Field("date")
-    order: Order2 | None = Field("desc")
+    sort: SortList | None = Field(SortList.DATE)
+    order: OrderDeductions | None = Field(OrderDeductions.DESC)
     category: str | None = Field(None)
     service_name: str | None = Field(None, alias="serviceName")
     limit: int | None = Field(50)

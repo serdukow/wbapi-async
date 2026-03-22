@@ -11,9 +11,7 @@ from ..analytics.types.pagination_by_groups_response import PaginationByGroupsRe
 from ..analytics.types.pagination_by_products_within_a_group_response import (
     PaginationByProductsWithinAGroupResponse,
 )
-from ..analytics.types.product_cards_statistics_per_days_response import (
-    ProductCardsStatisticsPerDaysResponse,
-)
+from ..analytics.types.product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from ..analytics.types.product_cards_statistics_per_period_response import (
     ProductCardsStatisticsPerPeriodResponse,
 )
@@ -24,15 +22,11 @@ from ..analytics.types.size_data_item import SizeDataItem
 from ..analytics.types.the_report_response import TheReportResponse
 from ..analytics.types.the_reports_list_item import TheReportsListItem
 from ..analytics.types.warehouse_data_item import WarehouseDataItem
-from ..communications.types.answer_buyers_application_response import (
-    AnswerBuyersApplicationResponse,
-)
+from ..communications.types.answer_buyers_application_response import AnswerBuyersApplicationResponse
 from ..communications.types.buyers_return_applications_item import BuyersReturnApplicationsItem
 from ..communications.types.chat_events_item import ChatEventsItem
 from ..communications.types.chat_list_item import ChatListItem
-from ..communications.types.edit_response_to_feedback_response import (
-    EditResponseToFeedbackResponse,
-)
+from ..communications.types.edit_response_to_feedback_response import EditResponseToFeedbackResponse
 from ..communications.types.feedbacks_list_item import FeedbacksListItem
 from ..communications.types.file_from_the_message_response import FileFromTheMessageResponse
 from ..communications.types.list_of_archived_feedbacks_item import ListOfArchivedFeedbacksItem
@@ -55,9 +49,7 @@ from ..communications.types.the_question_by_id_item import TheQuestionByIdItem
 from ..communications.types.unanswered_feedbacks_item import UnansweredFeedbacksItem
 from ..communications.types.unanswered_questions_item import UnansweredQuestionsItem
 from ..communications.types.unpin_feedback_response import UnpinFeedbackResponse
-from ..communications.types.unseen_feedbacks_and_questions_item import (
-    UnseenFeedbacksAndQuestionsItem,
-)
+from ..communications.types.unseen_feedbacks_and_questions_item import UnseenFeedbacksAndQuestionsItem
 from ..communications.types.working_with_questions_item import WorkingWithQuestionsItem
 from ..finances.types.document_response import DocumentResponse
 from ..finances.types.documents_categories_item import DocumentsCategoriesItem
@@ -69,24 +61,16 @@ from ..general.types.a_list_of_seller_active_or_invited_users_item import (
     AListOfSellerActiveOrInvitedUsersItem,
 )
 from ..general.types.connection_check_response import ConnectionCheckResponse
-from ..general.types.create_an_invitation_for_a_new_user_response import (
-    CreateAnInvitationForANewUserResponse,
-)
+from ..general.types.create_an_invitation_for_a_new_user_response import CreateAnInvitationForANewUserResponse
 from ..general.types.delete_user_response import DeleteUserResponse
 from ..general.types.getting_seller_portal_news_item import GettingSellerPortalNewsItem
 from ..general.types.seller_information_response import SellerInformationResponse
-from ..general.types.update_users_access_permissions_response import (
-    UpdateUsersAccessPermissionsResponse,
-)
+from ..general.types.update_users_access_permissions_response import UpdateUsersAccessPermissionsResponse
 from ..in_store_pickup.types.add_data_matrix_codes_to_the_assembly_orders_chestny_znak_item import (
     AddDataMatrixCodesToTheAssemblyOrdersChestnyZnakItem,
 )
-from ..in_store_pickup.types.add_gtin_to_the_assembly_orders_item import (
-    AddGtinToTheAssemblyOrdersItem,
-)
-from ..in_store_pickup.types.add_imei_to_the_assembly_orders_item import (
-    AddImeiToTheAssemblyOrdersItem,
-)
+from ..in_store_pickup.types.add_gtin_to_the_assembly_orders_item import AddGtinToTheAssemblyOrdersItem
+from ..in_store_pickup.types.add_imei_to_the_assembly_orders_item import AddImeiToTheAssemblyOrdersItem
 from ..in_store_pickup.types.add_uin_unique_identification_numbers_to_the_assembly_orders_item import (
     AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem,
 )
@@ -98,9 +82,7 @@ from ..in_store_pickup.types.cancel_the_assembly_orders_item import CancelTheAss
 from ..in_store_pickup.types.check_if_the_order_belongs_to_the_buyer_response import (
     CheckIfTheOrderBelongsToTheBuyerResponse,
 )
-from ..in_store_pickup.types.delete_assembly_order_metadata_item import (
-    DeleteAssemblyOrderMetadataItem,
-)
+from ..in_store_pickup.types.delete_assembly_order_metadata_item import DeleteAssemblyOrderMetadataItem
 from ..in_store_pickup.types.new_assembly_orders_list_item import NewAssemblyOrdersListItem
 from ..in_store_pickup.types.notify_that_the_assembly_order_is_ready_for_pickup_response import (
     NotifyThatTheAssemblyOrderIsReadyForPickupResponse,
@@ -131,12 +113,8 @@ from ..orders_dbs.types.add_uin_unique_identification_number_to_assembly_orders_
 from ..orders_dbs.types.assembly_order_statuses_item import AssemblyOrderStatusesItem
 from ..orders_dbs.types.b2_b_buyer_information_item import B2BBuyerInformationItem
 from ..orders_dbs.types.cancel_assembly_orders_item import CancelAssemblyOrdersItem
-from ..orders_dbs.types.delete_assembly_orders_metadata_item import (
-    DeleteAssemblyOrdersMetadataItem,
-)
-from ..orders_dbs.types.information_on_paid_delivery_response import (
-    InformationOnPaidDeliveryResponse,
-)
+from ..orders_dbs.types.delete_assembly_orders_metadata_item import DeleteAssemblyOrdersMetadataItem
+from ..orders_dbs.types.information_on_paid_delivery_response import InformationOnPaidDeliveryResponse
 from ..orders_dbs.types.new_orders_list_item import NewOrdersListItem
 from ..orders_dbs.types.notify_that_the_buyer_has_declined_the_order_response import (
     NotifyThatTheBuyerHasDeclinedTheOrderResponse,
@@ -144,20 +122,14 @@ from ..orders_dbs.types.notify_that_the_buyer_has_declined_the_order_response im
 from ..orders_dbs.types.notify_that_the_order_has_been_accepted_by_the_buyer_response import (
     NotifyThatTheOrderHasBeenAcceptedByTheBuyerResponse,
 )
-from ..orders_dbs.types.notify_that_the_orders_are_declined_item import (
-    NotifyThatTheOrdersAreDeclinedItem,
-)
-from ..orders_dbs.types.notify_that_the_orders_are_received_item import (
-    NotifyThatTheOrdersAreReceivedItem,
-)
+from ..orders_dbs.types.notify_that_the_orders_are_declined_item import NotifyThatTheOrdersAreDeclinedItem
+from ..orders_dbs.types.notify_that_the_orders_are_received_item import NotifyThatTheOrdersAreReceivedItem
 from ..orders_dbs.types.stickers_for_assembly_orders_with_delivery_to_pickup_point_item import (
     StickersForAssemblyOrdersWithDeliveryToPickupPointItem,
 )
 from ..orders_dbs.types.transfer_to_assembly_item import TransferToAssemblyItem
 from ..orders_dbs.types.transfer_to_delivery_item import TransferToDeliveryItem
-from ..orders_dbw.types.add_data_matrix_code_to_the_order_response import (
-    AddDataMatrixCodeToTheOrderResponse,
-)
+from ..orders_dbw.types.add_data_matrix_code_to_the_order_response import AddDataMatrixCodeToTheOrderResponse
 from ..orders_dbw.types.add_gtin_to_the_order_response import AddGtinToTheOrderResponse
 from ..orders_dbw.types.add_imei_to_the_order_response import AddImeiToTheOrderResponse
 from ..orders_dbw.types.add_uin_unique_identification_number_to_the_order_response import (
@@ -168,9 +140,7 @@ from ..orders_dbw.types.cancel_the_order_response import CancelTheOrderResponse
 from ..orders_dbw.types.courier_info_item import CourierInfoItem
 from ..orders_dbw.types.delete_order_metadata_response import DeleteOrderMetadataResponse
 from ..orders_dbw.types.delivery_date_and_time_item import DeliveryDateAndTimeItem
-from ..orders_dbw.types.information_on_completed_orders_item import (
-    InformationOnCompletedOrdersItem,
-)
+from ..orders_dbw.types.information_on_completed_orders_item import InformationOnCompletedOrdersItem
 from ..orders_dbw.types.new_orders_item import NewOrdersItem
 from ..orders_dbw.types.order_metadata_item import OrderMetadataItem
 from ..orders_dbw.types.orders_statuses_item import OrdersStatusesItem
@@ -178,9 +148,7 @@ from ..orders_dbw.types.orders_stickers_item import OrdersStickersItem
 from ..orders_dbw.types.transfer_to_assembly_response import TransferToAssemblyResponse
 from ..orders_dbw.types.transfer_to_delivery_response import TransferToDeliveryResponse
 from ..orders_fbs.types.a_supplies_list_item import ASuppliesListItem
-from ..orders_fbs.types.add_assembly_orders_to_the_supply_response import (
-    AddAssemblyOrdersToTheSupplyResponse,
-)
+from ..orders_fbs.types.add_assembly_orders_to_the_supply_response import AddAssemblyOrdersToTheSupplyResponse
 from ..orders_fbs.types.add_boxes_to_the_supply_item import AddBoxesToTheSupplyItem
 from ..orders_fbs.types.add_custom_declaration_number_to_the_order_response import (
     AddCustomDeclarationNumberToTheOrderResponse,
@@ -191,18 +159,12 @@ from ..orders_fbs.types.add_data_matrix_code_to_the_assembly_order_response impo
 from ..orders_fbs.types.add_expiration_date_to_the_assembly_order_response import (
     AddExpirationDateToTheAssemblyOrderResponse,
 )
-from ..orders_fbs.types.add_gtin_to_the_assembly_order_response import (
-    AddGtinToTheAssemblyOrderResponse,
-)
-from ..orders_fbs.types.add_imei_to_the_assembly_order_response import (
-    AddImeiToTheAssemblyOrderResponse,
-)
+from ..orders_fbs.types.add_gtin_to_the_assembly_order_response import AddGtinToTheAssemblyOrderResponse
+from ..orders_fbs.types.add_imei_to_the_assembly_order_response import AddImeiToTheAssemblyOrderResponse
 from ..orders_fbs.types.add_uin_unique_identification_number_to_the_assembly_order_response import (
     AddUinUniqueIdentificationNumberToTheAssemblyOrderResponse,
 )
-from ..orders_fbs.types.all_assembly_orders_for_reshipment_item import (
-    AllAssemblyOrdersForReshipmentItem,
-)
+from ..orders_fbs.types.all_assembly_orders_for_reshipment_item import AllAssemblyOrdersForReshipmentItem
 from ..orders_fbs.types.assembly_orders_item import AssemblyOrdersItem
 from ..orders_fbs.types.assembly_orders_metadata_item import AssemblyOrdersMetadataItem
 from ..orders_fbs.types.assembly_orders_statuses_item import AssemblyOrdersStatusesItem
@@ -210,17 +172,11 @@ from ..orders_fbs.types.assembly_orders_stickers_item import AssemblyOrdersStick
 from ..orders_fbs.types.cancel_the_assembly_order_response import CancelTheAssemblyOrderResponse
 from ..orders_fbs.types.create_a_new_supply_response import CreateANewSupplyResponse
 from ..orders_fbs.types.create_pass_response import CreatePassResponse
-from ..orders_fbs.types.delete_assembly_order_metadata_response import (
-    DeleteAssemblyOrderMetadataResponse,
-)
-from ..orders_fbs.types.delete_boxes_from_the_supply_response import (
-    DeleteBoxesFromTheSupplyResponse,
-)
+from ..orders_fbs.types.delete_assembly_order_metadata_response import DeleteAssemblyOrderMetadataResponse
+from ..orders_fbs.types.delete_boxes_from_the_supply_response import DeleteBoxesFromTheSupplyResponse
 from ..orders_fbs.types.delete_the_pass_response import DeleteThePassResponse
 from ..orders_fbs.types.delete_the_supply_response import DeleteTheSupplyResponse
-from ..orders_fbs.types.move_the_supply_to_the_delivery_response import (
-    MoveTheSupplyToTheDeliveryResponse,
-)
+from ..orders_fbs.types.move_the_supply_to_the_delivery_response import MoveTheSupplyToTheDeliveryResponse
 from ..orders_fbs.types.new_assembly_orders_item import NewAssemblyOrdersItem
 from ..orders_fbs.types.offices_for_pass_response import OfficesForPassResponse
 from ..orders_fbs.types.orders_with_client_information_item import OrdersWithClientInformationItem
@@ -249,9 +205,7 @@ from ..products.types.contacts_list_item import ContactsListItem
 from ..products.types.country_of_origin_response import CountryOfOriginResponse
 from ..products.types.create_a_tag_response import CreateATagResponse
 from ..products.types.create_product_cards_response import CreateProductCardsResponse
-from ..products.types.create_product_cards_with_merge_response import (
-    CreateProductCardsWithMergeResponse,
-)
+from ..products.types.create_product_cards_with_merge_response import CreateProductCardsWithMergeResponse
 from ..products.types.create_warehouse_response import CreateWarehouseResponse
 from ..products.types.delete_inventory_response import DeleteInventoryResponse
 from ..products.types.delete_the_tag_response import DeleteTheTagResponse
@@ -277,22 +231,16 @@ from ..products.types.products_in_quarantine_item import ProductsInQuarantineIte
 from ..products.types.products_parent_categories_response import ProductsParentCategoriesResponse
 from ..products.types.products_with_prices_by_articles_item import ProductsWithPricesByArticlesItem
 from ..products.types.products_with_prices_item import ProductsWithPricesItem
-from ..products.types.recover_product_card_from_trash_response import (
-    RecoverProductCardFromTrashResponse,
-)
+from ..products.types.recover_product_card_from_trash_response import RecoverProductCardFromTrashResponse
 from ..products.types.season_item import SeasonItem
 from ..products.types.set_prices_and_discounts_response import SetPricesAndDiscountsResponse
 from ..products.types.set_size_prices_response import SetSizePricesResponse
 from ..products.types.set_wb_club_discounts_response import SetWbClubDiscountsResponse
 from ..products.types.subject_characteristics_item import SubjectCharacteristicsItem
 from ..products.types.subjects_list_item import SubjectsListItem
-from ..products.types.tag_management_in_the_product_card_response import (
-    TagManagementInTheProductCardResponse,
-)
+from ..products.types.tag_management_in_the_product_card_response import TagManagementInTheProductCardResponse
 from ..products.types.tags_list_response import TagsListResponse
-from ..products.types.transfer_product_card_to_trash_response import (
-    TransferProductCardToTrashResponse,
-)
+from ..products.types.transfer_product_card_to_trash_response import TransferProductCardToTrashResponse
 from ..products.types.unprocessed_upload_details_item import UnprocessedUploadDetailsItem
 from ..products.types.unprocessed_upload_state_response import UnprocessedUploadStateResponse
 from ..products.types.update_contacts_list_response import UpdateContactsListResponse
@@ -307,9 +255,7 @@ from ..products.types.warehouses_response import WarehousesResponse
 from ..promotion.types.active_and_inactive_search_cluster_lists_item import (
     ActiveAndInactiveSearchClusterListsItem,
 )
-from ..promotion.types.add_product_to_the_promotion_response import (
-    AddProductToThePromotionResponse,
-)
+from ..promotion.types.add_product_to_the_promotion_response import AddProductToThePromotionResponse
 from ..promotion.types.balance_item import BalanceItem
 from ..promotion.types.campaign_budget_response import CampaignBudgetResponse
 from ..promotion.types.campaigns_information_item import CampaignsInformationItem
@@ -323,16 +269,10 @@ from ..promotion.types.changing_the_list_of_product_cards_in_campaigns_item impo
     ChangingTheListOfProductCardsInCampaignsItem,
 )
 from ..promotion.types.create_campaign_response import CreateCampaignResponse
-from ..promotion.types.daily_search_clusters_statistics_item import (
-    DailySearchClustersStatisticsItem,
-)
-from ..promotion.types.delete_bids_from_search_clusters_response import (
-    DeleteBidsFromSearchClustersResponse,
-)
+from ..promotion.types.daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
+from ..promotion.types.delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from ..promotion.types.delete_campaign_response import DeleteCampaignResponse
-from ..promotion.types.information_about_media_campaign_item import (
-    InformationAboutMediaCampaignItem,
-)
+from ..promotion.types.information_about_media_campaign_item import InformationAboutMediaCampaignItem
 from ..promotion.types.launch_campaign_response import LaunchCampaignResponse
 from ..promotion.types.list_of_campaign_minus_phrases_item import ListOfCampaignMinusPhrasesItem
 from ..promotion.types.list_of_media_campaigns_response import ListOfMediaCampaignsResponse
@@ -356,24 +296,18 @@ from ..promotion.types.recommended_bids_for_items_and_search_clusters_item impor
 )
 from ..promotion.types.rename_campaign_response import RenameCampaignResponse
 from ..promotion.types.search_clusters_statistics_item import SearchClustersStatisticsItem
-from ..promotion.types.set_bids_for_search_clusters_response import (
-    SetBidsForSearchClustersResponse,
-)
+from ..promotion.types.set_bids_for_search_clusters_response import SetBidsForSearchClustersResponse
 from ..promotion.types.setting_and_deleting_minus_phrases_response import (
     SettingAndDeletingMinusPhrasesResponse,
 )
 from ..promotion.types.stop_campaign_response import StopCampaignResponse
 from ..promotion.types.subjects_for_campaigns_response import SubjectsForCampaignsResponse
-from ..promotion.types.topup_of_the_campaign_budget_response import (
-    TopupOfTheCampaignBudgetResponse,
-)
+from ..promotion.types.topup_of_the_campaign_budget_response import TopupOfTheCampaignBudgetResponse
 from ..reports.types.blocked_product_cards_item import BlockedProductCardsItem
 from ..reports.types.check_the_status_response import CheckTheStatusResponse
 from ..reports.types.generate_the_report_response import GenerateTheReportResponse
 from ..reports.types.hidden_from_the_catalog_item import HiddenFromTheCatalogItem
-from ..reports.types.logistics_and_storage_costs_multiplier_item import (
-    LogisticsAndStorageCostsMultiplierItem,
-)
+from ..reports.types.logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
 from ..reports.types.orders_response import OrdersResponse
 from ..reports.types.parent_categories_of_the_brand_item import ParentCategoriesOfTheBrandItem
 from ..reports.types.product_labeling_item import ProductLabelingItem

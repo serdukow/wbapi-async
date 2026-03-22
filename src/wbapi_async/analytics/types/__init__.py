@@ -1,16 +1,12 @@
 from .create_the_report_response import CreateTheReportResponse
 from .group_data_item import GroupDataItem
-from .grouped_product_cards_statistics_per_days_item import (
-    GroupedProductCardsStatisticsPerDaysItem,
-)
+from .grouped_product_cards_statistics_per_days_item import GroupedProductCardsStatisticsPerDaysItem
 from .main_page_response import MainPageResponse
 from .orders_and_positions_by_product_search_texts_response import (
     OrdersAndPositionsByProductSearchTextsResponse,
 )
 from .pagination_by_groups_response import PaginationByGroupsResponse
-from .pagination_by_products_within_a_group_response import (
-    PaginationByProductsWithinAGroupResponse,
-)
+from .pagination_by_products_within_a_group_response import PaginationByProductsWithinAGroupResponse
 from .product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from .product_cards_statistics_per_period_response import ProductCardsStatisticsPerPeriodResponse
 from .product_data_item import ProductDataItem

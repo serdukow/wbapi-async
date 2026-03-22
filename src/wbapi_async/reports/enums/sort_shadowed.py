@@ -1,7 +1,7 @@
 from enum import StrEnum
 
 
-class Sort3(StrEnum):
+class SortShadowed(StrEnum):
     BRAND = "brand"
     NMID = "nmId"
     TITLE = "title"

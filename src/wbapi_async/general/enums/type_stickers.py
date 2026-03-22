@@ -1,5 +1,5 @@
 from enum import StrEnum
 
 
-class Type2(StrEnum):
+class TypeStickers(StrEnum):
     PDF = "pdf"

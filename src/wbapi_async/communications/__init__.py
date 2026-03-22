@@ -9,15 +9,11 @@ from .types.edit_response_to_feedback_response import EditResponseToFeedbackResp
 from .types.feedbacks_list_item import FeedbacksListItem
 from .types.file_from_the_message_response import FileFromTheMessageResponse
 from .types.list_of_archived_feedbacks_item import ListOfArchivedFeedbacksItem
-from .types.list_of_pinned_and_unpinned_feedback_response import (
-    ListOfPinnedAndUnpinnedFeedbackResponse,
-)
+from .types.list_of_pinned_and_unpinned_feedback_response import ListOfPinnedAndUnpinnedFeedbackResponse
 from .types.number_of_feedbacks_item import NumberOfFeedbacksItem
 from .types.number_of_questions_item import NumberOfQuestionsItem
 from .types.pin_feedback_response import PinFeedbackResponse
-from .types.pinned_and_unpinned_feedback_number_response import (
-    PinnedAndUnpinnedFeedbackNumberResponse,
-)
+from .types.pinned_and_unpinned_feedback_number_response import PinnedAndUnpinnedFeedbackNumberResponse
 from .types.pinned_feedback_limits_response import PinnedFeedbackLimitsResponse
 from .types.question_list_item import QuestionListItem
 from .types.reply_to_feedback_response import ReplyToFeedbackResponse

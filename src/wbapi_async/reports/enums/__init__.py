@@ -1,10 +1,10 @@
 from .sort import Sort
-from .sort_2 import Sort2
-from .sort_3 import Sort3
+from .sort_blocked import SortBlocked
+from .sort_shadowed import SortShadowed
 
 
 __all__ = (
     "Sort",
-    "Sort2",
-    "Sort3",
+    "SortBlocked",
+    "SortShadowed",
 )

@@ -25,4 +25,4 @@ class ProductCardsStatisticsPerDays(WbMethod):
     selected_period: Any = Field(alias="selectedPeriod")
     nm_ids: list[int] = Field(alias="nmIds")
     skip_deleted_nm: bool | None = Field(None, alias="skipDeletedNm")
-    aggregation_level: AggregationLevel | None = Field("day", alias="aggregationLevel")
+    aggregation_level: AggregationLevel | None = Field(AggregationLevel.DAY, alias="aggregationLevel")

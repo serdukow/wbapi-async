@@ -16,7 +16,5 @@ def unofficial(func: Callable[..., Any]) -> Callable[..., Any]:
         return await func(*args, **kwargs)
 
     wrapper.__unofficial__ = True  # type: ignore[attr-defined]
-    wrapper.__doc__ = (
-        f".. warning:: Unofficial method — not documented in WB API.\n\n{func.__doc__ or ''}"
-    )
+    wrapper.__doc__ = f".. warning:: Unofficial method — not documented in WB API.\n\n{func.__doc__ or ''}"
     return wrapper

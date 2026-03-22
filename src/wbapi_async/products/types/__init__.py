@@ -15,9 +15,7 @@ from .hscodes_item import HscodesItem
 from .inventory_item import InventoryItem
 from .limits_for_the_product_cards_response import LimitsForTheProductCardsResponse
 from .list_of_failed_product_cards_with_errors_item import ListOfFailedProductCardsWithErrorsItem
-from .merging_or_separating_of_product_cards_response import (
-    MergingOrSeparatingOfProductCardsResponse,
-)
+from .merging_or_separating_of_product_cards_response import MergingOrSeparatingOfProductCardsResponse
 from .offices_response import OfficesResponse
 from .processed_upload_details_item import ProcessedUploadDetailsItem
 from .processed_upload_state_response import ProcessedUploadStateResponse

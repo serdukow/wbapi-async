@@ -22,6 +22,6 @@ class CreateCampaign(WbMethod):
 
     name: str | None = Field(None)
     nms: list[int] | None = Field(None)
-    bid_type: BidType | None = Field("manual")
-    payment_type: PaymentType | None = Field("cpm")
+    bid_type: BidType | None = Field(BidType.MANUAL)
+    payment_type: PaymentType | None = Field(PaymentType.CPM)
     placement_types: list[str] | None = Field(("search",))

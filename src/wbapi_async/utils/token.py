@@ -46,9 +46,7 @@ def validate_token(token: str) -> bool:
 
     header = _decode_part(parts[0])
     if header.get("typ", "").upper() != "JWT":
-        raise TokenValidationError(
-            f"Token is invalid! Header typ must be 'JWT', got {header.get('typ')!r}."
-        )
+        raise TokenValidationError(f"Token is invalid! Header typ must be 'JWT', got {header.get('typ')!r}.")
 
     payload = _decode_part(parts[1])
 

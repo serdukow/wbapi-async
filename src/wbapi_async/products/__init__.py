@@ -15,12 +15,8 @@ from .types.generation_of_skus_item import GenerationOfSkusItem
 from .types.hscodes_item import HscodesItem
 from .types.inventory_item import InventoryItem
 from .types.limits_for_the_product_cards_response import LimitsForTheProductCardsResponse
-from .types.list_of_failed_product_cards_with_errors_item import (
-    ListOfFailedProductCardsWithErrorsItem,
-)
-from .types.merging_or_separating_of_product_cards_response import (
-    MergingOrSeparatingOfProductCardsResponse,
-)
+from .types.list_of_failed_product_cards_with_errors_item import ListOfFailedProductCardsWithErrorsItem
+from .types.merging_or_separating_of_product_cards_response import MergingOrSeparatingOfProductCardsResponse
 from .types.offices_response import OfficesResponse
 from .types.processed_upload_details_item import ProcessedUploadDetailsItem
 from .types.processed_upload_state_response import ProcessedUploadStateResponse
@@ -38,9 +34,7 @@ from .types.set_size_prices_response import SetSizePricesResponse
 from .types.set_wb_club_discounts_response import SetWbClubDiscountsResponse
 from .types.subject_characteristics_item import SubjectCharacteristicsItem
 from .types.subjects_list_item import SubjectsListItem
-from .types.tag_management_in_the_product_card_response import (
-    TagManagementInTheProductCardResponse,
-)
+from .types.tag_management_in_the_product_card_response import TagManagementInTheProductCardResponse
 from .types.tags_list_response import TagsListResponse
 from .types.transfer_product_card_to_trash_response import TransferProductCardToTrashResponse
 from .types.unprocessed_upload_details_item import UnprocessedUploadDetailsItem

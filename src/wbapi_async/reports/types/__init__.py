@@ -7,9 +7,7 @@ from .orders_response import OrdersResponse
 from .parent_categories_of_the_brand_item import ParentCategoriesOfTheBrandItem
 from .product_labeling_item import ProductLabelingItem
 from .report_item import ReportItem
-from .report_on_products_with_mandatory_labeling_item import (
-    ReportOnProductsWithMandatoryLabelingItem,
-)
+from .report_on_products_with_mandatory_labeling_item import ReportOnProductsWithMandatoryLabelingItem
 from .sales_response import SalesResponse
 from .selfpurchases_item import SelfpurchasesItem
 from .seller_brands_item import SellerBrandsItem

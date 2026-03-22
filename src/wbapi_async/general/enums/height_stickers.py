@@ -1,5 +1,5 @@
 from enum import StrEnum
 
 
-class Height2(StrEnum):
+class HeightStickers(StrEnum):
     V_40 = "40"

@@ -1,6 +1,6 @@
 from enum import StrEnum
 
 
-class Order2(StrEnum):
+class OrderDeductions(StrEnum):
     DESC = "desc"
     ASC = "asc"

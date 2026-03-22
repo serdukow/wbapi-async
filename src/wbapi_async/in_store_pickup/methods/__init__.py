@@ -6,9 +6,7 @@ from .add_imei_to_the_assembly_orders import AddImeiToTheAssemblyOrders
 from .add_uin_unique_identification_numbers_to_the_assembly_orders import (
     AddUinUniqueIdentificationNumbersToTheAssemblyOrders,
 )
-from .assign_a_data_matrix_code_to_the_assembly_order import (
-    AssignADataMatrixCodeToTheAssemblyOrder,
-)
+from .assign_a_data_matrix_code_to_the_assembly_order import AssignADataMatrixCodeToTheAssemblyOrder
 from .cancel_the_assembly_orders import CancelTheAssemblyOrders
 from .check_if_the_order_belongs_to_the_buyer import CheckIfTheOrderBelongsToTheBuyer
 from .get_assembly_order_metadata import GetAssemblyOrderMetadata
@@ -16,16 +14,10 @@ from .get_new_assembly_orders_list import GetNewAssemblyOrdersList
 from .get_retrieve_information_on_completed_assembly_orders import (
     GetRetrieveInformationOnCompletedAssemblyOrders,
 )
-from .notify_that_the_assembly_order_is_ready_for_pickup import (
-    NotifyThatTheAssemblyOrderIsReadyForPickup,
-)
-from .notify_that_the_assembly_orders_are_ready_for_pickup import (
-    NotifyThatTheAssemblyOrdersAreReadyForPickup,
-)
+from .notify_that_the_assembly_order_is_ready_for_pickup import NotifyThatTheAssemblyOrderIsReadyForPickup
+from .notify_that_the_assembly_orders_are_ready_for_pickup import NotifyThatTheAssemblyOrdersAreReadyForPickup
 from .notify_that_the_buyer_refused_the_order import NotifyThatTheBuyerRefusedTheOrder
-from .notify_that_the_orders_were_received_by_the_buyers import (
-    NotifyThatTheOrdersWereReceivedByTheBuyers,
-)
+from .notify_that_the_orders_were_received_by_the_buyers import NotifyThatTheOrdersWereReceivedByTheBuyers
 
 
 __all__ = (

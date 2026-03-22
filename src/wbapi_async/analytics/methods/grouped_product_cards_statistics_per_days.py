@@ -28,4 +28,4 @@ class GroupedProductCardsStatisticsPerDays(WbMethod):
     subject_ids: list[int] | None = Field(None, alias="subjectIds")
     tag_ids: list[int] | None = Field(None, alias="tagIds")
     skip_deleted_nm: bool | None = Field(None, alias="skipDeletedNm")
-    aggregation_level: AggregationLevel | None = Field("day", alias="aggregationLevel")
+    aggregation_level: AggregationLevel | None = Field(AggregationLevel.DAY, alias="aggregationLevel")

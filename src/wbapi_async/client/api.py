@@ -5,24 +5,24 @@ from ..enums import (
     AggregationLevel,
     BidType,
     Height,
-    Height2,
+    HeightStickers,
     Locale,
     Order,
-    Order2,
+    OrderDeductions,
     PaymentType,
     Period,
     PinOn,
     PositionCluster,
     Sort,
-    Sort2,
-    Sort3,
-    Sort4,
+    SortBlocked,
+    SortList,
+    SortShadowed,
     State,
     TopOrderBy,
     Type,
-    Type2,
+    TypeStickers,
     Width,
-    Width2,
+    WidthStickers,
 )
 from ..methods import (
     AcceptanceOptions,
@@ -1228,8 +1228,8 @@ class WbAPI:
         self,
         name: str | None = None,
         nms: list[int] | None = None,
-        bid_type: BidType | None = "manual",
-        payment_type: PaymentType | None = "cpm",
+        bid_type: BidType | None = BidType.MANUAL,
+        payment_type: PaymentType | None = PaymentType.CPM,
         placement_types: list[str] | None = ("search",),
     ) -> list[CreateCampaignResponse]:
         """
@@ -1821,8 +1821,8 @@ class WbAPI:
 
     async def get_blocked_product_cards(
         self,
-        sort: Sort2 = None,
-        order: Order2 = None,
+        sort: SortBlocked = None,
+        order: OrderDeductions = None,
     ) -> list[BlockedProductCardsItem]:
         """
         Returns the list of [blocked product
@@ -2182,8 +2182,8 @@ class WbAPI:
         locale: str | None = "en",
         begin_time: str | None = None,
         end_time: str | None = None,
-        sort: Sort4 | None = "date",
-        order: Order2 | None = "desc",
+        sort: SortList | None = SortList.DATE,
+        order: OrderDeductions | None = OrderDeductions.DESC,
         category: str | None = None,
         service_name: str | None = None,
         limit: int | None = 50,
@@ -2329,8 +2329,8 @@ class WbAPI:
 
     async def get_hidden_from_the_catalog(
         self,
-        sort: Sort3 = None,
-        order: Order2 = None,
+        sort: SortShadowed = None,
+        order: OrderDeductions = None,
     ) -> list[HiddenFromTheCatalogItem]:
         """
         Returns the list of products [hidden from the
@@ -3222,7 +3222,7 @@ class WbAPI:
         date_to: str = None,
         limit: int | None = 100000,
         rrdid: int | None = 0,
-        period: Period | None = "weekly",
+        period: Period | None = Period.WEEKLY,
     ) -> list[RealizationSalesReportResponse]:
         """
         Details for the [realization
@@ -3458,9 +3458,9 @@ class WbAPI:
 
     async def get_stickers_for_assembly_orders_with_delivery_to_pickup_point(
         self,
-        type: Type2 = None,
-        width: Width2 = None,
-        height: Height2 = None,
+        type: TypeStickers = None,
+        width: WidthStickers = None,
+        height: HeightStickers = None,
         orders: list[int] = None,
     ) -> list[StickersForAssemblyOrdersWithDeliveryToPickupPointItem]:
         """
@@ -3580,8 +3580,8 @@ class WbAPI:
         self,
         date_from: str | None = None,
         date_to: str = None,
-        sort: Sort | None = "dtBonus",
-        order: Order2 | None = "desc",
+        sort: Sort | None = Sort.DTBONUS,
+        order: OrderDeductions | None = OrderDeductions.DESC,
         limit: int = None,
         offset: int | None = 0,
     ) -> list[SubstitutionsAndIncorrectAttachmentsItem]:
@@ -4010,7 +4010,7 @@ class WbAPI:
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
         skip_deleted_nm: bool | None = None,
-        aggregation_level: AggregationLevel | None = "day",
+        aggregation_level: AggregationLevel | None = AggregationLevel.DAY,
     ) -> list[GroupedProductCardsStatisticsPerDaysItem]:
         """
         The method returns statistics for product cards by day or by week. Product cards are
@@ -4570,7 +4570,7 @@ class WbAPI:
         selected_period: Any = None,
         nm_ids: list[int] = None,
         skip_deleted_nm: bool | None = None,
-        aggregation_level: AggregationLevel | None = "day",
+        aggregation_level: AggregationLevel | None = AggregationLevel.DAY,
     ) -> list[ProductCardsStatisticsPerDaysResponse]:
         """
         The method returns statistics for product cards by day or by week. You can get data for a

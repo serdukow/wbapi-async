@@ -1,7 +1,7 @@
 from enum import StrEnum
 
 
-class Sort2(StrEnum):
+class SortBlocked(StrEnum):
     BRAND = "brand"
     NMID = "nmId"
     TITLE = "title"

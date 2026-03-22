@@ -9,9 +9,7 @@ from .changing_campaigns_bids_item import ChangingCampaignsBidsItem
 from .changing_placements_in_campaigns_with_custom_bid_response import (
     ChangingPlacementsInCampaignsWithCustomBidResponse,
 )
-from .changing_the_list_of_product_cards_in_campaigns_item import (
-    ChangingTheListOfProductCardsInCampaignsItem,
-)
+from .changing_the_list_of_product_cards_in_campaigns_item import ChangingTheListOfProductCardsInCampaignsItem
 from .create_campaign_response import CreateCampaignResponse
 from .daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
 from .delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
@@ -32,12 +30,8 @@ from .product_cards_for_campaigns_response import ProductCardsForCampaignsRespon
 from .promotions_details_item import PromotionsDetailsItem
 from .promotions_list_item import PromotionsListItem
 from .receiving_costs_history_response import ReceivingCostsHistoryResponse
-from .receiving_the_history_of_account_topups_response import (
-    ReceivingTheHistoryOfAccountTopupsResponse,
-)
-from .recommended_bids_for_items_and_search_clusters_item import (
-    RecommendedBidsForItemsAndSearchClustersItem,
-)
+from .receiving_the_history_of_account_topups_response import ReceivingTheHistoryOfAccountTopupsResponse
+from .recommended_bids_for_items_and_search_clusters_item import RecommendedBidsForItemsAndSearchClustersItem
 from .rename_campaign_response import RenameCampaignResponse
 from .search_clusters_statistics_item import SearchClustersStatisticsItem
 from .set_bids_for_search_clusters_response import SetBidsForSearchClustersResponse

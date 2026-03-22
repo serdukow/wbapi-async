@@ -36,9 +36,7 @@ from .types.offices_for_pass_response import OfficesForPassResponse
 from .types.orders_with_client_information_item import OrdersWithClientInformationItem
 from .types.passes_response import PassesResponse
 from .types.status_history_for_crossborder_orders_item import StatusHistoryForCrossborderOrdersItem
-from .types.stickers_for_crossborder_assembly_orders_item import (
-    StickersForCrossborderAssemblyOrdersItem,
-)
+from .types.stickers_for_crossborder_assembly_orders_item import StickersForCrossborderAssemblyOrdersItem
 from .types.supply_assembly_order_ids_item import SupplyAssemblyOrderIdsItem
 from .types.supply_boxes_list_item import SupplyBoxesListItem
 from .types.supply_details_response import SupplyDetailsResponse
