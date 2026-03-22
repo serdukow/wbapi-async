@@ -9,7 +9,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://img.shields.io/pypi/v/wild-api.svg)](https://pypi.org/project/wild-api/)
 [![Downloads](https://img.shields.io/pypi/dm/wild-api.svg)](https://pypi.python.org/pypi/wild-api)
-[![Status](https://img.shields.io/badge/status-pre--alpha-8B5CF6.svg?logo=git&logoColor=white)]()
+[![Docs](https://img.shields.io/badge/docs-serdukow.github.io-blue.svg)](https://serdukow.github.io/wbapi-async/)
+[![Status](https://img.shields.io/badge/status-beta-8B5CF6.svg?logo=git&logoColor=white)]()
 
 </div>
 

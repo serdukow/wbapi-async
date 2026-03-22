@@ -59,6 +59,7 @@ db.sqlite3-journal
 
 # Documentation
 docs/_build/
+site/
 
 ### IDEs ###
 # JetBrains / PyCharm
