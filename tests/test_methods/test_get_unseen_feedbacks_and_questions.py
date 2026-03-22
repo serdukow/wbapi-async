@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.unseen_feedbacks_and_questions_item import UnseenFeedbacksAndQuestionsItem
+from wbapi_async.types import UnseenFeedbacksAndQuestionsItem
 from tests.mocked_api import MockedAPI
 
 

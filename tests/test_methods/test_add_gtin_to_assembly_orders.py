@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.add_gtin_to_assembly_orders_item import AddGtinToAssemblyOrdersItem
+from wbapi_async.types import AddGtinToAssemblyOrdersItem
 from tests.mocked_api import MockedAPI
 
 

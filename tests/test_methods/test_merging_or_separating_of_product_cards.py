@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.merging_or_separating_of_product_cards_response import MergingOrSeparatingOfProductCardsResponse
+from wbapi_async.types import MergingOrSeparatingOfProductCardsResponse
 from tests.mocked_api import MockedAPI
 
 

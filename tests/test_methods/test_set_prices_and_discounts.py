@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.set_prices_and_discounts_response import SetPricesAndDiscountsResponse
+from wbapi_async.types import SetPricesAndDiscountsResponse
 from tests.mocked_api import MockedAPI
 
 

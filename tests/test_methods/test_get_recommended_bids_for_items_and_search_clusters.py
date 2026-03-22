@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.recommended_bids_for_items_and_search_clusters_item import RecommendedBidsForItemsAndSearchClustersItem
+from wbapi_async.types import RecommendedBidsForItemsAndSearchClustersItem
 from tests.mocked_api import MockedAPI
 
 

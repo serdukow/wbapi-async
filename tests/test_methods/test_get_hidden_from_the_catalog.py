@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.hidden_from_the_catalog_item import HiddenFromTheCatalogItem
+from wbapi_async.types import HiddenFromTheCatalogItem
 from tests.mocked_api import MockedAPI
 
 
@@ -20,7 +20,7 @@ class TestGetHiddenFromTheCatalog:
         }
         )
 
-        result = await api.get_hidden_from_the_catalog(sort="sort", order="order")
+        result = await api.get_hidden_from_the_catalog(sort="brand", order="desc")
 
         assert isinstance(result, list)
         assert len(result) == 1

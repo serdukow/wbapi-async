@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.list_of_campaign_minus_phrases_item import ListOfCampaignMinusPhrasesItem
+from wbapi_async.types import ListOfCampaignMinusPhrasesItem
 from tests.mocked_api import MockedAPI
 
 

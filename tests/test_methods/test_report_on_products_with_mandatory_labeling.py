@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.report_on_products_with_mandatory_labeling_item import ReportOnProductsWithMandatoryLabelingItem
+from wbapi_async.types import ReportOnProductsWithMandatoryLabelingItem
 from tests.mocked_api import MockedAPI
 
 

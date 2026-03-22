@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.product_category_commission_response import ProductCategoryCommissionResponse
+from wbapi_async.types import ProductCategoryCommissionResponse
 from tests.mocked_api import MockedAPI
 
 

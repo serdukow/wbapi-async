@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.receiving_the_history_of_account_topups_response import ReceivingTheHistoryOfAccountTopupsResponse
+from wbapi_async.types import ReceivingTheHistoryOfAccountTopupsResponse
 from tests.mocked_api import MockedAPI
 
 

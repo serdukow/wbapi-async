@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.upload_media_files_via_links_response import UploadMediaFilesViaLinksResponse
+from wbapi_async.types import UploadMediaFilesViaLinksResponse
 from tests.mocked_api import MockedAPI
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.information_on_completed_orders_item import InformationOnCompletedOrdersItem
+from wbapi_async.types import InformationOnCompletedOrdersItem
 from tests.mocked_api import MockedAPI
 
 

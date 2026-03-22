@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.add_uin_unique_identification_numbers_to_the_assembly_orders_item import AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem
+from wbapi_async.types import AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem
 from tests.mocked_api import MockedAPI
 
 

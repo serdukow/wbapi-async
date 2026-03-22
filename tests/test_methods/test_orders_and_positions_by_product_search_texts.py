@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.orders_and_positions_by_product_search_texts_response import OrdersAndPositionsByProductSearchTextsResponse
+from wbapi_async.types import OrdersAndPositionsByProductSearchTextsResponse
 from tests.mocked_api import MockedAPI
 
 

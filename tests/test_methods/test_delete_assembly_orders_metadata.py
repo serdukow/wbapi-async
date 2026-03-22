@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.delete_assembly_orders_metadata_item import DeleteAssemblyOrdersMetadataItem
+from wbapi_async.types import DeleteAssemblyOrdersMetadataItem
 from tests.mocked_api import MockedAPI
 
 

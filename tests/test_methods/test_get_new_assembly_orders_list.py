@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.new_assembly_orders_list_item import NewAssemblyOrdersListItem
+from wbapi_async.types import NewAssemblyOrdersListItem
 from tests.mocked_api import MockedAPI
 
 

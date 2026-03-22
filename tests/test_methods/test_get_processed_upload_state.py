@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.processed_upload_state_response import ProcessedUploadStateResponse
+from wbapi_async.types import ProcessedUploadStateResponse
 from tests.mocked_api import MockedAPI
 
 

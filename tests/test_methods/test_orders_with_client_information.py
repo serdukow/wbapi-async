@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.orders_with_client_information_item import OrdersWithClientInformationItem
+from wbapi_async.types import OrdersWithClientInformationItem
 from tests.mocked_api import MockedAPI
 
 

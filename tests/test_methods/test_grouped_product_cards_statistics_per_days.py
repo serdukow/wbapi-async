@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.grouped_product_cards_statistics_per_days_item import GroupedProductCardsStatisticsPerDaysItem
+from wbapi_async.types import GroupedProductCardsStatisticsPerDaysItem
 from tests.mocked_api import MockedAPI
 
 

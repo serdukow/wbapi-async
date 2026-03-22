@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.campaigns_information_item import CampaignsInformationItem
+from wbapi_async.types import CampaignsInformationItem
 from tests.mocked_api import MockedAPI
 
 

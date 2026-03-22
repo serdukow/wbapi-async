@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.connection_check_response import ConnectionCheckResponse
+from wbapi_async.types import ConnectionCheckResponse
 from tests.mocked_api import MockedAPI
 
 

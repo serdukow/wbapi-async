@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.delivery_date_and_time_item import DeliveryDateAndTimeItem
+from wbapi_async.types import DeliveryDateAndTimeItem
 from tests.mocked_api import MockedAPI
 
 

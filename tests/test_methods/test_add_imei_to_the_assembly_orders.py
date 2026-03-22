@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.add_imei_to_the_assembly_orders_item import AddImeiToTheAssemblyOrdersItem
+from wbapi_async.types import AddImeiToTheAssemblyOrdersItem
 from tests.mocked_api import MockedAPI
 
 

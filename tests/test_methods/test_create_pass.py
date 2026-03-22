@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.create_pass_response import CreatePassResponse
+from wbapi_async.types import CreatePassResponse
 from tests.mocked_api import MockedAPI
 
 

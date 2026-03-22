@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.passes_response import PassesResponse
+from wbapi_async.types import PassesResponse
 from tests.mocked_api import MockedAPI
 
 

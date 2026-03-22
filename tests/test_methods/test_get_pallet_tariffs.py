@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.pallet_tariffs_item import PalletTariffsItem
+from wbapi_async.types import PalletTariffsItem
 from tests.mocked_api import MockedAPI
 
 

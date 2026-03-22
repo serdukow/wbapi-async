@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.b2_b_buyer_information_item import B2BBuyerInformationItem
+from wbapi_async.types import B2BBuyerInformationItem
 from tests.mocked_api import MockedAPI
 
 

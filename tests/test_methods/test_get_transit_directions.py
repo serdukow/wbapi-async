@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.transit_directions_response import TransitDirectionsResponse
+from wbapi_async.types import TransitDirectionsResponse
 from tests.mocked_api import MockedAPI
 
 

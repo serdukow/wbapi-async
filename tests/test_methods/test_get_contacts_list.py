@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.contacts_list_item import ContactsListItem
+from wbapi_async.types import ContactsListItem
 from tests.mocked_api import MockedAPI
 
 

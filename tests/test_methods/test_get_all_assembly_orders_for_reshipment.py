@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.all_assembly_orders_for_reshipment_item import AllAssemblyOrdersForReshipmentItem
+from wbapi_async.types import AllAssemblyOrdersForReshipmentItem
 from tests.mocked_api import MockedAPI
 
 

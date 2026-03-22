@@ -1,0 +1,7 @@
+from ...types.base import BaseType
+
+
+class CancelTheAssemblyOrderResponse(BaseType):
+    """Cancel the Assembly Order"""
+
+    pass

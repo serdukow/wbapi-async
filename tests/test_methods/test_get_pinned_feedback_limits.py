@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.pinned_feedback_limits_response import PinnedFeedbackLimitsResponse
+from wbapi_async.types import PinnedFeedbackLimitsResponse
 from tests.mocked_api import MockedAPI
 
 

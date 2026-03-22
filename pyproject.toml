@@ -75,7 +75,7 @@ exclude = [
     "scripts",
     "*.egg-info",
 ]
-line-length = 99
+line-length = 110
 target-version = "py313"
 
 [tool.ruff.lint]

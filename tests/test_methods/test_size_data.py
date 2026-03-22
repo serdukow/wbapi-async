@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.size_data_item import SizeDataItem
+from wbapi_async.types import SizeDataItem
 from tests.mocked_api import MockedAPI
 
 

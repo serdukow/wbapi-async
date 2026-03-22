@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.acceptance_options_item import AcceptanceOptionsItem
+from wbapi_async.types import AcceptanceOptionsItem
 from tests.mocked_api import MockedAPI
 
 

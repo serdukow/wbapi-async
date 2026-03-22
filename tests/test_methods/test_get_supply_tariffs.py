@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.supply_tariffs_response import SupplyTariffsResponse
+from wbapi_async.types import SupplyTariffsResponse
 from tests.mocked_api import MockedAPI
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.set_wb_club_discounts_response import SetWbClubDiscountsResponse
+from wbapi_async.types import SetWbClubDiscountsResponse
 from tests.mocked_api import MockedAPI
 
 

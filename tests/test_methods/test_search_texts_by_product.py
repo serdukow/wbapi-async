@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.search_texts_by_product_response import SearchTextsByProductResponse
+from wbapi_async.types import SearchTextsByProductResponse
 from tests.mocked_api import MockedAPI
 
 
@@ -14,7 +14,7 @@ class TestSearchTextsByProduct:
             }]
         )
 
-        result = await api.search_texts_by_product(current_period={}, nm_ids=[], top_order_by="top_order_by", order_by={}, limit=None)
+        result = await api.search_texts_by_product(current_period={}, nm_ids=[], top_order_by="openCard", order_by={}, limit=None)
 
         assert isinstance(result, list)
         assert len(result) == 1

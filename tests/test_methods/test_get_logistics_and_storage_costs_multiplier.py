@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
+from wbapi_async.types import LogisticsAndStorageCostsMultiplierItem
 from tests.mocked_api import MockedAPI
 
 

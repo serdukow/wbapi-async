@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.create_warehouse_response import CreateWarehouseResponse
+from wbapi_async.types import CreateWarehouseResponse
 from tests.mocked_api import MockedAPI
 
 

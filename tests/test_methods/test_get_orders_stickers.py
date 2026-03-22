@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.orders_stickers_item import OrdersStickersItem
+from wbapi_async.types import OrdersStickersItem
 from tests.mocked_api import MockedAPI
 
 
@@ -20,7 +20,7 @@ class TestGetOrdersStickers:
         }
         )
 
-        result = await api.get_orders_stickers(type="type", width=1, height=1)
+        result = await api.get_orders_stickers(type="svg", width="58", height="40")
 
         assert isinstance(result, list)
         assert len(result) == 1

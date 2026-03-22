@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.send_message_item import SendMessageItem
+from wbapi_async.types import SendMessageItem
 from tests.mocked_api import MockedAPI
 
 

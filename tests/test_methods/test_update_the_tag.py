@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.update_the_tag_response import UpdateTheTagResponse
+from wbapi_async.types import UpdateTheTagResponse
 from tests.mocked_api import MockedAPI
 
 

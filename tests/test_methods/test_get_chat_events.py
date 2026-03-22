@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.chat_events_item import ChatEventsItem
+from wbapi_async.types import ChatEventsItem
 from tests.mocked_api import MockedAPI
 
 

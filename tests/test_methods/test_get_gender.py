@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.gender_item import GenderItem
+from wbapi_async.types import GenderItem
 from tests.mocked_api import MockedAPI
 
 

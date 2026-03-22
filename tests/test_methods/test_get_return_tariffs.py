@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.return_tariffs_item import ReturnTariffsItem
+from wbapi_async.types import ReturnTariffsItem
 from tests.mocked_api import MockedAPI
 
 

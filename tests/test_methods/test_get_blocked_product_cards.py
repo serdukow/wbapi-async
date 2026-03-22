@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.blocked_product_cards_item import BlockedProductCardsItem
+from wbapi_async.types import BlockedProductCardsItem
 from tests.mocked_api import MockedAPI
 
 
@@ -20,7 +20,7 @@ class TestGetBlockedProductCards:
         }
         )
 
-        result = await api.get_blocked_product_cards(sort="sort", order="order")
+        result = await api.get_blocked_product_cards(sort="brand", order="desc")
 
         assert isinstance(result, list)
         assert len(result) == 1

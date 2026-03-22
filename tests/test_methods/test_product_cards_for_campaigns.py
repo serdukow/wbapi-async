@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.product_cards_for_campaigns_response import ProductCardsForCampaignsResponse
+from wbapi_async.types import ProductCardsForCampaignsResponse
 from tests.mocked_api import MockedAPI
 
 

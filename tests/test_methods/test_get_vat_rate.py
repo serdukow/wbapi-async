@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.vat_rate_item import VatRateItem
+from wbapi_async.types import VatRateItem
 from tests.mocked_api import MockedAPI
 
 

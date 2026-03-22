@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.topup_of_the_campaign_budget_response import TopupOfTheCampaignBudgetResponse
+from wbapi_async.types import TopupOfTheCampaignBudgetResponse
 from tests.mocked_api import MockedAPI
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.retrieve_information_on_completed_assembly_orders_item import RetrieveInformationOnCompletedAssemblyOrdersItem
+from wbapi_async.types import RetrieveInformationOnCompletedAssemblyOrdersItem
 from tests.mocked_api import MockedAPI
 
 

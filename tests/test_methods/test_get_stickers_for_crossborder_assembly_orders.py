@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.stickers_for_crossborder_assembly_orders_item import StickersForCrossborderAssemblyOrdersItem
+from wbapi_async.types import StickersForCrossborderAssemblyOrdersItem
 from tests.mocked_api import MockedAPI
 
 

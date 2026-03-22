@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.stickers_for_assembly_orders_with_delivery_to_pickup_point_item import StickersForAssemblyOrdersWithDeliveryToPickupPointItem
+from wbapi_async.types import StickersForAssemblyOrdersWithDeliveryToPickupPointItem
 from tests.mocked_api import MockedAPI
 
 
@@ -20,7 +20,7 @@ class TestGetStickersForAssemblyOrdersWithDeliveryToPickupPoint:
         }
         )
 
-        result = await api.get_stickers_for_assembly_orders_with_delivery_to_pickup_point(type="type", width=1, height=1, orders=[])
+        result = await api.get_stickers_for_assembly_orders_with_delivery_to_pickup_point(type="pdf", width="58", height="40", orders=[])
 
         assert isinstance(result, list)
         assert len(result) == 1

@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.add_data_matrix_codes_to_assembly_orders_chestny_znak_item import AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem
+from wbapi_async.types import AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem
 from tests.mocked_api import MockedAPI
 
 

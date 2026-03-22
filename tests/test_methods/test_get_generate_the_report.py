@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.generate_the_report_response import GenerateTheReportResponse
+from wbapi_async.types import GenerateTheReportResponse
 from tests.mocked_api import MockedAPI
 
 

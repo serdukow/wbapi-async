@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.season_item import SeasonItem
+from wbapi_async.types import SeasonItem
 from tests.mocked_api import MockedAPI
 
 

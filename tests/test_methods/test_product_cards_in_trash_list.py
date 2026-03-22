@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.product_cards_in_trash_list_item import ProductCardsInTrashListItem
+from wbapi_async.types import ProductCardsInTrashListItem
 from tests.mocked_api import MockedAPI
 
 

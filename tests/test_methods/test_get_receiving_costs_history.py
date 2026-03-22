@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.receiving_costs_history_response import ReceivingCostsHistoryResponse
+from wbapi_async.types import ReceivingCostsHistoryResponse
 from tests.mocked_api import MockedAPI
 
 

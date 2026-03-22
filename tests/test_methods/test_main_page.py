@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.main_page_response import MainPageResponse
+from wbapi_async.types import MainPageResponse
 from tests.mocked_api import MockedAPI
 
 
@@ -14,7 +14,7 @@ class TestMainPage:
             }]
         )
 
-        result = await api.main_page(current_period={}, position_cluster="position_cluster", order_by={}, limit=1, offset=1)
+        result = await api.main_page(current_period={}, position_cluster="all", order_by={}, limit=1, offset=1)
 
         assert isinstance(result, list)
         assert len(result) == 1

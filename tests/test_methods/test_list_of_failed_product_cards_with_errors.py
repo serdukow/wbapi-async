@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.list_of_failed_product_cards_with_errors_item import ListOfFailedProductCardsWithErrorsItem
+from wbapi_async.types import ListOfFailedProductCardsWithErrorsItem
 from tests.mocked_api import MockedAPI
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.box_tariffs_item import BoxTariffsItem
+from wbapi_async.types import BoxTariffsItem
 from tests.mocked_api import MockedAPI
 
 

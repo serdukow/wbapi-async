@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.recover_product_card_from_trash_response import RecoverProductCardFromTrashResponse
+from wbapi_async.types import RecoverProductCardFromTrashResponse
 from tests.mocked_api import MockedAPI
 
 

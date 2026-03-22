@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.create_an_invitation_for_a_new_user_response import CreateAnInvitationForANewUserResponse
+from wbapi_async.types import CreateAnInvitationForANewUserResponse
 from tests.mocked_api import MockedAPI
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.substitutions_and_incorrect_attachments_item import SubstitutionsAndIncorrectAttachmentsItem
+from wbapi_async.types import SubstitutionsAndIncorrectAttachmentsItem
 from tests.mocked_api import MockedAPI
 
 

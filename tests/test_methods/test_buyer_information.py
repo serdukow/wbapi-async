@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.buyer_information_item import BuyerInformationItem
+from wbapi_async.types import BuyerInformationItem
 from tests.mocked_api import MockedAPI
 
 

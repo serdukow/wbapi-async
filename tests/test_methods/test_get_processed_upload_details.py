@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.processed_upload_details_item import ProcessedUploadDetailsItem
+from wbapi_async.types import ProcessedUploadDetailsItem
 from tests.mocked_api import MockedAPI
 
 

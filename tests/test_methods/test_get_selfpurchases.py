@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.selfpurchases_item import SelfpurchasesItem
+from wbapi_async.types import SelfpurchasesItem
 from tests.mocked_api import MockedAPI
 
 

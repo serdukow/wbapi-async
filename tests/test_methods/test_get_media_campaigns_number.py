@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.media_campaigns_number_response import MediaCampaignsNumberResponse
+from wbapi_async.types import MediaCampaignsNumberResponse
 from tests.mocked_api import MockedAPI
 
 

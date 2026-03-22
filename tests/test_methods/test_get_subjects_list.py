@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.subjects_list_item import SubjectsListItem
+from wbapi_async.types import SubjectsListItem
 from tests.mocked_api import MockedAPI
 
 

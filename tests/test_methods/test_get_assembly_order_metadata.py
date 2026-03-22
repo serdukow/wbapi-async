@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.assembly_order_metadata_response import AssemblyOrderMetadataResponse
+from wbapi_async.types import AssemblyOrderMetadataResponse
 from tests.mocked_api import MockedAPI
 
 

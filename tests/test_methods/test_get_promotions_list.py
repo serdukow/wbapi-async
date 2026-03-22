@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.promotions_list_item import PromotionsListItem
+from wbapi_async.types import PromotionsListItem
 from tests.mocked_api import MockedAPI
 
 

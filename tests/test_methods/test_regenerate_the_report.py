@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.regenerate_the_report_response import RegenerateTheReportResponse
+from wbapi_async.types import RegenerateTheReportResponse
 from tests.mocked_api import MockedAPI
 
 

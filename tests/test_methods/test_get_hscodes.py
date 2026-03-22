@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.hscodes_item import HscodesItem
+from wbapi_async.types import HscodesItem
 from tests.mocked_api import MockedAPI
 
 

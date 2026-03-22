@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.number_of_questions_item import NumberOfQuestionsItem
+from wbapi_async.types import NumberOfQuestionsItem
 from tests.mocked_api import MockedAPI
 
 

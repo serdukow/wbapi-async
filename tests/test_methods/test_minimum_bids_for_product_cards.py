@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.minimum_bids_for_product_cards_item import MinimumBidsForProductCardsItem
+from wbapi_async.types import MinimumBidsForProductCardsItem
 from tests.mocked_api import MockedAPI
 
 
@@ -17,7 +17,7 @@ class TestMinimumBidsForProductCards:
         }
         )
 
-        result = await api.minimum_bids_for_product_cards(advert_id=1, nm_ids=[], payment_type="payment_type", placement_types=[])
+        result = await api.minimum_bids_for_product_cards(advert_id=1, nm_ids=[], payment_type="cpm", placement_types=[])
 
         assert isinstance(result, list)
         assert len(result) == 1

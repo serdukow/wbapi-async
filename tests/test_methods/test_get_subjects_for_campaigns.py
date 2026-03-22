@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.subjects_for_campaigns_response import SubjectsForCampaignsResponse
+from wbapi_async.types import SubjectsForCampaignsResponse
 from tests.mocked_api import MockedAPI
 
 

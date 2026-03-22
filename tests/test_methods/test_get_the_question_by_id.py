@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.the_question_by_id_item import TheQuestionByIdItem
+from wbapi_async.types import TheQuestionByIdItem
 from tests.mocked_api import MockedAPI
 
 

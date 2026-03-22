@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.subject_characteristics_item import SubjectCharacteristicsItem
+from wbapi_async.types import SubjectCharacteristicsItem
 from tests.mocked_api import MockedAPI
 
 

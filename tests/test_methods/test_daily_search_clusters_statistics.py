@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
+from wbapi_async.types import DailySearchClustersStatisticsItem
 from tests.mocked_api import MockedAPI
 
 

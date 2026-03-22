@@ -1,18 +1,40 @@
 from typing import Any
 
 from ..client.session.base import BaseSession
+from ..enums import (
+    AggregationLevel,
+    BidType,
+    Height,
+    Height2,
+    Locale,
+    Order,
+    Order2,
+    PaymentType,
+    Period,
+    PinOn,
+    PositionCluster,
+    Sort,
+    Sort2,
+    Sort3,
+    Sort4,
+    State,
+    TopOrderBy,
+    Type,
+    Type2,
+    Width,
+    Width2,
+)
 from ..methods import (
-    WbMethod,
     AcceptanceOptions,
     ActiveAndInactiveSearchClusterLists,
     AddAssemblyOrdersToTheSupply,
     AddBoxesToTheSupply,
     AddCustomDeclarationNumberToTheOrder,
     AddCustomDeclarationToTheOrders,
-    AddDataMatrixCodeToTheAssemblyOrder,
-    AddDataMatrixCodeToTheOrder,
     AddDataMatrixCodesToAssemblyOrdersChestnyZnak,
     AddDataMatrixCodesToTheAssemblyOrdersChestnyZnak,
+    AddDataMatrixCodeToTheAssemblyOrder,
+    AddDataMatrixCodeToTheOrder,
     AddExpirationDateToTheAssemblyOrder,
     AddGtinToAssemblyOrders,
     AddGtinToTheAssemblyOrder,
@@ -23,10 +45,10 @@ from ..methods import (
     AddImeiToTheAssemblyOrders,
     AddImeiToTheOrder,
     AddProductToThePromotion,
+    AddUinUniqueIdentificationNumbersToTheAssemblyOrders,
     AddUinUniqueIdentificationNumberToAssemblyOrders,
     AddUinUniqueIdentificationNumberToTheAssemblyOrder,
     AddUinUniqueIdentificationNumberToTheOrder,
-    AddUinUniqueIdentificationNumbersToTheAssemblyOrders,
     AnswerBuyersApplication,
     AssignADataMatrixCodeToTheAssemblyOrder,
     B2BBuyerInformation,
@@ -41,8 +63,8 @@ from ..methods import (
     CheckIfTheOrderBelongsToTheBuyer,
     CourierInfo,
     CreateANewSupply,
-    CreateATag,
     CreateAnInvitationForANewUser,
+    CreateATag,
     CreateCampaign,
     CreatePass,
     CreateProductCards,
@@ -65,14 +87,14 @@ from ..methods import (
     EditResponseToFeedback,
     GenerationOfSkus,
     GetAListOfSellerActiveOrInvitedUsers,
-    GetASuppliesList,
     GetAllAssemblyOrdersForReshipment,
     GetAssemblyOrderMetadata,
-    GetAssemblyOrderStatuses,
     GetAssemblyOrders,
     GetAssemblyOrdersMetadata,
     GetAssemblyOrdersStatuses,
     GetAssemblyOrdersStickers,
+    GetAssemblyOrderStatuses,
+    GetASuppliesList,
     GetBalance,
     GetBlockedProductCards,
     GetBoxTariffs,
@@ -137,8 +159,8 @@ from ..methods import (
     GetProductCategoryCommission,
     GetProductDetail,
     GetProductLabeling,
-    GetProductSizesWithPrices,
     GetProductsInQuarantine,
+    GetProductSizesWithPrices,
     GetProductsParentCategories,
     GetProductsWithPrices,
     GetProductsWithPricesByArticles,
@@ -230,8 +252,8 @@ from ..methods import (
     SetBidsForSearchClusters,
     SetPricesAndDiscounts,
     SetSizePrices,
-    SetWbClubDiscounts,
     SettingAndDeletingMinusPhrases,
+    SetWbClubDiscounts,
     SizeData,
     StatusHistoryForCrossborderOrders,
     SuppliesList,
@@ -251,44 +273,31 @@ from ..methods import (
     UploadMediaFile,
     UploadMediaFilesViaLinks,
     WarehouseData,
+    WbMethod,
     WorkingWithQuestions,
 )
 from ..types import (
-    AListOfSellerActiveOrInvitedUsersItem,
-    ASuppliesListItem,
     AcceptanceOptionsItem,
     ActiveAndInactiveSearchClusterListsItem,
-    AddAssemblyOrdersToTheSupplyResponse,
     AddBoxesToTheSupplyItem,
-    AddCustomDeclarationNumberToTheOrderResponse,
-    AddCustomDeclarationToTheOrdersResponse,
-    AddDataMatrixCodeToTheAssemblyOrderResponse,
-    AddDataMatrixCodeToTheOrderResponse,
     AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem,
     AddDataMatrixCodesToTheAssemblyOrdersChestnyZnakItem,
-    AddExpirationDateToTheAssemblyOrderResponse,
     AddGtinToAssemblyOrdersItem,
-    AddGtinToTheAssemblyOrderResponse,
     AddGtinToTheAssemblyOrdersItem,
-    AddGtinToTheOrderResponse,
     AddImeiToAssemblyOrdersItem,
-    AddImeiToTheAssemblyOrderResponse,
     AddImeiToTheAssemblyOrdersItem,
-    AddImeiToTheOrderResponse,
     AddProductToThePromotionResponse,
-    AddUinUniqueIdentificationNumberToAssemblyOrdersItem,
-    AddUinUniqueIdentificationNumberToTheAssemblyOrderResponse,
-    AddUinUniqueIdentificationNumberToTheOrderResponse,
     AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem,
+    AddUinUniqueIdentificationNumberToAssemblyOrdersItem,
+    AListOfSellerActiveOrInvitedUsersItem,
     AllAssemblyOrdersForReshipmentItem,
-    AnswerBuyersApplicationResponse,
     AssemblyOrderMetadataResponse,
-    AssemblyOrderStatusesItem,
     AssemblyOrdersItem,
     AssemblyOrdersMetadataItem,
     AssemblyOrdersStatusesItem,
     AssemblyOrdersStickersItem,
-    AssignADataMatrixCodeToTheAssemblyOrderResponse,
+    AssemblyOrderStatusesItem,
+    ASuppliesListItem,
     B2BBuyerInformationItem,
     BalanceItem,
     BlockedProductCardsItem,
@@ -301,11 +310,8 @@ from ..types import (
     CampaignsListsItem,
     CampaignsStatisticsResponse,
     CancelAssemblyOrdersItem,
-    CancelTheAssemblyOrderResponse,
     CancelTheAssemblyOrdersItem,
-    CancelTheOrderResponse,
     ChangingCampaignsBidsItem,
-    ChangingPlacementsInCampaignsWithCustomBidResponse,
     ChangingTheListOfProductCardsInCampaignsItem,
     ChatEventsItem,
     ChatListItem,
@@ -317,8 +323,8 @@ from ..types import (
     CountryOfOriginResponse,
     CourierInfoItem,
     CreateANewSupplyResponse,
-    CreateATagResponse,
     CreateAnInvitationForANewUserResponse,
+    CreateATagResponse,
     CreateCampaignResponse,
     CreatePassResponse,
     CreateProductCardsResponse,
@@ -326,26 +332,14 @@ from ..types import (
     CreateTheReportResponse,
     CreateWarehouseResponse,
     DailySearchClustersStatisticsItem,
-    DeleteAssemblyOrderMetadataResponse,
     DeleteAssemblyOrdersMetadataItem,
-    DeleteBidsFromSearchClustersResponse,
-    DeleteBoxesFromTheSupplyResponse,
-    DeleteCampaignResponse,
-    DeleteInventoryResponse,
-    DeleteOrderMetadataResponse,
-    DeleteThePassResponse,
-    DeleteTheSupplyResponse,
     DeleteTheTagResponse,
-    DeleteUserResponse,
-    DeleteWarehouseResponse,
     DeliveryDateAndTimeItem,
     DocumentResponse,
     DocumentsCategoriesItem,
     DocumentsListItem,
     DocumentsResponse,
-    EditResponseToFeedbackResponse,
     FeedbacksListItem,
-    FileFromTheMessageResponse,
     GenderItem,
     GenerateTheReportResponse,
     GenerationOfSkusItem,
@@ -358,7 +352,6 @@ from ..types import (
     InformationOnCompletedOrdersItem,
     InformationOnPaidDeliveryResponse,
     InventoryItem,
-    LaunchCampaignResponse,
     LimitsForTheProductCardsResponse,
     ListOfArchivedFeedbacksItem,
     ListOfCampaignMinusPhrasesItem,
@@ -369,20 +362,15 @@ from ..types import (
     ListOfSearchClustersBidsItem,
     LogisticsAndStorageCostsMultiplierItem,
     MainPageResponse,
-    MediaCampaignStatisticsResponse,
     MediaCampaignsNumberResponse,
+    MediaCampaignStatisticsResponse,
     MergingOrSeparatingOfProductCardsResponse,
     MinimumBidsForProductCardsItem,
-    MoveTheSupplyToTheDeliveryResponse,
     NewAssemblyOrdersItem,
     NewAssemblyOrdersListItem,
     NewOrdersItem,
     NewOrdersListItem,
-    NotifyThatTheAssemblyOrderIsReadyForPickupResponse,
     NotifyThatTheAssemblyOrdersAreReadyForPickupItem,
-    NotifyThatTheBuyerHasDeclinedTheOrderResponse,
-    NotifyThatTheBuyerRefusedTheOrderResponse,
-    NotifyThatTheOrderHasBeenAcceptedByTheBuyerResponse,
     NotifyThatTheOrdersAreDeclinedItem,
     NotifyThatTheOrdersAreReceivedItem,
     NotifyThatTheOrdersWereReceivedByTheBuyersItem,
@@ -401,7 +389,6 @@ from ..types import (
     PalletTariffsItem,
     ParentCategoriesOfTheBrandItem,
     PassesResponse,
-    PauseCampaignResponse,
     PinFeedbackResponse,
     PinnedAndUnpinnedFeedbackNumberResponse,
     PinnedFeedbackLimitsResponse,
@@ -416,8 +403,8 @@ from ..types import (
     ProductDataItem,
     ProductDetail,
     ProductLabelingItem,
-    ProductSizesWithPricesItem,
     ProductsInQuarantineItem,
+    ProductSizesWithPricesItem,
     ProductsParentCategoriesResponse,
     ProductsWithPricesByArticlesItem,
     ProductsWithPricesItem,
@@ -430,8 +417,6 @@ from ..types import (
     RecommendedBidsForItemsAndSearchClustersItem,
     RecoverProductCardFromTrashResponse,
     RegenerateTheReportResponse,
-    RenameCampaignResponse,
-    ReplyToFeedbackResponse,
     ReportItem,
     ReportOnProductsWithMandatoryLabelingItem,
     RetrieveInformationOnCompletedAssemblyOrdersItem,
@@ -446,16 +431,13 @@ from ..types import (
     SellerInformationResponse,
     SellersBalanceResponse,
     SendMessageItem,
-    SetBidsForSearchClustersResponse,
     SetPricesAndDiscountsResponse,
     SetSizePricesResponse,
     SetWbClubDiscountsResponse,
-    SettingAndDeletingMinusPhrasesResponse,
     SizeDataItem,
     StatusHistoryForCrossborderOrdersItem,
     StickersForAssemblyOrdersWithDeliveryToPickupPointItem,
     StickersForCrossborderAssemblyOrdersItem,
-    StopCampaignResponse,
     SubjectCharacteristicsItem,
     SubjectsForCampaignsResponse,
     SubjectsListItem,
@@ -471,14 +453,11 @@ from ..types import (
     TagsListResponse,
     TheFeedbackByIdItem,
     TheQuestionByIdItem,
-    TheReportResponse,
     TheReportsListItem,
     TheSupplyBoxQrCodeStickersItem,
     TheSupplyQrCodeResponse,
     TopupOfTheCampaignBudgetResponse,
     TransferProductCardToTrashResponse,
-    TransferToAssemblyResponse,
-    TransferToDeliveryResponse,
     TransitDirectionsResponse,
     UnansweredFeedbacksItem,
     UnansweredQuestionsItem,
@@ -486,13 +465,8 @@ from ..types import (
     UnprocessedUploadDetailsItem,
     UnprocessedUploadStateResponse,
     UnseenFeedbacksAndQuestionsItem,
-    UpdateContactsListResponse,
-    UpdateInventoryResponse,
-    UpdatePassResponse,
     UpdateProductCardsResponse,
     UpdateTheTagResponse,
-    UpdateUsersAccessPermissionsResponse,
-    UpdateWarehouseResponse,
     UploadMediaFileResponse,
     UploadMediaFilesViaLinksResponse,
     VatRateItem,
@@ -540,7 +514,8 @@ class WbAPI:
         return await method.emit(self)
 
     async def acceptance_options(
-        self, warehouse_id: int | None = None,
+        self,
+        warehouse_id: int | None = None,
     ) -> list[AcceptanceOptionsItem]:
         """
         The method returns information about warehouses and package types available for supply. The
@@ -548,18 +523,20 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbw#tag/Information-for-Forming-Supplies/paths/~1api~1v1~1acceptance~1options/post
 
-        :param warehouse_id: Warehouse ID. <br> If the parameter is not specified, data for all
-                             warehousesis returned. <br> **Maximum is one value**
+        :param warehouse_id: Warehouse ID. If the parameter is not specified, data for all
+                             warehousesis returned. **Maximum is one value**
         :return: list[AcceptanceOptionsItem]
         """
         call = AcceptanceOptions(warehouse_id=warehouse_id)
         return await self(call)
 
     async def active_and_inactive_search_cluster_lists(
-        self, items: list[Any] = None,
+        self,
+        items: list[Any] = None,
     ) -> list[ActiveAndInactiveSearchClusterListsItem]:
         """
-        Returns lists of active and inactive search clusters with at least 100 views.
+        Returns lists of active and inactive search clusters with at least 100 views. Request limit
+        perone seller's account:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Search-Clusters/paths/~1adv~1v0~1normquery~1list/post
         :return: list[ActiveAndInactiveSearchClusterListsItem]
@@ -588,10 +565,14 @@ class WbAPI:
         return await self(call)
 
     async def add_boxes_to_the_supply(
-        self, supply_id: str, amount: int = None,
+        self,
+        supply_id: str,
+        amount: int = None,
     ) -> list[AddBoxesToTheSupplyItem]:
         """
-        Adds the required number of boxes to the supply.
+        Adds the required number of boxes to the supply. You should add boxes only to supplies
+        shippedto the pickup points. You can add boxes to an open supply only. You can add as many
+        boxesas there are items in the supply, plus one more box.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Supplies/paths/~1api~1v3~1supplies~1%7BsupplyId%7D~1trbx/post
 
@@ -660,9 +641,9 @@ class WbAPI:
         sgtins: list[str] | None = None,
     ) -> None:
         """
-        This method allows you to assign a Data Matrix code (Chestny ZNAK marking) to an order.
-        <br>The assignment of a Data Matrix code to an order is only possible if this field is
-        returnedin the response of the [Get order
+        This method allows you to assign a Data Matrix code (Chestny ZNAK marking) to an order. The
+        assignmentof a Data Matrix code to an order is only possible if this field is returned in
+        theresponse of the [Get order
         metadata](/openapi/orders-dbw#tag/DBW-Metadata/paths/~1api~1v3~1dbw~1orders~1%7BorderId%7D~1meta/get)
         methodand the order is in the `confirm` status.
 
@@ -680,7 +661,12 @@ class WbAPI:
         orders: list[Any] = None,
     ) -> list[AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem]:
         """
-        Sets the Data Matrix code (Chestny ZNAK marking) for the assembly orders. <br>
+        Sets the Data Matrix code (Chestny ZNAK marking) for the assembly orders. You can set the
+        DataMatrix code only for orders in the `confirm` status and if the field `sgtin` is
+        returnedin the response of the [Get order
+        metadata](orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1info/post)
+        method.For more information about Data Matrix Codes please check:
+        https://chestnyznak.ru/en/.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1sgtin/post
         :return: list[AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem]
@@ -694,7 +680,12 @@ class WbAPI:
     ) -> list[AddDataMatrixCodesToTheAssemblyOrdersChestnyZnakItem]:
         """
         The method sets Data Matrix codes (Chestny ZNAK) to the [assembly orders
-        metadata](/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1info/post).<br><br>
+        metadata](/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1info/post).
+        Youcan set the Data Matrix codes only for orders in the `confirm` status and if the field
+        `sgtin`is returned in the response of the [Get order
+        metadata](/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1info/post)
+        method.You can get the uploaded Data Matrix codes in the [assembly orders
+        metadata](/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1info/post).
 
         Source: https://dev.wildberries.ru/en/docs/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1sgtin/post
         :return: list[AddDataMatrixCodesToTheAssemblyOrdersChestnyZnakItem]
@@ -708,7 +699,12 @@ class WbAPI:
         expiration: str | None = None,
     ) -> None:
         """
-        Sets the expiration date for the assembly order.
+        Sets the expiration date for the assembly order. The expiration date can only be added for
+        assemblyorders that are delivered by WB and are in the `confirm` status. You can get the
+        uploadeddata in the [metadata of the assembly
+        order](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1marketplace~1v3~1orders~1meta/post).
+        Tochange the expiration date, send a request with the new date. It is impossible to remove
+        theexpiration date from the metadata of the assembly order.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1expiration/put
 
@@ -721,12 +717,16 @@ class WbAPI:
         return await self(call)
 
     async def add_gtin_to_assembly_orders(
-        self, orders: list[Any] = None,
+        self,
+        orders: list[Any] = None,
     ) -> list[AddGtinToAssemblyOrdersItem]:
         """
         Sets the GTIN, Belarus product unique identifier, for the assembly order
         metadata(./orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1info/post).
-        <br>
+        Theassembly order can only have one GTIN. You can set the GTIN only for orders in the
+        `confirmed`
+        [status](/openapi/orders-dbs#tag/DBS-Assembly-Orders/paths/~1api~1marketplace~1v3~1dbs~1orders~1status~1info/post)
+        andthat are delivered by Wildberries.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1gtin/post
         :return: list[AddGtinToAssemblyOrdersItem]
@@ -735,7 +735,9 @@ class WbAPI:
         return await self(call)
 
     async def add_gtin_to_the_assembly_order(
-        self, order_id: int, gtin: str = None,
+        self,
+        order_id: int,
+        gtin: str = None,
     ) -> None:
         """
         Sets the GTIN (Belarus product unique identifier) for the assembly order. The assembly
@@ -752,12 +754,17 @@ class WbAPI:
         return await self(call)
 
     async def add_gtin_to_the_assembly_orders(
-        self, orders: list[Any] = None,
+        self,
+        orders: list[Any] = None,
     ) -> list[AddGtinToTheAssemblyOrdersItem]:
         """
         The method sets the GTIN, Belarus product unique identifier, for the for the assembly
         orders
         [metadata](/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1info/post).
+        Theassembly order can only have one GTIN. You can add the GTIN only for assembly orders in
+        the`confirm`
+        [status](/openapi/in-store-pickup#tag/In-Store-Pickup-Assembly-Orders/paths/~1api~1marketplace~1v3~1click-collect~1orders~1status~1info/post)
+        andthat are delivered by WB.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1gtin/post
         :return: list[AddGtinToTheAssemblyOrdersItem]
@@ -766,7 +773,9 @@ class WbAPI:
         return await self(call)
 
     async def add_gtin_to_the_order(
-        self, order_id: int, gtin: str = None,
+        self,
+        order_id: int,
+        gtin: str = None,
     ) -> None:
         """
         Sets the GTIN (Belarus product unique identifier) for the order. The order can only have
@@ -782,12 +791,16 @@ class WbAPI:
         return await self(call)
 
     async def add_imei_to_assembly_orders(
-        self, orders: list[Any] = None,
+        self,
+        orders: list[Any] = None,
     ) -> list[AddImeiToAssemblyOrdersItem]:
         """
         Sets the IMEI for the [assembly orders
         metadata](/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1info/post).
-        <br>
+        Theassembly order can have only one IMEI. You can add the IMEI only for orders in the
+        `confirmed`
+        [status](/openapi/orders-dbs#tag/DBS-Assembly-Orders/paths/~1api~1marketplace~1v3~1dbs~1orders~1status~1info/post)
+        andthat are delivered by Wildberries.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1imei/post
         :return: list[AddImeiToAssemblyOrdersItem]
@@ -796,10 +809,15 @@ class WbAPI:
         return await self(call)
 
     async def add_imei_to_the_assembly_order(
-        self, order_id: int, imei: str = None,
+        self,
+        order_id: int,
+        imei: str = None,
     ) -> None:
         """
-        Sets the IMEI for the assembly order.
+        Sets the IMEI for the assembly order. The assembly order can have only one IMEI. If a
+        devicehas two IMEIs — **IMEI** and **IMEI2** or **IMEI1** and **IMEI2** — you should only
+        specify**IMEI** or **IMEI1**. You don't need to specify **IMEI2**. You can add the code
+        onlyfor assembly orders in the `confirm` status.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1imei/put
 
@@ -811,12 +829,16 @@ class WbAPI:
         return await self(call)
 
     async def add_imei_to_the_assembly_orders(
-        self, orders: list[Any] = None,
+        self,
+        orders: list[Any] = None,
     ) -> list[AddImeiToTheAssemblyOrdersItem]:
         """
         Sets the IMEI for the [assembly orders
         metadata](/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1info/post).
-        <br>
+        Theassembly order can have only one IMEI. You can add the IMEI only for assembly orders in
+        the`confirm`
+        [status](/openapi/in-store-pickup#tag/In-Store-Pickup-Assembly-Orders/paths/~1api~1marketplace~1v3~1click-collect~1orders~1status~1info/post)
+        thatare delivered by Wildberries.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1imei/post
         :return: list[AddImeiToTheAssemblyOrdersItem]
@@ -825,7 +847,9 @@ class WbAPI:
         return await self(call)
 
     async def add_imei_to_the_order(
-        self, order_id: int, imei: str = None,
+        self,
+        order_id: int,
+        imei: str = None,
     ) -> None:
         """
         Sets the IMEI for the order. The order can have only one IMEI. You can add the code only
@@ -841,10 +865,11 @@ class WbAPI:
         return await self(call)
 
     async def add_product_to_the_promotion(
-        self, data: dict[str, Any] | None = None,
+        self,
+        data: dict[str, Any] | None = None,
     ) -> list[AddProductToThePromotionResponse]:
         """
-        Creates a product upload for the promotion.<br>The upload status can be checked using
+        Creates a product upload for the promotion. The upload status can be checked using
         [separate
         methods](/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1history~1tasks/get).
 
@@ -863,7 +888,10 @@ class WbAPI:
         """
         Sets the UIN to the [assembly orders
         metadata](/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1info/post).
-        <br>
+        Theorder can only have one UIN. You can add the UIN only for assembly orders in the
+        `confirmed`
+        [status](/openapi/orders-dbs#tag/DBS-Assembly-Orders/paths/~1api~1marketplace~1v3~1dbs~1orders~1status~1info/post)
+        andthat are delivered by Wildberries.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1uin/post
         :return: list[AddUinUniqueIdentificationNumberToAssemblyOrdersItem]
@@ -914,6 +942,10 @@ class WbAPI:
         """
         The method sets the UIN (Unique Identification Numbers) for the [assembly orders
         metadata](/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1info/post).
+        Theorder can only have one UIN. You can add the UIN only for assembly orders in the
+        `confirm`
+        [status](/openapi/in-store-pickup#tag/In-Store-Pickup-Assembly-Orders/paths/~1api~1marketplace~1v3~1click-collect~1orders~1status~1info/post)
+        andthat are delivered by WB.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1marketplace~1v3~1click-collect~1orders~1meta~1uin/post
         :return: list[AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem]
@@ -933,11 +965,11 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Buyers-Returns/paths/~1api~1v1~1claim/patch
 
         :param id: Application ID
-        :param action: Application action.<br>Use one of the `actions` array values from the
-                       responseof the getting [buyers
+        :param action: Application action. Use one of the `actions` array values from the response
+                       ofthe getting [buyers
                        applications](./user-communication#tag/Buyers-Returns/paths/~1api~1v1~1claims/get)
                        method
-        :param comment: Comment.<br>Only when `"action":"rejectcustom"` or `"action":"approvecc1"`.
+        :param comment: Comment. Only when `"action":"rejectcustom"` or `"action":"approvecc1"`.
                         When`"action":"rejectcustom"` this parameter is required
         :return: None
         """
@@ -963,10 +995,13 @@ class WbAPI:
         return await self(call)
 
     async def b2b_buyer_information(
-        self, orders_ids: list[int] | None = None,
+        self,
+        orders_ids: list[int] | None = None,
     ) -> list[B2BBuyerInformationItem]:
         """
-        The method returns B2B buyers data by assembly orders ID:
+        The method returns B2B buyers data by assembly orders ID: - Taxpayer Identification Number
+        (TINor INN in Russian) - Code of Reason for Registration (CRR or KPP in Russian) - Company
+        name
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Assembly-Orders/paths/~1api~1marketplace~1v3~1dbs~1orders~1b2b~1info/post
 
@@ -977,7 +1012,8 @@ class WbAPI:
         return await self(call)
 
     async def buyer_information(
-        self, orders: list[int] | None = None,
+        self,
+        orders: list[int] | None = None,
     ) -> list[BuyerInformationItem]:
         """
         The method returns buyers information by order IDs.
@@ -991,7 +1027,8 @@ class WbAPI:
         return await self(call)
 
     async def cancel_assembly_orders(
-        self, orders_ids: list[int] | None = None,
+        self,
+        orders_ids: list[int] | None = None,
     ) -> list[CancelAssemblyOrdersItem]:
         """
         The method transfers [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders) with
@@ -1008,7 +1045,8 @@ class WbAPI:
         return await self(call)
 
     async def cancel_the_assembly_order(
-        self, order_id: int,
+        self,
+        order_id: int,
     ) -> None:
         """
         Moves the assembly orders to `cancel` ("Canceled by the supplier") status.
@@ -1022,7 +1060,8 @@ class WbAPI:
         return await self(call)
 
     async def cancel_the_assembly_orders(
-        self, orders_ids: list[int] | None = None,
+        self,
+        orders_ids: list[int] | None = None,
     ) -> list[CancelTheAssemblyOrdersItem]:
         """
         The method transfers [assembly
@@ -1040,7 +1079,8 @@ class WbAPI:
         return await self(call)
 
     async def cancel_the_order(
-        self, order_id: int,
+        self,
+        order_id: int,
     ) -> None:
         """
         Moves the assembly order to `cancel` status — canceled by the seller.
@@ -1054,10 +1094,12 @@ class WbAPI:
         return await self(call)
 
     async def changing_campaigns_bids(
-        self, bids: list[dict[str, Any]] = None,
+        self,
+        bids: list[dict[str, Any]] = None,
     ) -> list[ChangingCampaignsBidsItem]:
         """
-        The method changes the bids of product cards by WB articles in campaigns:
+        The method changes the bids of product cards by WB articles in campaigns: - with standard
+        bid- with custom bid - with a `cpc` payment model — per click
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1api~1advert~1v1~1bids/patch
 
@@ -1073,7 +1115,7 @@ class WbAPI:
     ) -> None:
         """
         The method allows you to change placements in campaigns with custom bid and per mille
-        paymentmodel — `cpm`.
+        paymentmodel — `cpm`. For campaigns in statuses `4`, `9` and `11`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1auction~1placements/put
 
@@ -1088,7 +1130,8 @@ class WbAPI:
         nms: list[dict[str, Any]] = None,
     ) -> list[ChangingTheListOfProductCardsInCampaignsItem]:
         """
-        The method allows you to add and remove product cards in campaigns.
+        The method allows you to add and remove product cards in campaigns. For campaigns in
+        statuses`4`, `9` and `11`. The current minimum bid is set for the added products.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1auction~1nms/patch
 
@@ -1105,7 +1148,8 @@ class WbAPI:
     ) -> list[CheckIfTheOrderBelongsToTheBuyerResponse]:
         """
         The method indicates whether the checked order belongs to the buyer based on the provided
-        code.
+        code.Available if at least one assembly order from the order is in `prepare` status — ready
+        forpickup.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/in-store-pickup#tag/In-Store-Pickup-Assembly-Orders/paths/~1api~1v3~1click-collect~1orders~1client~1identity/post
 
@@ -1117,7 +1161,8 @@ class WbAPI:
         return await self(call)
 
     async def courier_info(
-        self, orders: list[int] | None = None,
+        self,
+        orders: list[int] | None = None,
     ) -> list[CourierInfoItem]:
         """
         Method provides the courier's contact information and vehicle number based on the assembly
@@ -1132,7 +1177,8 @@ class WbAPI:
         return await self(call)
 
     async def create_a_new_supply(
-        self, name: str | None = None,
+        self,
+        name: str | None = None,
     ) -> list[CreateANewSupplyResponse]:
         """
         **Supplies limitations**:
@@ -1146,7 +1192,9 @@ class WbAPI:
         return await self(call)
 
     async def create_a_tag(
-        self, color: str | None = None, name: str | None = None,
+        self,
+        color: str | None = None,
+        name: str | None = None,
     ) -> list[CreateATagResponse]:
         """
         Creates a tag.
@@ -1166,7 +1214,7 @@ class WbAPI:
         invite: dict[str, Any] = None,
     ) -> list[CreateAnInvitationForANewUserResponse]:
         """
-        <div class="description_token">
+        Method is available by Personal token
 
         Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-User-Management/paths/~1api~1v1~1invite/post
 
@@ -1180,12 +1228,14 @@ class WbAPI:
         self,
         name: str | None = None,
         nms: list[int] | None = None,
-        bid_type: str | None = "manual",
-        payment_type: str | None = "cpm",
-        placement_types: list[str] | None = ['search'],
+        bid_type: BidType | None = "manual",
+        payment_type: PaymentType | None = "cpm",
+        placement_types: list[str] | None = ("search",),
     ) -> list[CreateCampaignResponse]:
         """
-        The method creates campaign:
+        The method creates campaign: - with custom bid for promotion products in search and/or
+        recommendations- with standard bid for promotion products both in search and
+        recommendations
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Creation/paths/~1adv~1v2~1seacat~1save-ad/post
 
@@ -1217,7 +1267,8 @@ class WbAPI:
         office_id: int = None,
     ) -> list[CreatePassResponse]:
         """
-        Creates a supplier pass. <br> The pass is valid for 48 hours from the time of creation.
+        Creates a supplier pass. The pass is valid for 48 hours from the time of creation. Maximum
+        of1 request per 10 minutes per one seller's account
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Passes/paths/~1api~1v3~1passes/post
 
@@ -1241,7 +1292,7 @@ class WbAPI:
         self,
     ) -> list[CreateProductCardsResponse]:
         """
-        Creates products cards. You can specify product description and characteristics.<br>
+        Creates products cards. You can specify product description and characteristics.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload/post
         :return: list[CreateProductCardsResponse]
@@ -1257,7 +1308,14 @@ class WbAPI:
         """
         The method creates product cards by merging it with existing individual cards and groups of
         mergedcards. There can be no more than 30 cards in one group of merged product cards,
-        respectively,you can create no more than 29 product cards in one request.
+        respectively,you can create no more than 29 product cards in one request. The dimensions of
+        theproducts can only be specified in `centimeters`, and the weight of packed products must
+        bespecified in `kilograms`. If this method response is Success (`200`) but product card was
+        notupdated, check errors using [list of failed nomenclature with
+        errors](/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1error~1list/post).
+        Productcards are created asynchronously. The process of synchronizing a new card with
+        servicesmay take up to 30 minutes. During this time, you can't add inventory to warehouses
+        andset prices.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload~1add/post
 
@@ -1273,7 +1331,9 @@ class WbAPI:
         self,
     ) -> list[CreateTheReportResponse]:
         """
-        The method creates a task for generating a report with advanced seller analytics.
+        The method creates a task for generating a report with advanced seller analytics. You can
+        createa CSV-version of [sales funnel](/openapi/analytics#tag/Sales-Funnel) or [search
+        parameters](/openapi/analytics#tag/Search-Queries-for-Your-Items)report with grouping:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Seller-Analytics-CSV/paths/~1api~1v2~1nm-report~1downloads/post
         :return: list[CreateTheReportResponse]
@@ -1282,7 +1342,9 @@ class WbAPI:
         return await self(call)
 
     async def create_warehouse(
-        self, name: str = None, office_id: int = None,
+        self,
+        name: str = None,
+        office_id: int = None,
     ) -> list[CreateWarehouseResponse]:
         """
         Creates a seller's warehouse. You cannot link an office that is already in use.
@@ -1304,7 +1366,7 @@ class WbAPI:
     ) -> list[DailySearchClustersStatisticsItem]:
         """
         Returns statistics (views, clicks, add-to-cart, orders, CTR, CPC, CPM, etc.) by search
-        clustersfor the specified period detailed by day.
+        clustersfor the specified period detailed by day. Request limit per one seller's account:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Statistics/paths/~1adv~1v1~1normquery~1stats/post
 
@@ -1316,10 +1378,22 @@ class WbAPI:
         return await self(call)
 
     async def delete_assembly_order_metadata(
-        self, order_id: int, key: str | None = None,
+        self,
+        order_id: int,
+        key: str | None = None,
     ) -> None:
         """
-        Removes all assembly order metadata values for the passed key.
+        Removes all assembly order metadata values for the passed key. Possible metadata are: -
+        `imei`—
+        [IMEI](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1imei/put)
+        -`uin` —
+        [UIN](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1uin/put)
+        -`gtin` —
+        [GTIN](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1gtin/put)
+        -`sgtin` — [Data matrix
+        code](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1sgtin/put)
+        -`customsDeclaration` — [customs declaration
+        number](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1marketplace~1v3~1orders~1%7BorderId%7D~1meta~1customs-declaration/put)
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta/delete
 
@@ -1339,7 +1413,17 @@ class WbAPI:
         """
         Removes all [assembly order
         metadata](/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1info/post)
-        values.
+        values.You can only delete one type of metadata in one request. Specify the metadata type
+        inthe request: - `imei` —
+        [IMEI](/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1imei/post)
+        -`uin` —
+        [UIN](/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1uin/post)
+        -`gtin` —
+        [GTIN](/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1gtin/post)
+        -`sgtin` — [Data Matrix
+        code](/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1sgtin/post)
+        -`customsDeclaration` — [customs declaration
+        number](/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1meta~1customs-declaration/post)
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1marketplace~1v3~1dbs~1orders~1meta~1delete/post
 
@@ -1352,10 +1436,12 @@ class WbAPI:
         return await self(call)
 
     async def delete_bids_from_search_clusters(
-        self, bids: list[Any] = None,
+        self,
+        bids: list[Any] = None,
     ) -> None:
         """
-        The method deletes the bids from search clusters.<br>
+        The method deletes the bids from search clusters. You can use this method only for
+        campaignswith: - custom bid - a `cpm` payment model — per displays
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Search-Clusters/paths/~1adv~1v0~1normquery~1bids/delete
         :return: None
@@ -1364,7 +1450,9 @@ class WbAPI:
         return await self(call)
 
     async def delete_boxes_from_the_supply(
-        self, supply_id: str, trbx_ids: list[str] = None,
+        self,
+        supply_id: str,
+        trbx_ids: list[str] = None,
     ) -> None:
         """
         The method deletes boxes from the supply. Available only while the supply is being
@@ -1380,7 +1468,9 @@ class WbAPI:
         return await self(call)
 
     async def delete_inventory(
-        self, warehouse_id: int, chrt_ids: list[int] = None,
+        self,
+        warehouse_id: int,
+        chrt_ids: list[int] = None,
     ) -> None:
         """
         Deletes product inventory.
@@ -1395,7 +1485,9 @@ class WbAPI:
         return await self(call)
 
     async def delete_order_metadata(
-        self, order_id: int, key: str | None = None,
+        self,
+        order_id: int,
+        key: str | None = None,
     ) -> None:
         """
         Removes all order metadata values for the passed key. Possible metadata is `imei`, `uin`,
@@ -1412,7 +1504,8 @@ class WbAPI:
         return await self(call)
 
     async def delete_the_pass(
-        self, pass_id: int,
+        self,
+        pass_id: int,
     ) -> None:
         """
         Deletes the seller's pass
@@ -1426,7 +1519,8 @@ class WbAPI:
         return await self(call)
 
     async def delete_the_supply(
-        self, supply_id: str,
+        self,
+        supply_id: str,
     ) -> None:
         """
         Deleted the supply if it is active and does not contain any assembly orders.
@@ -1440,7 +1534,8 @@ class WbAPI:
         return await self(call)
 
     async def delete_the_tag(
-        self, id: int,
+        self,
+        id: int,
     ) -> list[DeleteTheTagResponse]:
         """
         Deletes the tag
@@ -1454,10 +1549,11 @@ class WbAPI:
         return await self(call)
 
     async def delete_user(
-        self, deleted_user_id: int = None,
+        self,
+        deleted_user_id: int = None,
     ) -> None:
         """
-        <div class="description_token">
+        Method is available by Personal token
 
         Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-User-Management/paths/~1api~1v1~1user/delete
 
@@ -1468,7 +1564,8 @@ class WbAPI:
         return await self(call)
 
     async def delete_warehouse(
-        self, warehouse_id: int,
+        self,
+        warehouse_id: int,
     ) -> None:
         """
         Deletes the seller's warehouse.
@@ -1482,7 +1579,8 @@ class WbAPI:
         return await self(call)
 
     async def delivery_date_and_time(
-        self, orders: list[int] | None = None,
+        self,
+        orders: list[int] | None = None,
     ) -> list[DeliveryDateAndTimeItem]:
         """
         Method provides information about the delivery date and time selected by the buyer for
@@ -1497,10 +1595,14 @@ class WbAPI:
         return await self(call)
 
     async def edit_response_to_feedback(
-        self, id: str = None, text: str = None,
+        self,
+        id: str = None,
+        text: str = None,
     ) -> None:
         """
-        Allows you to edit an already sent response to the feedback.
+        Allows you to edit an already sent response to the feedback. You can edit the response only
+        oncewithin 60 days. There is no validation by `feedback ID`: if an incorrect value is
+        providedin the request, you will not receive an error.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedbacks~1answer/patch
 
@@ -1512,7 +1614,8 @@ class WbAPI:
         return await self(call)
 
     async def generation_of_skus(
-        self, count: int | None = None,
+        self,
+        count: int | None = None,
     ) -> list[GenerationOfSkusItem]:
         """
         Generates array of unique SKUs to create size of the product card
@@ -1532,7 +1635,7 @@ class WbAPI:
         is_invite_only: bool | None = False,
     ) -> list[AListOfSellerActiveOrInvitedUsersItem]:
         """
-        <div class="description_token">
+        Method is available by Personal token
 
         Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-User-Management/paths/~1api~1v1~1users/get
 
@@ -1551,7 +1654,9 @@ class WbAPI:
         return await self(call)
 
     async def get_a_supplies_list(
-        self, limit: int = None, next: int = None,
+        self,
+        limit: int = None,
+        next: int = None,
     ) -> list[ASuppliesListItem]:
         """
         Returns the supply list.
@@ -1580,7 +1685,8 @@ class WbAPI:
         return await self(call)
 
     async def get_assembly_order_metadata(
-        self, order_id: int,
+        self,
+        order_id: int,
     ) -> list[AssemblyOrderMetadataResponse]:
         """
         This method is deprecated. It will be removed on [May
@@ -1595,7 +1701,8 @@ class WbAPI:
         return await self(call)
 
     async def get_assembly_order_statuses(
-        self, orders_ids: list[int] | None = None,
+        self,
+        orders_ids: list[int] | None = None,
     ) -> list[AssemblyOrderStatusesItem]:
         """
         Returns the statuses of [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders)
@@ -1617,7 +1724,7 @@ class WbAPI:
         date_to: int | None = None,
     ) -> list[AssemblyOrdersItem]:
         """
-        Returns assembly orders information without current status. <br>You can get data for a
+        Returns assembly orders information without current status. You can get data for a
         specifiedperiod, maximum of 30 calendar days per request.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Assembly-Orders/paths/~1api~1v3~1orders/get
@@ -1635,12 +1742,27 @@ class WbAPI:
         return await self(call)
 
     async def get_assembly_orders_metadata(
-        self, orders: list[int] = None,
+        self,
+        orders: list[int] = None,
     ) -> list[AssemblyOrdersMetadataItem]:
         """
         The method returns metadata for [assembly
         orders](/openapi/orders-fbs#tag/FBS-Assembly-Orders/paths/~1api~1v3~1orders/get)by the list
-        oftheir IDs.
+        oftheir IDs. You can get the list of metadata available for an assembly order in the
+        `requiredMeta`and `optionalMeta` fields in the response of the [Get New Assembly
+        Orders](/openapi/orders-fbs#tag/FBS-Assembly-Orders/paths/~1api~1v3~1orders~1new/get)
+        method.Possible metadata: - `imei` —
+        [IMEI](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1imei/put)
+        -`uin` —
+        [UIN](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1uin/put)
+        -`gtin` —
+        [GTIN](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1gtin/put)
+        -`sgtin` — [Data matrix
+        code](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1sgtin/put)
+        -`expiration` — [Expiration
+        date](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1v3~1orders~1%7BorderId%7D~1meta~1expiration/put)
+        -`customsDeclaration` — [customs declaration
+        number](/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1marketplace~1v3~1orders~1%7BorderId%7D~1meta~1customs-declaration/put)
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Metadata/paths/~1api~1marketplace~1v3~1orders~1meta/post
         :return: list[AssemblyOrdersMetadataItem]
@@ -1649,7 +1771,8 @@ class WbAPI:
         return await self(call)
 
     async def get_assembly_orders_statuses(
-        self, orders: list[int] = None,
+        self,
+        orders: list[int] = None,
     ) -> list[AssemblyOrdersStatusesItem]:
         """
         Returns the statuses of assembly orders from the request.
@@ -1664,13 +1787,14 @@ class WbAPI:
 
     async def get_assembly_orders_stickers(
         self,
-        type: str = None,
-        width: int = None,
-        height: int = None,
+        type: Type = None,
+        width: Width = None,
+        height: Height = None,
         orders: list[int] | None = None,
     ) -> list[AssemblyOrdersStickersItem]:
         """
-        Returns a list of stickers according to the requested assembly orders.
+        Returns a list of stickers according to the requested assembly orders. You can request a
+        stickerin `svg`, `zplv` (vertical), `zplh` (horizontal) and `png` formats.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Assembly-Orders/paths/~1api~1v3~1orders~1stickers/post
 
@@ -1687,7 +1811,7 @@ class WbAPI:
         self,
     ) -> list[BalanceItem]:
         """
-        The method allows to get information about the seller's net, balance and bonuses<br>
+        The method allows to get information about the seller's net, balance and bonuses
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Finances/paths/~1adv~1v1~1balance/get
         :return: list[BalanceItem]
@@ -1696,7 +1820,9 @@ class WbAPI:
         return await self(call)
 
     async def get_blocked_product_cards(
-        self, sort: str = None, order: str = None,
+        self,
+        sort: Sort2 = None,
+        order: Order2 = None,
     ) -> list[BlockedProductCardsItem]:
         """
         Returns the list of [blocked product
@@ -1712,11 +1838,14 @@ class WbAPI:
         return await self(call)
 
     async def get_box_tariffs(
-        self, date: str = None,
+        self,
+        date: str = None,
     ) -> list[BoxTariffsItem]:
         """
         For items inventory supplied to the warehouse in boxes, the method returns the
-        [rates](https://seller.wildberries.ru/dynamic-product-categories):
+        [rates](https://seller.wildberries.ru/dynamic-product-categories):- for delivery from
+        warehouseor sorting center to the buyer - for delivery from the buyer to the sorting center
+        -for storage on WB warehouse
 
         Source: https://dev.wildberries.ru/en/docs/openapi/tariffs#tag/Stock-Tariffs/paths/~1api~1v1~1tariffs~1box/get
 
@@ -1727,7 +1856,9 @@ class WbAPI:
         return await self(call)
 
     async def get_brands(
-        self, subject_id: int = None, next: int | None = None,
+        self,
+        subject_id: int = None,
+        next: int | None = None,
     ) -> list[BrandsItem]:
         """
         The method returns list of brands by subject ID.
@@ -1772,7 +1903,8 @@ class WbAPI:
         return await self(call)
 
     async def get_campaign_budget(
-        self, id: int = None,
+        self,
+        id: int = None,
     ) -> list[CampaignBudgetResponse]:
         """
         The method allows to get information about the budget of a campaign.
@@ -1789,7 +1921,7 @@ class WbAPI:
         self,
         ids: str | None = None,
         statuses: str | None = None,
-        payment_type: str | None = None,
+        payment_type: PaymentType | None = None,
     ) -> list[CampaignsInformationItem]:
         """
         The method returns information about campaigns with standard or custom bid via statuses,
@@ -1825,7 +1957,8 @@ class WbAPI:
         end_date: str = None,
     ) -> list[CampaignsStatisticsResponse]:
         """
-        The method generates statistics for campaigns, regardless of their type.
+        The method generates statistics for campaigns, regardless of their type. The maximum period
+        ina request is 31 days. For campaigns in statuses `7`, `9` and `11`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Statistics/paths/~1adv~1v3~1fullstats/get
 
@@ -1838,15 +1971,16 @@ class WbAPI:
         return await self(call)
 
     async def get_chat_events(
-        self, next: int | None = None,
+        self,
+        next: int | None = None,
     ) -> list[ChatEventsItem]:
         """
         Returns an event list for all chats.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Buyers-Chat/paths/~1api~1v1~1seller~1events/get
 
-        :param next: Paginator. Retrieve the next data packet starting from this moment.
-                     <br>Format:Unix timestamp **with milliseconds**
+        :param next: Paginator. Retrieve the next data packet starting from this moment. Format:
+                     Unixtimestamp **with milliseconds**
         :return: list[ChatEventsItem]
         """
         call = GetChatEvents(next=next)
@@ -1865,7 +1999,8 @@ class WbAPI:
         return await self(call)
 
     async def get_check_the_status(
-        self, task_id: str,
+        self,
+        task_id: str,
     ) -> list[CheckTheStatusResponse]:
         """
         Returns the status of the generation task
@@ -1879,7 +2014,8 @@ class WbAPI:
         return await self(call)
 
     async def get_color(
-        self, locale: str | None = None,
+        self,
+        locale: str | None = None,
     ) -> list[ColorResponse]:
         """
         Provides values of color characteristic.
@@ -1896,7 +2032,8 @@ class WbAPI:
         self,
     ) -> list[ConnectionCheckResponse]:
         """
-        Checks:
+        Checks: 1. Whether the request successfully reaches the WB API. 2. The validity of the
+        authorizationtoken and request URL. 3. Whether the token category matches the service.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/WB-API-Connection-Check/paths/~1ping/get
         :return: list[ConnectionCheckResponse]
@@ -1905,10 +2042,12 @@ class WbAPI:
         return await self(call)
 
     async def get_contacts_list(
-        self, warehouse_id: int,
+        self,
+        warehouse_id: int,
     ) -> list[ContactsListItem]:
         """
-        Returns a list of contacts linked to the seller's warehouse.
+        Returns a list of contacts linked to the seller's warehouse. Only for warehouses with
+        deliverytype `3` — Delivery by WB courier (DBW).
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1dbw~1warehouses~1%7BwarehouseId%7D~1contacts/get
 
@@ -1919,7 +2058,8 @@ class WbAPI:
         return await self(call)
 
     async def get_country_of_origin(
-        self, locale: str | None = None,
+        self,
+        locale: str | None = None,
     ) -> list[CountryOfOriginResponse]:
         """
         Provides value of characteristic country of origin.
@@ -1978,10 +2118,11 @@ class WbAPI:
         return await self(call)
 
     async def get_delete_campaign(
-        self, id: int = None,
+        self,
+        id: int = None,
     ) -> None:
         """
-        The method allows to delete campaigns in the status `4` — ready to launch. <br>
+        The method allows to delete campaigns in the status `4` — ready to launch.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1delete/get
 
@@ -1992,7 +2133,9 @@ class WbAPI:
         return await self(call)
 
     async def get_document(
-        self, service_name: str = None, extension: str = None,
+        self,
+        service_name: str = None,
+        extension: str = None,
     ) -> list[DocumentResponse]:
         """
         Returns one document
@@ -2007,7 +2150,8 @@ class WbAPI:
         return await self(call)
 
     async def get_documents(
-        self, params: list[dict[str, Any]] | None = None,
+        self,
+        params: list[dict[str, Any]] | None = None,
     ) -> list[DocumentsResponse]:
         """
         Returns more than one document.
@@ -2019,7 +2163,8 @@ class WbAPI:
         return await self(call)
 
     async def get_documents_categories(
-        self, locale: str | None = "en",
+        self,
+        locale: str | None = "en",
     ) -> list[DocumentsCategoriesItem]:
         """
         Returns documents categories
@@ -2037,8 +2182,8 @@ class WbAPI:
         locale: str | None = "en",
         begin_time: str | None = None,
         end_time: str | None = None,
-        sort: str | None = "date",
-        order: str | None = "desc",
+        sort: Sort4 | None = "date",
+        order: Order2 | None = "desc",
         category: str | None = None,
         service_name: str | None = None,
         limit: int | None = 50,
@@ -2081,7 +2226,7 @@ class WbAPI:
         nm_id: int | None = None,
         take: int = None,
         skip: int = None,
-        order: str | None = None,
+        order: Order | None = None,
         date_from: int | None = None,
         date_to: int | None = None,
     ) -> list[FeedbacksListItem]:
@@ -2112,7 +2257,8 @@ class WbAPI:
         return await self(call)
 
     async def get_file_from_the_message(
-        self, id: str,
+        self,
+        id: str,
     ) -> None:
         """
         The method provides a file or image from the message by its ID.
@@ -2128,7 +2274,8 @@ class WbAPI:
         return await self(call)
 
     async def get_gender(
-        self, locale: str | None = None,
+        self,
+        locale: str | None = None,
     ) -> list[GenderItem]:
         """
         Provides values of gender characteristic.
@@ -2142,7 +2289,9 @@ class WbAPI:
         return await self(call)
 
     async def get_generate_the_report(
-        self, date_from: str = None, date_to: str = None,
+        self,
+        date_from: str = None,
+        date_to: str = None,
     ) -> list[GenerateTheReportResponse]:
         """
         Create a task to generate a report. Maximum of report period — 8 days
@@ -2164,7 +2313,9 @@ class WbAPI:
         from_id: int | None = None,
     ) -> list[GettingSellerPortalNewsItem]:
         """
-        The method allows getting news from the seller portal.
+        The method allows getting news from the seller portal. To receive a successful response,
+        oneof the parameters `from` or `fromID` must be specified. You can get up to 100 news items
+        perrequest.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/News-API/paths/~1api~1communications~1v2~1news/get
 
@@ -2177,7 +2328,9 @@ class WbAPI:
         return await self(call)
 
     async def get_hidden_from_the_catalog(
-        self, sort: str = None, order: str = None,
+        self,
+        sort: Sort3 = None,
+        order: Order2 = None,
     ) -> list[HiddenFromTheCatalogItem]:
         """
         Returns the list of products [hidden from the
@@ -2212,7 +2365,8 @@ class WbAPI:
         return await self(call)
 
     async def get_information_about_media_campaign(
-        self, id: int = None,
+        self,
+        id: int = None,
     ) -> list[InformationAboutMediaCampaignItem]:
         """
         The method allows to get information about a media campaign
@@ -2233,7 +2387,8 @@ class WbAPI:
         date_to: int = None,
     ) -> list[InformationOnCompletedOrdersItem]:
         """
-        Returns information on completed orders (either canceled or sold).
+        Returns information on completed orders (either canceled or sold). You can get data for a
+        specifiedperiod, maximum of 30 calendar days per request.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbw#tag/DBW-Assembly-Orders/paths/~1api~1v3~1dbw~1orders/get
 
@@ -2254,7 +2409,8 @@ class WbAPI:
         return await self(call)
 
     async def get_information_on_paid_delivery(
-        self, groups: list[str] | None = None,
+        self,
+        groups: list[str] | None = None,
     ) -> list[InformationOnPaidDeliveryResponse]:
         """
         The method provides information on paid delivery for assembly orders that have been
@@ -2274,7 +2430,9 @@ class WbAPI:
         return await self(call)
 
     async def get_inventory(
-        self, warehouse_id: int, chrt_ids: list[int] = None,
+        self,
+        warehouse_id: int,
+        chrt_ids: list[int] = None,
     ) -> list[InventoryItem]:
         """
         Returns product inventory.
@@ -2289,11 +2447,13 @@ class WbAPI:
         return await self(call)
 
     async def get_launch_campaign(
-        self, id: int = None,
+        self,
+        id: int = None,
     ) -> None:
         """
         The method allows to run campaigns that are in statuses `4` — ready to launch or `11` —
-        pausedcampaign. <br>
+        pausedcampaign. To run a campaign, check its budget. If the budget is insufficient,
+        replenishit.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1start/get
 
@@ -2307,8 +2467,14 @@ class WbAPI:
         self,
     ) -> list[LimitsForTheProductCardsResponse]:
         """
-        The method allows to get separately free and paid vendor limits for creating product
-        cards.<br>
+        The method allows to get separately free and paid vendor limits for creating product cards.
+        Tocalculate the number of cards that can be created, use the formula: (freeLimits +
+        paidLimits)- Number of cards created. All cards that can be obtained using the [product
+        cards
+        list](/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1list/post)
+        and[list of product cards that are in the
+        trash](/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1trash/post)
+        methodsare considered created.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1limits/get
         :return: list[LimitsForTheProductCardsResponse]
@@ -2321,10 +2487,12 @@ class WbAPI:
         nm_id: int | None = None,
         take: int = None,
         skip: int = None,
-        order: str | None = None,
+        order: Order | None = None,
     ) -> list[ListOfArchivedFeedbacksItem]:
         """
-        The method allows you to get a list of archived feedbacks. <br>
+        The method allows you to get a list of archived feedbacks. The feedback becomes archived
+        if:- A response to the feedback is received. - No response to the feedback is received
+        within30 days. - The feedback contains no text or photos.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedbacks~1archive/get
 
@@ -2371,8 +2539,8 @@ class WbAPI:
 
     async def get_list_of_pinned_and_unpinned_feedback(
         self,
-        state: str | None = None,
-        pin_on: str | None = None,
+        state: State | None = None,
+        pin_on: PinOn | None = None,
         imt_id: int | None = None,
         nm_id: int | None = None,
         feedback_id: int | None = None,
@@ -2382,13 +2550,15 @@ class WbAPI:
         limit: int | None = 500,
     ) -> list[ListOfPinnedAndUnpinnedFeedbackResponse]:
         """
-        The method allows to get the list of pinned and unpinned feedback.<br>
+        The method allows to get the list of pinned and unpinned feedback. Only automatically
+        unpinnedfeedback cause of the reasons specified in the response in the `unpinnedCause`
+        fieldare considered unpinned.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Pinned-Feedback/paths/~1api~1feedbacks~1v1~1pins/get
 
         :param state: If the feedback is pinned:
         :param pin_on: Feedback pinning placement:
-        :param imt_id: Merged product cards ID.<br>
+        :param imt_id: Merged product cards ID.
         :param nm_id: WB article
         :param feedback_id: Feedback ID
         :param date_from: The date the first feedback in the list was pinned
@@ -2591,10 +2761,14 @@ class WbAPI:
         return await self(call)
 
     async def get_order_metadata(
-        self, order_id: int,
+        self,
+        order_id: int,
     ) -> list[OrderMetadataItem]:
         """
-        Returns assembly order metadata.
+        Returns assembly order metadata. The list of metadata available for the assembly order can
+        beobtained in the [list of new assembly
+        orders](/openapi/orders-dbw#tag/DBW-Assembly-Orders/paths/~1api~1v3~1dbw~1orders~1new/get),
+        field`requiredMeta`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbw#tag/DBW-Metadata/paths/~1api~1v3~1dbw~1orders~1%7BorderId%7D~1meta/get
 
@@ -2605,14 +2779,16 @@ class WbAPI:
         return await self(call)
 
     async def get_orders(
-        self, date_from: str = None, flag: int | None = 0,
+        self,
+        date_from: str = None,
+        flag: int | None = 0,
     ) -> list[OrdersResponse]:
         """
-        The method returns order information.<br>The data updated every 30 minutes.<br><br>
+        The method returns order information. The data updated every 30 minutes.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1orders/get
 
-        :param date_from: Date and time of last change on the order.<br>
+        :param date_from: Date and time of last change on the order.
         :param flag: If parameter `flag=0` (or it doesn't exist in requests string), then call of
                      APImethods returns data,
         :return: list[OrdersResponse]
@@ -2621,7 +2797,8 @@ class WbAPI:
         return await self(call)
 
     async def get_orders_statuses(
-        self, orders: list[int] = None,
+        self,
+        orders: list[int] = None,
     ) -> list[OrdersStatusesItem]:
         """
         Returns the statuses of orders based on the provided list of assembly order IDs
@@ -2636,9 +2813,9 @@ class WbAPI:
 
     async def get_orders_stickers(
         self,
-        type: str = None,
-        width: int = None,
-        height: int = None,
+        type: Type = None,
+        width: Width = None,
+        height: Height = None,
         orders: list[int] | None = None,
     ) -> list[OrdersStickersItem]:
         """
@@ -2646,6 +2823,7 @@ class WbAPI:
         orders](/openapi/orders-dbw#tag/DBW-Assembly-Orders/paths/~1api~1v3~1dbw~1orders~1new/get)
         inthe
         [statuses](/openapi/orders-dbw#tag/DBW-Assembly-Orders/paths/~1api~1v3~1dbw~1orders~1status/post):
+        -`confirm` — on assembly - `complete` — on delivery
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbw#tag/DBW-Assembly-Orders/paths/~1api~1v3~1dbw~1orders~1stickers/post
 
@@ -2659,11 +2837,14 @@ class WbAPI:
         return await self(call)
 
     async def get_pallet_tariffs(
-        self, date: str = None,
+        self,
+        date: str = None,
     ) -> list[PalletTariffsItem]:
         """
         For items supplied to the WB warehouse on pallets, the method returns the
-        [cost](https://seller.wildberries.ru/dynamic-product-categories):
+        [cost](https://seller.wildberries.ru/dynamic-product-categories):- of delivery from
+        warehouseto the buyer - of delivery from the buyer to warehouse - of storage on WB
+        warehouse
 
         Source: https://dev.wildberries.ru/en/docs/openapi/tariffs#tag/Stock-Tariffs/paths/~1api~1v1~1tariffs~1pallet/get
 
@@ -2712,7 +2893,8 @@ class WbAPI:
         return await self(call)
 
     async def get_pause_campaign(
-        self, id: int = None,
+        self,
+        id: int = None,
     ) -> None:
         """
         Campaign in status `9` — active — can be paused
@@ -2727,8 +2909,8 @@ class WbAPI:
 
     async def get_pinned_and_unpinned_feedback_number(
         self,
-        state: str | None = None,
-        pin_on: str | None = None,
+        state: State | None = None,
+        pin_on: PinOn | None = None,
         imt_id: int | None = None,
         nm_id: int | None = None,
         feedback_id: int | None = None,
@@ -2742,7 +2924,7 @@ class WbAPI:
 
         :param state: If the feedback is pinned:
         :param pin_on: Feedback pinning placement:
-        :param imt_id: Merged product cards ID.<br>
+        :param imt_id: Merged product cards ID.
         :param nm_id: WB article
         :param feedback_id: Feedback ID
         :param date_from: The date the first feedback in the list was pinned
@@ -2793,7 +2975,8 @@ class WbAPI:
         return await self(call)
 
     async def get_processed_upload_state(
-        self, upload_id: int = None,
+        self,
+        upload_id: int = None,
     ) -> list[ProcessedUploadStateResponse]:
         """
         Returns the processed upload data.
@@ -2807,7 +2990,8 @@ class WbAPI:
         return await self(call)
 
     async def get_product_category_commission(
-        self, locale: str | None = None,
+        self,
+        locale: str | None = None,
     ) -> list[ProductCategoryCommissionResponse]:
         """
         WB commission by parent categories of products according to sales model.
@@ -2821,10 +3005,14 @@ class WbAPI:
         return await self(call)
 
     async def get_product_labeling(
-        self, date_from: str = None, date_to: str = None,
+        self,
+        date_from: str = None,
+        date_to: str = None,
     ) -> list[ProductLabelingItem]:
         """
-        Returns a report on deductions for the absence of mandatory product labeling.
+        Returns a report on deductions for the absence of mandatory product labeling. The report
+        containsphotos of products where the labeling is absent or cannot be read. Data can be
+        obtainedfor up to 31 days, starting from March 2024
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Retention-Reports/paths/~1api~1v1~1analytics~1goods-labeling/get
 
@@ -2857,10 +3045,21 @@ class WbAPI:
         return await self(call)
 
     async def get_products_in_quarantine(
-        self, limit: int = None, offset: int | None = None,
+        self,
+        limit: int = None,
+        offset: int | None = None,
     ) -> list[ProductsInQuarantineItem]:
         """
-        Returns information about products in quarantine.
+        Returns information about products in quarantine. If the product new price with discount
+        willbe minimum 3 times less than the old price, the product will be placed in
+        [quarantine](https://seller.wildberries.ru/discount-and-prices/quarantine)and will be sold
+        atthe old price. An error about this will be in the [upload
+        states](/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1history~1tasks/get)
+        methodresponse. You can change price or discount via API or release product from quarantine
+        in[personal account](https://seller.wildberries.ru/discount-and-prices/quarantine). For
+        productswith [size-based
+        pricing](/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1upload~1task~1size/post),
+        quarantinedoes not apply.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1quarantine~1goods/get
 
@@ -2873,7 +3072,8 @@ class WbAPI:
         return await self(call)
 
     async def get_products_parent_categories(
-        self, locale: str | None = None,
+        self,
+        locale: str | None = None,
     ) -> list[ProductsParentCategoriesResponse]:
         """
         Returns the list of all products parent categories
@@ -2893,7 +3093,14 @@ class WbAPI:
         filter_nm_id: int | None = None,
     ) -> list[ProductsWithPricesItem]:
         """
-        Returns product data.
+        Returns product data. You can specify only one article in one request. To get data for all
+        products,do not set the article, set `limit=1000`, and use the `offset` field to set the
+        dataoffset. The offset should be calculated using the formula: `offset` plus `limit` from
+        theprevious request. Repeat the request until you receive a response with an empty array.
+        Useseparate methods to get data: - for [more than one product by
+        article](/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/post)
+        -for [the size of the
+        product](/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1size~1nm/get)
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/get
 
@@ -2907,10 +3114,15 @@ class WbAPI:
         return await self(call)
 
     async def get_products_with_prices_by_articles(
-        self, nm_list: list[int] = None,
+        self,
+        nm_list: list[int] = None,
     ) -> list[ProductsWithPricesByArticlesItem]:
         """
-        Returns product data by its article.
+        Returns product data by its article. You can specify more than one article in one request.
+        Useseparate methods to get data: - for [all products without specifying
+        articles](/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/get)
+        -for [the size of the
+        product](/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1size~1nm/get).
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1filter/post
 
@@ -2921,7 +3133,8 @@ class WbAPI:
         return await self(call)
 
     async def get_promotions_details(
-        self, promotion_i_ds: list[int] = None,
+        self,
+        promotion_i_ds: list[int] = None,
     ) -> list[PromotionsDetailsItem]:
         """
         Returns detailed information about the selected promotions
@@ -2975,7 +3188,7 @@ class WbAPI:
     ) -> list[QuestionListItem]:
         """
         The method allows you to get a list of questions by the specified parameters with
-        paginationand sorting.<br> It is possible to get a maximum of 10,000 questions per query
+        paginationand sorting. It is possible to get a maximum of 10,000 questions per query
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Questions/paths/~1api~1v1~1questions/get
 
@@ -3009,17 +3222,18 @@ class WbAPI:
         date_to: str = None,
         limit: int | None = 100000,
         rrdid: int | None = 0,
-        period: str | None = "weekly",
+        period: Period | None = "weekly",
     ) -> list[RealizationSalesReportResponse]:
         """
         Details for the [realization
-        reports](https://seller.wildberries.ru/suppliers-mutual-settlements).
+        reports](https://seller.wildberries.ru/suppliers-mutual-settlements).The report contains
+        datasince 29 January 2024.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1v5~1supplier~1reportDetailByPeriod/get
 
-        :param date_from: Starting date of the report.<br> Date format: RFC3339. You may send date
-                          ordate with time. Time could be specified in seconds or milliseconds.<br>
-                          Thetime stands in Moscow time zone (UTC+3). <br>Examples:
+        :param date_from: Starting date of the report. Date format: RFC3339. You may send date or
+                          datewith time. Time could be specified in seconds or milliseconds. The
+                          timestands in Moscow time zone (UTC+3). Examples:
         :param date_to: Report end date
         :param limit: Number of strings in the response
         :param rrdid: The unique ID of the report line. Required to receive the report in parts.
@@ -3036,7 +3250,9 @@ class WbAPI:
         return await self(call)
 
     async def get_receiving_costs_history(
-        self, from_: str = None, to: str = None,
+        self,
+        from_: str = None,
+        to: str = None,
     ) -> list[ReceivingCostsHistoryResponse]:
         """
         The method allows to get a costs history
@@ -3044,7 +3260,7 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Finances/paths/~1adv~1v1~1upd/get
 
         :param from_: Beginning of the interval
-        :param to: End of interval. <br>
+        :param to: End of interval.
         :return: list[ReceivingCostsHistoryResponse]
         """
         call = GetReceivingCostsHistory(from_=from_, to=to)
@@ -3061,7 +3277,7 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Finances/paths/~1adv~1v1~1payments/get
 
         :param from_: Beginning of the interval
-        :param to: End of interval. <br>
+        :param to: End of interval.
         :return: list[ReceivingTheHistoryOfAccountTopupsResponse]
         """
         call = GetReceivingTheHistoryOfAccountTopups(from_=from_, to=to)
@@ -3073,7 +3289,8 @@ class WbAPI:
         advert_id: int = None,
     ) -> list[RecommendedBidsForItemsAndSearchClustersItem]:
         """
-        The method returns recommended bids for items and search clusters of the campaign.
+        The method returns recommended bids for items and search clusters of the campaign. Only for
+        campaignswith cpm payment type — cost per mille.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1api~1advert~1v0~1bids~1recommendations/get
 
@@ -3085,7 +3302,9 @@ class WbAPI:
         return await self(call)
 
     async def get_report(
-        self, date_from: str = None, date_to: str = None,
+        self,
+        date_from: str = None,
+        date_to: str = None,
     ) -> list[ReportItem]:
         """
         Returns sales data grouped by regions of the countries. You can obtain a report for a
@@ -3131,10 +3350,13 @@ class WbAPI:
         return await self(call)
 
     async def get_return_tariffs(
-        self, date: str = None,
+        self,
+        date: str = None,
     ) -> list[ReturnTariffsItem]:
         """
-        Returns [tariffs](https://seller.wildberries.ru/dynamic-product-categories/return-cost):
+        Returns [tariffs](https://seller.wildberries.ru/dynamic-product-categories/return-cost): -
+        ontransfer from Wildberries warehouse or sorting center to the seller - on transfer of
+        returnedproducts that were not picked up by seller
 
         Source: https://dev.wildberries.ru/en/docs/openapi/tariffs#tag/Return-Cost-to-Seller/paths/~1api~1v1~1tariffs~1return/get
 
@@ -3145,15 +3367,16 @@ class WbAPI:
         return await self(call)
 
     async def get_sales(
-        self, date_from: str = None, flag: int | None = 0,
+        self,
+        date_from: str = None,
+        flag: int | None = 0,
     ) -> list[SalesResponse]:
         """
-        The method returns sale and return information.<br>The data updated every 30
-        minutes.<br><br>
+        The method returns sale and return information. The data updated every 30 minutes.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1sales/get
 
-        :param date_from: Date and time of last change on the sale/return.<br>
+        :param date_from: Date and time of last change on the sale/return.
         :param flag: If parameter `flag=0` (or it doesn't exist in requests string), then call of
                      APImethods returns data,
         :return: list[SalesResponse]
@@ -3162,7 +3385,8 @@ class WbAPI:
         return await self(call)
 
     async def get_season(
-        self, locale: str | None = None,
+        self,
+        locale: str | None = None,
     ) -> list[SeasonItem]:
         """
         Provide values of season characteristic
@@ -3176,11 +3400,14 @@ class WbAPI:
         return await self(call)
 
     async def get_selfpurchases(
-        self, date: str | None = None,
+        self,
+        date: str | None = None,
     ) -> list[SelfpurchasesItem]:
         """
         Returns report with self-purchase deductions. The report is generated on Wednesdays at 7:00
         UTC+4and contains weekly data. Also you can get all data starting from August 2023.
+        Self-purchasededuction is 30% of product price. Minimum deduction is 100,000 ₽, if the
+        totalproduct cost delivered to the pick-up point is more than 100,000 ₽ per one week.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Retention-Reports/paths/~1api~1v1~1analytics~1antifraud-details/get
 
@@ -3207,7 +3434,8 @@ class WbAPI:
         self,
     ) -> list[SellerInformationResponse]:
         """
-        This method allows you to obtain the seller's name and account ID.
+        This method allows you to obtain the seller's name and account ID. You can use any token in
+        request,as long as the **Test Environment** option is not selected.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-Information/paths/~1api~1v1~1seller-info/get
         :return: list[SellerInformationResponse]
@@ -3230,15 +3458,13 @@ class WbAPI:
 
     async def get_stickers_for_assembly_orders_with_delivery_to_pickup_point(
         self,
-        type: str = None,
-        width: int = None,
-        height: int = None,
+        type: Type2 = None,
+        width: Width2 = None,
+        height: Height2 = None,
         orders: list[int] = None,
     ) -> list[StickersForAssemblyOrdersWithDeliveryToPickupPointItem]:
         """
-        <div class="description_token">Method is available by <a
-        href="/openapi/api-information#tag/Authorization/Rules-for-using-API-access-tokens">token
-        types</a>:<strong>Personal</strong>,<strong> Service</strong> </div>
+        Method is available by token types : Personal , Service
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Assembly-Orders/paths/~1api~1marketplace~1v3~1dbs~1orders~1stickers/post
 
@@ -3261,7 +3487,7 @@ class WbAPI:
         orders: list[int] | None = None,
     ) -> list[StickersForCrossborderAssemblyOrdersItem]:
         """
-        Returns a list of stickers for cross-border assembly orders in PDF.<br><br>
+        Returns a list of stickers for cross-border assembly orders in PDF.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Assembly-Orders/paths/~1api~1v3~1orders~1stickers~1cross-border/post
 
@@ -3272,10 +3498,12 @@ class WbAPI:
         return await self(call)
 
     async def get_stop_campaign(
-        self, id: int = None,
+        self,
+        id: int = None,
     ) -> None:
         """
-        The method allows to end campaigns in statuses:
+        The method allows to end campaigns in statuses: - `4` — ready to launch - `9` — active -
+        `11`— paused
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1stop/get
 
@@ -3286,7 +3514,9 @@ class WbAPI:
         return await self(call)
 
     async def get_subject_characteristics(
-        self, subject_id: int, locale: str | None = None,
+        self,
+        subject_id: int,
+        locale: str | None = None,
     ) -> list[SubjectCharacteristicsItem]:
         """
         Returns list of the subject characteristics by its ID
@@ -3301,7 +3531,8 @@ class WbAPI:
         return await self(call)
 
     async def get_subjects_for_campaigns(
-        self, payment_type: str | None = "cpm",
+        self,
+        payment_type: str | None = "cpm",
     ) -> list[SubjectsForCampaignsResponse]:
         """
         Returns subjects product cards from which are available for all campaigns
@@ -3349,8 +3580,8 @@ class WbAPI:
         self,
         date_from: str | None = None,
         date_to: str = None,
-        sort: str | None = "dtBonus",
-        order: str | None = "desc",
+        sort: Sort | None = "dtBonus",
+        order: Order2 | None = "desc",
         limit: int = None,
         offset: int | None = 0,
     ) -> list[SubstitutionsAndIncorrectAttachmentsItem]:
@@ -3382,7 +3613,8 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_assembly_order_ids(
-        self, supply_id: str,
+        self,
+        supply_id: str,
     ) -> list[SupplyAssemblyOrderIdsItem]:
         """
         The method returns assembly orders IDs assigned to the supply.
@@ -3396,7 +3628,8 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_boxes_list(
-        self, supply_id: str,
+        self,
+        supply_id: str,
     ) -> list[SupplyBoxesListItem]:
         """
         Returns supply boxes list.
@@ -3410,7 +3643,8 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_details(
-        self, supply_id: str,
+        self,
+        supply_id: str,
     ) -> list[SupplyDetailsResponse]:
         """
         Returns supply details.
@@ -3424,7 +3658,8 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_package(
-        self, id: int,
+        self,
+        id: int,
     ) -> list[SupplyPackageResponse]:
         """
         The method returns information about the package of the supply.
@@ -3459,14 +3694,15 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_tariffs(
-        self, warehouse_i_ds: str | None = None,
+        self,
+        warehouse_i_ds: str | None = None,
     ) -> list[SupplyTariffsResponse]:
         """
         The method returns the supply tariffs for specific warehouses for the next 14 days.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/tariffs#tag/Supply-Tariffs/paths/~1api~1tariffs~1v1~1acceptance~1coefficients/get
 
-        :param warehouse_i_ds: Warehouse IDs.<br>By default, data for all warehouses is returned
+        :param warehouse_i_ds: Warehouse IDs. By default, data for all warehouses is returned
         :return: list[SupplyTariffsResponse]
         """
         call = GetSupplyTariffs(warehouse_i_ds=warehouse_i_ds)
@@ -3485,7 +3721,8 @@ class WbAPI:
         return await self(call)
 
     async def get_the_feedback_by_id(
-        self, id: str = None,
+        self,
+        id: str = None,
     ) -> list[TheFeedbackByIdItem]:
         """
         The method allows you to get a feedback by its ID
@@ -3499,7 +3736,8 @@ class WbAPI:
         return await self(call)
 
     async def get_the_question_by_id(
-        self, id: str = None,
+        self,
+        id: str = None,
     ) -> list[TheQuestionByIdItem]:
         """
         The method allows you to get a question by its ID
@@ -3513,12 +3751,14 @@ class WbAPI:
         return await self(call)
 
     async def get_the_report(
-        self, download_id: str,
+        self,
+        download_id: str,
     ) -> None:
         """
         The method provides a report with advanced seller analytics by [generation
         task](/openapi/analytics#tag/Seller-Analytics-CSV/paths/~1api~1v2~1nm-report~1downloads/post)
-        ID.
+        ID.You can get a report that was generated within the last 48 hours. The report will be
+        downloadedinside a ZIP archive in CSV format.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Seller-Analytics-CSV/paths/~1api~1v2~1nm-report~1downloads~1file~1%7BdownloadId%7D/get
 
@@ -3529,7 +3769,8 @@ class WbAPI:
         return await self(call)
 
     async def get_the_reports_list(
-        self, filter_download_ids: list[str] | None = None,
+        self,
+        filter_download_ids: list[str] | None = None,
     ) -> list[TheReportsListItem]:
         """
         The method provides a list of reports with advanced seller analytics. The response contains
@@ -3548,11 +3789,12 @@ class WbAPI:
     async def get_the_supply_box_qr_code_stickers(
         self,
         supply_id: str,
-        type: str = None,
+        type: Type = None,
         trbx_ids: list[str] = None,
     ) -> list[TheSupplyBoxQrCodeStickersItem]:
         """
-        Returns QR-code stickers in svg, zplv (vertical), zplh (horizontal), png.<br>
+        Returns QR-code stickers in svg, zplv (vertical), zplh (horizontal), png. Available only if
+        thereare assembly orders in the box. Stickers dimensions: 580x400 px.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Supplies/paths/~1api~1v3~1supplies~1%7BsupplyId%7D~1trbx~1stickers/post
 
@@ -3565,10 +3807,13 @@ class WbAPI:
         return await self(call)
 
     async def get_the_supply_qr_code(
-        self, supply_id: str, type: str = None,
+        self,
+        supply_id: str,
+        type: Type = None,
     ) -> list[TheSupplyQrCodeResponse]:
         """
-        Returns the QR code in svg, zplv (vertical), zplh (horizontal), png. <br>
+        Returns the QR code in svg, zplv (vertical), zplh (horizontal), png. Available only after
+        thesupply has been transferred to the delivery. Available dimensions: 580x400 px
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Supplies/paths/~1api~1v3~1supplies~1%7BsupplyId%7D~1barcode/get
 
@@ -3636,7 +3881,8 @@ class WbAPI:
         return await self(call)
 
     async def get_unprocessed_upload_state(
-        self, upload_id: int = None,
+        self,
+        upload_id: int = None,
     ) -> list[UnprocessedUploadStateResponse]:
         """
         Returns the processing upload data.
@@ -3662,7 +3908,8 @@ class WbAPI:
         return await self(call)
 
     async def get_vat_rate(
-        self, locale: str | None = None,
+        self,
+        locale: str | None = None,
     ) -> list[VatRateItem]:
         """
         Returns a list of values for the **VAT rate** characteristic
@@ -3676,14 +3923,15 @@ class WbAPI:
         return await self(call)
 
     async def get_warehouse(
-        self, date_from: str = None,
+        self,
+        date_from: str = None,
     ) -> list[WarehouseResponse]:
         """
         The method returns WB warehouses inventory.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1stocks/get
 
-        :param date_from: Date and time of last change on the product.<br>
+        :param date_from: Date and time of last change on the product.
         :return: list[WarehouseResponse]
         """
         call = GetWarehouse(date_from=date_from)
@@ -3746,7 +3994,8 @@ class WbAPI:
         self,
     ) -> list[GroupDataItem]:
         """
-        Forms a dataset for inventory by product group.
+        Forms a dataset for inventory by product group. The product group is described by a tuple
+        of`subjectID, brandName, tagID`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1groups/post
         :return: list[GroupDataItem]
@@ -3761,10 +4010,11 @@ class WbAPI:
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
         skip_deleted_nm: bool | None = None,
-        aggregation_level: str | None = "day",
+        aggregation_level: AggregationLevel | None = "day",
     ) -> list[GroupedProductCardsStatisticsPerDaysItem]:
         """
-        The method returns statistics for product cards by day or by week.<br>
+        The method returns statistics for product cards by day or by week. Product cards are
+        groupedby subjects, brands and tags. You can get data for a maximum of the last week.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Sales-Funnel/paths/~1api~1analytics~1v3~1sales-funnel~1grouped~1history/post
 
@@ -3786,10 +4036,11 @@ class WbAPI:
         return await self(call)
 
     async def list_of_campaign_minus_phrases(
-        self, items: list[Any] = None,
+        self,
+        items: list[Any] = None,
     ) -> list[ListOfCampaignMinusPhrasesItem]:
         """
-        The method returns a list of minus phrases by:
+        The method returns a list of minus phrases by: - campaign IDs - WB articles
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Search-Clusters/paths/~1adv~1v0~1normquery~1get-minus/post
         :return: list[ListOfCampaignMinusPhrasesItem]
@@ -3806,7 +4057,14 @@ class WbAPI:
         """
         Returns the list of product cards
         ([drafts](https://seller.wildberries.ru/new-goods/error-cards))and the list of errors
-        encounteredduring product card creation or editing.
+        encounteredduring product card creation or editing. The data is returned in batches. One
+        batchcontains: - all errors for one `variants` array in one request during product cards
+        [creation](/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload/post)
+        -all errors in one request during product cards [creation with
+        merge](/openapi/work-with-products#tag/Creating-Product-Cards/paths/~1content~1v2~1cards~1upload~1add/post)
+        or
+        [editing](/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1update/post).
+        Toget more than 100 batches, use pagination:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1error~1list/post
 
@@ -3819,10 +4077,11 @@ class WbAPI:
         return await self(call)
 
     async def list_of_search_clusters_bids(
-        self, items: list[Any] = None,
+        self,
+        items: list[Any] = None,
     ) -> list[ListOfSearchClustersBidsItem]:
         """
-        The method returns a list of search clusters with bids by:
+        The method returns a list of search clusters with bids by: - campaign IDs - WB articles
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Search-Clusters/paths/~1adv~1v0~1normquery~1get-bids/post
         :return: list[ListOfSearchClustersBidsItem]
@@ -3838,7 +4097,7 @@ class WbAPI:
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
         tag_ids: list[int] | None = None,
-        position_cluster: str = None,
+        position_cluster: PositionCluster = None,
         order_by: dict[str, Any] = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
@@ -3846,7 +4105,8 @@ class WbAPI:
         offset: int = None,
     ) -> list[MainPageResponse]:
         """
-        Forms a dataset for the main report page with:
+        Forms a dataset for the main report page with: - General information - Product positions -
+        Dataon visibility and transitions to the product card - Data for the table by groups
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Search-Queries-for-Your-Items/paths/~1api~1v2~1search-report~1report/post
 
@@ -3901,7 +4161,7 @@ class WbAPI:
     ) -> list[MergingOrSeparatingOfProductCardsResponse]:
         """
         The method merges and separates product cards. Product cards are merged if they have the
-        same`imtID`.<br><br>
+        same`imtID`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1moveNm/post
         :return: list[MergingOrSeparatingOfProductCardsResponse]
@@ -3913,7 +4173,7 @@ class WbAPI:
         self,
         advert_id: int = None,
         nm_ids: list[int] = None,
-        payment_type: str = None,
+        payment_type: PaymentType = None,
         placement_types: list[str] = None,
     ) -> list[MinimumBidsForProductCardsItem]:
         """
@@ -3937,7 +4197,8 @@ class WbAPI:
         return await self(call)
 
     async def move_the_supply_to_the_delivery(
-        self, supply_id: str,
+        self,
+        supply_id: str,
     ) -> None:
         """
         Closes the supply and moves all assembly orders to `complete` (`In Delivery`) status. You
@@ -3952,7 +4213,8 @@ class WbAPI:
         return await self(call)
 
     async def notify_that_the_assembly_order_is_ready_for_pickup(
-        self, order_id: int,
+        self,
+        order_id: int,
     ) -> None:
         """
         This method is deprecated. It will be removed on [May
@@ -4005,7 +4267,8 @@ class WbAPI:
         return await self(call)
 
     async def notify_that_the_buyer_refused_the_order(
-        self, order_id: int,
+        self,
+        order_id: int,
     ) -> None:
         """
         This method is deprecated. It will be removed on [May
@@ -4039,7 +4302,8 @@ class WbAPI:
         return await self(call)
 
     async def notify_that_the_orders_are_declined(
-        self, orders: list[Any] = None,
+        self,
+        orders: list[Any] = None,
     ) -> list[NotifyThatTheOrdersAreDeclinedItem]:
         """
         The method transfers [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders) with
@@ -4054,7 +4318,8 @@ class WbAPI:
         return await self(call)
 
     async def notify_that_the_orders_are_received(
-        self, orders: list[Any] = None,
+        self,
+        orders: list[Any] = None,
     ) -> list[NotifyThatTheOrdersAreReceivedItem]:
         """
         The method transfers [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders) with
@@ -4095,7 +4360,7 @@ class WbAPI:
     ) -> list[OrdersAndPositionsByProductSearchTextsResponse]:
         """
         Forms data for a table on the number of orders and positions by queries. The data is
-        specifiedwithin a period for a specific product.<br><br>
+        specifiedwithin a period for a specific product.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Search-Queries-for-Your-Items/paths/~1api~1v2~1search-report~1product~1orders/post
 
@@ -4114,10 +4379,11 @@ class WbAPI:
         return await self(call)
 
     async def orders_with_client_information(
-        self, orders: list[int] | None = None,
+        self,
+        orders: list[int] | None = None,
     ) -> list[OrdersWithClientInformationItem]:
         """
-        The method allows getting information about the client by assembly order ID. <br>Only for
+        The method allows getting information about the client by assembly order ID. Only for
         cross-borderorders from **Turkey**
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Assembly-Orders/paths/~1api~1v3~1orders~1client/post
@@ -4137,7 +4403,7 @@ class WbAPI:
         brand_names: list[str] | None = None,
         tag_ids: list[int] | None = None,
         order_by: dict[str, Any] = None,
-        position_cluster: str = None,
+        position_cluster: PositionCluster = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
         limit: int = None,
@@ -4191,7 +4457,7 @@ class WbAPI:
         tag_id: int | None = None,
         nm_ids: list[int] | None = None,
         order_by: dict[str, Any] = None,
-        position_cluster: str = None,
+        position_cluster: PositionCluster = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
         limit: int = None,
@@ -4241,7 +4507,11 @@ class WbAPI:
     ) -> list[PinFeedbackResponse]:
         """
         The method allows to pin the feedback to a group of merged product cards or to a product
-        card.<br>
+        card.To get feedback ID, use the [List of pinned and unpinned
+        feedback](/openapi/user-communication#tag/Pinned-Feedback/paths/~1api~1feedbacks~1v1~1pins/get)
+        method.The method is available for [Jam
+        subscription](https://seller.wildberries.ru/monetization/jam)or **Pin a feedback** option
+        inthe [tariff constructor](https://seller.wildberries.ru/tariff-constructor).
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Pinned-Feedback/paths/~1api~1feedbacks~1v1~1pins/post
         :return: list[PinFeedbackResponse]
@@ -4263,11 +4533,11 @@ class WbAPI:
 
     async def product_cards_in_trash_list(
         self,
-        locale: str | None = None,
+        locale: Locale | None = None,
         settings: dict[str, Any] | None = None,
     ) -> list[ProductCardsInTrashListItem]:
         """
-        <div class="description_auth">
+        The method is available with the token of the Promotion category
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1trash/post
 
@@ -4284,7 +4554,7 @@ class WbAPI:
         settings: dict[str, Any] | None = None,
     ) -> list[ProductCardsListItem]:
         """
-        <div class="description_auth">
+        The method is available with the token of the Promotion category
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1get~1cards~1list/post
 
@@ -4300,10 +4570,11 @@ class WbAPI:
         selected_period: Any = None,
         nm_ids: list[int] = None,
         skip_deleted_nm: bool | None = None,
-        aggregation_level: str | None = "day",
+        aggregation_level: AggregationLevel | None = "day",
     ) -> list[ProductCardsStatisticsPerDaysResponse]:
         """
-        The method returns statistics for product cards by day or by week.<br>
+        The method returns statistics for product cards by day or by week. You can get data for a
+        maximumof the last week.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Sales-Funnel/paths/~1api~1analytics~1v3~1sales-funnel~1products~1history/post
 
@@ -4335,7 +4606,7 @@ class WbAPI:
     ) -> list[ProductCardsStatisticsPerPeriodResponse]:
         """
         The method generates a report on products by comparing key metrics for the current period
-        witha similar past one.<br><br>
+        witha similar past one.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Sales-Funnel/paths/~1api~1analytics~1v3~1sales-funnel~1products/post
 
@@ -4369,7 +4640,9 @@ class WbAPI:
         self,
     ) -> list[ProductDataItem]:
         """
-        Forms a dataset for inventory by products.
+        Forms a dataset for inventory by products. You can get data for individual products as well
+        asfor the entire report if there are no filters in the query: `nmIDs`, `subjectID`,
+        `brandName`,`tagID`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1products/post
         :return: list[ProductDataItem]
@@ -4378,7 +4651,8 @@ class WbAPI:
         return await self(call)
 
     async def recover_product_card_from_trash(
-        self, nm_i_ds: list[int] | None = None,
+        self,
+        nm_i_ds: list[int] | None = None,
     ) -> list[RecoverProductCardFromTrashResponse]:
         """
         Returns the product card from trash
@@ -4392,7 +4666,8 @@ class WbAPI:
         return await self(call)
 
     async def regenerate_the_report(
-        self, download_id: str | None = None,
+        self,
+        download_id: str | None = None,
     ) -> list[RegenerateTheReportResponse]:
         """
         The method creates a [repeated generation
@@ -4410,10 +4685,12 @@ class WbAPI:
         return await self(call)
 
     async def rename_campaign(
-        self, advert_id: int = None, name: str = None,
+        self,
+        advert_id: int = None,
+        name: str = None,
     ) -> None:
         """
-        The method allows to rename a campaign. <br>
+        The method allows to rename a campaign.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1rename/post
 
@@ -4425,10 +4702,13 @@ class WbAPI:
         return await self(call)
 
     async def reply_to_feedback(
-        self, id: str = None, text: str = None,
+        self,
+        id: str = None,
+        text: str = None,
     ) -> None:
         """
-        Allows you to respond to the feedback.
+        Allows you to respond to the feedback. There is no validation by `feedback ID`: if an
+        incorrectvalue is provided in the request, you will not receive an error.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedbacks~1answer/post
 
@@ -4464,10 +4744,12 @@ class WbAPI:
         return await self(call)
 
     async def return_product_by_feedback_id(
-        self, feedback_id: str | None = None,
+        self,
+        feedback_id: str | None = None,
     ) -> list[ReturnProductByFeedbackIdItem]:
         """
         The method allows requesting a return for a product for which a feedback has been left.
+        Returnis available for feedbacks with `"isAbleReturnProductOrders": true`
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedbacks~1order~1return/post
 
@@ -4484,7 +4766,8 @@ class WbAPI:
         items: list[dict[str, Any]] = None,
     ) -> list[SearchClustersStatisticsItem]:
         """
-        The method returns statistics for search clusters over a specified period.<br>
+        The method returns statistics for search clusters over a specified period. You can use this
+        methodonly for campaigns with a `cpm` payment model — for displays.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Statistics/paths/~1adv~1v0~1normquery~1stats/post
 
@@ -4500,7 +4783,7 @@ class WbAPI:
         current_period: dict[str, Any] = None,
         past_period: dict[str, Any] | None = None,
         nm_ids: list[int] = None,
-        top_order_by: str = None,
+        top_order_by: TopOrderBy = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
         order_by: dict[str, Any] = None,
@@ -4547,10 +4830,12 @@ class WbAPI:
         return await self(call)
 
     async def set_bids_for_search_clusters(
-        self, bids: list[Any] = None,
+        self,
+        bids: list[Any] = None,
     ) -> None:
         """
-        The method sets the bids for search clusters.<br>
+        The method sets the bids for search clusters. You can use this method only for campaigns
+        with:- custom bid - a `cpm` payment model — per displays
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Search-Clusters/paths/~1adv~1v0~1normquery~1bids/post
         :return: None
@@ -4559,7 +4844,8 @@ class WbAPI:
         return await self(call)
 
     async def set_prices_and_discounts(
-        self, data: list[Any] = None,
+        self,
+        data: list[Any] = None,
     ) -> list[SetPricesAndDiscountsResponse]:
         """
         Sets prices and discounts.
@@ -4574,7 +4860,8 @@ class WbAPI:
         return await self(call)
 
     async def set_size_prices(
-        self, data: list[Any] = None,
+        self,
+        data: list[Any] = None,
     ) -> list[SetSizePricesResponse]:
         """
         Sets different prices for different sizes.
@@ -4588,7 +4875,8 @@ class WbAPI:
         return await self(call)
 
     async def set_wb_club_discounts(
-        self, data: list[Any] = None,
+        self,
+        data: list[Any] = None,
     ) -> list[SetWbClubDiscountsResponse]:
         """
         Sets WB Club subscription discounts.
@@ -4627,7 +4915,20 @@ class WbAPI:
         self,
     ) -> list[SizeDataItem]:
         """
-        Forms a dataset for inventory by the size of the product.
+        Forms a dataset for inventory by the size of the product. Possible cases: 1. The product
+        hasdimensions and `"includeOffice":true`, then the response body will contain data on the
+        inventoryfor each of the sizes with nested details by warehouse. 2. The product has
+        dimensionsand `"includeOffice":false`, then the response body will contain data on the
+        inventoryfor each of the sizes without nested details by warehouse. 3. The product has no
+        sizeand `"include Office":true`, then the response body will contain details by warehouse
+        withoutdata on the inventory for each of the sizes. 4. The product has no size and
+        `"includeOffice":false`, then the response body will be empty. `The product has no size`
+        meansthe size of the product is the same and has `"techSize":"0"`. In responses of the
+        methodfor getting data on
+        [products](/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1products/post),
+        suchproducts have `hasSizes':false`. The data on the seller's warehouses are in an
+        aggregatedform — for all of them together without detailing specific warehouses — and
+        responsescontain `"regionName":"Маркетплейс"` and `"officeName":""` in such cases.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1sizes/post
         :return: list[SizeDataItem]
@@ -4636,7 +4937,8 @@ class WbAPI:
         return await self(call)
 
     async def status_history_for_crossborder_orders(
-        self, orders: list[int] | None = None,
+        self,
+        orders: list[int] | None = None,
     ) -> list[StatusHistoryForCrossborderOrdersItem]:
         """
         Returns status history for cross-border orders
@@ -4676,13 +4978,14 @@ class WbAPI:
         tags_i_ds: list[int] | None = None,
     ) -> list[TagManagementInTheProductCardResponse]:
         """
-        The method allows to add tags to the product card and remove tags from the product
-        card.<br>
+        The method allows to add tags to the product card and remove tags from the product card.
+        Whenremoving a tag from a product card, the tag itself is not removed. It is possible to
+        add15 tags to a product card.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1nomenclature~1link/post
 
         :param nm_id: WB article
-        :param tags_i_ds: An array of numeric tag IDs.<br>
+        :param tags_i_ds: An array of numeric tag IDs.
         :return: list[TagManagementInTheProductCardResponse]
         """
         call = TagManagementInTheProductCard(nm_id=nm_id, tags_i_ds=tags_i_ds)
@@ -4699,7 +5002,9 @@ class WbAPI:
     ) -> list[TopupOfTheCampaignBudgetResponse]:
         """
         The method tops up the campaign
-        [budget](/openapi/promotion#tag/Finances/paths/~1adv~1v1~1budget/get).<br>
+        [budget](/openapi/promotion#tag/Finances/paths/~1adv~1v1~1budget/get).To launch the
+        campaignafter topping up the budget, use the [Launch
+        campaign](/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1start/get)method.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Finances/paths/~1adv~1v1~1budget~1deposit/post
 
@@ -4725,7 +5030,8 @@ class WbAPI:
         return await self(call)
 
     async def transfer_product_card_to_trash(
-        self, nm_i_ds: list[int] | None = None,
+        self,
+        nm_i_ds: list[int] | None = None,
     ) -> list[TransferProductCardToTrashResponse]:
         """
         Transfers the product card to the trash. In doing so, the product card would not be
@@ -4740,7 +5046,8 @@ class WbAPI:
         return await self(call)
 
     async def transfer_to_assembly(
-        self, order_id: int,
+        self,
+        order_id: int,
     ) -> None:
         """
         Transfers the assembly order to the `confirm` status — on assembly.
@@ -4754,7 +5061,8 @@ class WbAPI:
         return await self(call)
 
     async def transfer_to_delivery(
-        self, order_id: int,
+        self,
+        order_id: int,
     ) -> None:
         """
         Transfers the [assembly
@@ -4775,7 +5083,9 @@ class WbAPI:
     ) -> list[UnpinFeedbackResponse]:
         """
         The method allows to unpin the feedback in a group of merged product cards or a product
-        card.<br>
+        card.To get `pinId` — feedback pinning operation ID, use the [List of pinned and unpinned
+        feedback](/openapi/user-communication#tag/Pinned-Feedback/paths/~1api~1feedbacks~1v1~1pins/get)
+        method.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Pinned-Feedback/paths/~1api~1feedbacks~1v1~1pins/delete
         :return: list[UnpinFeedbackResponse]
@@ -4789,7 +5099,7 @@ class WbAPI:
         contacts: list[dict[str, Any]] | None = None,
     ) -> None:
         """
-        Updates the seller's warehouse contact list. <br>
+        Updates the seller's warehouse contact list.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Seller-Warehouses/paths/~1api~1v3~1dbw~1warehouses~1%7BwarehouseId%7D~1contacts/put
 
@@ -4800,7 +5110,9 @@ class WbAPI:
         return await self(call)
 
     async def update_inventory(
-        self, warehouse_id: int, stocks: list[dict[str, Any]] = None,
+        self,
+        warehouse_id: int,
+        stocks: list[dict[str, Any]] = None,
     ) -> None:
         """
         Updates product inventory.
@@ -4878,10 +5190,11 @@ class WbAPI:
         return await self(call)
 
     async def update_users_access_permissions(
-        self, users_accesses: list[Any] = None,
+        self,
+        users_accesses: list[Any] = None,
     ) -> None:
         """
-        <div class="description_token">
+        Method is available by Personal token
 
         Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-User-Management/paths/~1api~1v1~1users~1access/put
 
@@ -4912,7 +5225,9 @@ class WbAPI:
         return await self(call)
 
     async def upload_media_file(
-        self, x_nm_id: str = None, x_photo_number: int = None,
+        self,
+        x_nm_id: str = None,
+        x_photo_number: int = None,
     ) -> list[UploadMediaFileResponse]:
         """
         Uploads and adds one media file for the product card.
@@ -4949,7 +5264,9 @@ class WbAPI:
         self,
     ) -> list[WarehouseDataItem]:
         """
-        Forms a dataset for inventory by warehouses.
+        Forms a dataset for inventory by warehouses. The data on the seller's warehouses are in an
+        aggregatedform — for all of them together without detailing specific warehouses — and
+        responsescontain `"regionName":"Маркетплейс"` and `"offices":[]`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1offices/post
         :return: list[WarehouseDataItem]
@@ -4961,7 +5278,8 @@ class WbAPI:
         self,
     ) -> list[WorkingWithQuestionsItem]:
         """
-        Depending on the request body, you can:
+        Depending on the request body, you can: - View question. - Reject question. - Answer
+        questionor edit the answer.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Questions/paths/~1api~1v1~1questions/patch
         :return: list[WorkingWithQuestionsItem]

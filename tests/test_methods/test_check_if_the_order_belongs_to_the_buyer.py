@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.check_if_the_order_belongs_to_the_buyer_response import CheckIfTheOrderBelongsToTheBuyerResponse
+from wbapi_async.types import CheckIfTheOrderBelongsToTheBuyerResponse
 from tests.mocked_api import MockedAPI
 
 

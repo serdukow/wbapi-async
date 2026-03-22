@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.supply_boxes_list_item import SupplyBoxesListItem
+from wbapi_async.types import SupplyBoxesListItem
 from tests.mocked_api import MockedAPI
 
 

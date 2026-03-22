@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.balance_item import BalanceItem
+from wbapi_async.types import BalanceItem
 from tests.mocked_api import MockedAPI
 
 

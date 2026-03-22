@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.limits_for_the_product_cards_response import LimitsForTheProductCardsResponse
+from wbapi_async.types import LimitsForTheProductCardsResponse
 from tests.mocked_api import MockedAPI
 
 

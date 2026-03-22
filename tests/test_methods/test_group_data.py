@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.group_data_item import GroupDataItem
+from wbapi_async.types import GroupDataItem
 from tests.mocked_api import MockedAPI
 
 

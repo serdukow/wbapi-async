@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.offices_response import OfficesResponse
+from wbapi_async.types import OfficesResponse
 from tests.mocked_api import MockedAPI
 
 

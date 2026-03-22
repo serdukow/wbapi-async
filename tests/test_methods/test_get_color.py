@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.color_response import ColorResponse
+from wbapi_async.types import ColorResponse
 from tests.mocked_api import MockedAPI
 
 

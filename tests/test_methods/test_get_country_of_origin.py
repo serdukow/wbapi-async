@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.country_of_origin_response import CountryOfOriginResponse
+from wbapi_async.types import CountryOfOriginResponse
 from tests.mocked_api import MockedAPI
 
 

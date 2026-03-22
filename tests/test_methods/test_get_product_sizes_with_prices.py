@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.product_sizes_with_prices_item import ProductSizesWithPricesItem
+from wbapi_async.types import ProductSizesWithPricesItem
 from tests.mocked_api import MockedAPI
 
 

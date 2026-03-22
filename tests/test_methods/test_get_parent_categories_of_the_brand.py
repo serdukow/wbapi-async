@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.parent_categories_of_the_brand_item import ParentCategoriesOfTheBrandItem
+from wbapi_async.types import ParentCategoriesOfTheBrandItem
 from tests.mocked_api import MockedAPI
 
 

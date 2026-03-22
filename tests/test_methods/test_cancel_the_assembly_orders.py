@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.cancel_the_assembly_orders_item import CancelTheAssemblyOrdersItem
+from wbapi_async.types import CancelTheAssemblyOrdersItem
 from tests.mocked_api import MockedAPI
 
 

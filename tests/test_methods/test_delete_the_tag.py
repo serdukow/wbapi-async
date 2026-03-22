@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.delete_the_tag_response import DeleteTheTagResponse
+from wbapi_async.types import DeleteTheTagResponse
 from tests.mocked_api import MockedAPI
 
 

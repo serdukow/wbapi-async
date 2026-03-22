@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.list_of_media_campaigns_response import ListOfMediaCampaignsResponse
+from wbapi_async.types import ListOfMediaCampaignsResponse
 from tests.mocked_api import MockedAPI
 
 

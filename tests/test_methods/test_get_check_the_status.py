@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.check_the_status_response import CheckTheStatusResponse
+from wbapi_async.types import CheckTheStatusResponse
 from tests.mocked_api import MockedAPI
 
 

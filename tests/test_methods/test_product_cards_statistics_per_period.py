@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.product_cards_statistics_per_period_response import ProductCardsStatisticsPerPeriodResponse
+from wbapi_async.types import ProductCardsStatisticsPerPeriodResponse
 from tests.mocked_api import MockedAPI
 
 

@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from ..types.product_detail import ProductDetail
-from ..types.request_limit import RequestLimit
+from ..types import ProductDetail, RequestLimit
 from .base import WbMethod
 
 

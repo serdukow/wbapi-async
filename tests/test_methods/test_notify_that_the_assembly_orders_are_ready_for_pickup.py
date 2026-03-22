@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.notify_that_the_assembly_orders_are_ready_for_pickup_item import NotifyThatTheAssemblyOrdersAreReadyForPickupItem
+from wbapi_async.types import NotifyThatTheAssemblyOrdersAreReadyForPickupItem
 from tests.mocked_api import MockedAPI
 
 

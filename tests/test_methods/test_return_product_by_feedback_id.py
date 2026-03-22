@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.return_product_by_feedback_id_item import ReturnProductByFeedbackIdItem
+from wbapi_async.types import ReturnProductByFeedbackIdItem
 from tests.mocked_api import MockedAPI
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.tag_management_in_the_product_card_response import TagManagementInTheProductCardResponse
+from wbapi_async.types import TagManagementInTheProductCardResponse
 from tests.mocked_api import MockedAPI
 
 

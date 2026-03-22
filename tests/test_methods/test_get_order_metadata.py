@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.order_metadata_item import OrderMetadataItem
+from wbapi_async.types import OrderMetadataItem
 from tests.mocked_api import MockedAPI
 
 

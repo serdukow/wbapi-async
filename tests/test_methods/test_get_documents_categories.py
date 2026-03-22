@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.documents_categories_item import DocumentsCategoriesItem
+from wbapi_async.types import DocumentsCategoriesItem
 from tests.mocked_api import MockedAPI
 
 

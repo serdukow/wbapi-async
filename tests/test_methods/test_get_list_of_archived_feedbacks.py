@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.list_of_archived_feedbacks_item import ListOfArchivedFeedbacksItem
+from wbapi_async.types import ListOfArchivedFeedbacksItem
 from tests.mocked_api import MockedAPI
 
 

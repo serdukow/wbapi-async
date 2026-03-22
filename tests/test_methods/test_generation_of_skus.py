@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.generation_of_skus_item import GenerationOfSkusItem
+from wbapi_async.types import GenerationOfSkusItem
 from tests.mocked_api import MockedAPI
 
 

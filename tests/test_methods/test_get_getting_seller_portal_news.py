@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.getting_seller_portal_news_item import GettingSellerPortalNewsItem
+from wbapi_async.types import GettingSellerPortalNewsItem
 from tests.mocked_api import MockedAPI
 
 

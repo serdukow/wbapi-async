@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.pin_feedback_response import PinFeedbackResponse
+from wbapi_async.types import PinFeedbackResponse
 from tests.mocked_api import MockedAPI
 
 

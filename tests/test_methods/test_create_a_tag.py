@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.create_a_tag_response import CreateATagResponse
+from wbapi_async.types import CreateATagResponse
 from tests.mocked_api import MockedAPI
 
 

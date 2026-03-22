@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.active_and_inactive_search_cluster_lists_item import ActiveAndInactiveSearchClusterListsItem
+from wbapi_async.types import ActiveAndInactiveSearchClusterListsItem
 from tests.mocked_api import MockedAPI
 
 

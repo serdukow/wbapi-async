@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.a_list_of_seller_active_or_invited_users_item import AListOfSellerActiveOrInvitedUsersItem
+from wbapi_async.types import AListOfSellerActiveOrInvitedUsersItem
 from tests.mocked_api import MockedAPI
 
 

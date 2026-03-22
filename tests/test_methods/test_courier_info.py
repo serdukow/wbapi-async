@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.courier_info_item import CourierInfoItem
+from wbapi_async.types import CourierInfoItem
 from tests.mocked_api import MockedAPI
 
 

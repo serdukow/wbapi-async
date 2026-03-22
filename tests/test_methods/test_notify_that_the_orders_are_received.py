@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.notify_that_the_orders_are_received_item import NotifyThatTheOrdersAreReceivedItem
+from wbapi_async.types import NotifyThatTheOrdersAreReceivedItem
 from tests.mocked_api import MockedAPI
 
 

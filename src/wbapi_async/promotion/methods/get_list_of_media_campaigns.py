@@ -1,0 +1,25 @@
+from pydantic import Field
+
+from ...methods.base import WbMethod
+from ...types import ListOfMediaCampaignsResponse, RequestLimit
+
+
+class GetListOfMediaCampaigns(WbMethod):
+    """
+    The method allows to get the list of media campaigns of the seller
+
+    Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Media/paths/~1adv~1v1~1adverts/get
+    """
+
+    __return__ = ListOfMediaCampaignsResponse
+    __api__ = "advert-media-api"
+    __method__ = "adv/v1/adverts"
+
+    request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
+
+    status: int | None = Field(None)
+    type: int | None = Field(None)
+    limit: int | None = Field(None)
+    offset: int | None = Field(None)
+    order: str | None = Field(None)
+    direction: str | None = Field(None)

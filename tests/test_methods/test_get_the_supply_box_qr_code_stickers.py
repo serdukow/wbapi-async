@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.the_supply_box_qr_code_stickers_item import TheSupplyBoxQrCodeStickersItem
+from wbapi_async.types import TheSupplyBoxQrCodeStickersItem
 from tests.mocked_api import MockedAPI
 
 
@@ -17,7 +17,7 @@ class TestGetTheSupplyBoxQrCodeStickers:
         }
         )
 
-        result = await api.get_the_supply_box_qr_code_stickers(supply_id="supply_id", type="type", trbx_ids=[])
+        result = await api.get_the_supply_box_qr_code_stickers(supply_id="supply_id", type="svg", trbx_ids=[])
 
         assert isinstance(result, list)
         assert len(result) == 1

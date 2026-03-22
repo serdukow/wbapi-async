@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.changing_the_list_of_product_cards_in_campaigns_item import ChangingTheListOfProductCardsInCampaignsItem
+from wbapi_async.types import ChangingTheListOfProductCardsInCampaignsItem
 from tests.mocked_api import MockedAPI
 
 

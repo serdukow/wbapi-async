@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.status_history_for_crossborder_orders_item import StatusHistoryForCrossborderOrdersItem
+from wbapi_async.types import StatusHistoryForCrossborderOrdersItem
 from tests.mocked_api import MockedAPI
 
 

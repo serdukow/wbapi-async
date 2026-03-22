@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi_async.types.products_in_quarantine_item import ProductsInQuarantineItem
+from wbapi_async.types import ProductsInQuarantineItem
 from tests.mocked_api import MockedAPI
 
 
