@@ -2,9 +2,7 @@ from typing import Any
 
 from pydantic import Field
 
-from ..types.list_of_failed_product_cards_with_errors_item import (
-    ListOfFailedProductCardsWithErrorsItem,
-)
+from ..types.list_of_failed_product_cards_with_errors_item import ListOfFailedProductCardsWithErrorsItem
 from ..types.request_limit import RequestLimit
 from .base import WbMethod
 

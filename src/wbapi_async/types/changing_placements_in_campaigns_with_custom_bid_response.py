@@ -1,0 +1,9 @@
+from pydantic import Field
+
+from .base import BaseType
+
+
+class ChangingPlacementsInCampaignsWithCustomBidResponse(BaseType):
+    """Changing Placements in Campaigns with Custom Bid"""
+
+    pass

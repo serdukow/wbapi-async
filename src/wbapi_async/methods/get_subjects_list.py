@@ -1,7 +1,7 @@
 from pydantic import Field
 
-from ..types.request_limit import RequestLimit
 from ..types.subjects_list_item import SubjectsListItem
+from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 

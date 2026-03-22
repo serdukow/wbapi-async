@@ -1,9 +1,7 @@
 from pydantic import Field
 
+from ..types.tag_management_in_the_product_card_response import TagManagementInTheProductCardResponse
 from ..types.request_limit import RequestLimit
-from ..types.tag_management_in_the_product_card_response import (
-    TagManagementInTheProductCardResponse,
-)
 from .base import WbMethod
 
 

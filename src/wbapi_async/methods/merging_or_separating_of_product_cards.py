@@ -1,6 +1,4 @@
-from ..types.merging_or_separating_of_product_cards_response import (
-    MergingOrSeparatingOfProductCardsResponse,
-)
+from ..types.merging_or_separating_of_product_cards_response import MergingOrSeparatingOfProductCardsResponse
 from ..types.request_limit import RequestLimit
 from .base import WbMethod
 

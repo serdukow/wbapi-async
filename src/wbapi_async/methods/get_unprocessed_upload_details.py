@@ -1,7 +1,7 @@
 from pydantic import Field
 
-from ..types.request_limit import RequestLimit
 from ..types.unprocessed_upload_details_item import UnprocessedUploadDetailsItem
+from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 

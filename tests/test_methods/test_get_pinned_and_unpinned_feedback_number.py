@@ -1,0 +1,21 @@
+import pytest
+
+from wbapi_async.types.pinned_and_unpinned_feedback_number_response import PinnedAndUnpinnedFeedbackNumberResponse
+from tests.mocked_api import MockedAPI
+
+
+@pytest.mark.unit
+class TestGetPinnedAndUnpinnedFeedbackNumber:
+
+    async def test_get_pinned_and_unpinned_feedback_number(self, api: MockedAPI) -> None:
+        api.add_response(
+            [{
+
+            }]
+        )
+
+        result = await api.get_pinned_and_unpinned_feedback_number()
+
+        assert isinstance(result, list)
+        assert len(result) == 1
+        assert isinstance(result[0], PinnedAndUnpinnedFeedbackNumberResponse)

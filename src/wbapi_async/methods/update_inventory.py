@@ -2,8 +2,8 @@ from typing import Any
 
 from pydantic import Field
 
-from ..types.request_limit import RequestLimit
 from ..types.update_inventory_response import UpdateInventoryResponse
+from ..types.request_limit import RequestLimit
 from .base import WbMethod
 
 
