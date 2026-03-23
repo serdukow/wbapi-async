@@ -24,7 +24,7 @@
 - **Auto-pagination** — fetch all pages with a single `await paginate(...)`
 - **Rate limiting** — per-method limits with `aiolimiter`
 - **Auto-retry** — automatic retry on HTTP 429
-- **Always up to date** — methods are [auto-generated](https://github.com/serdukow/wbapi-codegen) from official OpenAPI specs as soon as they change
+- **Always up to date** — methods are [auto-generated](https://github.com/serdukow/wbapi-codegen) from [wb api](https://dev.wildberries.ru) as soon as they change
 
 ## Docs
 
