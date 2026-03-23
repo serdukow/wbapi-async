@@ -1,21 +1,22 @@
 import pytest
 
-from wbapi_async.types import BrandsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import BrandsItem
 
 
 @pytest.mark.unit
 class TestGetBrands:
-
     async def test_get_brands(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "brands": [{
-                "id": 1,
-                "logoUrl": "logoUrl",
-                "name": "name",
-            }]
-        }
+                "brands": [
+                    {
+                        "id": 1,
+                        "logoUrl": "logoUrl",
+                        "name": "name",
+                    }
+                ]
+            }
         )
 
         result = await api.get_brands(subject_id=1)

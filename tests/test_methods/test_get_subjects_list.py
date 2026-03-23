@@ -1,22 +1,23 @@
 import pytest
 
-from wbapi_async.types import SubjectsListItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import SubjectsListItem
 
 
 @pytest.mark.unit
 class TestGetSubjectsList:
-
     async def test_get_subjects_list(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": [{
-                "subjectID": 1,
-                "parentID": 1,
-                "subjectName": "subjectName",
-                "parentName": "parentName",
-            }]
-        }
+                "data": [
+                    {
+                        "subjectID": 1,
+                        "parentID": 1,
+                        "subjectName": "subjectName",
+                        "parentName": "parentName",
+                    }
+                ]
+            }
         )
 
         result = await api.get_subjects_list()

@@ -1,21 +1,22 @@
 import pytest
 
-from wbapi_async.types import AssemblyOrdersStatusesItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import AssemblyOrdersStatusesItem
 
 
 @pytest.mark.unit
 class TestGetAssemblyOrdersStatuses:
-
     async def test_get_assembly_orders_statuses(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "orders": [{
-                "id": 1,
-                "supplierStatus": "supplierStatus",
-                "wbStatus": "wbStatus",
-            }]
-        }
+                "orders": [
+                    {
+                        "id": 1,
+                        "supplierStatus": "supplierStatus",
+                        "wbStatus": "wbStatus",
+                    }
+                ]
+            }
         )
 
         result = await api.get_assembly_orders_statuses(orders=[])

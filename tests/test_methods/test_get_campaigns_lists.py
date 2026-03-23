@@ -1,22 +1,23 @@
 import pytest
 
-from wbapi_async.types import CampaignsListsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import CampaignsListsItem
 
 
 @pytest.mark.unit
 class TestGetCampaignsLists:
-
     async def test_get_campaigns_lists(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "adverts": [{
-                "type": 1,
-                "status": 1,
-                "count": 1,
-                "advert_list": [],
-            }]
-        }
+                "adverts": [
+                    {
+                        "type": 1,
+                        "status": 1,
+                        "count": 1,
+                        "advert_list": [],
+                    }
+                ]
+            }
         )
 
         result = await api.get_campaigns_lists()

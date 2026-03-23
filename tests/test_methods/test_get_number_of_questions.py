@@ -1,20 +1,13 @@
 import pytest
 
-from wbapi_async.types import NumberOfQuestionsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import NumberOfQuestionsItem
 
 
 @pytest.mark.unit
 class TestGetNumberOfQuestions:
-
     async def test_get_number_of_questions(self, api: MockedAPI) -> None:
-        api.add_response(
-            {
-            "additionalErrors": [{
-
-            }]
-        }
-        )
+        api.add_response({"additionalErrors": [{}]})
 
         result = await api.get_number_of_questions()
 

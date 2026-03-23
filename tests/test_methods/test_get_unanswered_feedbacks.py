@@ -1,20 +1,13 @@
 import pytest
 
-from wbapi_async.types import UnansweredFeedbacksItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import UnansweredFeedbacksItem
 
 
 @pytest.mark.unit
 class TestGetUnansweredFeedbacks:
-
     async def test_get_unanswered_feedbacks(self, api: MockedAPI) -> None:
-        api.add_response(
-            {
-            "additionalErrors": [{
-
-            }]
-        }
-        )
+        api.add_response({"additionalErrors": [{}]})
 
         result = await api.get_unanswered_feedbacks()
 

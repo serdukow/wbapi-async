@@ -1,8 +1,8 @@
 import pytest
 
+from tests.mocked_api import MockedAPI
 from wbapi_async.types import ProductDetail
 
-from tests.mocked_api import MockedAPI
 
 RESPONSE = {
     "products": [

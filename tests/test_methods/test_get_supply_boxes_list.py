@@ -1,19 +1,20 @@
 import pytest
 
-from wbapi_async.types import SupplyBoxesListItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import SupplyBoxesListItem
 
 
 @pytest.mark.unit
 class TestGetSupplyBoxesList:
-
     async def test_get_supply_boxes_list(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "trbxes": [{
-                "id": "id",
-            }]
-        }
+                "trbxes": [
+                    {
+                        "id": "id",
+                    }
+                ]
+            }
         )
 
         result = await api.get_supply_boxes_list(supply_id="supply_id")

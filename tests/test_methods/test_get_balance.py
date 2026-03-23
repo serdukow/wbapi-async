@@ -1,21 +1,22 @@
 import pytest
 
-from wbapi_async.types import BalanceItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import BalanceItem
 
 
 @pytest.mark.unit
 class TestGetBalance:
-
     async def test_get_balance(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "cashbacks": [{
-                "sum": 1,
-                "percent": 1,
-                "expiration_date": "expiration_date",
-            }]
-        }
+                "cashbacks": [
+                    {
+                        "sum": 1,
+                        "percent": 1,
+                        "expiration_date": "expiration_date",
+                    }
+                ]
+            }
         )
 
         result = await api.get_balance()

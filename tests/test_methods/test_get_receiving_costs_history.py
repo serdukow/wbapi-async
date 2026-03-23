@@ -1,24 +1,25 @@
 import pytest
 
-from wbapi_async.types import ReceivingCostsHistoryResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ReceivingCostsHistoryResponse
 
 
 @pytest.mark.unit
 class TestGetReceivingCostsHistory:
-
     async def test_get_receiving_costs_history(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "updNum": 1,
-                "updTime": "updTime",
-                "updSum": 1,
-                "advertId": 1,
-                "campName": "campName",
-                "advertType": 1,
-                "paymentType": "paymentType",
-                "advertStatus": 1,
-            }]
+            [
+                {
+                    "updNum": 1,
+                    "updTime": "updTime",
+                    "updSum": 1,
+                    "advertId": 1,
+                    "campName": "campName",
+                    "advertType": 1,
+                    "paymentType": "paymentType",
+                    "advertStatus": 1,
+                }
+            ]
         )
 
         result = await api.get_receiving_costs_history(from_="from_", to="to")

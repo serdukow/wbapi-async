@@ -1,26 +1,27 @@
 import pytest
 
-from wbapi_async.types import DocumentsListItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import DocumentsListItem
 
 
 @pytest.mark.unit
 class TestGetDocumentsList:
-
     async def test_get_documents_list(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": {
-            "documents": [{
-                "serviceName": "serviceName",
-                "name": "name",
-                "category": "category",
-                "extensions": [],
-                "creationTime": "creationTime",
-                "viewed": True,
-            }]
-        }
-        }
+                "data": {
+                    "documents": [
+                        {
+                            "serviceName": "serviceName",
+                            "name": "name",
+                            "category": "category",
+                            "extensions": [],
+                            "creationTime": "creationTime",
+                            "viewed": True,
+                        }
+                    ]
+                }
+            }
         )
 
         result = await api.get_documents_list()

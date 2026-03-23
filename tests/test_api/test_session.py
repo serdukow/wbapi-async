@@ -7,7 +7,6 @@ from wbapi_async.exceptions import WbAPIError
 
 @pytest.mark.unit
 class TestBaseSession:
-
     async def test_error_raises_on_4xx(self, session: BaseSession, httpx_mock: HTTPXMock) -> None:
         httpx_mock.add_response(
             status_code=401,

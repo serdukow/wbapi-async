@@ -1,4 +1,5 @@
 import pytest
+
 from tests.mocked_api import MockedAPI
 from wbapi_async.client.session import BaseSession
 
