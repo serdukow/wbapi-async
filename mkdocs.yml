@@ -65,8 +65,10 @@ nav:
       - Quick Start: getting-started/quick-start.md
   - API Reference:
       - WbAPI Client: api/client.md
+      - Domains: api/domains.md
   - Advanced:
       - Error Handling: advanced/error-handling.md
       - Rate Limiting: advanced/rate-limiting.md
+      - Pagination: advanced/pagination.md
       - Types & Enums: advanced/types-and-enums.md
   - Changelog: changelog.md

@@ -37,7 +37,3 @@ session = BaseSession(base="wildberries.ru", timeout=120)
 async with WbAPI(token="...", session=session) as api:
     ...
 ```
-
-## All methods
-
-All 252 API methods are available as async methods on the `WbAPI` instance. Use your IDE's autocomplete to discover them, or see the full API documentation at [dev.wildberries.ru](https://dev.wildberries.ru/openapi).

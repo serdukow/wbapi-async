@@ -15,6 +15,7 @@ class GetPromotionsList(WbMethod):
     __api__ = "dp-calendar-api"
     __method__ = "api/v1/calendar/promotions"
     __data_key__ = "data.promotions"
+    __pagination__ = "offset"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

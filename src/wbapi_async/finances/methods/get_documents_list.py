@@ -16,6 +16,7 @@ class GetDocumentsList(WbMethod):
     __api__ = "documents-api"
     __method__ = "api/v1/documents/list"
     __data_key__ = "data.documents"
+    __pagination__ = "offset"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

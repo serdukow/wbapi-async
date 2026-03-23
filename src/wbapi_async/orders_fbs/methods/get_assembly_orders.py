@@ -16,6 +16,7 @@ class GetAssemblyOrders(WbMethod):
     __api__ = "marketplace-api"
     __method__ = "api/v3/orders"
     __data_key__ = "orders"
+    __pagination__ = "next"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

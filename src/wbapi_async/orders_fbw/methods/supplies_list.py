@@ -17,6 +17,7 @@ class SuppliesList(WbMethod):
     __api__ = "supplies-api"
     __method__ = "api/v1/supplies"
     __http_method__ = "POST"
+    __pagination__ = "offset"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

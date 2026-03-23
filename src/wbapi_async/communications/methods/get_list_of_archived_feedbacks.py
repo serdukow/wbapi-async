@@ -18,6 +18,7 @@ class GetListOfArchivedFeedbacks(WbMethod):
     __api__ = "feedbacks-api"
     __method__ = "api/v1/feedbacks/archive"
     __data_key__ = "data.feedbacks"
+    __pagination__ = "take_skip"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

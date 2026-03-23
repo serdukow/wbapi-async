@@ -17,6 +17,7 @@ class GetListOfPinnedAndUnpinnedFeedback(WbMethod):
     __return__ = ListOfPinnedAndUnpinnedFeedbackResponse
     __api__ = "feedbacks-api"
     __method__ = "api/feedbacks/v1/pins"
+    __pagination__ = "next"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

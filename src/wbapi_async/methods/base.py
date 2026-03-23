@@ -34,6 +34,8 @@ class WbMethod(BaseModel, ABC):
         __unofficial__: ClassVar[bool]
         # Method path template with {field} placeholders, e.g. "api/v1/supplies/{supply_id}/goods".
         __method_template__: ClassVar[str | None]
+        # Pagination strategy key — one of "offset", "next", "take_skip", or None.
+        __pagination__: ClassVar[str | None]
     else:
 
         @property
@@ -69,6 +71,10 @@ class WbMethod(BaseModel, ABC):
 
         @property
         def __method_template__(self) -> str | None:
+            return None
+
+        @property
+        def __pagination__(self) -> str | None:
             return None
 
     def _get_url(self, wb_api: WbAPI) -> str:
@@ -119,28 +125,7 @@ class WbMethod(BaseModel, ABC):
         http_method = getattr(self, "__http_method__", "GET").upper()
         excluded_fields = {"request_limit"}
 
-        # Auto-pagination: if method has limit/offset fields and limit is None,
-        # fetch all pages and return a combined list.
-        has_pagination = hasattr(self, "limit") and hasattr(self, "offset")
-        if has_pagination and getattr(self, "limit", None) is None:
-            page_size = 1000
-            current_offset = 0
-            result: list[Any] = []
-            return_type = self.__return__
-
-            while True:
-                page_copy = self.model_copy(update={"limit": page_size, "offset": current_offset})
-                params = page_copy.model_dump(by_alias=True, exclude_none=True, exclude=excluded_fields)
-                data = await self._dispatch(wb_api, http_method, url, params, request_limit)
-                page = self._extract(data)
-                if not isinstance(page, list) or not page:
-                    break
-                result.extend(TypeAdapter(list[return_type]).validate_python(page))  # type: ignore[valid-type]
-                if len(page) < page_size:
-                    break
-                current_offset += page_size
-
-            return result
+        return_type = self.__return__
 
         params = self.model_dump(by_alias=True, exclude_none=True, exclude=excluded_fields)
         data = await self._dispatch(wb_api, http_method, url, params, request_limit)

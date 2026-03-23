@@ -14,6 +14,7 @@ class GetListOfMediaCampaigns(WbMethod):
     __return__ = ListOfMediaCampaignsResponse
     __api__ = "advert-media-api"
     __method__ = "adv/v1/adverts"
+    __pagination__ = "offset"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
