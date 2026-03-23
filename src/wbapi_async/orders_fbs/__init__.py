@@ -67,6 +67,7 @@ __all__ = (
     "DeleteBoxesFromTheSupplyResponse",
     "DeleteThePassResponse",
     "DeleteTheSupplyResponse",
+    "Height",
     "MoveTheSupplyToTheDeliveryResponse",
     "NewAssemblyOrdersItem",
     "OfficesForPassResponse",
@@ -79,8 +80,7 @@ __all__ = (
     "SupplyDetailsResponse",
     "TheSupplyBoxQrCodeStickersItem",
     "TheSupplyQrCodeResponse",
-    "UpdatePassResponse",
-    "Height",
     "Type",
+    "UpdatePassResponse",
     "Width",
 )

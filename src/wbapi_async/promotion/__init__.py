@@ -51,6 +51,7 @@ __all__ = (
     "ActiveAndInactiveSearchClusterListsItem",
     "AddProductToThePromotionResponse",
     "BalanceItem",
+    "BidType",
     "CampaignBudgetResponse",
     "CampaignsInformationItem",
     "CampaignsListsItem",
@@ -72,6 +73,7 @@ __all__ = (
     "MediaCampaignsNumberResponse",
     "MinimumBidsForProductCardsItem",
     "PauseCampaignResponse",
+    "PaymentType",
     "ProductCardsForCampaignsResponse",
     "PromotionsDetailsItem",
     "PromotionsListItem",
@@ -85,6 +87,4 @@ __all__ = (
     "StopCampaignResponse",
     "SubjectsForCampaignsResponse",
     "TopupOfTheCampaignBudgetResponse",
-    "BidType",
-    "PaymentType",
 )

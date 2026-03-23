@@ -68,6 +68,7 @@ __all__ = (
     "InventoryItem",
     "LimitsForTheProductCardsResponse",
     "ListOfFailedProductCardsWithErrorsItem",
+    "Locale",
     "MergingOrSeparatingOfProductCardsResponse",
     "OfficesResponse",
     "ProcessedUploadDetailsItem",
@@ -100,5 +101,4 @@ __all__ = (
     "UploadMediaFilesViaLinksResponse",
     "VatRateItem",
     "WarehousesResponse",
-    "Locale",
 )

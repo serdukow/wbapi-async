@@ -18,11 +18,11 @@ __all__ = (
     "CreateAnInvitationForANewUserResponse",
     "DeleteUserResponse",
     "GettingSellerPortalNewsItem",
-    "SellerInformationResponse",
-    "UpdateUsersAccessPermissionsResponse",
     "HeightStickers",
     "OrderDeductions",
+    "SellerInformationResponse",
     "SortList",
     "TypeStickers",
+    "UpdateUsersAccessPermissionsResponse",
     "WidthStickers",
 )

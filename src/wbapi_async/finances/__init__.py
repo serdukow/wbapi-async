@@ -12,7 +12,7 @@ __all__ = (
     "DocumentsCategoriesItem",
     "DocumentsListItem",
     "DocumentsResponse",
+    "Period",
     "RealizationSalesReportResponse",
     "SellersBalanceResponse",
-    "Period",
 )
