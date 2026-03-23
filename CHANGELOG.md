@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0](https://github.com/serdukow/wbapi-async/compare/v0.0.6...v0.1.0) (2026-03-23)
+
+
+### Features
+
+* add 40+ new WB API methods for products and warehouses ([504b48a](https://github.com/serdukow/wbapi-async/commit/504b48ad9c169a27a7d976b1d84c3ce0d64191a1))
+* add PATCH method support and refactor product cards API ([b3382eb](https://github.com/serdukow/wbapi-async/commit/b3382eb46b684722cbe7e068d9d9b15e58313882))
+* reorganize source into domain-specific module subdirectories ([82617aa](https://github.com/serdukow/wbapi-async/commit/82617aab10a7ff6b9f3a236cbaa1d6080ad781ae))
+* replace auto-pagination with explicit paginate() utility ([03da7ad](https://github.com/serdukow/wbapi-async/commit/03da7addf40775500adcc627b1d09b5221f0c44b))
+
+
+### Bug Fixes
+
+* preserve original error when response body is not JSON ([ca2bf59](https://github.com/serdukow/wbapi-async/commit/ca2bf5954a9ff903b1cbb08e9c6ba4a107c5cd1b))
+* rename builtins, required params have no default in api.py ([6f41595](https://github.com/serdukow/wbapi-async/commit/6f41595908d27db1e5134be67296e415f679de5a))
+
+
+### Documentation
+
+* add AGENTS.md with project guidelines, symlink CLAUDE.md to it ([b436ec0](https://github.com/serdukow/wbapi-async/commit/b436ec01c88b83f4b89419128e1b2de737680a87))
+* add mkdocs-material documentation with gh-pages deploy ([dd1349d](https://github.com/serdukow/wbapi-async/commit/dd1349d659e6b0461801d7db1ff2f7f6ba810d66))
+* add note about auto-generated API methods from OpenAPI specs ([28906dd](https://github.com/serdukow/wbapi-async/commit/28906dda4aff10736abfa0e1197222770a044ea9))
+* add uv sync --all-extras command to AGENTS.md ([3a23d28](https://github.com/serdukow/wbapi-async/commit/3a23d28e227a92815042f9f08d4ae7cf3492e778))
+* simplify README and link docs/index.md to README ([df57f60](https://github.com/serdukow/wbapi-async/commit/df57f60890f5144006098bca800c63fb73530d40))
+* update AGENTS.md with pagination API and structure changes ([25ea154](https://github.com/serdukow/wbapi-async/commit/25ea1547fa16752500f5c4641cd6e3301bef1064))
+* update codegen description to reflect event-driven updates ([b6cdb67](https://github.com/serdukow/wbapi-async/commit/b6cdb67bdf762d654efb3ded238f0dc4bff0d57d))
+* update codegen link to include wb api reference ([96352d2](https://github.com/serdukow/wbapi-async/commit/96352d233bf120bdb94d052d7c2f52bb511d23cf))
+
 ## [0.1.0b1] - 2026-03-22
 
 ### Added
