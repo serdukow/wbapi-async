@@ -15,43 +15,19 @@
 </div>
 
 > [!CAUTION]
-> The library is under active development and **is not recommended for use in production environments**
+> The library is under active development and **is currently not recommended for use in production environments**
 
-> [!NOTE]
-> API methods, types, and tests are [automatically generated](https://github.com/serdukow/wbapi-codegen) from the official [Wildberries OpenAPI specs](https://dev.wildberries.ru/openapi) — so the library is always up to date with the latest endpoints and changes.
+## Features
 
-## Install
+- **Fully async** — built on `httpx` and `asyncio`
+- **Type-safe** — Pydantic v2 models with `py.typed` marker
+- **Auto-pagination** — fetch all pages with a single `await paginate(...)`
+- **Rate limiting** — per-method limits with `aiolimiter`
+- **Auto-retry** — automatic retry on HTTP 429
+- **Always up to date** — methods are [auto-generated](https://github.com/serdukow/wbapi-codegen) nightly from official OpenAPI specs
 
-```console
-pip install wbapi-async
-```
+## Docs
 
-## Quick Start
+**[wbapi-async](https://serdukow.github.io/wbapi-async/)**
 
-```python
-import asyncio
-from wbapi_async import WbAPI
-
-async def main():
-    async with WbAPI(token="your_token_here") as api:
-        # Connection check
-        check = await api.connection_check()
-        print(check)
-
-        # Get products with prices
-        products = await api.get_products_with_prices(limit=100)
-        print(products)
-
-        # Get sales report
-        sales = await api.get_sales(date_from="2026-01-01")
-        print(sales)
-
-        # Get realization report
-        report = await api.get_realization_sales_report(
-            date_from="2026-01-01",
-            date_to="2026-01-31",
-        )
-        print(report)
-
-asyncio.run(main())
-```
+**[WB API](https://dev.wildberries.ru)**

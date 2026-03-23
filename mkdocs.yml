@@ -70,5 +70,4 @@ nav:
       - Error Handling: advanced/error-handling.md
       - Rate Limiting: advanced/rate-limiting.md
       - Pagination: advanced/pagination.md
-      - Types & Enums: advanced/types-and-enums.md
   - Changelog: changelog.md
