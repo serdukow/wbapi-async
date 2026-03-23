@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import RegenerateTheReportResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import RegenerateTheReportResponse, RequestLimit
 
 
 class RegenerateTheReport(WbMethod):

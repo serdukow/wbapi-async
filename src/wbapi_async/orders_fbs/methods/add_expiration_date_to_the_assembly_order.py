@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AddExpirationDateToTheAssemblyOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AddExpirationDateToTheAssemblyOrderResponse, RequestLimit
 
 
 class AddExpirationDateToTheAssemblyOrder(WbMethod):

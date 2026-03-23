@@ -1,6 +1,3 @@
-from .enums.sort import Sort
-from .enums.sort_blocked import SortBlocked
-from .enums.sort_shadowed import SortShadowed
 from .types.blocked_product_cards_item import BlockedProductCardsItem
 from .types.check_the_status_response import CheckTheStatusResponse
 from .types.generate_the_report_response import GenerateTheReportResponse
@@ -17,6 +14,9 @@ from .types.seller_brands_item import SellerBrandsItem
 from .types.substitutions_and_incorrect_attachments_item import SubstitutionsAndIncorrectAttachmentsItem
 from .types.warehouse_measurements_item import WarehouseMeasurementsItem
 from .types.warehouse_response import WarehouseResponse
+from .enums.sort import Sort
+from .enums.sort_blocked import SortBlocked
+from .enums.sort_shadowed import SortShadowed
 
 
 __all__ = (

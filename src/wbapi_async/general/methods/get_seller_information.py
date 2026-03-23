@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import SellerInformationResponse
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SellerInformationResponse
 
 
 class GetSellerInformation(WbMethod):

@@ -3,8 +3,9 @@ from typing import Any
 from pydantic import Field
 
 from ...enums import PositionCluster
+from ...types import PaginationByProductsWithinAGroupResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import PaginationByProductsWithinAGroupResponse, RequestLimit
 
 
 class PaginationByProductsWithinAGroup(WbMethod):

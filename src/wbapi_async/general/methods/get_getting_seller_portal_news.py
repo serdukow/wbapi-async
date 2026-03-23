@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import GettingSellerPortalNewsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import GettingSellerPortalNewsItem, RequestLimit
 
 
 class GetGettingSellerPortalNews(WbMethod):

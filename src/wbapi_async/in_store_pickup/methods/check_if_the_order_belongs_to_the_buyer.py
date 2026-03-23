@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import CheckIfTheOrderBelongsToTheBuyerResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CheckIfTheOrderBelongsToTheBuyerResponse, RequestLimit
 
 
 class CheckIfTheOrderBelongsToTheBuyer(WbMethod):

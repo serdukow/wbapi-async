@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AnswerBuyersApplicationResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AnswerBuyersApplicationResponse, RequestLimit
 
 
 class AnswerBuyersApplication(WbMethod):

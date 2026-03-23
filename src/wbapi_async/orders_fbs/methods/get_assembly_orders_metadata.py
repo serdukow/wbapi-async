@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AssemblyOrdersMetadataItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AssemblyOrdersMetadataItem, RequestLimit
 
 
 class GetAssemblyOrdersMetadata(WbMethod):

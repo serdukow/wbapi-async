@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import GenderItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import GenderItem, RequestLimit
 
 
 class GetGender(WbMethod):

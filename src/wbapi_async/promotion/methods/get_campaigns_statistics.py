@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import CampaignsStatisticsResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CampaignsStatisticsResponse, RequestLimit
 
 
 class GetCampaignsStatistics(WbMethod):

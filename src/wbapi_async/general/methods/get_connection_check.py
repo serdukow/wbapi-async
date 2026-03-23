@@ -1,5 +1,6 @@
+from ...types import ConnectionCheckResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ConnectionCheckResponse, RequestLimit
 
 
 class GetConnectionCheck(WbMethod):

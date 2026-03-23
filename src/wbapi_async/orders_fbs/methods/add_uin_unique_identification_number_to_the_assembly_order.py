@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AddUinUniqueIdentificationNumberToTheAssemblyOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AddUinUniqueIdentificationNumberToTheAssemblyOrderResponse, RequestLimit
 
 
 class AddUinUniqueIdentificationNumberToTheAssemblyOrder(WbMethod):

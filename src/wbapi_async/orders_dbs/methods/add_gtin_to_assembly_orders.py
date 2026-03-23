@@ -2,8 +2,9 @@ from typing import Any
 
 from pydantic import Field
 
+from ...types import AddGtinToAssemblyOrdersItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AddGtinToAssemblyOrdersItem, RequestLimit
 
 
 class AddGtinToAssemblyOrders(WbMethod):

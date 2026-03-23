@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import MoveTheSupplyToTheDeliveryResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import MoveTheSupplyToTheDeliveryResponse, RequestLimit
 
 
 class MoveTheSupplyToTheDelivery(WbMethod):

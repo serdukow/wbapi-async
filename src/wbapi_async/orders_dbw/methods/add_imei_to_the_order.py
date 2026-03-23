@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AddImeiToTheOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AddImeiToTheOrderResponse, RequestLimit
 
 
 class AddImeiToTheOrder(WbMethod):

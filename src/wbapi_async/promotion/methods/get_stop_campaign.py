@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import RequestLimit
+from ...types import StopCampaignResponse
 from ...methods.base import WbMethod
-from ...types import RequestLimit, StopCampaignResponse
 
 
 class GetStopCampaign(WbMethod):

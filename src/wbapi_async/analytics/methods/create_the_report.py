@@ -1,5 +1,6 @@
+from ...types import CreateTheReportResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CreateTheReportResponse, RequestLimit
 
 
 class CreateTheReport(WbMethod):

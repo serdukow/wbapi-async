@@ -1,4 +1,7 @@
+
 from .period import Period
 
 
-__all__ = ("Period",)
+__all__ = (
+    "Period",
+)

@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import CountryOfOriginResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CountryOfOriginResponse, RequestLimit
 
 
 class GetCountryOfOrigin(WbMethod):

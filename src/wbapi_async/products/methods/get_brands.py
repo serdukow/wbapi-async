@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import BrandsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import BrandsItem, RequestLimit
 
 
 class GetBrands(WbMethod):

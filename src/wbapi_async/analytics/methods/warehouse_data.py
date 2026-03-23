@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import WarehouseDataItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, WarehouseDataItem
 
 
 class WarehouseData(WbMethod):

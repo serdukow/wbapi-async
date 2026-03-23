@@ -1,4 +1,3 @@
-from .enums.locale import Locale
 from .types.brands_item import BrandsItem
 from .types.color_response import ColorResponse
 from .types.contacts_list_item import ContactsListItem
@@ -48,6 +47,7 @@ from .types.upload_media_file_response import UploadMediaFileResponse
 from .types.upload_media_files_via_links_response import UploadMediaFilesViaLinksResponse
 from .types.vat_rate_item import VatRateItem
 from .types.warehouses_response import WarehousesResponse
+from .enums.locale import Locale
 
 
 __all__ = (

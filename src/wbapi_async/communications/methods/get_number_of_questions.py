@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import NumberOfQuestionsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import NumberOfQuestionsItem, RequestLimit
 
 
 class GetNumberOfQuestions(WbMethod):

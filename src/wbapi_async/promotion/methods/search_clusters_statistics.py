@@ -2,8 +2,9 @@ from typing import Any
 
 from pydantic import Field
 
+from ...types import RequestLimit
+from ...types import SearchClustersStatisticsItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SearchClustersStatisticsItem
 
 
 class SearchClustersStatistics(WbMethod):

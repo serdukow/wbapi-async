@@ -1,5 +1,6 @@
+from ...types import AllAssemblyOrdersForReshipmentItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AllAssemblyOrdersForReshipmentItem, RequestLimit
 
 
 class GetAllAssemblyOrdersForReshipment(WbMethod):

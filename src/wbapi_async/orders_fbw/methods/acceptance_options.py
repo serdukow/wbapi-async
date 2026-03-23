@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AcceptanceOptionsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AcceptanceOptionsItem, RequestLimit
 
 
 class AcceptanceOptions(WbMethod):

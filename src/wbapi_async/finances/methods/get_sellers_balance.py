@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import SellersBalanceResponse
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SellersBalanceResponse
 
 
 class GetSellersBalance(WbMethod):

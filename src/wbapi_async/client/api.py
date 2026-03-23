@@ -25,16 +25,17 @@ from ..enums import (
     WidthStickers,
 )
 from ..methods import (
+    WbMethod,
     AcceptanceOptions,
     ActiveAndInactiveSearchClusterLists,
     AddAssemblyOrdersToTheSupply,
     AddBoxesToTheSupply,
     AddCustomDeclarationNumberToTheOrder,
     AddCustomDeclarationToTheOrders,
-    AddDataMatrixCodesToAssemblyOrdersChestnyZnak,
-    AddDataMatrixCodesToTheAssemblyOrdersChestnyZnak,
     AddDataMatrixCodeToTheAssemblyOrder,
     AddDataMatrixCodeToTheOrder,
+    AddDataMatrixCodesToAssemblyOrdersChestnyZnak,
+    AddDataMatrixCodesToTheAssemblyOrdersChestnyZnak,
     AddExpirationDateToTheAssemblyOrder,
     AddGtinToAssemblyOrders,
     AddGtinToTheAssemblyOrder,
@@ -45,10 +46,10 @@ from ..methods import (
     AddImeiToTheAssemblyOrders,
     AddImeiToTheOrder,
     AddProductToThePromotion,
-    AddUinUniqueIdentificationNumbersToTheAssemblyOrders,
     AddUinUniqueIdentificationNumberToAssemblyOrders,
     AddUinUniqueIdentificationNumberToTheAssemblyOrder,
     AddUinUniqueIdentificationNumberToTheOrder,
+    AddUinUniqueIdentificationNumbersToTheAssemblyOrders,
     AnswerBuyersApplication,
     AssignADataMatrixCodeToTheAssemblyOrder,
     B2BBuyerInformation,
@@ -63,8 +64,8 @@ from ..methods import (
     CheckIfTheOrderBelongsToTheBuyer,
     CourierInfo,
     CreateANewSupply,
-    CreateAnInvitationForANewUser,
     CreateATag,
+    CreateAnInvitationForANewUser,
     CreateCampaign,
     CreatePass,
     CreateProductCards,
@@ -87,14 +88,14 @@ from ..methods import (
     EditResponseToFeedback,
     GenerationOfSkus,
     GetAListOfSellerActiveOrInvitedUsers,
+    GetASuppliesList,
     GetAllAssemblyOrdersForReshipment,
     GetAssemblyOrderMetadata,
+    GetAssemblyOrderStatuses,
     GetAssemblyOrders,
     GetAssemblyOrdersMetadata,
     GetAssemblyOrdersStatuses,
     GetAssemblyOrdersStickers,
-    GetAssemblyOrderStatuses,
-    GetASuppliesList,
     GetBalance,
     GetBlockedProductCards,
     GetBoxTariffs,
@@ -159,8 +160,8 @@ from ..methods import (
     GetProductCategoryCommission,
     GetProductDetail,
     GetProductLabeling,
-    GetProductsInQuarantine,
     GetProductSizesWithPrices,
+    GetProductsInQuarantine,
     GetProductsParentCategories,
     GetProductsWithPrices,
     GetProductsWithPricesByArticles,
@@ -252,8 +253,8 @@ from ..methods import (
     SetBidsForSearchClusters,
     SetPricesAndDiscounts,
     SetSizePrices,
-    SettingAndDeletingMinusPhrases,
     SetWbClubDiscounts,
+    SettingAndDeletingMinusPhrases,
     SizeData,
     StatusHistoryForCrossborderOrders,
     SuppliesList,
@@ -273,10 +274,11 @@ from ..methods import (
     UploadMediaFile,
     UploadMediaFilesViaLinks,
     WarehouseData,
-    WbMethod,
     WorkingWithQuestions,
 )
 from ..types import (
+    AListOfSellerActiveOrInvitedUsersItem,
+    ASuppliesListItem,
     AcceptanceOptionsItem,
     ActiveAndInactiveSearchClusterListsItem,
     AddBoxesToTheSupplyItem,
@@ -287,17 +289,15 @@ from ..types import (
     AddImeiToAssemblyOrdersItem,
     AddImeiToTheAssemblyOrdersItem,
     AddProductToThePromotionResponse,
-    AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem,
     AddUinUniqueIdentificationNumberToAssemblyOrdersItem,
-    AListOfSellerActiveOrInvitedUsersItem,
+    AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem,
     AllAssemblyOrdersForReshipmentItem,
     AssemblyOrderMetadataResponse,
+    AssemblyOrderStatusesItem,
     AssemblyOrdersItem,
     AssemblyOrdersMetadataItem,
     AssemblyOrdersStatusesItem,
     AssemblyOrdersStickersItem,
-    AssemblyOrderStatusesItem,
-    ASuppliesListItem,
     B2BBuyerInformationItem,
     BalanceItem,
     BlockedProductCardsItem,
@@ -323,8 +323,8 @@ from ..types import (
     CountryOfOriginResponse,
     CourierInfoItem,
     CreateANewSupplyResponse,
-    CreateAnInvitationForANewUserResponse,
     CreateATagResponse,
+    CreateAnInvitationForANewUserResponse,
     CreateCampaignResponse,
     CreatePassResponse,
     CreateProductCardsResponse,
@@ -362,8 +362,8 @@ from ..types import (
     ListOfSearchClustersBidsItem,
     LogisticsAndStorageCostsMultiplierItem,
     MainPageResponse,
-    MediaCampaignsNumberResponse,
     MediaCampaignStatisticsResponse,
+    MediaCampaignsNumberResponse,
     MergingOrSeparatingOfProductCardsResponse,
     MinimumBidsForProductCardsItem,
     NewAssemblyOrdersItem,
@@ -403,8 +403,8 @@ from ..types import (
     ProductDataItem,
     ProductDetail,
     ProductLabelingItem,
-    ProductsInQuarantineItem,
     ProductSizesWithPricesItem,
+    ProductsInQuarantineItem,
     ProductsParentCategoriesResponse,
     ProductsWithPricesByArticlesItem,
     ProductsWithPricesItem,
@@ -514,8 +514,7 @@ class WbAPI:
         return await method.emit(self)
 
     async def acceptance_options(
-        self,
-        warehouse_id: int | None = None,
+        self, warehouse_id: int | None = None,
     ) -> list[AcceptanceOptionsItem]:
         """
         The method returns information about warehouses and package types available for supply. The
@@ -531,8 +530,7 @@ class WbAPI:
         return await self(call)
 
     async def active_and_inactive_search_cluster_lists(
-        self,
-        items: list[Any] = None,
+        self, items: list[Any] = None,
     ) -> list[ActiveAndInactiveSearchClusterListsItem]:
         """
         Returns lists of active and inactive search clusters with at least 100 views. Request limit
@@ -565,9 +563,7 @@ class WbAPI:
         return await self(call)
 
     async def add_boxes_to_the_supply(
-        self,
-        supply_id: str,
-        amount: int = None,
+        self, supply_id: str, amount: int = None,
     ) -> list[AddBoxesToTheSupplyItem]:
         """
         Adds the required number of boxes to the supply. You should add boxes only to supplies
@@ -717,8 +713,7 @@ class WbAPI:
         return await self(call)
 
     async def add_gtin_to_assembly_orders(
-        self,
-        orders: list[Any] = None,
+        self, orders: list[Any] = None,
     ) -> list[AddGtinToAssemblyOrdersItem]:
         """
         Sets the GTIN, Belarus product unique identifier, for the assembly order
@@ -735,9 +730,7 @@ class WbAPI:
         return await self(call)
 
     async def add_gtin_to_the_assembly_order(
-        self,
-        order_id: int,
-        gtin: str = None,
+        self, order_id: int, gtin: str = None,
     ) -> None:
         """
         Sets the GTIN (Belarus product unique identifier) for the assembly order. The assembly
@@ -754,8 +747,7 @@ class WbAPI:
         return await self(call)
 
     async def add_gtin_to_the_assembly_orders(
-        self,
-        orders: list[Any] = None,
+        self, orders: list[Any] = None,
     ) -> list[AddGtinToTheAssemblyOrdersItem]:
         """
         The method sets the GTIN, Belarus product unique identifier, for the for the assembly
@@ -773,9 +765,7 @@ class WbAPI:
         return await self(call)
 
     async def add_gtin_to_the_order(
-        self,
-        order_id: int,
-        gtin: str = None,
+        self, order_id: int, gtin: str = None,
     ) -> None:
         """
         Sets the GTIN (Belarus product unique identifier) for the order. The order can only have
@@ -791,8 +781,7 @@ class WbAPI:
         return await self(call)
 
     async def add_imei_to_assembly_orders(
-        self,
-        orders: list[Any] = None,
+        self, orders: list[Any] = None,
     ) -> list[AddImeiToAssemblyOrdersItem]:
         """
         Sets the IMEI for the [assembly orders
@@ -809,9 +798,7 @@ class WbAPI:
         return await self(call)
 
     async def add_imei_to_the_assembly_order(
-        self,
-        order_id: int,
-        imei: str = None,
+        self, order_id: int, imei: str = None,
     ) -> None:
         """
         Sets the IMEI for the assembly order. The assembly order can have only one IMEI. If a
@@ -829,8 +816,7 @@ class WbAPI:
         return await self(call)
 
     async def add_imei_to_the_assembly_orders(
-        self,
-        orders: list[Any] = None,
+        self, orders: list[Any] = None,
     ) -> list[AddImeiToTheAssemblyOrdersItem]:
         """
         Sets the IMEI for the [assembly orders
@@ -847,9 +833,7 @@ class WbAPI:
         return await self(call)
 
     async def add_imei_to_the_order(
-        self,
-        order_id: int,
-        imei: str = None,
+        self, order_id: int, imei: str = None,
     ) -> None:
         """
         Sets the IMEI for the order. The order can have only one IMEI. You can add the code only
@@ -865,8 +849,7 @@ class WbAPI:
         return await self(call)
 
     async def add_product_to_the_promotion(
-        self,
-        data: dict[str, Any] | None = None,
+        self, data: dict[str, Any] | None = None,
     ) -> list[AddProductToThePromotionResponse]:
         """
         Creates a product upload for the promotion. The upload status can be checked using
@@ -995,8 +978,7 @@ class WbAPI:
         return await self(call)
 
     async def b2b_buyer_information(
-        self,
-        orders_ids: list[int] | None = None,
+        self, orders_ids: list[int] | None = None,
     ) -> list[B2BBuyerInformationItem]:
         """
         The method returns B2B buyers data by assembly orders ID: - Taxpayer Identification Number
@@ -1012,8 +994,7 @@ class WbAPI:
         return await self(call)
 
     async def buyer_information(
-        self,
-        orders: list[int] | None = None,
+        self, orders: list[int] | None = None,
     ) -> list[BuyerInformationItem]:
         """
         The method returns buyers information by order IDs.
@@ -1027,8 +1008,7 @@ class WbAPI:
         return await self(call)
 
     async def cancel_assembly_orders(
-        self,
-        orders_ids: list[int] | None = None,
+        self, orders_ids: list[int] | None = None,
     ) -> list[CancelAssemblyOrdersItem]:
         """
         The method transfers [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders) with
@@ -1045,8 +1025,7 @@ class WbAPI:
         return await self(call)
 
     async def cancel_the_assembly_order(
-        self,
-        order_id: int,
+        self, order_id: int,
     ) -> None:
         """
         Moves the assembly orders to `cancel` ("Canceled by the supplier") status.
@@ -1060,8 +1039,7 @@ class WbAPI:
         return await self(call)
 
     async def cancel_the_assembly_orders(
-        self,
-        orders_ids: list[int] | None = None,
+        self, orders_ids: list[int] | None = None,
     ) -> list[CancelTheAssemblyOrdersItem]:
         """
         The method transfers [assembly
@@ -1079,8 +1057,7 @@ class WbAPI:
         return await self(call)
 
     async def cancel_the_order(
-        self,
-        order_id: int,
+        self, order_id: int,
     ) -> None:
         """
         Moves the assembly order to `cancel` status — canceled by the seller.
@@ -1094,8 +1071,7 @@ class WbAPI:
         return await self(call)
 
     async def changing_campaigns_bids(
-        self,
-        bids: list[dict[str, Any]] = None,
+        self, bids: list[dict[str, Any]] = None,
     ) -> list[ChangingCampaignsBidsItem]:
         """
         The method changes the bids of product cards by WB articles in campaigns: - with standard
@@ -1161,8 +1137,7 @@ class WbAPI:
         return await self(call)
 
     async def courier_info(
-        self,
-        orders: list[int] | None = None,
+        self, orders: list[int] | None = None,
     ) -> list[CourierInfoItem]:
         """
         Method provides the courier's contact information and vehicle number based on the assembly
@@ -1177,8 +1152,7 @@ class WbAPI:
         return await self(call)
 
     async def create_a_new_supply(
-        self,
-        name: str | None = None,
+        self, name: str | None = None,
     ) -> list[CreateANewSupplyResponse]:
         """
         **Supplies limitations**:
@@ -1192,9 +1166,7 @@ class WbAPI:
         return await self(call)
 
     async def create_a_tag(
-        self,
-        color: str | None = None,
-        name: str | None = None,
+        self, color: str | None = None, name: str | None = None,
     ) -> list[CreateATagResponse]:
         """
         Creates a tag.
@@ -1230,7 +1202,7 @@ class WbAPI:
         nms: list[int] | None = None,
         bid_type: BidType | None = BidType.MANUAL,
         payment_type: PaymentType | None = PaymentType.CPM,
-        placement_types: list[str] | None = ("search",),
+        placement_types: list[str] | None = ('search',),
     ) -> list[CreateCampaignResponse]:
         """
         The method creates campaign: - with custom bid for promotion products in search and/or
@@ -1342,9 +1314,7 @@ class WbAPI:
         return await self(call)
 
     async def create_warehouse(
-        self,
-        name: str = None,
-        office_id: int = None,
+        self, name: str = None, office_id: int = None,
     ) -> list[CreateWarehouseResponse]:
         """
         Creates a seller's warehouse. You cannot link an office that is already in use.
@@ -1378,9 +1348,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_assembly_order_metadata(
-        self,
-        order_id: int,
-        key: str | None = None,
+        self, order_id: int, key: str | None = None,
     ) -> None:
         """
         Removes all assembly order metadata values for the passed key. Possible metadata are: -
@@ -1436,8 +1404,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_bids_from_search_clusters(
-        self,
-        bids: list[Any] = None,
+        self, bids: list[Any] = None,
     ) -> None:
         """
         The method deletes the bids from search clusters. You can use this method only for
@@ -1450,9 +1417,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_boxes_from_the_supply(
-        self,
-        supply_id: str,
-        trbx_ids: list[str] = None,
+        self, supply_id: str, trbx_ids: list[str] = None,
     ) -> None:
         """
         The method deletes boxes from the supply. Available only while the supply is being
@@ -1468,9 +1433,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_inventory(
-        self,
-        warehouse_id: int,
-        chrt_ids: list[int] = None,
+        self, warehouse_id: int, chrt_ids: list[int] = None,
     ) -> None:
         """
         Deletes product inventory.
@@ -1485,9 +1448,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_order_metadata(
-        self,
-        order_id: int,
-        key: str | None = None,
+        self, order_id: int, key: str | None = None,
     ) -> None:
         """
         Removes all order metadata values for the passed key. Possible metadata is `imei`, `uin`,
@@ -1504,8 +1465,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_the_pass(
-        self,
-        pass_id: int,
+        self, pass_id: int,
     ) -> None:
         """
         Deletes the seller's pass
@@ -1519,8 +1479,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_the_supply(
-        self,
-        supply_id: str,
+        self, supply_id: str,
     ) -> None:
         """
         Deleted the supply if it is active and does not contain any assembly orders.
@@ -1534,8 +1493,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_the_tag(
-        self,
-        id: int,
+        self, id: int,
     ) -> list[DeleteTheTagResponse]:
         """
         Deletes the tag
@@ -1549,8 +1507,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_user(
-        self,
-        deleted_user_id: int = None,
+        self, deleted_user_id: int = None,
     ) -> None:
         """
         Method is available by Personal token
@@ -1564,8 +1521,7 @@ class WbAPI:
         return await self(call)
 
     async def delete_warehouse(
-        self,
-        warehouse_id: int,
+        self, warehouse_id: int,
     ) -> None:
         """
         Deletes the seller's warehouse.
@@ -1579,8 +1535,7 @@ class WbAPI:
         return await self(call)
 
     async def delivery_date_and_time(
-        self,
-        orders: list[int] | None = None,
+        self, orders: list[int] | None = None,
     ) -> list[DeliveryDateAndTimeItem]:
         """
         Method provides information about the delivery date and time selected by the buyer for
@@ -1595,9 +1550,7 @@ class WbAPI:
         return await self(call)
 
     async def edit_response_to_feedback(
-        self,
-        id: str = None,
-        text: str = None,
+        self, id: str = None, text: str = None,
     ) -> None:
         """
         Allows you to edit an already sent response to the feedback. You can edit the response only
@@ -1614,8 +1567,7 @@ class WbAPI:
         return await self(call)
 
     async def generation_of_skus(
-        self,
-        count: int | None = None,
+        self, count: int | None = None,
     ) -> list[GenerationOfSkusItem]:
         """
         Generates array of unique SKUs to create size of the product card
@@ -1654,9 +1606,7 @@ class WbAPI:
         return await self(call)
 
     async def get_a_supplies_list(
-        self,
-        limit: int = None,
-        next: int = None,
+        self, limit: int = None, next: int = None,
     ) -> list[ASuppliesListItem]:
         """
         Returns the supply list.
@@ -1685,8 +1635,7 @@ class WbAPI:
         return await self(call)
 
     async def get_assembly_order_metadata(
-        self,
-        order_id: int,
+        self, order_id: int,
     ) -> list[AssemblyOrderMetadataResponse]:
         """
         This method is deprecated. It will be removed on [May
@@ -1701,8 +1650,7 @@ class WbAPI:
         return await self(call)
 
     async def get_assembly_order_statuses(
-        self,
-        orders_ids: list[int] | None = None,
+        self, orders_ids: list[int] | None = None,
     ) -> list[AssemblyOrderStatusesItem]:
         """
         Returns the statuses of [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders)
@@ -1742,8 +1690,7 @@ class WbAPI:
         return await self(call)
 
     async def get_assembly_orders_metadata(
-        self,
-        orders: list[int] = None,
+        self, orders: list[int] = None,
     ) -> list[AssemblyOrdersMetadataItem]:
         """
         The method returns metadata for [assembly
@@ -1771,8 +1718,7 @@ class WbAPI:
         return await self(call)
 
     async def get_assembly_orders_statuses(
-        self,
-        orders: list[int] = None,
+        self, orders: list[int] = None,
     ) -> list[AssemblyOrdersStatusesItem]:
         """
         Returns the statuses of assembly orders from the request.
@@ -1838,8 +1784,7 @@ class WbAPI:
         return await self(call)
 
     async def get_box_tariffs(
-        self,
-        date: str = None,
+        self, date: str = None,
     ) -> list[BoxTariffsItem]:
         """
         For items inventory supplied to the warehouse in boxes, the method returns the
@@ -1856,9 +1801,7 @@ class WbAPI:
         return await self(call)
 
     async def get_brands(
-        self,
-        subject_id: int = None,
-        next: int | None = None,
+        self, subject_id: int = None, next: int | None = None,
     ) -> list[BrandsItem]:
         """
         The method returns list of brands by subject ID.
@@ -1903,8 +1846,7 @@ class WbAPI:
         return await self(call)
 
     async def get_campaign_budget(
-        self,
-        id: int = None,
+        self, id: int = None,
     ) -> list[CampaignBudgetResponse]:
         """
         The method allows to get information about the budget of a campaign.
@@ -1971,8 +1913,7 @@ class WbAPI:
         return await self(call)
 
     async def get_chat_events(
-        self,
-        next: int | None = None,
+        self, next: int | None = None,
     ) -> list[ChatEventsItem]:
         """
         Returns an event list for all chats.
@@ -1999,8 +1940,7 @@ class WbAPI:
         return await self(call)
 
     async def get_check_the_status(
-        self,
-        task_id: str,
+        self, task_id: str,
     ) -> list[CheckTheStatusResponse]:
         """
         Returns the status of the generation task
@@ -2014,8 +1954,7 @@ class WbAPI:
         return await self(call)
 
     async def get_color(
-        self,
-        locale: str | None = None,
+        self, locale: str | None = None,
     ) -> list[ColorResponse]:
         """
         Provides values of color characteristic.
@@ -2042,8 +1981,7 @@ class WbAPI:
         return await self(call)
 
     async def get_contacts_list(
-        self,
-        warehouse_id: int,
+        self, warehouse_id: int,
     ) -> list[ContactsListItem]:
         """
         Returns a list of contacts linked to the seller's warehouse. Only for warehouses with
@@ -2058,8 +1996,7 @@ class WbAPI:
         return await self(call)
 
     async def get_country_of_origin(
-        self,
-        locale: str | None = None,
+        self, locale: str | None = None,
     ) -> list[CountryOfOriginResponse]:
         """
         Provides value of characteristic country of origin.
@@ -2118,8 +2055,7 @@ class WbAPI:
         return await self(call)
 
     async def get_delete_campaign(
-        self,
-        id: int = None,
+        self, id: int = None,
     ) -> None:
         """
         The method allows to delete campaigns in the status `4` — ready to launch.
@@ -2133,9 +2069,7 @@ class WbAPI:
         return await self(call)
 
     async def get_document(
-        self,
-        service_name: str = None,
-        extension: str = None,
+        self, service_name: str = None, extension: str = None,
     ) -> list[DocumentResponse]:
         """
         Returns one document
@@ -2150,8 +2084,7 @@ class WbAPI:
         return await self(call)
 
     async def get_documents(
-        self,
-        params: list[dict[str, Any]] | None = None,
+        self, params: list[dict[str, Any]] | None = None,
     ) -> list[DocumentsResponse]:
         """
         Returns more than one document.
@@ -2163,8 +2096,7 @@ class WbAPI:
         return await self(call)
 
     async def get_documents_categories(
-        self,
-        locale: str | None = "en",
+        self, locale: str | None = "en",
     ) -> list[DocumentsCategoriesItem]:
         """
         Returns documents categories
@@ -2257,8 +2189,7 @@ class WbAPI:
         return await self(call)
 
     async def get_file_from_the_message(
-        self,
-        id: str,
+        self, id: str,
     ) -> None:
         """
         The method provides a file or image from the message by its ID.
@@ -2274,8 +2205,7 @@ class WbAPI:
         return await self(call)
 
     async def get_gender(
-        self,
-        locale: str | None = None,
+        self, locale: str | None = None,
     ) -> list[GenderItem]:
         """
         Provides values of gender characteristic.
@@ -2289,9 +2219,7 @@ class WbAPI:
         return await self(call)
 
     async def get_generate_the_report(
-        self,
-        date_from: str = None,
-        date_to: str = None,
+        self, date_from: str = None, date_to: str = None,
     ) -> list[GenerateTheReportResponse]:
         """
         Create a task to generate a report. Maximum of report period — 8 days
@@ -2365,8 +2293,7 @@ class WbAPI:
         return await self(call)
 
     async def get_information_about_media_campaign(
-        self,
-        id: int = None,
+        self, id: int = None,
     ) -> list[InformationAboutMediaCampaignItem]:
         """
         The method allows to get information about a media campaign
@@ -2409,8 +2336,7 @@ class WbAPI:
         return await self(call)
 
     async def get_information_on_paid_delivery(
-        self,
-        groups: list[str] | None = None,
+        self, groups: list[str] | None = None,
     ) -> list[InformationOnPaidDeliveryResponse]:
         """
         The method provides information on paid delivery for assembly orders that have been
@@ -2430,9 +2356,7 @@ class WbAPI:
         return await self(call)
 
     async def get_inventory(
-        self,
-        warehouse_id: int,
-        chrt_ids: list[int] = None,
+        self, warehouse_id: int, chrt_ids: list[int] = None,
     ) -> list[InventoryItem]:
         """
         Returns product inventory.
@@ -2447,8 +2371,7 @@ class WbAPI:
         return await self(call)
 
     async def get_launch_campaign(
-        self,
-        id: int = None,
+        self, id: int = None,
     ) -> None:
         """
         The method allows to run campaigns that are in statuses `4` — ready to launch or `11` —
@@ -2761,8 +2684,7 @@ class WbAPI:
         return await self(call)
 
     async def get_order_metadata(
-        self,
-        order_id: int,
+        self, order_id: int,
     ) -> list[OrderMetadataItem]:
         """
         Returns assembly order metadata. The list of metadata available for the assembly order can
@@ -2779,9 +2701,7 @@ class WbAPI:
         return await self(call)
 
     async def get_orders(
-        self,
-        date_from: str = None,
-        flag: int | None = 0,
+        self, date_from: str = None, flag: int | None = 0,
     ) -> list[OrdersResponse]:
         """
         The method returns order information. The data updated every 30 minutes.
@@ -2797,8 +2717,7 @@ class WbAPI:
         return await self(call)
 
     async def get_orders_statuses(
-        self,
-        orders: list[int] = None,
+        self, orders: list[int] = None,
     ) -> list[OrdersStatusesItem]:
         """
         Returns the statuses of orders based on the provided list of assembly order IDs
@@ -2837,8 +2756,7 @@ class WbAPI:
         return await self(call)
 
     async def get_pallet_tariffs(
-        self,
-        date: str = None,
+        self, date: str = None,
     ) -> list[PalletTariffsItem]:
         """
         For items supplied to the WB warehouse on pallets, the method returns the
@@ -2893,8 +2811,7 @@ class WbAPI:
         return await self(call)
 
     async def get_pause_campaign(
-        self,
-        id: int = None,
+        self, id: int = None,
     ) -> None:
         """
         Campaign in status `9` — active — can be paused
@@ -2975,8 +2892,7 @@ class WbAPI:
         return await self(call)
 
     async def get_processed_upload_state(
-        self,
-        upload_id: int = None,
+        self, upload_id: int = None,
     ) -> list[ProcessedUploadStateResponse]:
         """
         Returns the processed upload data.
@@ -2990,8 +2906,7 @@ class WbAPI:
         return await self(call)
 
     async def get_product_category_commission(
-        self,
-        locale: str | None = None,
+        self, locale: str | None = None,
     ) -> list[ProductCategoryCommissionResponse]:
         """
         WB commission by parent categories of products according to sales model.
@@ -3005,9 +2920,7 @@ class WbAPI:
         return await self(call)
 
     async def get_product_labeling(
-        self,
-        date_from: str = None,
-        date_to: str = None,
+        self, date_from: str = None, date_to: str = None,
     ) -> list[ProductLabelingItem]:
         """
         Returns a report on deductions for the absence of mandatory product labeling. The report
@@ -3045,9 +2958,7 @@ class WbAPI:
         return await self(call)
 
     async def get_products_in_quarantine(
-        self,
-        limit: int = None,
-        offset: int | None = None,
+        self, limit: int = None, offset: int | None = None,
     ) -> list[ProductsInQuarantineItem]:
         """
         Returns information about products in quarantine. If the product new price with discount
@@ -3072,8 +2983,7 @@ class WbAPI:
         return await self(call)
 
     async def get_products_parent_categories(
-        self,
-        locale: str | None = None,
+        self, locale: str | None = None,
     ) -> list[ProductsParentCategoriesResponse]:
         """
         Returns the list of all products parent categories
@@ -3114,8 +3024,7 @@ class WbAPI:
         return await self(call)
 
     async def get_products_with_prices_by_articles(
-        self,
-        nm_list: list[int] = None,
+        self, nm_list: list[int] = None,
     ) -> list[ProductsWithPricesByArticlesItem]:
         """
         Returns product data by its article. You can specify more than one article in one request.
@@ -3133,8 +3042,7 @@ class WbAPI:
         return await self(call)
 
     async def get_promotions_details(
-        self,
-        promotion_i_ds: list[int] = None,
+        self, promotion_i_ds: list[int] = None,
     ) -> list[PromotionsDetailsItem]:
         """
         Returns detailed information about the selected promotions
@@ -3250,9 +3158,7 @@ class WbAPI:
         return await self(call)
 
     async def get_receiving_costs_history(
-        self,
-        from_: str = None,
-        to: str = None,
+        self, from_: str = None, to: str = None,
     ) -> list[ReceivingCostsHistoryResponse]:
         """
         The method allows to get a costs history
@@ -3302,9 +3208,7 @@ class WbAPI:
         return await self(call)
 
     async def get_report(
-        self,
-        date_from: str = None,
-        date_to: str = None,
+        self, date_from: str = None, date_to: str = None,
     ) -> list[ReportItem]:
         """
         Returns sales data grouped by regions of the countries. You can obtain a report for a
@@ -3350,8 +3254,7 @@ class WbAPI:
         return await self(call)
 
     async def get_return_tariffs(
-        self,
-        date: str = None,
+        self, date: str = None,
     ) -> list[ReturnTariffsItem]:
         """
         Returns [tariffs](https://seller.wildberries.ru/dynamic-product-categories/return-cost): -
@@ -3367,9 +3270,7 @@ class WbAPI:
         return await self(call)
 
     async def get_sales(
-        self,
-        date_from: str = None,
-        flag: int | None = 0,
+        self, date_from: str = None, flag: int | None = 0,
     ) -> list[SalesResponse]:
         """
         The method returns sale and return information. The data updated every 30 minutes.
@@ -3385,8 +3286,7 @@ class WbAPI:
         return await self(call)
 
     async def get_season(
-        self,
-        locale: str | None = None,
+        self, locale: str | None = None,
     ) -> list[SeasonItem]:
         """
         Provide values of season characteristic
@@ -3400,8 +3300,7 @@ class WbAPI:
         return await self(call)
 
     async def get_selfpurchases(
-        self,
-        date: str | None = None,
+        self, date: str | None = None,
     ) -> list[SelfpurchasesItem]:
         """
         Returns report with self-purchase deductions. The report is generated on Wednesdays at 7:00
@@ -3498,8 +3397,7 @@ class WbAPI:
         return await self(call)
 
     async def get_stop_campaign(
-        self,
-        id: int = None,
+        self, id: int = None,
     ) -> None:
         """
         The method allows to end campaigns in statuses: - `4` — ready to launch - `9` — active -
@@ -3514,9 +3412,7 @@ class WbAPI:
         return await self(call)
 
     async def get_subject_characteristics(
-        self,
-        subject_id: int,
-        locale: str | None = None,
+        self, subject_id: int, locale: str | None = None,
     ) -> list[SubjectCharacteristicsItem]:
         """
         Returns list of the subject characteristics by its ID
@@ -3531,8 +3427,7 @@ class WbAPI:
         return await self(call)
 
     async def get_subjects_for_campaigns(
-        self,
-        payment_type: str | None = "cpm",
+        self, payment_type: str | None = "cpm",
     ) -> list[SubjectsForCampaignsResponse]:
         """
         Returns subjects product cards from which are available for all campaigns
@@ -3613,8 +3508,7 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_assembly_order_ids(
-        self,
-        supply_id: str,
+        self, supply_id: str,
     ) -> list[SupplyAssemblyOrderIdsItem]:
         """
         The method returns assembly orders IDs assigned to the supply.
@@ -3628,8 +3522,7 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_boxes_list(
-        self,
-        supply_id: str,
+        self, supply_id: str,
     ) -> list[SupplyBoxesListItem]:
         """
         Returns supply boxes list.
@@ -3643,8 +3536,7 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_details(
-        self,
-        supply_id: str,
+        self, supply_id: str,
     ) -> list[SupplyDetailsResponse]:
         """
         Returns supply details.
@@ -3658,8 +3550,7 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_package(
-        self,
-        id: int,
+        self, id: int,
     ) -> list[SupplyPackageResponse]:
         """
         The method returns information about the package of the supply.
@@ -3694,8 +3585,7 @@ class WbAPI:
         return await self(call)
 
     async def get_supply_tariffs(
-        self,
-        warehouse_i_ds: str | None = None,
+        self, warehouse_i_ds: str | None = None,
     ) -> list[SupplyTariffsResponse]:
         """
         The method returns the supply tariffs for specific warehouses for the next 14 days.
@@ -3721,8 +3611,7 @@ class WbAPI:
         return await self(call)
 
     async def get_the_feedback_by_id(
-        self,
-        id: str = None,
+        self, id: str = None,
     ) -> list[TheFeedbackByIdItem]:
         """
         The method allows you to get a feedback by its ID
@@ -3736,8 +3625,7 @@ class WbAPI:
         return await self(call)
 
     async def get_the_question_by_id(
-        self,
-        id: str = None,
+        self, id: str = None,
     ) -> list[TheQuestionByIdItem]:
         """
         The method allows you to get a question by its ID
@@ -3751,8 +3639,7 @@ class WbAPI:
         return await self(call)
 
     async def get_the_report(
-        self,
-        download_id: str,
+        self, download_id: str,
     ) -> None:
         """
         The method provides a report with advanced seller analytics by [generation
@@ -3769,8 +3656,7 @@ class WbAPI:
         return await self(call)
 
     async def get_the_reports_list(
-        self,
-        filter_download_ids: list[str] | None = None,
+        self, filter_download_ids: list[str] | None = None,
     ) -> list[TheReportsListItem]:
         """
         The method provides a list of reports with advanced seller analytics. The response contains
@@ -3807,9 +3693,7 @@ class WbAPI:
         return await self(call)
 
     async def get_the_supply_qr_code(
-        self,
-        supply_id: str,
-        type: Type = None,
+        self, supply_id: str, type: Type = None,
     ) -> list[TheSupplyQrCodeResponse]:
         """
         Returns the QR code in svg, zplv (vertical), zplh (horizontal), png. Available only after
@@ -3881,8 +3765,7 @@ class WbAPI:
         return await self(call)
 
     async def get_unprocessed_upload_state(
-        self,
-        upload_id: int = None,
+        self, upload_id: int = None,
     ) -> list[UnprocessedUploadStateResponse]:
         """
         Returns the processing upload data.
@@ -3908,8 +3791,7 @@ class WbAPI:
         return await self(call)
 
     async def get_vat_rate(
-        self,
-        locale: str | None = None,
+        self, locale: str | None = None,
     ) -> list[VatRateItem]:
         """
         Returns a list of values for the **VAT rate** characteristic
@@ -3923,8 +3805,7 @@ class WbAPI:
         return await self(call)
 
     async def get_warehouse(
-        self,
-        date_from: str = None,
+        self, date_from: str = None,
     ) -> list[WarehouseResponse]:
         """
         The method returns WB warehouses inventory.
@@ -4036,8 +3917,7 @@ class WbAPI:
         return await self(call)
 
     async def list_of_campaign_minus_phrases(
-        self,
-        items: list[Any] = None,
+        self, items: list[Any] = None,
     ) -> list[ListOfCampaignMinusPhrasesItem]:
         """
         The method returns a list of minus phrases by: - campaign IDs - WB articles
@@ -4077,8 +3957,7 @@ class WbAPI:
         return await self(call)
 
     async def list_of_search_clusters_bids(
-        self,
-        items: list[Any] = None,
+        self, items: list[Any] = None,
     ) -> list[ListOfSearchClustersBidsItem]:
         """
         The method returns a list of search clusters with bids by: - campaign IDs - WB articles
@@ -4197,8 +4076,7 @@ class WbAPI:
         return await self(call)
 
     async def move_the_supply_to_the_delivery(
-        self,
-        supply_id: str,
+        self, supply_id: str,
     ) -> None:
         """
         Closes the supply and moves all assembly orders to `complete` (`In Delivery`) status. You
@@ -4213,8 +4091,7 @@ class WbAPI:
         return await self(call)
 
     async def notify_that_the_assembly_order_is_ready_for_pickup(
-        self,
-        order_id: int,
+        self, order_id: int,
     ) -> None:
         """
         This method is deprecated. It will be removed on [May
@@ -4267,8 +4144,7 @@ class WbAPI:
         return await self(call)
 
     async def notify_that_the_buyer_refused_the_order(
-        self,
-        order_id: int,
+        self, order_id: int,
     ) -> None:
         """
         This method is deprecated. It will be removed on [May
@@ -4302,8 +4178,7 @@ class WbAPI:
         return await self(call)
 
     async def notify_that_the_orders_are_declined(
-        self,
-        orders: list[Any] = None,
+        self, orders: list[Any] = None,
     ) -> list[NotifyThatTheOrdersAreDeclinedItem]:
         """
         The method transfers [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders) with
@@ -4318,8 +4193,7 @@ class WbAPI:
         return await self(call)
 
     async def notify_that_the_orders_are_received(
-        self,
-        orders: list[Any] = None,
+        self, orders: list[Any] = None,
     ) -> list[NotifyThatTheOrdersAreReceivedItem]:
         """
         The method transfers [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders) with
@@ -4379,8 +4253,7 @@ class WbAPI:
         return await self(call)
 
     async def orders_with_client_information(
-        self,
-        orders: list[int] | None = None,
+        self, orders: list[int] | None = None,
     ) -> list[OrdersWithClientInformationItem]:
         """
         The method allows getting information about the client by assembly order ID. Only for
@@ -4651,8 +4524,7 @@ class WbAPI:
         return await self(call)
 
     async def recover_product_card_from_trash(
-        self,
-        nm_i_ds: list[int] | None = None,
+        self, nm_i_ds: list[int] | None = None,
     ) -> list[RecoverProductCardFromTrashResponse]:
         """
         Returns the product card from trash
@@ -4666,8 +4538,7 @@ class WbAPI:
         return await self(call)
 
     async def regenerate_the_report(
-        self,
-        download_id: str | None = None,
+        self, download_id: str | None = None,
     ) -> list[RegenerateTheReportResponse]:
         """
         The method creates a [repeated generation
@@ -4685,9 +4556,7 @@ class WbAPI:
         return await self(call)
 
     async def rename_campaign(
-        self,
-        advert_id: int = None,
-        name: str = None,
+        self, advert_id: int = None, name: str = None,
     ) -> None:
         """
         The method allows to rename a campaign.
@@ -4702,9 +4571,7 @@ class WbAPI:
         return await self(call)
 
     async def reply_to_feedback(
-        self,
-        id: str = None,
-        text: str = None,
+        self, id: str = None, text: str = None,
     ) -> None:
         """
         Allows you to respond to the feedback. There is no validation by `feedback ID`: if an
@@ -4744,8 +4611,7 @@ class WbAPI:
         return await self(call)
 
     async def return_product_by_feedback_id(
-        self,
-        feedback_id: str | None = None,
+        self, feedback_id: str | None = None,
     ) -> list[ReturnProductByFeedbackIdItem]:
         """
         The method allows requesting a return for a product for which a feedback has been left.
@@ -4830,8 +4696,7 @@ class WbAPI:
         return await self(call)
 
     async def set_bids_for_search_clusters(
-        self,
-        bids: list[Any] = None,
+        self, bids: list[Any] = None,
     ) -> None:
         """
         The method sets the bids for search clusters. You can use this method only for campaigns
@@ -4844,8 +4709,7 @@ class WbAPI:
         return await self(call)
 
     async def set_prices_and_discounts(
-        self,
-        data: list[Any] = None,
+        self, data: list[Any] = None,
     ) -> list[SetPricesAndDiscountsResponse]:
         """
         Sets prices and discounts.
@@ -4860,8 +4724,7 @@ class WbAPI:
         return await self(call)
 
     async def set_size_prices(
-        self,
-        data: list[Any] = None,
+        self, data: list[Any] = None,
     ) -> list[SetSizePricesResponse]:
         """
         Sets different prices for different sizes.
@@ -4875,8 +4738,7 @@ class WbAPI:
         return await self(call)
 
     async def set_wb_club_discounts(
-        self,
-        data: list[Any] = None,
+        self, data: list[Any] = None,
     ) -> list[SetWbClubDiscountsResponse]:
         """
         Sets WB Club subscription discounts.
@@ -4937,8 +4799,7 @@ class WbAPI:
         return await self(call)
 
     async def status_history_for_crossborder_orders(
-        self,
-        orders: list[int] | None = None,
+        self, orders: list[int] | None = None,
     ) -> list[StatusHistoryForCrossborderOrdersItem]:
         """
         Returns status history for cross-border orders
@@ -5030,8 +4891,7 @@ class WbAPI:
         return await self(call)
 
     async def transfer_product_card_to_trash(
-        self,
-        nm_i_ds: list[int] | None = None,
+        self, nm_i_ds: list[int] | None = None,
     ) -> list[TransferProductCardToTrashResponse]:
         """
         Transfers the product card to the trash. In doing so, the product card would not be
@@ -5046,8 +4906,7 @@ class WbAPI:
         return await self(call)
 
     async def transfer_to_assembly(
-        self,
-        order_id: int,
+        self, order_id: int,
     ) -> None:
         """
         Transfers the assembly order to the `confirm` status — on assembly.
@@ -5061,8 +4920,7 @@ class WbAPI:
         return await self(call)
 
     async def transfer_to_delivery(
-        self,
-        order_id: int,
+        self, order_id: int,
     ) -> None:
         """
         Transfers the [assembly
@@ -5110,9 +4968,7 @@ class WbAPI:
         return await self(call)
 
     async def update_inventory(
-        self,
-        warehouse_id: int,
-        stocks: list[dict[str, Any]] = None,
+        self, warehouse_id: int, stocks: list[dict[str, Any]] = None,
     ) -> None:
         """
         Updates product inventory.
@@ -5190,8 +5046,7 @@ class WbAPI:
         return await self(call)
 
     async def update_users_access_permissions(
-        self,
-        users_accesses: list[Any] = None,
+        self, users_accesses: list[Any] = None,
     ) -> None:
         """
         Method is available by Personal token
@@ -5225,9 +5080,7 @@ class WbAPI:
         return await self(call)
 
     async def upload_media_file(
-        self,
-        x_nm_id: str = None,
-        x_photo_number: int = None,
+        self, x_nm_id: str = None, x_photo_number: int = None,
     ) -> list[UploadMediaFileResponse]:
         """
         Uploads and adds one media file for the product card.

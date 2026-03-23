@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DeleteInventoryResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DeleteInventoryResponse, RequestLimit
 
 
 class DeleteInventory(WbMethod):

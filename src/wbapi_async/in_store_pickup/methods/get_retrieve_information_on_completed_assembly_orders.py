@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import RequestLimit
+from ...types import RetrieveInformationOnCompletedAssemblyOrdersItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, RetrieveInformationOnCompletedAssemblyOrdersItem
 
 
 class GetRetrieveInformationOnCompletedAssemblyOrders(WbMethod):

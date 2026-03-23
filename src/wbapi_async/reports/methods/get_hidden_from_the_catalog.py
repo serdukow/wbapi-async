@@ -1,8 +1,10 @@
 from pydantic import Field
 
-from ...enums import OrderDeductions, SortShadowed
+from ...enums import OrderDeductions
+from ...enums import SortShadowed
+from ...types import HiddenFromTheCatalogItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import HiddenFromTheCatalogItem, RequestLimit
 
 
 class GetHiddenFromTheCatalog(WbMethod):

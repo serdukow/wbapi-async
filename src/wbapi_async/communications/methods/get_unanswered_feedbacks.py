@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import UnansweredFeedbacksItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, UnansweredFeedbacksItem
 
 
 class GetUnansweredFeedbacks(WbMethod):

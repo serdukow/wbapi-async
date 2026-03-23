@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import TagsListResponse
 from ...methods.base import WbMethod
-from ...types import RequestLimit, TagsListResponse
 
 
 class GetTagsList(WbMethod):

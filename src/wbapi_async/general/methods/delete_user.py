@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DeleteUserResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DeleteUserResponse, RequestLimit
 
 
 class DeleteUser(WbMethod):

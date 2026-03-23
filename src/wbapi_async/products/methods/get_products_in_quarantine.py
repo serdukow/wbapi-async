@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ProductsInQuarantineItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ProductsInQuarantineItem, RequestLimit
 
 
 class GetProductsInQuarantine(WbMethod):

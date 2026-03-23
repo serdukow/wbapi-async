@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ParentCategoriesOfTheBrandItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ParentCategoriesOfTheBrandItem, RequestLimit
 
 
 class GetParentCategoriesOfTheBrand(WbMethod):

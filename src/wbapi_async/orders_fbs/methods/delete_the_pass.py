@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DeleteThePassResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DeleteThePassResponse, RequestLimit
 
 
 class DeleteThePass(WbMethod):

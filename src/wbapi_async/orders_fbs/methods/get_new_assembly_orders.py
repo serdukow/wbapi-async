@@ -1,5 +1,6 @@
+from ...types import NewAssemblyOrdersItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import NewAssemblyOrdersItem, RequestLimit
 
 
 class GetNewAssemblyOrders(WbMethod):

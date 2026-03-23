@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import RecommendedBidsForItemsAndSearchClustersItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import RecommendedBidsForItemsAndSearchClustersItem, RequestLimit
 
 
 class GetRecommendedBidsForItemsAndSearchClusters(WbMethod):

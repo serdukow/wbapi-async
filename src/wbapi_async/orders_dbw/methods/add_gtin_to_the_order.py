@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AddGtinToTheOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AddGtinToTheOrderResponse, RequestLimit
 
 
 class AddGtinToTheOrder(WbMethod):

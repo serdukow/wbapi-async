@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AddDataMatrixCodeToTheOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AddDataMatrixCodeToTheOrderResponse, RequestLimit
 
 
 class AddDataMatrixCodeToTheOrder(WbMethod):

@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import SizeDataItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SizeDataItem
 
 
 class SizeData(WbMethod):

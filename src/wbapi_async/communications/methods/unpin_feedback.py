@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import UnpinFeedbackResponse
 from ...methods.base import WbMethod
-from ...types import RequestLimit, UnpinFeedbackResponse
 
 
 class UnpinFeedback(WbMethod):

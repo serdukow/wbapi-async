@@ -1,5 +1,6 @@
+from ...types import PinnedFeedbackLimitsResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import PinnedFeedbackLimitsResponse, RequestLimit
 
 
 class GetPinnedFeedbackLimits(WbMethod):

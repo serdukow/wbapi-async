@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import AddDataMatrixCodeToTheAssemblyOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import AddDataMatrixCodeToTheAssemblyOrderResponse, RequestLimit
 
 
 class AddDataMatrixCodeToTheAssemblyOrder(WbMethod):

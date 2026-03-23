@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import RequestLimit
+from ...types import SubjectsForCampaignsResponse
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SubjectsForCampaignsResponse
 
 
 class GetSubjectsForCampaigns(WbMethod):

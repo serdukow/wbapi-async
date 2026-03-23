@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DeleteTheSupplyResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DeleteTheSupplyResponse, RequestLimit
 
 
 class DeleteTheSupply(WbMethod):

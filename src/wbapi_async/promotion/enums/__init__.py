@@ -1,3 +1,4 @@
+
 from .bid_type import BidType
 from .payment_type import PaymentType
 

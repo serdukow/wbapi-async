@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import InventoryItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import InventoryItem, RequestLimit
 
 
 class GetInventory(WbMethod):

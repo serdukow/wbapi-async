@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DeleteBoxesFromTheSupplyResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DeleteBoxesFromTheSupplyResponse, RequestLimit
 
 
 class DeleteBoxesFromTheSupply(WbMethod):

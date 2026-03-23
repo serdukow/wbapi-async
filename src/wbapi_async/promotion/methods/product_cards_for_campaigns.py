@@ -1,5 +1,6 @@
+from ...types import ProductCardsForCampaignsResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ProductCardsForCampaignsResponse, RequestLimit
 
 
 class ProductCardsForCampaigns(WbMethod):

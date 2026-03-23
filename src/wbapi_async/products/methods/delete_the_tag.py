@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DeleteTheTagResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DeleteTheTagResponse, RequestLimit
 
 
 class DeleteTheTag(WbMethod):

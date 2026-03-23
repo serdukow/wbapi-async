@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DeleteCampaignResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DeleteCampaignResponse, RequestLimit
 
 
 class GetDeleteCampaign(WbMethod):

@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import PromotionsDetailsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import PromotionsDetailsItem, RequestLimit
 
 
 class GetPromotionsDetails(WbMethod):

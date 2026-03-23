@@ -1,5 +1,6 @@
+from ...types import NewOrdersItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import NewOrdersItem, RequestLimit
 
 
 class GetNewOrders(WbMethod):

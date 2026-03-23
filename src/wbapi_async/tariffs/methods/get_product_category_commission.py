@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ProductCategoryCommissionResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ProductCategoryCommissionResponse, RequestLimit
 
 
 class GetProductCategoryCommission(WbMethod):

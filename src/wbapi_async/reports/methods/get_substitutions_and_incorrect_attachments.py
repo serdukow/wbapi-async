@@ -1,8 +1,10 @@
 from pydantic import Field
 
-from ...enums import OrderDeductions, Sort
+from ...enums import OrderDeductions
+from ...enums import Sort
+from ...types import RequestLimit
+from ...types import SubstitutionsAndIncorrectAttachmentsItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SubstitutionsAndIncorrectAttachmentsItem
 
 
 class GetSubstitutionsAndIncorrectAttachments(WbMethod):

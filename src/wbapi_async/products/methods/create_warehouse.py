@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import CreateWarehouseResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CreateWarehouseResponse, RequestLimit
 
 
 class CreateWarehouse(WbMethod):

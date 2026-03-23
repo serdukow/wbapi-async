@@ -1,8 +1,10 @@
 from pydantic import Field
 
-from ...enums import BidType, PaymentType
+from ...enums import BidType
+from ...enums import PaymentType
+from ...types import CreateCampaignResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CreateCampaignResponse, RequestLimit
 
 
 class CreateCampaign(WbMethod):
@@ -24,4 +26,4 @@ class CreateCampaign(WbMethod):
     nms: list[int] | None = Field(None)
     bid_type: BidType | None = Field(BidType.MANUAL)
     payment_type: PaymentType | None = Field(PaymentType.CPM)
-    placement_types: list[str] | None = Field(("search",))
+    placement_types: list[str] | None = Field(('search',))

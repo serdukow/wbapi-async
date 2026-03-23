@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import CancelTheOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CancelTheOrderResponse, RequestLimit
 
 
 class CancelTheOrder(WbMethod):

@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ProductSizesWithPricesItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ProductSizesWithPricesItem, RequestLimit
 
 
 class GetProductSizesWithPrices(WbMethod):

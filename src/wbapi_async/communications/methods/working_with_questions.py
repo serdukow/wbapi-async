@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import WorkingWithQuestionsItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, WorkingWithQuestionsItem
 
 
 class WorkingWithQuestions(WbMethod):

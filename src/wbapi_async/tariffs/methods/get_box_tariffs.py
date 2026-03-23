@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import BoxTariffsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import BoxTariffsItem, RequestLimit
 
 
 class GetBoxTariffs(WbMethod):

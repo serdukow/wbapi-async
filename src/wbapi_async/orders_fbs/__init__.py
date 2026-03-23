@@ -1,6 +1,3 @@
-from .enums.height import Height
-from .enums.type import Type
-from .enums.width import Width
 from .types.a_supplies_list_item import ASuppliesListItem
 from .types.add_assembly_orders_to_the_supply_response import AddAssemblyOrdersToTheSupplyResponse
 from .types.add_boxes_to_the_supply_item import AddBoxesToTheSupplyItem
@@ -43,6 +40,9 @@ from .types.supply_details_response import SupplyDetailsResponse
 from .types.the_supply_box_qr_code_stickers_item import TheSupplyBoxQrCodeStickersItem
 from .types.the_supply_qr_code_response import TheSupplyQrCodeResponse
 from .types.update_pass_response import UpdatePassResponse
+from .enums.height import Height
+from .enums.type import Type
+from .enums.width import Width
 
 
 __all__ = (

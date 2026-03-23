@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DeleteOrderMetadataResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DeleteOrderMetadataResponse, RequestLimit
 
 
 class DeleteOrderMetadata(WbMethod):

@@ -1,5 +1,6 @@
+from ...types import ChatListItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ChatListItem, RequestLimit
 
 
 class GetChatList(WbMethod):

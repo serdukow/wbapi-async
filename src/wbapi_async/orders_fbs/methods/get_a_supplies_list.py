@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ASuppliesListItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ASuppliesListItem, RequestLimit
 
 
 class GetASuppliesList(WbMethod):

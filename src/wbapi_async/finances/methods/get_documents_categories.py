@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import DocumentsCategoriesItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DocumentsCategoriesItem, RequestLimit
 
 
 class GetDocumentsCategories(WbMethod):

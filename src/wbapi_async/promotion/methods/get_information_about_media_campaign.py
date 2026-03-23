@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import InformationAboutMediaCampaignItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import InformationAboutMediaCampaignItem, RequestLimit
 
 
 class GetInformationAboutMediaCampaign(WbMethod):

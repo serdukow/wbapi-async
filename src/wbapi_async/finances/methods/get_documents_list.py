@@ -1,8 +1,10 @@
 from pydantic import Field
 
-from ...enums import OrderDeductions, SortList
+from ...enums import OrderDeductions
+from ...enums import SortList
+from ...types import DocumentsListItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import DocumentsListItem, RequestLimit
 
 
 class GetDocumentsList(WbMethod):

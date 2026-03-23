@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import NotifyThatTheAssemblyOrdersAreReadyForPickupItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import NotifyThatTheAssemblyOrdersAreReadyForPickupItem, RequestLimit
 
 
 class NotifyThatTheAssemblyOrdersAreReadyForPickup(WbMethod):

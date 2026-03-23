@@ -1,8 +1,10 @@
 from pydantic import Field
 
-from ...enums import OrderDeductions, SortBlocked
+from ...enums import OrderDeductions
+from ...enums import SortBlocked
+from ...types import BlockedProductCardsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import BlockedProductCardsItem, RequestLimit
 
 
 class GetBlockedProductCards(WbMethod):

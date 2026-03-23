@@ -1,6 +1,3 @@
-from .enums.aggregation_level import AggregationLevel
-from .enums.position_cluster import PositionCluster
-from .enums.top_order_by import TopOrderBy
 from .types.create_the_report_response import CreateTheReportResponse
 from .types.group_data_item import GroupDataItem
 from .types.grouped_product_cards_statistics_per_days_item import GroupedProductCardsStatisticsPerDaysItem
@@ -19,6 +16,9 @@ from .types.size_data_item import SizeDataItem
 from .types.the_report_response import TheReportResponse
 from .types.the_reports_list_item import TheReportsListItem
 from .types.warehouse_data_item import WarehouseDataItem
+from .enums.aggregation_level import AggregationLevel
+from .enums.position_cluster import PositionCluster
+from .enums.top_order_by import TopOrderBy
 
 
 __all__ = (

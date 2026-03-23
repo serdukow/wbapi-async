@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import CancelTheAssemblyOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CancelTheAssemblyOrderResponse, RequestLimit
 
 
 class CancelTheAssemblyOrder(WbMethod):

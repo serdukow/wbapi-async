@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import RecoverProductCardFromTrashResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import RecoverProductCardFromTrashResponse, RequestLimit
 
 
 class RecoverProductCardFromTrash(WbMethod):

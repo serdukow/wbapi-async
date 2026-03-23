@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import RenameCampaignResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import RenameCampaignResponse, RequestLimit
 
 
 class RenameCampaign(WbMethod):

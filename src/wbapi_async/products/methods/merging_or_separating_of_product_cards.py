@@ -1,5 +1,6 @@
+from ...types import MergingOrSeparatingOfProductCardsResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import MergingOrSeparatingOfProductCardsResponse, RequestLimit
 
 
 class MergingOrSeparatingOfProductCards(WbMethod):

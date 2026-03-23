@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ListOfProductsForParticipatingInThePromotionItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ListOfProductsForParticipatingInThePromotionItem, RequestLimit
 
 
 class GetListOfProductsForParticipatingInThePromotion(WbMethod):

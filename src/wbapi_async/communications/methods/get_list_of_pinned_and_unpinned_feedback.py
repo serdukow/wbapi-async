@@ -1,8 +1,10 @@
 from pydantic import Field
 
-from ...enums import PinOn, State
+from ...enums import PinOn
+from ...enums import State
+from ...types import ListOfPinnedAndUnpinnedFeedbackResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ListOfPinnedAndUnpinnedFeedbackResponse, RequestLimit
 
 
 class GetListOfPinnedAndUnpinnedFeedback(WbMethod):

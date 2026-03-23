@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ChatEventsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ChatEventsItem, RequestLimit
 
 
 class GetChatEvents(WbMethod):

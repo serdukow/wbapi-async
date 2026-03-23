@@ -1,5 +1,6 @@
+from ...types import GroupDataItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import GroupDataItem, RequestLimit
 
 
 class GroupData(WbMethod):

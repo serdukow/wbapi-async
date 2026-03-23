@@ -1,5 +1,6 @@
+from ...types import PassesResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import PassesResponse, RequestLimit
 
 
 class GetPasses(WbMethod):

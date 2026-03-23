@@ -1,8 +1,9 @@
 from pydantic import Field
 
 from ...enums import PaymentType
+from ...types import MinimumBidsForProductCardsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import MinimumBidsForProductCardsItem, RequestLimit
 
 
 class MinimumBidsForProductCards(WbMethod):

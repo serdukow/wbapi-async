@@ -1,5 +1,6 @@
+from ...types import MediaCampaignStatisticsResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import MediaCampaignStatisticsResponse, RequestLimit
 
 
 class MediaCampaignStatistics(WbMethod):

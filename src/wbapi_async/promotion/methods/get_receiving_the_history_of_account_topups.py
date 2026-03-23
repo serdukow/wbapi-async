@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ReceivingTheHistoryOfAccountTopupsResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ReceivingTheHistoryOfAccountTopupsResponse, RequestLimit
 
 
 class GetReceivingTheHistoryOfAccountTopups(WbMethod):

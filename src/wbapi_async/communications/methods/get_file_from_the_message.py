@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import FileFromTheMessageResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import FileFromTheMessageResponse, RequestLimit
 
 
 class GetFileFromTheMessage(WbMethod):

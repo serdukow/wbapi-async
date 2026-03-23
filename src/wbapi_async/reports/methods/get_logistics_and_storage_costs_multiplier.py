@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import LogisticsAndStorageCostsMultiplierItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import LogisticsAndStorageCostsMultiplierItem, RequestLimit
 
 
 class GetLogisticsAndStorageCostsMultiplier(WbMethod):

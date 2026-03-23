@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import RequestLimit
+from ...types import TheFeedbackByIdItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, TheFeedbackByIdItem
 
 
 class GetTheFeedbackById(WbMethod):

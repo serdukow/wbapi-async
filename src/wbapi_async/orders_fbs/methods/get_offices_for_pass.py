@@ -1,5 +1,6 @@
+from ...types import OfficesForPassResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import OfficesForPassResponse, RequestLimit
 
 
 class GetOfficesForPass(WbMethod):

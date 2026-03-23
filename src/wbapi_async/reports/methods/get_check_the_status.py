@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import CheckTheStatusResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CheckTheStatusResponse, RequestLimit
 
 
 class GetCheckTheStatus(WbMethod):

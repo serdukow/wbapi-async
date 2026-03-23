@@ -3,8 +3,9 @@ from typing import Any
 from pydantic import Field
 
 from ...enums import Locale
+from ...types import ProductCardsInTrashListItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ProductCardsInTrashListItem, RequestLimit
 
 
 class ProductCardsInTrashList(WbMethod):

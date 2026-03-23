@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ReportOnProductsWithMandatoryLabelingItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ReportOnProductsWithMandatoryLabelingItem, RequestLimit
 
 
 class ReportOnProductsWithMandatoryLabeling(WbMethod):

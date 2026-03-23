@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import SellerBrandsItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SellerBrandsItem
 
 
 class GetSellerBrands(WbMethod):

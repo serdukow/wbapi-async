@@ -3,8 +3,9 @@ from typing import Any
 from pydantic import Field
 
 from ...enums import AggregationLevel
+from ...types import ProductCardsStatisticsPerDaysResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ProductCardsStatisticsPerDaysResponse, RequestLimit
 
 
 class ProductCardsStatisticsPerDays(WbMethod):

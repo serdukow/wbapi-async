@@ -1,6 +1,3 @@
-from .enums.order import Order
-from .enums.pin_on import PinOn
-from .enums.state import State
 from .types.answer_buyers_application_response import AnswerBuyersApplicationResponse
 from .types.buyers_return_applications_item import BuyersReturnApplicationsItem
 from .types.chat_events_item import ChatEventsItem
@@ -26,6 +23,9 @@ from .types.unanswered_questions_item import UnansweredQuestionsItem
 from .types.unpin_feedback_response import UnpinFeedbackResponse
 from .types.unseen_feedbacks_and_questions_item import UnseenFeedbacksAndQuestionsItem
 from .types.working_with_questions_item import WorkingWithQuestionsItem
+from .enums.order import Order
+from .enums.pin_on import PinOn
+from .enums.state import State
 
 
 __all__ = (

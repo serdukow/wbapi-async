@@ -1,5 +1,6 @@
+from ...types import CampaignsListsItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CampaignsListsItem, RequestLimit
 
 
 class GetCampaignsLists(WbMethod):

@@ -1,8 +1,9 @@
 from pydantic import Field
 
 from ...enums import Type
+from ...types import RequestLimit
+from ...types import TheSupplyQrCodeResponse
 from ...methods.base import WbMethod
-from ...types import RequestLimit, TheSupplyQrCodeResponse
 
 
 class GetTheSupplyQrCode(WbMethod):

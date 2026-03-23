@@ -3,8 +3,9 @@ from typing import Any
 from pydantic import Field
 
 from ...enums import TopOrderBy
+from ...types import RequestLimit
+from ...types import SearchTextsByProductResponse
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SearchTextsByProductResponse
 
 
 class SearchTextsByProduct(WbMethod):

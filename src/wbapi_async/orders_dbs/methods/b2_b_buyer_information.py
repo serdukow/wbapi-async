@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import B2BBuyerInformationItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import B2BBuyerInformationItem, RequestLimit
 
 
 class B2BBuyerInformation(WbMethod):

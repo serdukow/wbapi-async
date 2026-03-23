@@ -1,5 +1,6 @@
+from ...types import RequestLimit
+from ...types import UnansweredQuestionsItem
 from ...methods.base import WbMethod
-from ...types import RequestLimit, UnansweredQuestionsItem
 
 
 class GetUnansweredQuestions(WbMethod):

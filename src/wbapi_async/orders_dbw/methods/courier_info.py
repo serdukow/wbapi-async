@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import CourierInfoItem
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import CourierInfoItem, RequestLimit
 
 
 class CourierInfo(WbMethod):

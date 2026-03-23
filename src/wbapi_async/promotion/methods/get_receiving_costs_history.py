@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import ReceivingCostsHistoryResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import ReceivingCostsHistoryResponse, RequestLimit
 
 
 class GetReceivingCostsHistory(WbMethod):

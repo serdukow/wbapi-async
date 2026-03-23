@@ -1,5 +1,6 @@
+from ...types import LimitsForTheProductCardsResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import LimitsForTheProductCardsResponse, RequestLimit
 
 
 class GetLimitsForTheProductCards(WbMethod):

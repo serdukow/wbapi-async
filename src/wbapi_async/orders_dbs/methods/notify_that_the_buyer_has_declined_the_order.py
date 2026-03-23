@@ -1,7 +1,8 @@
 from pydantic import Field
 
+from ...types import NotifyThatTheBuyerHasDeclinedTheOrderResponse
+from ...types import RequestLimit
 from ...methods.base import WbMethod
-from ...types import NotifyThatTheBuyerHasDeclinedTheOrderResponse, RequestLimit
 
 
 class NotifyThatTheBuyerHasDeclinedTheOrder(WbMethod):
