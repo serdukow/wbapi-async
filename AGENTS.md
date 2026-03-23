@@ -33,6 +33,9 @@ overwritten on the next codegen run:
 ## Commands
 
 ```bash
+# Install all dependencies (test, dev, docs extras)
+uv sync --all-extras
+
 # Run tests
 uv run pytest
 
