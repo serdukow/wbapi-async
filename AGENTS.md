@@ -19,16 +19,19 @@ overwritten on the next codegen run:
 ## Hand-written files — safe to edit
 
 - `src/wbapi_async/methods/base.py` — WbMethod base class
+- `src/wbapi_async/methods/pagination.py` — pagination strategies (offset, next, take_skip)
 - `src/wbapi_async/methods/get_product_detail.py` — unofficial method (card.wb.ru)
 - `src/wbapi_async/types/base.py` — BaseType
 - `src/wbapi_async/types/error.py` — Error type
 - `src/wbapi_async/types/request_limit.py` — RequestLimit
 - `src/wbapi_async/types/product_detail.py` — ProductDetail (unofficial)
 - `src/wbapi_async/client/session/` — HTTP session, retry, auth logic
-- `src/wbapi_async/utils/` — token validation helpers
+- `src/wbapi_async/client/pagination.py` — `PaginationMixin` (removed, paginate is in utils)
+- `src/wbapi_async/utils/` — `paginate()`, token validation
 - `src/wbapi_async/exceptions.py` — WbAPIError, TokenValidationError
-- `src/wbapi_async/__init__.py` — public package exports
+- `src/wbapi_async/__init__.py` — public package exports (WbAPI, paginate, WbAPIError, TokenValidationError)
 - `tests/conftest.py`, `tests/mocked_api.py`, `tests/test_methods/test_get_product_detail.py`
+- `tests/test_api/test_pagination.py` — pagination tests
 
 ## Commands
 
@@ -43,7 +46,7 @@ uv run pytest
 uv run ruff check src/
 
 # Run codegen (regenerates all auto-generated files)
-wbapi-codegen --target . --swagger-dir internal/.wb/swagger
+uv run --project /path/to/wbapi-async-codegen wbapi-codegen --target . --swagger-dir internal/.wb/swagger
 
 # Build docs locally
 uv run mkdocs serve
@@ -52,11 +55,34 @@ uv run mkdocs serve
 uv build --wheel
 ```
 
+## Pagination
+
+`paginate()` is a standalone async function importable from the package root:
+
+```python
+from wbapi_async import WbAPI, paginate
+
+async with WbAPI(token="...") as api:
+    all_products = await paginate(api.get_products_with_prices)
+    orders = await paginate(api.get_assembly_orders, date_from=1700000000)
+```
+
+It accepts a bound method from `WbAPI` and optional kwargs (excluding pagination params).
+Returns `list[T]`. Raises `TypeError` if the method has no `__pagination__`.
+
+Three pagination patterns are auto-detected by codegen from the OpenAPI spec:
+
+- `offset` — `limit` + `offset`, page size 1000
+- `next` — `limit` + `next` (cursor), page size 1000
+- `take_skip` — `take` + `skip`, page size 5000
+
+To add a new pattern: subclass `PaginationStrategy` in `methods/pagination.py` and register it in `PAGINATION_STRATEGIES`.
+
 ## Codegen
 
 The codegen tool lives at
 [serdukow/wbapi-codegen](https://github.com/serdukow/wbapi-codegen). It runs
-nightly via GitHub Actions and opens a PR with updated API code.
+via GitHub Actions and opens a PR with updated API code when the WB spec changes.
 
 Unofficial methods (marked `__unofficial__ = True`) are preserved by codegen
 and never overwritten.
@@ -70,14 +96,16 @@ src/wbapi_async/
 │   ├── methods/       # promotion, communications, tariffs,
 │   └── enums/         # reports, finances, general
 ├── types/             # flat re-export aggregator (auto-generated __init__.py)
-├── methods/           # flat re-export aggregator + hand-written base/unofficial
+├── methods/           # flat re-export aggregator + hand-written base/pagination
 ├── enums/             # flat re-export aggregator
-└── client/            # WbAPI, session, auth (hand-written)
+├── client/            # WbAPI (auto-generated api.py), session, auth
+└── utils/             # paginate(), token validation
 ```
 
-Backward-compatible imports work at any level:
+Imports work at any level:
 
 ```python
-from wbapi_async.types import AnyType          # flat (always works)
-from wbapi_async.products.types import AnyType  # domain-specific
+from wbapi_async import WbAPI, paginate          # public API
+from wbapi_async.types import AnyType            # flat (always works)
+from wbapi_async.products.types import AnyType   # domain-specific
 ```
