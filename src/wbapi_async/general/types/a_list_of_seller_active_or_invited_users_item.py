@@ -8,7 +8,7 @@ from ...types.base import BaseType
 class AListOfSellerActiveOrInvitedUsersItem(BaseType):
     """Get a List of Seller Active or Invited Users"""
 
-    id: int = Field()
+    id_: int = Field(alias="id")
     role: str = Field()
     position: str = Field()
     phone: str = Field()

@@ -6,7 +6,7 @@ from ...types.base import BaseType
 class ASuppliesListItem(BaseType):
     """Get a Supplies List"""
 
-    id: str | None = Field(None)
+    id_: str | None = Field(None, alias="id")
     is_b2b: bool | None = Field(None, alias="isB2b")
     done: bool | None = Field(None)
     created_at: str | None = Field(None, alias="createdAt")

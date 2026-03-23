@@ -1,13 +1,18 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import ListOfPinnedAndUnpinnedFeedbackResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetListOfPinnedAndUnpinnedFeedback:
+
     async def test_get_list_of_pinned_and_unpinned_feedback(self, api: MockedAPI) -> None:
-        api.add_response([{}])
+        api.add_response(
+            [{
+
+            }]
+        )
 
         result = await api.get_list_of_pinned_and_unpinned_feedback()
 

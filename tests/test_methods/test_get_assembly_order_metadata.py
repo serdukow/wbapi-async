@@ -1,18 +1,17 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import AssemblyOrderMetadataResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetAssemblyOrderMetadata:
+
     async def test_get_assembly_order_metadata(self, api: MockedAPI) -> None:
         api.add_response(
-            [
-                {
-                    "meta": {},
-                }
-            ]
+            [{
+                "meta": {},
+            }]
         )
 
         result = await api.get_assembly_order_metadata(order_id=1)

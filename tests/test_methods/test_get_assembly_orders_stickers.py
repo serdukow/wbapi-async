@@ -1,27 +1,26 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import AssemblyOrdersStickersItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetAssemblyOrdersStickers:
+
     async def test_get_assembly_orders_stickers(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "stickers": [
-                    {
-                        "orderId": 1,
-                        "partA": 1,
-                        "partB": 1,
-                        "barcode": "barcode",
-                        "file": "file",
-                    }
-                ]
-            }
+            "stickers": [{
+                "orderId": 1,
+                "partA": 1,
+                "partB": 1,
+                "barcode": "barcode",
+                "file": "file",
+            }]
+        }
         )
 
-        result = await api.get_assembly_orders_stickers(type="svg", width="58", height="40")
+        result = await api.get_assembly_orders_stickers(type_="svg", width="58", height="40")
 
         assert isinstance(result, list)
         assert len(result) == 1

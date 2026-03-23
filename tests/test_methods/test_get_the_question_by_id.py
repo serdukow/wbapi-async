@@ -1,15 +1,22 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import TheQuestionByIdItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetTheQuestionById:
-    async def test_get_the_question_by_id(self, api: MockedAPI) -> None:
-        api.add_response({"additionalErrors": [{}]})
 
-        result = await api.get_the_question_by_id(id="id")
+    async def test_get_the_question_by_id(self, api: MockedAPI) -> None:
+        api.add_response(
+            {
+            "additionalErrors": [{
+
+            }]
+        }
+        )
+
+        result = await api.get_the_question_by_id(id_="id_")
 
         assert isinstance(result, list)
         assert len(result) == 1

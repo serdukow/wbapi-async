@@ -8,4 +8,4 @@ class OfficesForPassResponse(BaseType):
 
     name: str | None = Field(None)
     address: str | None = Field(None)
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")

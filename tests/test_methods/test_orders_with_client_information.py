@@ -1,26 +1,25 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import OrdersWithClientInformationItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestOrdersWithClientInformation:
+
     async def test_orders_with_client_information(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "orders": [
-                    {
-                        "firstName": "firstName",
-                        "fullName": "fullName",
-                        "lastName": "lastName",
-                        "middleName": "middleName",
-                        "orderID": 1,
-                        "phone": "phone",
-                        "phoneCode": "phoneCode",
-                    }
-                ]
-            }
+            "orders": [{
+                "firstName": "firstName",
+                "fullName": "fullName",
+                "lastName": "lastName",
+                "middleName": "middleName",
+                "orderID": 1,
+                "phone": "phone",
+                "phoneCode": "phoneCode",
+            }]
+        }
         )
 
         result = await api.orders_with_client_information()

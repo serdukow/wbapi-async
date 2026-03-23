@@ -8,5 +8,5 @@ from ...types.base import BaseType
 class MediaCampaignsNumberResponse(BaseType):
     """Media Campaigns Number"""
 
-    all: int | None = Field(None)
+    all_: int | None = Field(None, alias="all")
     adverts: dict[str, Any] | None = Field(None)

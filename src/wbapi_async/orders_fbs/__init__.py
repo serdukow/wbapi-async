@@ -1,5 +1,5 @@
 from .enums.height import Height
-from .enums.type import Type
+from .enums.type_ import Type
 from .enums.width import Width
 from .types.a_supplies_list_item import ASuppliesListItem
 from .types.add_assembly_orders_to_the_supply_response import AddAssemblyOrdersToTheSupplyResponse

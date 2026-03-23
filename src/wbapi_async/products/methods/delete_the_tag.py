@@ -14,9 +14,9 @@ class DeleteTheTag(WbMethod):
     __return__ = DeleteTheTagResponse
     __api__ = "content-api"
     __method__ = ""
-    __method_template__ = "content/v2/tag/{id}"
+    __method_template__ = "content/v2/tag/{id_}"
     __http_method__ = "DELETE"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    id: int = Field(exclude=True)
+    id_: int = Field(alias="id", exclude=True)

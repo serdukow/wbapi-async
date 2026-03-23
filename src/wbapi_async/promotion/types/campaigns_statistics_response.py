@@ -19,6 +19,6 @@ class CampaignsStatisticsResponse(BaseType):
     days: Any = Field()
     orders: int = Field()
     shks: int = Field()
-    sum: float = Field()
+    sum_: float = Field(alias="sum")
     sum_price: float = Field()
     views: int = Field()

@@ -6,4 +6,4 @@ from ...types.base import BaseType
 class CreateANewSupplyResponse(BaseType):
     """Create a New Supply"""
 
-    id: str | None = Field(None)
+    id_: str | None = Field(None, alias="id")

@@ -1,24 +1,23 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import WarehouseDataItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestWarehouseData:
+
     async def test_warehouse_data(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "data": {
-                    "regions": [
-                        {
-                            "regionName": "regionName",
-                            "metrics": None,
-                            "offices": [],
-                        }
-                    ]
-                }
-            }
+            "data": {
+            "regions": [{
+                "regionName": "regionName",
+                "metrics": None,
+                "offices": [],
+            }]
+        }
+        }
         )
 
         result = await api.warehouse_data()

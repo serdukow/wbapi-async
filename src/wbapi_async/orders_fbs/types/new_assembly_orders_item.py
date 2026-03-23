@@ -24,7 +24,7 @@ class NewAssemblyOrdersItem(BaseType):
     created_at: str | None = Field(None, alias="createdAt")
     offices: list[str] | None = Field(None)
     skus: list[str] | None = Field(None)
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     warehouse_id: int | None = Field(None, alias="warehouseId")
     office_id: int | None = Field(None, alias="officeId")
     nm_id: int | None = Field(None, alias="nmId")

@@ -1,30 +1,29 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import SupplyTariffsResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetSupplyTariffs:
+
     async def test_get_supply_tariffs(self, api: MockedAPI) -> None:
         api.add_response(
-            [
-                {
-                    "date": "date",
-                    "coefficient": 1.0,
-                    "warehouseID": 1,
-                    "warehouseName": "warehouseName",
-                    "allowUnload": True,
-                    "boxTypeID": 1,
-                    "storageCoef": "storageCoef",
-                    "deliveryCoef": "deliveryCoef",
-                    "deliveryBaseLiter": "deliveryBaseLiter",
-                    "deliveryAdditionalLiter": "deliveryAdditionalLiter",
-                    "storageBaseLiter": "storageBaseLiter",
-                    "storageAdditionalLiter": "storageAdditionalLiter",
-                    "isSortingCenter": True,
-                }
-            ]
+            [{
+                "date": "date",
+                "coefficient": 1.0,
+                "warehouseID": 1,
+                "warehouseName": "warehouseName",
+                "allowUnload": True,
+                "boxTypeID": 1,
+                "storageCoef": "storageCoef",
+                "deliveryCoef": "deliveryCoef",
+                "deliveryBaseLiter": "deliveryBaseLiter",
+                "deliveryAdditionalLiter": "deliveryAdditionalLiter",
+                "storageBaseLiter": "storageBaseLiter",
+                "storageAdditionalLiter": "storageAdditionalLiter",
+                "isSortingCenter": True,
+            }]
         )
 
         result = await api.get_supply_tariffs()

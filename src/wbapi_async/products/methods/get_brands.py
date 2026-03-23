@@ -19,4 +19,4 @@ class GetBrands(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     subject_id: int = Field(alias="subjectId")
-    next: int | None = Field(None)
+    next_: int | None = Field(None, alias="next")

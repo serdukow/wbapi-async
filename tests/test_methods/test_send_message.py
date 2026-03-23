@@ -1,13 +1,20 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import SendMessageItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestSendMessage:
+
     async def test_send_message(self, api: MockedAPI) -> None:
-        api.add_response({"errors": [{}]})
+        api.add_response(
+            {
+            "errors": [{
+
+            }]
+        }
+        )
 
         result = await api.send_message()
 

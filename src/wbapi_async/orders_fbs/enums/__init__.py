@@ -1,5 +1,5 @@
 from .height import Height
-from .type import Type
+from .type_ import Type
 from .width import Width
 
 

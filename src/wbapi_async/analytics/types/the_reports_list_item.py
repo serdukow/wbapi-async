@@ -6,7 +6,7 @@ from ...types.base import BaseType
 class TheReportsListItem(BaseType):
     """Get the Reports List"""
 
-    id: str = Field()
+    id_: str = Field(alias="id")
     created_at: str = Field(alias="createdAt")
     status: str = Field()
     name: str = Field()

@@ -8,5 +8,5 @@ from ...types.base import BaseType
 class AssemblyOrdersMetadataItem(BaseType):
     """Get Assembly Orders Metadata"""
 
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     meta: dict[str, Any] | None = Field(None)

@@ -1,21 +1,20 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import LimitsForTheProductCardsResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetLimitsForTheProductCards:
+
     async def test_get_limits_for_the_product_cards(self, api: MockedAPI) -> None:
         api.add_response(
-            [
-                {
-                    "data": {},
-                    "error": True,
-                    "errorText": "errorText",
-                    "additionalErrors": "additionalErrors",
-                }
-            ]
+            [{
+                "data": {},
+                "error": True,
+                "errorText": "errorText",
+                "additionalErrors": "additionalErrors",
+            }]
         )
 
         result = await api.get_limits_for_the_product_cards()
@@ -24,5 +23,5 @@ class TestGetLimitsForTheProductCards:
         assert len(result) == 1
         assert isinstance(result[0], LimitsForTheProductCardsResponse)
         assert result[0].data == {}
-        assert result[0].error
+        assert result[0].error == True
         assert result[0].error_text == "errorText"

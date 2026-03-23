@@ -8,7 +8,7 @@ from ...types.base import BaseType
 class InformationAboutMediaCampaignItem(BaseType):
     """Information About Media Campaign"""
 
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     name: str | None = Field(None)
     status: int | None = Field(None)
     place: int | None = Field(None)

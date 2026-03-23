@@ -8,7 +8,7 @@ class WarehousesResponse(BaseType):
 
     name: str | None = Field(None)
     office_id: int | None = Field(None, alias="officeId")
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     cargo_type: int | None = Field(None, alias="cargoType")
     delivery_type: int | None = Field(None, alias="deliveryType")
     is_deleting: bool | None = Field(None, alias="isDeleting")

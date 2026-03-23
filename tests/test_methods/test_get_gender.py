@@ -1,13 +1,20 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import GenderItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetGender:
+
     async def test_get_gender(self, api: MockedAPI) -> None:
-        api.add_response({"data": [{}]})
+        api.add_response(
+            {
+            "data": [{
+
+            }]
+        }
+        )
 
         result = await api.get_gender()
 

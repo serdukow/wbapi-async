@@ -1,30 +1,29 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import WarehouseMeasurementsItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetWarehouseMeasurements:
+
     async def test_get_warehouse_measurements(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "data": {
-                    "reports": [
-                        {
-                            "nmId": 1,
-                            "subjectName": "subjectName",
-                            "dimId": 1,
-                            "volume": 1.0,
-                            "width": 1,
-                            "length": 1,
-                            "height": 1,
-                            "photoUrls": [],
-                            "dt": "dt",
-                        }
-                    ]
-                }
-            }
+            "data": {
+            "reports": [{
+                "nmId": 1,
+                "subjectName": "subjectName",
+                "dimId": 1,
+                "volume": 1.0,
+                "width": 1,
+                "length": 1,
+                "height": 1,
+                "photoUrls": [],
+                "dt": "dt",
+            }]
+        }
+        }
         )
 
         result = await api.get_warehouse_measurements(date_to="date_to", limit=1)

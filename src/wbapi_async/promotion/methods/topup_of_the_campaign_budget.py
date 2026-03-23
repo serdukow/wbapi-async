@@ -21,9 +21,9 @@ class TopupOfTheCampaignBudget(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    id: int = Field()
-    sum: int | None = Field(None)
+    id_: int = Field(alias="id")
+    sum_: int | None = Field(None, alias="sum")
     cashback_sum: int | None = Field(None)
     cashback_percent: int | None = Field(None)
-    type: int | None = Field(None)
+    type_: int | None = Field(None, alias="type")
     return_: bool | None = Field(None, alias="return")

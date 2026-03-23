@@ -18,4 +18,4 @@ class GetTheFeedbackById(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    id: str = Field()
+    id_: str = Field(alias="id")

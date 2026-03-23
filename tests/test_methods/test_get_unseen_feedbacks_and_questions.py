@@ -1,13 +1,20 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import UnseenFeedbacksAndQuestionsItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetUnseenFeedbacksAndQuestions:
+
     async def test_get_unseen_feedbacks_and_questions(self, api: MockedAPI) -> None:
-        api.add_response({"additionalErrors": [{}]})
+        api.add_response(
+            {
+            "additionalErrors": [{
+
+            }]
+        }
+        )
 
         result = await api.get_unseen_feedbacks_and_questions()
 

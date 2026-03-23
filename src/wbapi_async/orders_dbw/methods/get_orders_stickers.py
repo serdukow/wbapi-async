@@ -24,7 +24,7 @@ class GetOrdersStickers(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    type: Type = Field()
+    type_: Type = Field(alias="type")
     width: Width = Field()
     height: Height = Field()
     orders: list[int] | None = Field(None)

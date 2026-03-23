@@ -6,7 +6,7 @@ from ...types.base import BaseType
 class ListOfProductsForParticipatingInThePromotionItem(BaseType):
     """List of Products for Participating in the Promotion"""
 
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     in_action: bool | None = Field(None, alias="inAction")
     price: float | None = Field(None)
     currency_code: str | None = Field(None, alias="currencyCode")

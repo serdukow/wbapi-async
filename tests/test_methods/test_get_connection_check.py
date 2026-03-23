@@ -1,19 +1,18 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import ConnectionCheckResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetConnectionCheck:
+
     async def test_get_connection_check(self, api: MockedAPI) -> None:
         api.add_response(
-            [
-                {
-                    "TS": "TS",
-                    "Status": "Status",
-                }
-            ]
+            [{
+                "TS": "TS",
+                "Status": "Status",
+            }]
         )
 
         result = await api.get_connection_check()

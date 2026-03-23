@@ -1,38 +1,37 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import ProductCardsListItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestProductCardsList:
+
     async def test_product_cards_list(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "cards": [
-                    {
-                        "nmID": 1,
-                        "imtID": 1,
-                        "nmUUID": "nmUUID",
-                        "subjectID": 1,
-                        "subjectName": "subjectName",
-                        "vendorCode": "vendorCode",
-                        "brand": "brand",
-                        "title": "title",
-                        "description": "description",
-                        "needKiz": True,
-                        "photos": [],
-                        "video": "video",
-                        "wholesale": {},
-                        "dimensions": {},
-                        "characteristics": [],
-                        "sizes": [],
-                        "tags": [],
-                        "createdAt": "createdAt",
-                        "updatedAt": "updatedAt",
-                    }
-                ]
-            }
+            "cards": [{
+                "nmID": 1,
+                "imtID": 1,
+                "nmUUID": "nmUUID",
+                "subjectID": 1,
+                "subjectName": "subjectName",
+                "vendorCode": "vendorCode",
+                "brand": "brand",
+                "title": "title",
+                "description": "description",
+                "needKiz": True,
+                "photos": [],
+                "video": "video",
+                "wholesale": {},
+                "dimensions": {},
+                "characteristics": [],
+                "sizes": [],
+                "tags": [],
+                "createdAt": "createdAt",
+                "updatedAt": "updatedAt",
+            }]
+        }
         )
 
         result = await api.product_cards_list()

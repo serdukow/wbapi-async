@@ -1,22 +1,21 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import InformationOnPaidDeliveryResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetInformationOnPaidDelivery:
+
     async def test_get_information_on_paid_delivery(self, api: MockedAPI) -> None:
         api.add_response(
-            [
-                {
-                    "groupID": "groupID",
-                    "deliveryCost": 1,
-                    "convertedDeliveryCost": 1,
-                    "currencyCode": 1,
-                    "convertedCurrencyCode": 1,
-                }
-            ]
+            [{
+                "groupID": "groupID",
+                "deliveryCost": 1,
+                "convertedDeliveryCost": 1,
+                "currencyCode": 1,
+                "convertedCurrencyCode": 1,
+            }]
         )
 
         result = await api.get_information_on_paid_delivery()

@@ -8,7 +8,7 @@ from ...types.base import BaseType
 class PromotionsDetailsItem(BaseType):
     """Promotions Details"""
 
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     name: str | None = Field(None)
     description: str | None = Field(None)
     advantages: list[str] | None = Field(None)
@@ -19,6 +19,6 @@ class PromotionsDetailsItem(BaseType):
     not_in_promo_action_leftovers: int | None = Field(None, alias="notInPromoActionLeftovers")
     not_in_promo_action_total: int | None = Field(None, alias="notInPromoActionTotal")
     participation_percentage: int | None = Field(None, alias="participationPercentage")
-    type: str | None = Field(None)
+    type_: str | None = Field(None, alias="type")
     exception_products_count: int | None = Field(None, alias="exceptionProductsCount")
     ranging: list[dict[str, Any]] | None = Field(None)

@@ -8,7 +8,7 @@ from ...types.base import BaseType
 class QuestionListItem(BaseType):
     """Question List"""
 
-    id: str | None = Field(None)
+    id_: str | None = Field(None, alias="id")
     text: str | None = Field(None)
     created_date: str | None = Field(None, alias="createdDate")
     state: str | None = Field(None)

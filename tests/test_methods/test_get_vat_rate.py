@@ -1,13 +1,20 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import VatRateItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetVatRate:
+
     async def test_get_vat_rate(self, api: MockedAPI) -> None:
-        api.add_response({"data": [{}]})
+        api.add_response(
+            {
+            "data": [{
+
+            }]
+        }
+        )
 
         result = await api.get_vat_rate()
 

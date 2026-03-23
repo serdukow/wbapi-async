@@ -1,22 +1,21 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import StatusHistoryForCrossborderOrdersItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestStatusHistoryForCrossborderOrders:
+
     async def test_status_history_for_crossborder_orders(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "orders": [
-                    {
-                        "deliveryDate": "deliveryDate",
-                        "statuses": [],
-                        "orderID": 1,
-                    }
-                ]
-            }
+            "orders": [{
+                "deliveryDate": "deliveryDate",
+                "statuses": [],
+                "orderID": 1,
+            }]
+        }
         )
 
         result = await api.status_history_for_crossborder_orders()

@@ -1,13 +1,18 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import ProductCategoryCommissionResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetProductCategoryCommission:
+
     async def test_get_product_category_commission(self, api: MockedAPI) -> None:
-        api.add_response([{}])
+        api.add_response(
+            [{
+
+            }]
+        )
 
         result = await api.get_product_category_commission()
 

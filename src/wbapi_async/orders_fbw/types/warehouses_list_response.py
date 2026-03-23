@@ -6,7 +6,7 @@ from ...types.base import BaseType
 class WarehousesListResponse(BaseType):
     """Warehouses List"""
 
-    id: int | None = Field(None, alias="ID")
+    id_: int | None = Field(None, alias="ID")
     name: str | None = Field(None)
     address: str | None = Field(None)
     work_time: str | None = Field(None, alias="workTime")

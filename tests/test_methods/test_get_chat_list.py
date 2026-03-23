@@ -1,24 +1,23 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import ChatListItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetChatList:
+
     async def test_get_chat_list(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "result": [
-                    {
-                        "chatID": "chatID",
-                        "replySign": "replySign",
-                        "clientName": "clientName",
-                        "goodCard": {},
-                        "lastMessage": None,
-                    }
-                ]
-            }
+            "result": [{
+                "chatID": "chatID",
+                "replySign": "replySign",
+                "clientName": "clientName",
+                "goodCard": {},
+                "lastMessage": None,
+            }]
+        }
         )
 
         result = await api.get_chat_list()

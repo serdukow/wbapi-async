@@ -532,7 +532,7 @@ class WbAPI:
 
     async def active_and_inactive_search_cluster_lists(
         self,
-        items: list[Any] = None,
+        items: list[Any],
     ) -> list[ActiveAndInactiveSearchClusterListsItem]:
         """
         Returns lists of active and inactive search clusters with at least 100 views. Request limit
@@ -567,7 +567,7 @@ class WbAPI:
     async def add_boxes_to_the_supply(
         self,
         supply_id: str,
-        amount: int = None,
+        amount: int,
     ) -> list[AddBoxesToTheSupplyItem]:
         """
         Adds the required number of boxes to the supply. You should add boxes only to supplies
@@ -658,7 +658,7 @@ class WbAPI:
 
     async def add_data_matrix_codes_to_assembly_orders_chestny_znak(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem]:
         """
         Sets the Data Matrix code (Chestny ZNAK marking) for the assembly orders. You can set the
@@ -676,7 +676,7 @@ class WbAPI:
 
     async def add_data_matrix_codes_to_the_assembly_orders_chestny_znak(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[AddDataMatrixCodesToTheAssemblyOrdersChestnyZnakItem]:
         """
         The method sets Data Matrix codes (Chestny ZNAK) to the [assembly orders
@@ -718,7 +718,7 @@ class WbAPI:
 
     async def add_gtin_to_assembly_orders(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[AddGtinToAssemblyOrdersItem]:
         """
         Sets the GTIN, Belarus product unique identifier, for the assembly order
@@ -737,7 +737,7 @@ class WbAPI:
     async def add_gtin_to_the_assembly_order(
         self,
         order_id: int,
-        gtin: str = None,
+        gtin: str,
     ) -> None:
         """
         Sets the GTIN (Belarus product unique identifier) for the assembly order. The assembly
@@ -755,7 +755,7 @@ class WbAPI:
 
     async def add_gtin_to_the_assembly_orders(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[AddGtinToTheAssemblyOrdersItem]:
         """
         The method sets the GTIN, Belarus product unique identifier, for the for the assembly
@@ -775,7 +775,7 @@ class WbAPI:
     async def add_gtin_to_the_order(
         self,
         order_id: int,
-        gtin: str = None,
+        gtin: str,
     ) -> None:
         """
         Sets the GTIN (Belarus product unique identifier) for the order. The order can only have
@@ -792,7 +792,7 @@ class WbAPI:
 
     async def add_imei_to_assembly_orders(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[AddImeiToAssemblyOrdersItem]:
         """
         Sets the IMEI for the [assembly orders
@@ -811,7 +811,7 @@ class WbAPI:
     async def add_imei_to_the_assembly_order(
         self,
         order_id: int,
-        imei: str = None,
+        imei: str,
     ) -> None:
         """
         Sets the IMEI for the assembly order. The assembly order can have only one IMEI. If a
@@ -830,7 +830,7 @@ class WbAPI:
 
     async def add_imei_to_the_assembly_orders(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[AddImeiToTheAssemblyOrdersItem]:
         """
         Sets the IMEI for the [assembly orders
@@ -849,7 +849,7 @@ class WbAPI:
     async def add_imei_to_the_order(
         self,
         order_id: int,
-        imei: str = None,
+        imei: str,
     ) -> None:
         """
         Sets the IMEI for the order. The order can have only one IMEI. You can add the code only
@@ -883,7 +883,7 @@ class WbAPI:
 
     async def add_uin_unique_identification_number_to_assembly_orders(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[AddUinUniqueIdentificationNumberToAssemblyOrdersItem]:
         """
         Sets the UIN to the [assembly orders
@@ -902,7 +902,7 @@ class WbAPI:
     async def add_uin_unique_identification_number_to_the_assembly_order(
         self,
         order_id: int,
-        uin: str = None,
+        uin: str,
     ) -> None:
         """
         Sets the UIN for the assembly order. The assembly order can only have one UIN. You can add
@@ -920,7 +920,7 @@ class WbAPI:
     async def add_uin_unique_identification_number_to_the_order(
         self,
         order_id: int,
-        uin: str = None,
+        uin: str,
     ) -> None:
         """
         Sets the UIN for the order. The order can only have one UIN. You can add the code only for
@@ -937,7 +937,7 @@ class WbAPI:
 
     async def add_uin_unique_identification_numbers_to_the_assembly_orders(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem]:
         """
         The method sets the UIN (Unique Identification Numbers) for the [assembly orders
@@ -955,8 +955,8 @@ class WbAPI:
 
     async def answer_buyers_application(
         self,
-        id: str = None,
-        action: str = None,
+        id_: str,
+        action: str,
         comment: str | None = None,
     ) -> None:
         """
@@ -964,7 +964,7 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Buyers-Returns/paths/~1api~1v1~1claim/patch
 
-        :param id: Application ID
+        :param id_: Application ID
         :param action: Application action. Use one of the `actions` array values from the response
                        ofthe getting [buyers
                        applications](./user-communication#tag/Buyers-Returns/paths/~1api~1v1~1claims/get)
@@ -973,7 +973,7 @@ class WbAPI:
                         When`"action":"rejectcustom"` this parameter is required
         :return: None
         """
-        call = AnswerBuyersApplication(id=id, action=action, comment=comment)
+        call = AnswerBuyersApplication(id_=id_, action=action, comment=comment)
         return await self(call)
 
     async def assign_a_data_matrix_code_to_the_assembly_order(
@@ -1095,7 +1095,7 @@ class WbAPI:
 
     async def changing_campaigns_bids(
         self,
-        bids: list[dict[str, Any]] = None,
+        bids: list[dict[str, Any]],
     ) -> list[ChangingCampaignsBidsItem]:
         """
         The method changes the bids of product cards by WB articles in campaigns: - with standard
@@ -1111,7 +1111,7 @@ class WbAPI:
 
     async def changing_placements_in_campaigns_with_custom_bid(
         self,
-        placements: list[dict[str, Any]] = None,
+        placements: list[dict[str, Any]],
     ) -> None:
         """
         The method allows you to change placements in campaigns with custom bid and per mille
@@ -1127,7 +1127,7 @@ class WbAPI:
 
     async def changing_the_list_of_product_cards_in_campaigns(
         self,
-        nms: list[dict[str, Any]] = None,
+        nms: list[dict[str, Any]],
     ) -> list[ChangingTheListOfProductCardsInCampaignsItem]:
         """
         The method allows you to add and remove product cards in campaigns. For campaigns in
@@ -1210,8 +1210,8 @@ class WbAPI:
 
     async def create_an_invitation_for_a_new_user(
         self,
+        invite: dict[str, Any],
         access: list[dict[str, Any]] | None = None,
-        invite: dict[str, Any] = None,
     ) -> list[CreateAnInvitationForANewUserResponse]:
         """
         Method is available by Personal token
@@ -1221,7 +1221,7 @@ class WbAPI:
         :param access: Access settings for seller account sections
         :return: list[CreateAnInvitationForANewUserResponse]
         """
-        call = CreateAnInvitationForANewUser(access=access, invite=invite)
+        call = CreateAnInvitationForANewUser(invite=invite, access=access)
         return await self(call)
 
     async def create_campaign(
@@ -1260,11 +1260,11 @@ class WbAPI:
 
     async def create_pass(
         self,
-        first_name: str = None,
-        last_name: str = None,
-        car_model: str = None,
-        car_number: str = None,
-        office_id: int = None,
+        first_name: str,
+        last_name: str,
+        car_model: str,
+        car_number: str,
+        office_id: int,
     ) -> list[CreatePassResponse]:
         """
         Creates a supplier pass. The pass is valid for 48 hours from the time of creation. Maximum
@@ -1343,8 +1343,8 @@ class WbAPI:
 
     async def create_warehouse(
         self,
-        name: str = None,
-        office_id: int = None,
+        name: str,
+        office_id: int,
     ) -> list[CreateWarehouseResponse]:
         """
         Creates a seller's warehouse. You cannot link an office that is already in use.
@@ -1360,9 +1360,9 @@ class WbAPI:
 
     async def daily_search_clusters_statistics(
         self,
-        from_: str = None,
-        to: str = None,
-        items: list[dict[str, Any]] = None,
+        from_: str,
+        to: str,
+        items: list[dict[str, Any]],
     ) -> list[DailySearchClustersStatisticsItem]:
         """
         Returns statistics (views, clicks, add-to-cart, orders, CTR, CPC, CPM, etc.) by search
@@ -1407,8 +1407,8 @@ class WbAPI:
 
     async def delete_assembly_orders_metadata(
         self,
-        key: str = None,
-        order_ids: list[int] = None,
+        key: str,
+        order_ids: list[int],
     ) -> list[DeleteAssemblyOrdersMetadataItem]:
         """
         Removes all [assembly order
@@ -1437,7 +1437,7 @@ class WbAPI:
 
     async def delete_bids_from_search_clusters(
         self,
-        bids: list[Any] = None,
+        bids: list[Any],
     ) -> None:
         """
         The method deletes the bids from search clusters. You can use this method only for
@@ -1452,7 +1452,7 @@ class WbAPI:
     async def delete_boxes_from_the_supply(
         self,
         supply_id: str,
-        trbx_ids: list[str] = None,
+        trbx_ids: list[str],
     ) -> None:
         """
         The method deletes boxes from the supply. Available only while the supply is being
@@ -1470,7 +1470,7 @@ class WbAPI:
     async def delete_inventory(
         self,
         warehouse_id: int,
-        chrt_ids: list[int] = None,
+        chrt_ids: list[int],
     ) -> None:
         """
         Deletes product inventory.
@@ -1535,22 +1535,22 @@ class WbAPI:
 
     async def delete_the_tag(
         self,
-        id: int,
+        id_: int,
     ) -> list[DeleteTheTagResponse]:
         """
         Deletes the tag
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1%7Bid%7D/delete
 
-        :param id: Numeric tag ID
+        :param id_: Numeric tag ID
         :return: list[DeleteTheTagResponse]
         """
-        call = DeleteTheTag(id=id)
+        call = DeleteTheTag(id_=id_)
         return await self(call)
 
     async def delete_user(
         self,
-        deleted_user_id: int = None,
+        deleted_user_id: int,
     ) -> None:
         """
         Method is available by Personal token
@@ -1596,8 +1596,8 @@ class WbAPI:
 
     async def edit_response_to_feedback(
         self,
-        id: str = None,
-        text: str = None,
+        id_: str,
+        text: str,
     ) -> None:
         """
         Allows you to edit an already sent response to the feedback. You can edit the response only
@@ -1606,11 +1606,11 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedbacks~1answer/patch
 
-        :param id: Feedback ID
+        :param id_: Feedback ID
         :param text: Reply text
         :return: None
         """
-        call = EditResponseToFeedback(id=id, text=text)
+        call = EditResponseToFeedback(id_=id_, text=text)
         return await self(call)
 
     async def generation_of_skus(
@@ -1655,8 +1655,8 @@ class WbAPI:
 
     async def get_a_supplies_list(
         self,
-        limit: int = None,
-        next: int = None,
+        limit: int,
+        next_: int,
     ) -> list[ASuppliesListItem]:
         """
         Returns the supply list.
@@ -1664,12 +1664,12 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Supplies/paths/~1api~1v3~1supplies/get
 
         :param limit: Pagination parameter. Sets the limit for the amount of data returned.
-        :param next: Pagination parameter. Sets the value from which to retrieve the next batch. It
-                     shouldstart at 0 to get the full list of data. For the subsequent requests,
-                     youmust take the value from the `next` field in the response.
+        :param next_: Pagination parameter. Sets the value from which to retrieve the next batch.
+                      Itshould start at 0 to get the full list of data. For the subsequent
+                      requests,you must take the value from the `next` field in the response.
         :return: list[ASuppliesListItem]
         """
-        call = GetASuppliesList(limit=limit, next=next)
+        call = GetASuppliesList(limit=limit, next_=next_)
         return await self(call)
 
     async def get_all_assembly_orders_for_reshipment(
@@ -1718,8 +1718,8 @@ class WbAPI:
 
     async def get_assembly_orders(
         self,
-        limit: int = None,
-        next: int = None,
+        limit: int,
+        next_: int,
         date_from: int | None = None,
         date_to: int | None = None,
     ) -> list[AssemblyOrdersItem]:
@@ -1730,20 +1730,20 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Assembly-Orders/paths/~1api~1v3~1orders/get
 
         :param limit: Pagination parameter. Sets the limit for the amount of data returned.
-        :param next: Pagination parameter. Sets the value from which to retrieve the next batch. It
-                     shouldstart at 0 to get the full list of data. For the subsequent requests,
-                     youmust take the value from the `next` field in the response.
+        :param next_: Pagination parameter. Sets the value from which to retrieve the next batch.
+                      Itshould start at 0 to get the full list of data. For the subsequent
+                      requests,you must take the value from the `next` field in the response.
         :param date_from: Period start date in Unix timestamp format. By default date is 30 days
                           beforethe request
         :param date_to: Period end date in Unix timestamp format
         :return: list[AssemblyOrdersItem]
         """
-        call = GetAssemblyOrders(limit=limit, next=next, date_from=date_from, date_to=date_to)
+        call = GetAssemblyOrders(limit=limit, next_=next_, date_from=date_from, date_to=date_to)
         return await self(call)
 
     async def get_assembly_orders_metadata(
         self,
-        orders: list[int] = None,
+        orders: list[int],
     ) -> list[AssemblyOrdersMetadataItem]:
         """
         The method returns metadata for [assembly
@@ -1772,7 +1772,7 @@ class WbAPI:
 
     async def get_assembly_orders_statuses(
         self,
-        orders: list[int] = None,
+        orders: list[int],
     ) -> list[AssemblyOrdersStatusesItem]:
         """
         Returns the statuses of assembly orders from the request.
@@ -1787,9 +1787,9 @@ class WbAPI:
 
     async def get_assembly_orders_stickers(
         self,
-        type: Type = None,
-        width: Width = None,
-        height: Height = None,
+        type_: Type,
+        width: Width,
+        height: Height,
         orders: list[int] | None = None,
     ) -> list[AssemblyOrdersStickersItem]:
         """
@@ -1798,13 +1798,13 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Assembly-Orders/paths/~1api~1v3~1orders~1stickers/post
 
-        :param type: Sticker format
+        :param type_: Sticker format
         :param width: Sticker width
         :param height: Sticker height
         :param orders: List of assembly order IDs
         :return: list[AssemblyOrdersStickersItem]
         """
-        call = GetAssemblyOrdersStickers(type=type, width=width, height=height, orders=orders)
+        call = GetAssemblyOrdersStickers(type_=type_, width=width, height=height, orders=orders)
         return await self(call)
 
     async def get_balance(
@@ -1821,8 +1821,8 @@ class WbAPI:
 
     async def get_blocked_product_cards(
         self,
-        sort: SortBlocked = None,
-        order: OrderDeductions = None,
+        sort: SortBlocked,
+        order: OrderDeductions,
     ) -> list[BlockedProductCardsItem]:
         """
         Returns the list of [blocked product
@@ -1839,7 +1839,7 @@ class WbAPI:
 
     async def get_box_tariffs(
         self,
-        date: str = None,
+        date: str,
     ) -> list[BoxTariffsItem]:
         """
         For items inventory supplied to the warehouse in boxes, the method returns the
@@ -1857,8 +1857,8 @@ class WbAPI:
 
     async def get_brands(
         self,
-        subject_id: int = None,
-        next: int | None = None,
+        subject_id: int,
+        next_: int | None = None,
     ) -> list[BrandsItem]:
         """
         The method returns list of brands by subject ID.
@@ -1866,17 +1866,17 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Categories-Subjects-and-Characteristics/paths/~1api~1content~1v1~1brands/get
 
         :param subject_id: Subject ID
-        :param next: Pagination parameter. Use the `next` value from the response to get the next
-                     databatch
+        :param next_: Pagination parameter. Use the `next` value from the response to get the next
+                      databatch
         :return: list[BrandsItem]
         """
-        call = GetBrands(subject_id=subject_id, next=next)
+        call = GetBrands(subject_id=subject_id, next_=next_)
         return await self(call)
 
     async def get_buyers_return_applications(
         self,
-        is_archive: bool = None,
-        id: str | None = None,
+        is_archive: bool,
+        id_: str | None = None,
         limit: int | None = 50,
         offset: int | None = 0,
         nm_id: int | None = None,
@@ -1887,7 +1887,7 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Buyers-Returns/paths/~1api~1v1~1claims/get
 
         :param is_archive: Application status:
-        :param id: Application ID
+        :param id_: Application ID
         :param limit: Number of applications in the response
         :param offset: From which element to start outputting data. `0` by default
         :param nm_id: WB article
@@ -1895,7 +1895,7 @@ class WbAPI:
         """
         call = GetBuyersReturnApplications(
             is_archive=is_archive,
-            id=id,
+            id_=id_,
             limit=limit,
             offset=offset,
             nm_id=nm_id,
@@ -1904,17 +1904,17 @@ class WbAPI:
 
     async def get_campaign_budget(
         self,
-        id: int = None,
+        id_: int,
     ) -> list[CampaignBudgetResponse]:
         """
         The method allows to get information about the budget of a campaign.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Finances/paths/~1adv~1v1~1budget/get
 
-        :param id: Campaign ID
+        :param id_: Campaign ID
         :return: list[CampaignBudgetResponse]
         """
-        call = GetCampaignBudget(id=id)
+        call = GetCampaignBudget(id_=id_)
         return await self(call)
 
     async def get_campaigns_information(
@@ -1952,9 +1952,9 @@ class WbAPI:
 
     async def get_campaigns_statistics(
         self,
-        ids: str = None,
-        begin_date: str = None,
-        end_date: str = None,
+        ids: str,
+        begin_date: str,
+        end_date: str,
     ) -> list[CampaignsStatisticsResponse]:
         """
         The method generates statistics for campaigns, regardless of their type. The maximum period
@@ -1972,18 +1972,18 @@ class WbAPI:
 
     async def get_chat_events(
         self,
-        next: int | None = None,
+        next_: int | None = None,
     ) -> list[ChatEventsItem]:
         """
         Returns an event list for all chats.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Buyers-Chat/paths/~1api~1v1~1seller~1events/get
 
-        :param next: Paginator. Retrieve the next data packet starting from this moment. Format:
-                     Unixtimestamp **with milliseconds**
+        :param next_: Paginator. Retrieve the next data packet starting from this moment. Format:
+                      Unixtimestamp **with milliseconds**
         :return: list[ChatEventsItem]
         """
-        call = GetChatEvents(next=next)
+        call = GetChatEvents(next_=next_)
         return await self(call)
 
     async def get_chat_list(
@@ -2119,23 +2119,23 @@ class WbAPI:
 
     async def get_delete_campaign(
         self,
-        id: int = None,
+        id_: int,
     ) -> None:
         """
         The method allows to delete campaigns in the status `4` — ready to launch.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1delete/get
 
-        :param id: Campaign ID
+        :param id_: Campaign ID
         :return: None
         """
-        call = GetDeleteCampaign(id=id)
+        call = GetDeleteCampaign(id_=id_)
         return await self(call)
 
     async def get_document(
         self,
-        service_name: str = None,
-        extension: str = None,
+        service_name: str,
+        extension: str,
     ) -> list[DocumentResponse]:
         """
         Returns one document
@@ -2222,10 +2222,10 @@ class WbAPI:
 
     async def get_feedbacks_list(
         self,
-        is_answered: bool = None,
+        is_answered: bool,
+        take: int,
+        skip: int,
         nm_id: int | None = None,
-        take: int = None,
-        skip: int = None,
         order: Order | None = None,
         date_from: int | None = None,
         date_to: int | None = None,
@@ -2237,9 +2237,9 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedbacks/get
 
         :param is_answered: If the feedback was answered:
-        :param nm_id: WB article
         :param take: Number of feedbacks (max. 5 000)
         :param skip: Number of feedbacks for skip (max. 199990)
+        :param nm_id: WB article
         :param order: Sorting of feedbacks by date (dateAsc/dateDesc)
         :param date_from: The start date of the period in Unix timestamp format
         :param date_to: The end date of the period in Unix timestamp format
@@ -2258,19 +2258,19 @@ class WbAPI:
 
     async def get_file_from_the_message(
         self,
-        id: str,
+        id_: str,
     ) -> None:
         """
         The method provides a file or image from the message by its ID.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Buyers-Chat/paths/~1api~1v1~1seller~1download~1%7Bid%7D/get
 
-        :param id: File ID from the `downloadID` field in the [chat
-                   events](./user-communication#tag/Buyers-Chat/paths/~1api~1v1~1seller~1events/get)
-                   method
+        :param id_: File ID from the `downloadID` field in the [chat
+                    events](./user-communication#tag/Buyers-Chat/paths/~1api~1v1~1seller~1events/get)
+                    method
         :return: None
         """
-        call = GetFileFromTheMessage(id=id)
+        call = GetFileFromTheMessage(id_=id_)
         return await self(call)
 
     async def get_gender(
@@ -2290,8 +2290,8 @@ class WbAPI:
 
     async def get_generate_the_report(
         self,
-        date_from: str = None,
-        date_to: str = None,
+        date_from: str,
+        date_to: str,
     ) -> list[GenerateTheReportResponse]:
         """
         Create a task to generate a report. Maximum of report period — 8 days
@@ -2329,8 +2329,8 @@ class WbAPI:
 
     async def get_hidden_from_the_catalog(
         self,
-        sort: SortShadowed = None,
-        order: OrderDeductions = None,
+        sort: SortShadowed,
+        order: OrderDeductions,
     ) -> list[HiddenFromTheCatalogItem]:
         """
         Returns the list of products [hidden from the
@@ -2347,7 +2347,7 @@ class WbAPI:
 
     async def get_hscodes(
         self,
-        subject_id: int = None,
+        subject_id: int,
         search: int | None = None,
         locale: str | None = None,
     ) -> list[HscodesItem]:
@@ -2366,25 +2366,25 @@ class WbAPI:
 
     async def get_information_about_media_campaign(
         self,
-        id: int = None,
+        id_: int,
     ) -> list[InformationAboutMediaCampaignItem]:
         """
         The method allows to get information about a media campaign
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Media/paths/~1adv~1v1~1advert/get
 
-        :param id: Media campaign ID
+        :param id_: Media campaign ID
         :return: list[InformationAboutMediaCampaignItem]
         """
-        call = GetInformationAboutMediaCampaign(id=id)
+        call = GetInformationAboutMediaCampaign(id_=id_)
         return await self(call)
 
     async def get_information_on_completed_orders(
         self,
-        limit: int = None,
-        next: int = None,
-        date_from: int = None,
-        date_to: int = None,
+        limit: int,
+        next_: int,
+        date_from: int,
+        date_to: int,
     ) -> list[InformationOnCompletedOrdersItem]:
         """
         Returns information on completed orders (either canceled or sold). You can get data for a
@@ -2393,16 +2393,16 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbw#tag/DBW-Assembly-Orders/paths/~1api~1v3~1dbw~1orders/get
 
         :param limit: Pagination parameter. Sets the limit for the amount of data returned
-        :param next: Pagination parameter. Sets the value from which to retrieve the next batch. It
-                     shouldstart at `0` to get the full list of data. For the subsequent requests,
-                     youmust take the value from the `next` field in the response
+        :param next_: Pagination parameter. Sets the value from which to retrieve the next batch.
+                      Itshould start at `0` to get the full list of data. For the subsequent
+                      requests,you must take the value from the `next` field in the response
         :param date_from: Period start date in Unix timestamp format
         :param date_to: Period end date in Unix timestamp format
         :return: list[InformationOnCompletedOrdersItem]
         """
         call = GetInformationOnCompletedOrders(
             limit=limit,
-            next=next,
+            next_=next_,
             date_from=date_from,
             date_to=date_to,
         )
@@ -2432,7 +2432,7 @@ class WbAPI:
     async def get_inventory(
         self,
         warehouse_id: int,
-        chrt_ids: list[int] = None,
+        chrt_ids: list[int],
     ) -> list[InventoryItem]:
         """
         Returns product inventory.
@@ -2448,7 +2448,7 @@ class WbAPI:
 
     async def get_launch_campaign(
         self,
-        id: int = None,
+        id_: int,
     ) -> None:
         """
         The method allows to run campaigns that are in statuses `4` — ready to launch or `11` —
@@ -2457,10 +2457,10 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1start/get
 
-        :param id: Campaign ID
+        :param id_: Campaign ID
         :return: None
         """
-        call = GetLaunchCampaign(id=id)
+        call = GetLaunchCampaign(id_=id_)
         return await self(call)
 
     async def get_limits_for_the_product_cards(
@@ -2484,9 +2484,9 @@ class WbAPI:
 
     async def get_list_of_archived_feedbacks(
         self,
+        take: int,
+        skip: int,
         nm_id: int | None = None,
-        take: int = None,
-        skip: int = None,
         order: Order | None = None,
     ) -> list[ListOfArchivedFeedbacksItem]:
         """
@@ -2496,19 +2496,19 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedbacks~1archive/get
 
-        :param nm_id: WB article
         :param take: Number of feedbacks (max. 5 000)
         :param skip: Number of feedbacks for skip
+        :param nm_id: WB article
         :param order: Sorting of feedbacks by date (dateAsc/dateDesc)
         :return: list[ListOfArchivedFeedbacksItem]
         """
-        call = GetListOfArchivedFeedbacks(nm_id=nm_id, take=take, skip=skip, order=order)
+        call = GetListOfArchivedFeedbacks(take=take, skip=skip, nm_id=nm_id, order=order)
         return await self(call)
 
     async def get_list_of_media_campaigns(
         self,
         status: int | None = None,
-        type: int | None = None,
+        type_: int | None = None,
         limit: int | None = None,
         offset: int | None = None,
         order: str | None = None,
@@ -2520,7 +2520,7 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Media/paths/~1adv~1v1~1adverts/get
 
         :param status: Media campaign status:
-        :param type: Media campaign type:
+        :param type_: Media campaign type:
         :param limit: Number of campaigns in the response
         :param offset: Offset relative to the first media campaign
         :param order: The order in which the response is displayed:
@@ -2529,7 +2529,7 @@ class WbAPI:
         """
         call = GetListOfMediaCampaigns(
             status=status,
-            type=type,
+            type_=type_,
             limit=limit,
             offset=offset,
             order=order,
@@ -2546,7 +2546,7 @@ class WbAPI:
         feedback_id: int | None = None,
         date_from: str | None = None,
         date_to: str | None = None,
-        next: int | None = None,
+        next_: int | None = None,
         limit: int | None = 500,
     ) -> list[ListOfPinnedAndUnpinnedFeedbackResponse]:
         """
@@ -2563,7 +2563,7 @@ class WbAPI:
         :param feedback_id: Feedback ID
         :param date_from: The date the first feedback in the list was pinned
         :param date_to: The date the last feedback in the list was pinned
-        :param next: The last pinning operation ID (paginator)
+        :param next_: The last pinning operation ID (paginator)
         :param limit: Feedback number per page (pagination)
         :return: list[ListOfPinnedAndUnpinnedFeedbackResponse]
         """
@@ -2575,14 +2575,14 @@ class WbAPI:
             feedback_id=feedback_id,
             date_from=date_from,
             date_to=date_to,
-            next=next,
+            next_=next_,
             limit=limit,
         )
         return await self(call)
 
     async def get_list_of_products_for_participating_in_the_promotion(
         self,
-        promotion_id: int = None,
+        promotion_id: int,
         in_action: bool = False,
         limit: int | None = None,
         offset: int | None = None,
@@ -2608,9 +2608,9 @@ class WbAPI:
 
     async def get_logistics_and_storage_costs_multiplier(
         self,
+        date_to: str,
+        limit: int,
         date_from: str | None = None,
-        date_to: str = None,
-        limit: int = None,
         offset: int | None = 0,
     ) -> list[LogisticsAndStorageCostsMultiplierItem]:
         """
@@ -2619,10 +2619,10 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Retention-Reports/paths/~1api~1analytics~1v1~1measurement-penalties/get
 
-        :param date_from: Report period start. By default the date when data for the report was
-                          firstreceived is used
         :param date_to: Report period end
         :param limit: Number of retentions in the response
+        :param date_from: Report period start. By default the date when data for the report was
+                          firstreceived is used
         :param offset: How many results to skip. For example, with value `10`, the response will
                        startwith the 11 element
         :return: list[LogisticsAndStorageCostsMultiplierItem]
@@ -2780,7 +2780,7 @@ class WbAPI:
 
     async def get_orders(
         self,
-        date_from: str = None,
+        date_from: str,
         flag: int | None = 0,
     ) -> list[OrdersResponse]:
         """
@@ -2798,7 +2798,7 @@ class WbAPI:
 
     async def get_orders_statuses(
         self,
-        orders: list[int] = None,
+        orders: list[int],
     ) -> list[OrdersStatusesItem]:
         """
         Returns the statuses of orders based on the provided list of assembly order IDs
@@ -2813,9 +2813,9 @@ class WbAPI:
 
     async def get_orders_stickers(
         self,
-        type: Type = None,
-        width: Width = None,
-        height: Height = None,
+        type_: Type,
+        width: Width,
+        height: Height,
         orders: list[int] | None = None,
     ) -> list[OrdersStickersItem]:
         """
@@ -2827,18 +2827,18 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbw#tag/DBW-Assembly-Orders/paths/~1api~1v3~1dbw~1orders~1stickers/post
 
-        :param type: Sticker format
+        :param type_: Sticker format
         :param width: Sticker width
         :param height: Sticker height
         :param orders: Assembly order IDs list
         :return: list[OrdersStickersItem]
         """
-        call = GetOrdersStickers(type=type, width=width, height=height, orders=orders)
+        call = GetOrdersStickers(type_=type_, width=width, height=height, orders=orders)
         return await self(call)
 
     async def get_pallet_tariffs(
         self,
-        date: str = None,
+        date: str,
     ) -> list[PalletTariffsItem]:
         """
         For items supplied to the WB warehouse on pallets, the method returns the
@@ -2856,20 +2856,20 @@ class WbAPI:
 
     async def get_parent_categories_of_the_brand(
         self,
+        brand: str,
+        date_from: str,
+        date_to: str,
         locale: str | None = "ru",
-        brand: str = None,
-        date_from: str = None,
-        date_to: str = None,
     ) -> list[ParentCategoriesOfTheBrandItem]:
         """
         Returns parent categories of the brand.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Share-of-Brand-in-Sales/paths/~1api~1v1~1analytics~1brand-share~1parent-subjects/get
 
-        :param locale: Language of the response field `parentName`:
         :param brand: Brand
         :param date_from: Report period start, `YYYY-MM-DD`
         :param date_to: Report period end, `YYYY-MM-DD`
+        :param locale: Language of the response field `parentName`:
         :return: list[ParentCategoriesOfTheBrandItem]
         """
         call = GetParentCategoriesOfTheBrand(
@@ -2894,17 +2894,17 @@ class WbAPI:
 
     async def get_pause_campaign(
         self,
-        id: int = None,
+        id_: int,
     ) -> None:
         """
         Campaign in status `9` — active — can be paused
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1pause/get
 
-        :param id: Campaign ID
+        :param id_: Campaign ID
         :return: None
         """
-        call = GetPauseCampaign(id=id)
+        call = GetPauseCampaign(id_=id_)
         return await self(call)
 
     async def get_pinned_and_unpinned_feedback_number(
@@ -2956,9 +2956,9 @@ class WbAPI:
 
     async def get_processed_upload_details(
         self,
-        limit: int = None,
+        limit: int,
+        upload_id: int,
         offset: int | None = None,
-        upload_id: int = None,
     ) -> list[ProcessedUploadDetailsItem]:
         """
         Returns products in processed upload including product errors.
@@ -2966,17 +2966,17 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1history~1goods~1task/get
 
         :param limit: Number of elements per page (pagination)
+        :param upload_id: Download ID
         :param offset: How many results to skip. For example, with value `10`, the response will
                        startwith the 11 element
-        :param upload_id: Download ID
         :return: list[ProcessedUploadDetailsItem]
         """
-        call = GetProcessedUploadDetails(limit=limit, offset=offset, upload_id=upload_id)
+        call = GetProcessedUploadDetails(limit=limit, upload_id=upload_id, offset=offset)
         return await self(call)
 
     async def get_processed_upload_state(
         self,
-        upload_id: int = None,
+        upload_id: int,
     ) -> list[ProcessedUploadStateResponse]:
         """
         Returns the processed upload data.
@@ -3006,8 +3006,8 @@ class WbAPI:
 
     async def get_product_labeling(
         self,
-        date_from: str = None,
-        date_to: str = None,
+        date_from: str,
+        date_to: str,
     ) -> list[ProductLabelingItem]:
         """
         Returns a report on deductions for the absence of mandatory product labeling. The report
@@ -3025,9 +3025,9 @@ class WbAPI:
 
     async def get_product_sizes_with_prices(
         self,
-        limit: int = None,
+        limit: int,
+        nm_id: int,
         offset: int | None = None,
-        nm_id: int = None,
     ) -> list[ProductSizesWithPricesItem]:
         """
         Returns sizes data for the product. Only for products from categories where size price
@@ -3036,17 +3036,17 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1list~1goods~1size~1nm/get
 
         :param limit: Number of elements per page (pagination)
+        :param nm_id: WB article
         :param offset: How many results to skip. For example, with value `10`, the response will
                        startwith the 11 element
-        :param nm_id: WB article
         :return: list[ProductSizesWithPricesItem]
         """
-        call = GetProductSizesWithPrices(limit=limit, offset=offset, nm_id=nm_id)
+        call = GetProductSizesWithPrices(limit=limit, nm_id=nm_id, offset=offset)
         return await self(call)
 
     async def get_products_in_quarantine(
         self,
-        limit: int = None,
+        limit: int,
         offset: int | None = None,
     ) -> list[ProductsInQuarantineItem]:
         """
@@ -3088,7 +3088,7 @@ class WbAPI:
 
     async def get_products_with_prices(
         self,
-        limit: int = None,
+        limit: int,
         offset: int | None = None,
         filter_nm_id: int | None = None,
     ) -> list[ProductsWithPricesItem]:
@@ -3115,7 +3115,7 @@ class WbAPI:
 
     async def get_products_with_prices_by_articles(
         self,
-        nm_list: list[int] = None,
+        nm_list: list[int],
     ) -> list[ProductsWithPricesByArticlesItem]:
         """
         Returns product data by its article. You can specify more than one article in one request.
@@ -3134,7 +3134,7 @@ class WbAPI:
 
     async def get_promotions_details(
         self,
-        promotion_i_ds: list[int] = None,
+        promotion_i_ds: list[int],
     ) -> list[PromotionsDetailsItem]:
         """
         Returns detailed information about the selected promotions
@@ -3149,8 +3149,8 @@ class WbAPI:
 
     async def get_promotions_list(
         self,
-        start_date_time: str = None,
-        end_date_time: str = None,
+        start_date_time: str,
+        end_date_time: str,
         all_promo: bool = False,
         limit: int | None = None,
         offset: int | None = None,
@@ -3178,10 +3178,10 @@ class WbAPI:
 
     async def get_question_list(
         self,
-        is_answered: bool = None,
+        is_answered: bool,
+        take: int,
+        skip: int,
         nm_id: int | None = None,
-        take: int = None,
-        skip: int = None,
         order: str | None = None,
         date_from: int | None = None,
         date_to: int | None = None,
@@ -3193,13 +3193,13 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Questions/paths/~1api~1v1~1questions/get
 
         :param is_answered: The question is answered:
-        :param nm_id: WB article
         :param take: Number of requested questions (the maximum possible value for the parameter is
                      10,000,and the total amount of `take` and `skip` parameters must not exceed
                      10,000)
         :param skip: Number of questions to skip (maximum possible value for the parameter is
                      10,000,and the total amount of `take` and `skip` parameters must not exceed
                      10,000)
+        :param nm_id: WB article
         :param order: Sorting questions by date (`dateAsc`/`dateDesc`)
         :param date_from: The start date of the period in Unix timestamp format
         :param date_to: The end date of the period in Unix timestamp format
@@ -3218,8 +3218,8 @@ class WbAPI:
 
     async def get_realization_sales_report(
         self,
-        date_from: str = None,
-        date_to: str = None,
+        date_from: str,
+        date_to: str,
         limit: int | None = 100000,
         rrdid: int | None = 0,
         period: Period | None = Period.WEEKLY,
@@ -3251,8 +3251,8 @@ class WbAPI:
 
     async def get_receiving_costs_history(
         self,
-        from_: str = None,
-        to: str = None,
+        from_: str,
+        to: str,
     ) -> list[ReceivingCostsHistoryResponse]:
         """
         The method allows to get a costs history
@@ -3285,8 +3285,8 @@ class WbAPI:
 
     async def get_recommended_bids_for_items_and_search_clusters(
         self,
-        nm_id: int = None,
-        advert_id: int = None,
+        nm_id: int,
+        advert_id: int,
     ) -> list[RecommendedBidsForItemsAndSearchClustersItem]:
         """
         The method returns recommended bids for items and search clusters of the campaign. Only for
@@ -3303,8 +3303,8 @@ class WbAPI:
 
     async def get_report(
         self,
-        date_from: str = None,
-        date_to: str = None,
+        date_from: str,
+        date_to: str,
     ) -> list[ReportItem]:
         """
         Returns sales data grouped by regions of the countries. You can obtain a report for a
@@ -3321,10 +3321,10 @@ class WbAPI:
 
     async def get_retrieve_information_on_completed_assembly_orders(
         self,
-        limit: int = None,
-        next: int = None,
-        date_from: int = None,
-        date_to: int = None,
+        limit: int,
+        next_: int,
+        date_from: int,
+        date_to: int,
     ) -> list[RetrieveInformationOnCompletedAssemblyOrdersItem]:
         """
         The method provides information on completed assembly orders after the sale or cancellation
@@ -3333,17 +3333,17 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/in-store-pickup#tag/In-Store-Pickup-Assembly-Orders/paths/~1api~1v3~1click-collect~1orders/get
 
         :param limit: Pagination parameter. Sets the maximum number of returned data.
-        :param next: Pagination parameter. Sets the value from which the next batch of data should
-                     beretrieved. To obtain the complete list of data, it should be set to 0 in the
-                     firstrequest. For subsequent requests, the values should be taken from the
-                     fieldwith the same name in the response.
+        :param next_: Pagination parameter. Sets the value from which the next batch of data should
+                      beretrieved. To obtain the complete list of data, it should be set to 0 in
+                      thefirst request. For subsequent requests, the values should be taken from
+                      thefield with the same name in the response.
         :param date_from: Period start date in the Unix timestamp format
         :param date_to: Period end date in the Unix timestamp format
         :return: list[RetrieveInformationOnCompletedAssemblyOrdersItem]
         """
         call = GetRetrieveInformationOnCompletedAssemblyOrders(
             limit=limit,
-            next=next,
+            next_=next_,
             date_from=date_from,
             date_to=date_to,
         )
@@ -3351,7 +3351,7 @@ class WbAPI:
 
     async def get_return_tariffs(
         self,
-        date: str = None,
+        date: str,
     ) -> list[ReturnTariffsItem]:
         """
         Returns [tariffs](https://seller.wildberries.ru/dynamic-product-categories/return-cost): -
@@ -3368,7 +3368,7 @@ class WbAPI:
 
     async def get_sales(
         self,
-        date_from: str = None,
+        date_from: str,
         flag: int | None = 0,
     ) -> list[SalesResponse]:
         """
@@ -3458,24 +3458,24 @@ class WbAPI:
 
     async def get_stickers_for_assembly_orders_with_delivery_to_pickup_point(
         self,
-        type: TypeStickers = None,
-        width: WidthStickers = None,
-        height: HeightStickers = None,
-        orders: list[int] = None,
+        type_: TypeStickers,
+        width: WidthStickers,
+        height: HeightStickers,
+        orders: list[int],
     ) -> list[StickersForAssemblyOrdersWithDeliveryToPickupPointItem]:
         """
         Method is available by token types : Personal , Service
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Assembly-Orders/paths/~1api~1marketplace~1v3~1dbs~1orders~1stickers/post
 
-        :param type: Sticker format
+        :param type_: Sticker format
         :param width: Sticker width
         :param height: Sticker height
         :param orders: Assembly orders ID list
         :return: list[StickersForAssemblyOrdersWithDeliveryToPickupPointItem]
         """
         call = GetStickersForAssemblyOrdersWithDeliveryToPickupPoint(
-            type=type,
+            type_=type_,
             width=width,
             height=height,
             orders=orders,
@@ -3499,7 +3499,7 @@ class WbAPI:
 
     async def get_stop_campaign(
         self,
-        id: int = None,
+        id_: int,
     ) -> None:
         """
         The method allows to end campaigns in statuses: - `4` — ready to launch - `9` — active -
@@ -3507,10 +3507,10 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Campaigns-Management/paths/~1adv~1v0~1stop/get
 
-        :param id: Campaign ID
+        :param id_: Campaign ID
         :return: None
         """
-        call = GetStopCampaign(id=id)
+        call = GetStopCampaign(id_=id_)
         return await self(call)
 
     async def get_subject_characteristics(
@@ -3578,11 +3578,11 @@ class WbAPI:
 
     async def get_substitutions_and_incorrect_attachments(
         self,
+        date_to: str,
+        limit: int,
         date_from: str | None = None,
-        date_to: str = None,
         sort: Sort | None = Sort.DTBONUS,
         order: OrderDeductions | None = OrderDeductions.DESC,
-        limit: int = None,
         offset: int | None = 0,
     ) -> list[SubstitutionsAndIncorrectAttachmentsItem]:
         """
@@ -3592,12 +3592,12 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Retention-Reports/paths/~1api~1analytics~1v1~1deductions/get
 
+        :param date_to: Report period end
+        :param limit: Number of retentions in the response
         :param date_from: Report period start. By default the date and time when data for the
                           reportwas first received is used
-        :param date_to: Report period end
         :param sort: Sorting:
         :param order: Data order:
-        :param limit: Number of retentions in the response
         :param offset: How many results to skip. For example, with value `10`, the response will
                        startwith the 11 element
         :return: list[SubstitutionsAndIncorrectAttachmentsItem]
@@ -3659,22 +3659,22 @@ class WbAPI:
 
     async def get_supply_package(
         self,
-        id: int,
+        id_: int,
     ) -> list[SupplyPackageResponse]:
         """
         The method returns information about the package of the supply.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbw#tag/Supplies-Information/paths/~1api~1v1~1supplies~1%7BID%7D~1package/get
 
-        :param id: Supply ID
+        :param id_: Supply ID
         :return: list[SupplyPackageResponse]
         """
-        call = GetSupplyPackage(id=id)
+        call = GetSupplyPackage(id_=id_)
         return await self(call)
 
     async def get_supply_products(
         self,
-        id: int,
+        id_: int,
         limit: int | None = 100,
         offset: int | None = 0,
         is_preorder_id: bool | None = False,
@@ -3684,13 +3684,18 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbw#tag/Supplies-Information/paths/~1api~1v1~1supplies~1%7BID%7D~1goods/get
 
-        :param id: ID of the supply or the order
+        :param id_: ID of the supply or the order
         :param limit: Number of objects in the response
         :param offset: From which element to start outputting data
         :param is_preorder_id: Search by:
         :return: list[SupplyProductsResponse]
         """
-        call = GetSupplyProducts(id=id, limit=limit, offset=offset, is_preorder_id=is_preorder_id)
+        call = GetSupplyProducts(
+            id_=id_,
+            limit=limit,
+            offset=offset,
+            is_preorder_id=is_preorder_id,
+        )
         return await self(call)
 
     async def get_supply_tariffs(
@@ -3722,32 +3727,32 @@ class WbAPI:
 
     async def get_the_feedback_by_id(
         self,
-        id: str = None,
+        id_: str,
     ) -> list[TheFeedbackByIdItem]:
         """
         The method allows you to get a feedback by its ID
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedback/get
 
-        :param id: Feedback ID
+        :param id_: Feedback ID
         :return: list[TheFeedbackByIdItem]
         """
-        call = GetTheFeedbackById(id=id)
+        call = GetTheFeedbackById(id_=id_)
         return await self(call)
 
     async def get_the_question_by_id(
         self,
-        id: str = None,
+        id_: str,
     ) -> list[TheQuestionByIdItem]:
         """
         The method allows you to get a question by its ID
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Questions/paths/~1api~1v1~1question/get
 
-        :param id: Question ID
+        :param id_: Question ID
         :return: list[TheQuestionByIdItem]
         """
-        call = GetTheQuestionById(id=id)
+        call = GetTheQuestionById(id_=id_)
         return await self(call)
 
     async def get_the_report(
@@ -3789,8 +3794,8 @@ class WbAPI:
     async def get_the_supply_box_qr_code_stickers(
         self,
         supply_id: str,
-        type: Type = None,
-        trbx_ids: list[str] = None,
+        type_: Type,
+        trbx_ids: list[str],
     ) -> list[TheSupplyBoxQrCodeStickersItem]:
         """
         Returns QR-code stickers in svg, zplv (vertical), zplh (horizontal), png. Available only if
@@ -3799,17 +3804,17 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Supplies/paths/~1api~1v3~1supplies~1%7BsupplyId%7D~1trbx~1stickers/post
 
         :param supply_id: Supply ID
-        :param type: Sticker format
+        :param type_: Sticker format
         :param trbx_ids: List of supply box IDs for the sticker generation
         :return: list[TheSupplyBoxQrCodeStickersItem]
         """
-        call = GetTheSupplyBoxQrCodeStickers(supply_id=supply_id, type=type, trbx_ids=trbx_ids)
+        call = GetTheSupplyBoxQrCodeStickers(supply_id=supply_id, type_=type_, trbx_ids=trbx_ids)
         return await self(call)
 
     async def get_the_supply_qr_code(
         self,
         supply_id: str,
-        type: Type = None,
+        type_: Type,
     ) -> list[TheSupplyQrCodeResponse]:
         """
         Returns the QR code in svg, zplv (vertical), zplh (horizontal), png. Available only after
@@ -3818,10 +3823,10 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbs#tag/FBS-Supplies/paths/~1api~1v3~1supplies~1%7BsupplyId%7D~1barcode/get
 
         :param supply_id: Supply ID
-        :param type: Sticker format
+        :param type_: Sticker format
         :return: list[TheSupplyQrCodeResponse]
         """
-        call = GetTheSupplyQrCode(supply_id=supply_id, type=type)
+        call = GetTheSupplyQrCode(supply_id=supply_id, type_=type_)
         return await self(call)
 
     async def get_transit_directions(
@@ -3862,9 +3867,9 @@ class WbAPI:
 
     async def get_unprocessed_upload_details(
         self,
-        limit: int = None,
+        limit: int,
+        upload_id: int,
         offset: int | None = None,
-        upload_id: int = None,
     ) -> list[UnprocessedUploadDetailsItem]:
         """
         Returns products in processing upload including product errors.
@@ -3872,17 +3877,17 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Prices-and-Discounts/paths/~1api~1v2~1buffer~1goods~1task/get
 
         :param limit: Number of elements per page (pagination)
+        :param upload_id: Download ID
         :param offset: How many results to skip. For example, with value `10`, the response will
                        startwith the 11 element
-        :param upload_id: Download ID
         :return: list[UnprocessedUploadDetailsItem]
         """
-        call = GetUnprocessedUploadDetails(limit=limit, offset=offset, upload_id=upload_id)
+        call = GetUnprocessedUploadDetails(limit=limit, upload_id=upload_id, offset=offset)
         return await self(call)
 
     async def get_unprocessed_upload_state(
         self,
-        upload_id: int = None,
+        upload_id: int,
     ) -> list[UnprocessedUploadStateResponse]:
         """
         Returns the processing upload data.
@@ -3924,7 +3929,7 @@ class WbAPI:
 
     async def get_warehouse(
         self,
-        date_from: str = None,
+        date_from: str,
     ) -> list[WarehouseResponse]:
         """
         The method returns WB warehouses inventory.
@@ -3939,9 +3944,9 @@ class WbAPI:
 
     async def get_warehouse_measurements(
         self,
+        date_to: str,
+        limit: int,
         date_from: str | None = None,
-        date_to: str = None,
-        limit: int = None,
         offset: int | None = 0,
     ) -> list[WarehouseMeasurementsItem]:
         """
@@ -3950,10 +3955,10 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Retention-Reports/paths/~1api~1analytics~1v1~1warehouse-measurements/get
 
-        :param date_from: Report period start. By default the date when data for the report was
-                          firstreceived is used
         :param date_to: Report period end
         :param limit: Number of measurements in the response
+        :param date_from: Report period start. By default the date when data for the report was
+                          firstreceived is used
         :param offset: How many results to skip. For example, with value `10`, the response will
                        startwith the 11 element
         :return: list[WarehouseMeasurementsItem]
@@ -4005,7 +4010,7 @@ class WbAPI:
 
     async def grouped_product_cards_statistics_per_days(
         self,
-        selected_period: Any = None,
+        selected_period: Any,
         brand_names: list[str] | None = None,
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
@@ -4037,7 +4042,7 @@ class WbAPI:
 
     async def list_of_campaign_minus_phrases(
         self,
-        items: list[Any] = None,
+        items: list[Any],
     ) -> list[ListOfCampaignMinusPhrasesItem]:
         """
         The method returns a list of minus phrases by: - campaign IDs - WB articles
@@ -4078,7 +4083,7 @@ class WbAPI:
 
     async def list_of_search_clusters_bids(
         self,
-        items: list[Any] = None,
+        items: list[Any],
     ) -> list[ListOfSearchClustersBidsItem]:
         """
         The method returns a list of search clusters with bids by: - campaign IDs - WB articles
@@ -4091,18 +4096,18 @@ class WbAPI:
 
     async def main_page(
         self,
-        current_period: dict[str, Any] = None,
+        current_period: dict[str, Any],
+        position_cluster: PositionCluster,
+        order_by: dict[str, Any],
+        limit: int,
+        offset: int,
         past_period: dict[str, Any] | None = None,
         nm_ids: list[int] | None = None,
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
         tag_ids: list[int] | None = None,
-        position_cluster: PositionCluster = None,
-        order_by: dict[str, Any] = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
-        limit: int = None,
-        offset: int = None,
     ) -> list[MainPageResponse]:
         """
         Forms a dataset for the main report page with: - General information - Product positions -
@@ -4111,20 +4116,20 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Search-Queries-for-Your-Items/paths/~1api~1v2~1search-report~1report/post
 
         :param current_period: Current period
+        :param position_cluster: Which average search position of products to display in the
+                                 report:
+        :param order_by: Sorting parameters
+        :param limit: Number of product groups in the response
+        :param offset: From which element to start outputting data
         :param past_period: Previous period for comparison. Number of days — less than or equal to
                             `currentPeriod`
         :param nm_ids: List of WB article numbers for filtering
         :param subject_ids: List of subject IDs for filtering
         :param brand_names: List of brands for filtering
         :param tag_ids: List of label IDs for filtering
-        :param position_cluster: Which average search position of products to display in the
-                                 report:
-        :param order_by: Sorting parameters
         :param include_substituted_sk_us: Show data for direct queries with [promo
                                           items](https://seller.wildberries.ru/help-center/article/A-524)
         :param include_search_texts: Show data for search queries without promo items
-        :param limit: Number of product groups in the response
-        :param offset: From which element to start outputting data
         :return: list[MainPageResponse]
         """
         call = MainPage(
@@ -4171,10 +4176,10 @@ class WbAPI:
 
     async def minimum_bids_for_product_cards(
         self,
-        advert_id: int = None,
-        nm_ids: list[int] = None,
-        payment_type: PaymentType = None,
-        placement_types: list[str] = None,
+        advert_id: int,
+        nm_ids: list[int],
+        payment_type: PaymentType,
+        placement_types: list[str],
     ) -> list[MinimumBidsForProductCardsItem]:
         """
         Method allows minimum bids for product cards in kopecks depending on the payment type and
@@ -4303,7 +4308,7 @@ class WbAPI:
 
     async def notify_that_the_orders_are_declined(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[NotifyThatTheOrdersAreDeclinedItem]:
         """
         The method transfers [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders) with
@@ -4319,7 +4324,7 @@ class WbAPI:
 
     async def notify_that_the_orders_are_received(
         self,
-        orders: list[Any] = None,
+        orders: list[Any],
     ) -> list[NotifyThatTheOrdersAreReceivedItem]:
         """
         The method transfers [assembly orders](/openapi/orders-dbs#tag/DBS-Assembly-Orders) with
@@ -4354,9 +4359,9 @@ class WbAPI:
 
     async def orders_and_positions_by_product_search_texts(
         self,
-        period: dict[str, Any] = None,
-        nm_id: int = None,
-        search_texts: list[str] = None,
+        period: dict[str, Any],
+        nm_id: int,
+        search_texts: list[str],
     ) -> list[OrdersAndPositionsByProductSearchTextsResponse]:
         """
         Forms data for a table on the number of orders and positions by queries. The data is
@@ -4396,18 +4401,18 @@ class WbAPI:
 
     async def pagination_by_groups(
         self,
-        current_period: dict[str, Any] = None,
+        current_period: dict[str, Any],
+        order_by: dict[str, Any],
+        position_cluster: PositionCluster,
+        limit: int,
+        offset: int,
         past_period: dict[str, Any] | None = None,
         nm_ids: list[int] | None = None,
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
         tag_ids: list[int] | None = None,
-        order_by: dict[str, Any] = None,
-        position_cluster: PositionCluster = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
-        limit: int = None,
-        offset: int = None,
     ) -> list[PaginationByGroupsResponse]:
         """
         Pagination by groups in the report. It is possible only if there is a filter by brand,
@@ -4416,20 +4421,20 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Search-Queries-for-Your-Items/paths/~1api~1v2~1search-report~1table~1groups/post
 
         :param current_period: Current period
+        :param order_by: Sorting parameters
+        :param position_cluster: Which average search position of products to display in the
+                                 report:
+        :param limit: Number of product groups in the response
+        :param offset: From which element to start outputting data
         :param past_period: Previous period for comparison. Number of days — less than or equal to
                             `currentPeriod`
         :param nm_ids: List of WB article numbers for filtering
         :param subject_ids: List of subject IDs for filtering
         :param brand_names: List of brands for filtering
         :param tag_ids: List of label IDs for filtering
-        :param order_by: Sorting parameters
-        :param position_cluster: Which average search position of products to display in the
-                                 report:
         :param include_substituted_sk_us: Show data for direct queries with [promo
                                           items](https://seller.wildberries.ru/help-center/article/A-524)
         :param include_search_texts: Show data for search queries without promo items
-        :param limit: Number of product groups in the response
-        :param offset: From which element to start outputting data
         :return: list[PaginationByGroupsResponse]
         """
         call = PaginationByGroups(
@@ -4450,18 +4455,18 @@ class WbAPI:
 
     async def pagination_by_products_within_a_group(
         self,
-        current_period: dict[str, Any] = None,
+        current_period: dict[str, Any],
+        order_by: dict[str, Any],
+        position_cluster: PositionCluster,
+        limit: int,
+        offset: int,
         past_period: dict[str, Any] | None = None,
         subject_id: int | None = None,
         brand_name: str | None = None,
         tag_id: int | None = None,
         nm_ids: list[int] | None = None,
-        order_by: dict[str, Any] = None,
-        position_cluster: PositionCluster = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
-        limit: int = None,
-        offset: int = None,
     ) -> list[PaginationByProductsWithinAGroupResponse]:
         """
         Pagination by products within a group. It is possible regardless of the presence of
@@ -4470,20 +4475,20 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Search-Queries-for-Your-Items/paths/~1api~1v2~1search-report~1table~1details/post
 
         :param current_period: Current period
+        :param order_by: Sorting parameters
+        :param position_cluster: Which average search position of products to display in the
+                                 report:
+        :param limit: Number of products in the response
+        :param offset: From which element to start outputting data
         :param past_period: Previous period for comparison. Number of days — less than or equal to
                             `currentPeriod`
         :param subject_id: Subject ID
         :param brand_name: Product name
         :param tag_id: Label ID
         :param nm_ids: WB article numbers list
-        :param order_by: Sorting parameters
-        :param position_cluster: Which average search position of products to display in the
-                                 report:
         :param include_substituted_sk_us: Show data for direct queries with [promo
                                           items](https://seller.wildberries.ru/help-center/article/A-524)
         :param include_search_texts: Show data for search queries without promo items
-        :param limit: Number of products in the response
-        :param offset: From which element to start outputting data
         :return: list[PaginationByProductsWithinAGroupResponse]
         """
         call = PaginationByProductsWithinAGroup(
@@ -4567,8 +4572,8 @@ class WbAPI:
 
     async def product_cards_statistics_per_days(
         self,
-        selected_period: Any = None,
-        nm_ids: list[int] = None,
+        selected_period: Any,
+        nm_ids: list[int],
         skip_deleted_nm: bool | None = None,
         aggregation_level: AggregationLevel | None = AggregationLevel.DAY,
     ) -> list[ProductCardsStatisticsPerDaysResponse]:
@@ -4593,7 +4598,7 @@ class WbAPI:
 
     async def product_cards_statistics_per_period(
         self,
-        selected_period: Any = None,
+        selected_period: Any,
         past_period: Any | None = None,
         nm_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
@@ -4686,8 +4691,8 @@ class WbAPI:
 
     async def rename_campaign(
         self,
-        advert_id: int = None,
-        name: str = None,
+        advert_id: int,
+        name: str,
     ) -> None:
         """
         The method allows to rename a campaign.
@@ -4703,8 +4708,8 @@ class WbAPI:
 
     async def reply_to_feedback(
         self,
-        id: str = None,
-        text: str = None,
+        id_: str,
+        text: str,
     ) -> None:
         """
         Allows you to respond to the feedback. There is no validation by `feedback ID`: if an
@@ -4712,17 +4717,17 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/communications#tag/Feedbacks/paths/~1api~1v1~1feedbacks~1answer/post
 
-        :param id: Feedback ID
+        :param id_: Feedback ID
         :param text: Reply text
         :return: None
         """
-        call = ReplyToFeedback(id=id, text=text)
+        call = ReplyToFeedback(id_=id_, text=text)
         return await self(call)
 
     async def report_on_products_with_mandatory_labeling(
         self,
-        date_from: str = None,
-        date_to: str = None,
+        date_from: str,
+        date_to: str,
         countries: list[str] | None = None,
     ) -> list[ReportOnProductsWithMandatoryLabelingItem]:
         """
@@ -4761,9 +4766,9 @@ class WbAPI:
 
     async def search_clusters_statistics(
         self,
-        from_: str = None,
-        to: str = None,
-        items: list[dict[str, Any]] = None,
+        from_: str,
+        to: str,
+        items: list[dict[str, Any]],
     ) -> list[SearchClustersStatisticsItem]:
         """
         The method returns statistics for search clusters over a specified period. You can use this
@@ -4780,14 +4785,14 @@ class WbAPI:
 
     async def search_texts_by_product(
         self,
-        current_period: dict[str, Any] = None,
+        current_period: dict[str, Any],
+        nm_ids: list[int],
+        top_order_by: TopOrderBy,
+        order_by: dict[str, Any],
+        limit: Any,
         past_period: dict[str, Any] | None = None,
-        nm_ids: list[int] = None,
-        top_order_by: TopOrderBy = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
-        order_by: dict[str, Any] = None,
-        limit: Any = None,
     ) -> list[SearchTextsByProductResponse]:
         """
         Forms the top search texts by product.
@@ -4795,14 +4800,14 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Search-Queries-for-Your-Items/paths/~1api~1v2~1search-report~1product~1search-texts/post
 
         :param current_period: Current period
-        :param past_period: Previous period for comparison. Number of days — less than or equal to
-                            `currentPeriod`
         :param nm_ids: WB article numbers list
         :param top_order_by: Filtering by the search queries that brought the most:
+        :param order_by: Sorting parameters
+        :param past_period: Previous period for comparison. Number of days — less than or equal to
+                            `currentPeriod`
         :param include_substituted_sk_us: Show data for direct queries with [promo
                                           items](https://seller.wildberries.ru/help-center/article/A-524)
         :param include_search_texts: Show data for search queries without promo items
-        :param order_by: Sorting parameters
         :return: list[SearchTextsByProductResponse]
         """
         call = SearchTextsByProduct(
@@ -4831,7 +4836,7 @@ class WbAPI:
 
     async def set_bids_for_search_clusters(
         self,
-        bids: list[Any] = None,
+        bids: list[Any],
     ) -> None:
         """
         The method sets the bids for search clusters. You can use this method only for campaigns
@@ -4845,7 +4850,7 @@ class WbAPI:
 
     async def set_prices_and_discounts(
         self,
-        data: list[Any] = None,
+        data: list[Any],
     ) -> list[SetPricesAndDiscountsResponse]:
         """
         Sets prices and discounts.
@@ -4861,7 +4866,7 @@ class WbAPI:
 
     async def set_size_prices(
         self,
-        data: list[Any] = None,
+        data: list[Any],
     ) -> list[SetSizePricesResponse]:
         """
         Sets different prices for different sizes.
@@ -4876,7 +4881,7 @@ class WbAPI:
 
     async def set_wb_club_discounts(
         self,
-        data: list[Any] = None,
+        data: list[Any],
     ) -> list[SetWbClubDiscountsResponse]:
         """
         Sets WB Club subscription discounts.
@@ -4891,9 +4896,9 @@ class WbAPI:
 
     async def setting_and_deleting_minus_phrases(
         self,
-        advert_id: int = None,
-        nm_id: int = None,
-        norm_queries: list[str] = None,
+        advert_id: int,
+        nm_id: int,
+        norm_queries: list[str],
     ) -> None:
         """
         The method sets and deletes the minus phrases in campaigns with standard and custom bid.
@@ -4993,11 +4998,11 @@ class WbAPI:
 
     async def topup_of_the_campaign_budget(
         self,
-        id: int = None,
-        sum: int | None = None,
+        id_: int,
+        sum_: int | None = None,
         cashback_sum: int | None = None,
         cashback_percent: int | None = None,
-        type: int | None = None,
+        type_: int | None = None,
         return_: bool | None = None,
     ) -> list[TopupOfTheCampaignBudgetResponse]:
         """
@@ -5008,23 +5013,23 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Finances/paths/~1adv~1v1~1budget~1deposit/post
 
-        :param id: Campaign ID
-        :param sum: Budget top-up amount
+        :param id_: Campaign ID
+        :param sum_: Budget top-up amount
         :param cashback_sum: Top-up budget sum paid with promo bonuses.
         :param cashback_percent: The percentage of the top-up amount that can be paid with promo
                                  bonuses.You need to specify the value of the `percent` field from
                                  theresponse for the method for getting [balance]
-        :param type: Type of top-up source:
+        :param type_: Type of top-up source:
         :param return_: Response return flag (`true` means updated campaign budget size will be
                         returnedin the response, `false` or empty means nothing will be returned).
         :return: list[TopupOfTheCampaignBudgetResponse]
         """
         call = TopupOfTheCampaignBudget(
-            id=id,
-            sum=sum,
+            id_=id_,
+            sum_=sum_,
             cashback_sum=cashback_sum,
             cashback_percent=cashback_percent,
-            type=type,
+            type_=type_,
             return_=return_,
         )
         return await self(call)
@@ -5112,7 +5117,7 @@ class WbAPI:
     async def update_inventory(
         self,
         warehouse_id: int,
-        stocks: list[dict[str, Any]] = None,
+        stocks: list[dict[str, Any]],
     ) -> None:
         """
         Updates product inventory.
@@ -5129,11 +5134,11 @@ class WbAPI:
     async def update_pass(
         self,
         pass_id: int,
-        first_name: str = None,
-        last_name: str = None,
-        car_model: str = None,
-        car_number: str = None,
-        office_id: int = None,
+        first_name: str,
+        last_name: str,
+        car_model: str,
+        car_number: str,
+        office_id: int,
     ) -> None:
         """
         Updates the seller's pass detail
@@ -5172,7 +5177,7 @@ class WbAPI:
 
     async def update_the_tag(
         self,
-        id: int,
+        id_: int,
         color: str | None = None,
         name: str | None = None,
     ) -> list[UpdateTheTagResponse]:
@@ -5181,17 +5186,17 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1%7Bid%7D/patch
 
-        :param id: Numeric tag ID
+        :param id_: Numeric tag ID
         :param color: Tag color
         :param name: Tag name
         :return: list[UpdateTheTagResponse]
         """
-        call = UpdateTheTag(id=id, color=color, name=name)
+        call = UpdateTheTag(id_=id_, color=color, name=name)
         return await self(call)
 
     async def update_users_access_permissions(
         self,
-        users_accesses: list[Any] = None,
+        users_accesses: list[Any],
     ) -> None:
         """
         Method is available by Personal token
@@ -5207,8 +5212,8 @@ class WbAPI:
     async def update_warehouse(
         self,
         warehouse_id: int,
-        name: str = None,
-        office_id: int = None,
+        name: str,
+        office_id: int,
     ) -> None:
         """
         Updates the seller's warehouse details. Changing the linked office is allowed once per day.
@@ -5226,8 +5231,8 @@ class WbAPI:
 
     async def upload_media_file(
         self,
-        x_nm_id: str = None,
-        x_photo_number: int = None,
+        x_nm_id: str,
+        x_photo_number: int,
     ) -> list[UploadMediaFileResponse]:
         """
         Uploads and adds one media file for the product card.

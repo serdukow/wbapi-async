@@ -1,20 +1,19 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import ProductCardsForCampaignsResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestProductCardsForCampaigns:
+
     async def test_product_cards_for_campaigns(self, api: MockedAPI) -> None:
         api.add_response(
-            [
-                {
-                    "title": "title",
-                    "nm": 1,
-                    "subjectId": 1,
-                }
-            ]
+            [{
+                "title": "title",
+                "nm": 1,
+                "subjectId": 1,
+            }]
         )
 
         result = await api.product_cards_for_campaigns()

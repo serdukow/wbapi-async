@@ -1,25 +1,24 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import SizeDataItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestSizeData:
+
     async def test_size_data(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "data": {
-                    "offices": [
-                        {
-                            "regionName": "regionName",
-                            "officeID": 1,
-                            "officeName": "officeName",
-                            "metrics": None,
-                        }
-                    ]
-                }
-            }
+            "data": {
+            "offices": [{
+                "regionName": "regionName",
+                "officeID": 1,
+                "officeName": "officeName",
+                "metrics": None,
+            }]
+        }
+        }
         )
 
         result = await api.size_data()

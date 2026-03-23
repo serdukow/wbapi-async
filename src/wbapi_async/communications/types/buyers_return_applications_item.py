@@ -6,7 +6,7 @@ from ...types.base import BaseType
 class BuyersReturnApplicationsItem(BaseType):
     """Buyers Return Applications"""
 
-    id: str | None = Field(None)
+    id_: str | None = Field(None, alias="id")
     claim_type: int | None = Field(None)
     status: int | None = Field(None)
     status_ex: int | None = Field(None)

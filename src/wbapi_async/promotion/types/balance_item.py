@@ -6,6 +6,6 @@ from ...types.base import BaseType
 class BalanceItem(BaseType):
     """Balance"""
 
-    sum: int | None = Field(None)
+    sum_: int | None = Field(None, alias="sum")
     percent: int | None = Field(None)
     expiration_date: str | None = Field(None)

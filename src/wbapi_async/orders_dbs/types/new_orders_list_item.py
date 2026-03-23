@@ -21,7 +21,7 @@ class NewOrdersListItem(BaseType):
     created_at: str | None = Field(None, alias="createdAt")
     delivery_type: str | None = Field(None, alias="deliveryType")
     skus: list[str] | None = Field(None)
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     warehouse_id: int | None = Field(None, alias="warehouseId")
     nm_id: int | None = Field(None, alias="nmId")
     chrt_id: int | None = Field(None, alias="chrtId")

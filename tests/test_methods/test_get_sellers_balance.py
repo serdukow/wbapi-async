@@ -1,20 +1,19 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import SellersBalanceResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetSellersBalance:
+
     async def test_get_sellers_balance(self, api: MockedAPI) -> None:
         api.add_response(
-            [
-                {
-                    "currency": "currency",
-                    "current": 1.0,
-                    "for_withdraw": 1.0,
-                }
-            ]
+            [{
+                "currency": "currency",
+                "current": 1.0,
+                "for_withdraw": 1.0,
+            }]
         )
 
         result = await api.get_sellers_balance()

@@ -27,5 +27,5 @@ class GetListOfPinnedAndUnpinnedFeedback(WbMethod):
     feedback_id: int | None = Field(None, alias="feedbackId")
     date_from: str | None = Field(None, alias="dateFrom")
     date_to: str | None = Field(None, alias="dateTo")
-    next: int | None = Field(None)
+    next_: int | None = Field(None, alias="next")
     limit: int | None = Field(500)

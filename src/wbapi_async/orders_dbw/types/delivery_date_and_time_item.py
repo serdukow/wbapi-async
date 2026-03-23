@@ -12,4 +12,4 @@ class DeliveryDateAndTimeItem(BaseType):
     d_time_to_old: str | None = Field(None, alias="dTimeToOld")
     d_date_old: str | None = Field(None, alias="dDateOld")
     d_date: str | None = Field(None, alias="dDate")
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")

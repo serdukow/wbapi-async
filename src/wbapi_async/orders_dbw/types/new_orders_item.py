@@ -20,7 +20,7 @@ class NewOrdersItem(BaseType):
     rid: str | None = Field(None)
     created_at: str | None = Field(None, alias="createdAt")
     skus: list[str] | None = Field(None)
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     warehouse_id: int | None = Field(None, alias="warehouseId")
     nm_id: int | None = Field(None, alias="nmId")
     chrt_id: int | None = Field(None, alias="chrtId")

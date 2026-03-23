@@ -1,36 +1,35 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import SubstitutionsAndIncorrectAttachmentsItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetSubstitutionsAndIncorrectAttachments:
+
     async def test_get_substitutions_and_incorrect_attachments(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "data": {
-                    "reports": [
-                        {
-                            "dtBonus": "dtBonus",
-                            "nmId": 1,
-                            "oldShkId": 1,
-                            "oldColor": "oldColor",
-                            "oldSize": "oldSize",
-                            "oldSku": "oldSku",
-                            "oldVendorCode": "oldVendorCode",
-                            "newShkId": 1,
-                            "newColor": "newColor",
-                            "newSize": "newSize",
-                            "newSku": "newSku",
-                            "newVendorCode": "newVendorCode",
-                            "bonusSumm": 1.0,
-                            "bonusType": "bonusType",
-                            "photoUrls": [],
-                        }
-                    ]
-                }
-            }
+            "data": {
+            "reports": [{
+                "dtBonus": "dtBonus",
+                "nmId": 1,
+                "oldShkId": 1,
+                "oldColor": "oldColor",
+                "oldSize": "oldSize",
+                "oldSku": "oldSku",
+                "oldVendorCode": "oldVendorCode",
+                "newShkId": 1,
+                "newColor": "newColor",
+                "newSize": "newSize",
+                "newSku": "newSku",
+                "newVendorCode": "newVendorCode",
+                "bonusSumm": 1.0,
+                "bonusType": "bonusType",
+                "photoUrls": [],
+            }]
+        }
+        }
         )
 
         result = await api.get_substitutions_and_incorrect_attachments(date_to="date_to", limit=1)

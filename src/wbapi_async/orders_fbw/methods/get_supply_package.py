@@ -14,8 +14,8 @@ class GetSupplyPackage(WbMethod):
     __return__ = SupplyPackageResponse
     __api__ = "supplies-api"
     __method__ = ""
-    __method_template__ = "api/v1/supplies/{id}/package"
+    __method_template__ = "api/v1/supplies/{id_}/package"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    id: int = Field(alias="ID", exclude=True)
+    id_: int = Field(alias="ID", exclude=True)

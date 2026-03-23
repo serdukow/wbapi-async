@@ -11,5 +11,5 @@ class GettingSellerPortalNewsItem(BaseType):
     content: str | None = Field(None)
     date: str | None = Field(None)
     header: str | None = Field(None)
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     types: list[dict[str, Any]] | None = Field(None)

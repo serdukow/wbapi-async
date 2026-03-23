@@ -14,4 +14,4 @@ class PassesResponse(BaseType):
     office_name: str | None = Field(None, alias="officeName")
     office_address: str | None = Field(None, alias="officeAddress")
     office_id: int | None = Field(None, alias="officeId")
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")

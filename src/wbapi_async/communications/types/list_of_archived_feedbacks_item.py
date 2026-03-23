@@ -8,7 +8,7 @@ from ...types.base import BaseType
 class ListOfArchivedFeedbacksItem(BaseType):
     """List of Archived Feedbacks"""
 
-    id: str | None = Field(None)
+    id_: str | None = Field(None, alias="id")
     text: str | None = Field(None)
     pros: str | None = Field(None)
     cons: str | None = Field(None)

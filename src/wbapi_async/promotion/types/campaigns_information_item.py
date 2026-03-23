@@ -9,7 +9,7 @@ class CampaignsInformationItem(BaseType):
     """Campaigns Information"""
 
     bid_type: str = Field()
-    id: int = Field()
+    id_: int = Field(alias="id")
     nm_settings: list[Any] = Field()
     settings: dict[str, Any] = Field()
     status: int = Field()

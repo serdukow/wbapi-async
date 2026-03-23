@@ -1,21 +1,20 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import ChangingTheListOfProductCardsInCampaignsItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestChangingTheListOfProductCardsInCampaigns:
+
     async def test_changing_the_list_of_product_cards_in_campaigns(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "nms": [
-                    {
-                        "advert_id": 1,
-                        "nms": {},
-                    }
-                ]
-            }
+            "nms": [{
+                "advert_id": 1,
+                "nms": {},
+            }]
+        }
         )
 
         result = await api.changing_the_list_of_product_cards_in_campaigns(nms=[])

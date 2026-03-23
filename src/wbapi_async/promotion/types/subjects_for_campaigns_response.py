@@ -6,6 +6,6 @@ from ...types.base import BaseType
 class SubjectsForCampaignsResponse(BaseType):
     """Subjects for Campaigns"""
 
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")
     name: str | None = Field(None)
     count: int | None = Field(None)

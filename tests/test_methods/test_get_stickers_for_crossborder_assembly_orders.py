@@ -1,22 +1,21 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import StickersForCrossborderAssemblyOrdersItem
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetStickersForCrossborderAssemblyOrders:
+
     async def test_get_stickers_for_crossborder_assembly_orders(self, api: MockedAPI) -> None:
         api.add_response(
             {
-                "stickers": [
-                    {
-                        "file": "file",
-                        "orderId": 1,
-                        "parcelId": "parcelId",
-                    }
-                ]
-            }
+            "stickers": [{
+                "file": "file",
+                "orderId": 1,
+                "parcelId": "parcelId",
+            }]
+        }
         )
 
         result = await api.get_stickers_for_crossborder_assembly_orders()

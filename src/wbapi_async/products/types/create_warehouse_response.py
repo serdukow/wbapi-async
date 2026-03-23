@@ -6,4 +6,4 @@ from ...types.base import BaseType
 class CreateWarehouseResponse(BaseType):
     """Create Warehouse"""
 
-    id: int | None = Field(None)
+    id_: int | None = Field(None, alias="id")

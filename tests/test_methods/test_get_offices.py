@@ -1,27 +1,26 @@
 import pytest
 
-from tests.mocked_api import MockedAPI
 from wbapi_async.types import OfficesResponse
+from tests.mocked_api import MockedAPI
 
 
 @pytest.mark.unit
 class TestGetOffices:
+
     async def test_get_offices(self, api: MockedAPI) -> None:
         api.add_response(
-            [
-                {
-                    "address": "address",
-                    "name": "name",
-                    "city": "city",
-                    "id": 1,
-                    "longitude": 1.0,
-                    "latitude": 1.0,
-                    "cargoType": 1,
-                    "deliveryType": 1,
-                    "federalDistrict": "federalDistrict",
-                    "selected": True,
-                }
-            ]
+            [{
+                "address": "address",
+                "name": "name",
+                "city": "city",
+                "id": 1,
+                "longitude": 1.0,
+                "latitude": 1.0,
+                "cargoType": 1,
+                "deliveryType": 1,
+                "federalDistrict": "federalDistrict",
+                "selected": True,
+            }]
         )
 
         result = await api.get_offices()

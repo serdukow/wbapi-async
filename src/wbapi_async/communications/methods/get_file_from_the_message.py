@@ -15,8 +15,8 @@ class GetFileFromTheMessage(WbMethod):
     __empty_response__ = True
     __api__ = "buyer-chat-api"
     __method__ = ""
-    __method_template__ = "api/v1/seller/download/{id}"
+    __method_template__ = "api/v1/seller/download/{id_}"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    id: str = Field(exclude=True)
+    id_: str = Field(alias="id", exclude=True)
