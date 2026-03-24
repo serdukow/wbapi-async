@@ -37,6 +37,7 @@ from .update_pass_response import UpdatePassResponse
 
 
 __all__ = (
+    "ASuppliesListItem",
     "AddAssemblyOrdersToTheSupplyResponse",
     "AddBoxesToTheSupplyItem",
     "AddCustomDeclarationNumberToTheOrderResponse",
@@ -50,7 +51,6 @@ __all__ = (
     "AssemblyOrdersMetadataItem",
     "AssemblyOrdersStatusesItem",
     "AssemblyOrdersStickersItem",
-    "ASuppliesListItem",
     "CancelTheAssemblyOrderResponse",
     "CreateANewSupplyResponse",
     "CreatePassResponse",

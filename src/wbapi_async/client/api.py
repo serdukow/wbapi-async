@@ -274,6 +274,7 @@ from ..methods import (
     UploadMediaFilesViaLinks,
     WarehouseData,
     WbMethod,
+    WbWarehousesInventory,
     WorkingWithQuestions,
 )
 from ..types import (
@@ -475,6 +476,7 @@ from ..types import (
     WarehouseResponse,
     WarehousesListResponse,
     WarehousesResponse,
+    WbWarehousesInventoryItem,
     WorkingWithQuestionsItem,
 )
 from ..utils.token import validate_token
@@ -530,8 +532,6 @@ class WbAPI:
         call = AcceptanceOptions(warehouse_id=warehouse_id)
         return await self(call)
 
-    acceptance_options.__wrapped_cls__ = AcceptanceOptions
-
     async def active_and_inactive_search_cluster_lists(
         self,
         items: list[Any],
@@ -545,8 +545,6 @@ class WbAPI:
         """
         call = ActiveAndInactiveSearchClusterLists(items=items)
         return await self(call)
-
-    active_and_inactive_search_cluster_lists.__wrapped_cls__ = ActiveAndInactiveSearchClusterLists
 
     async def add_assembly_orders_to_the_supply(
         self,
@@ -568,8 +566,6 @@ class WbAPI:
         call = AddAssemblyOrdersToTheSupply(supply_id=supply_id, orders=orders)
         return await self(call)
 
-    add_assembly_orders_to_the_supply.__wrapped_cls__ = AddAssemblyOrdersToTheSupply
-
     async def add_boxes_to_the_supply(
         self,
         supply_id: str,
@@ -588,8 +584,6 @@ class WbAPI:
         """
         call = AddBoxesToTheSupply(supply_id=supply_id, amount=amount)
         return await self(call)
-
-    add_boxes_to_the_supply.__wrapped_cls__ = AddBoxesToTheSupply
 
     async def add_custom_declaration_number_to_the_order(
         self,
@@ -612,8 +606,6 @@ class WbAPI:
         )
         return await self(call)
 
-    add_custom_declaration_number_to_the_order.__wrapped_cls__ = AddCustomDeclarationNumberToTheOrder
-
     async def add_custom_declaration_to_the_orders(
         self,
         orders: list[dict[str, Any]] | None = None,
@@ -626,8 +618,6 @@ class WbAPI:
         """
         call = AddCustomDeclarationToTheOrders(orders=orders)
         return await self(call)
-
-    add_custom_declaration_to_the_orders.__wrapped_cls__ = AddCustomDeclarationToTheOrders
 
     async def add_data_matrix_code_to_the_assembly_order(
         self,
@@ -646,8 +636,6 @@ class WbAPI:
         """
         call = AddDataMatrixCodeToTheAssemblyOrder(order_id=order_id, sgtins=sgtins)
         return await self(call)
-
-    add_data_matrix_code_to_the_assembly_order.__wrapped_cls__ = AddDataMatrixCodeToTheAssemblyOrder
 
     async def add_data_matrix_code_to_the_order(
         self,
@@ -670,8 +658,6 @@ class WbAPI:
         call = AddDataMatrixCodeToTheOrder(order_id=order_id, sgtins=sgtins)
         return await self(call)
 
-    add_data_matrix_code_to_the_order.__wrapped_cls__ = AddDataMatrixCodeToTheOrder
-
     async def add_data_matrix_codes_to_assembly_orders_chestny_znak(
         self,
         orders: list[Any],
@@ -689,10 +675,6 @@ class WbAPI:
         """
         call = AddDataMatrixCodesToAssemblyOrdersChestnyZnak(orders=orders)
         return await self(call)
-
-    add_data_matrix_codes_to_assembly_orders_chestny_znak.__wrapped_cls__ = (
-        AddDataMatrixCodesToAssemblyOrdersChestnyZnak
-    )
 
     async def add_data_matrix_codes_to_the_assembly_orders_chestny_znak(
         self,
@@ -712,10 +694,6 @@ class WbAPI:
         """
         call = AddDataMatrixCodesToTheAssemblyOrdersChestnyZnak(orders=orders)
         return await self(call)
-
-    add_data_matrix_codes_to_the_assembly_orders_chestny_znak.__wrapped_cls__ = (
-        AddDataMatrixCodesToTheAssemblyOrdersChestnyZnak
-    )
 
     async def add_expiration_date_to_the_assembly_order(
         self,
@@ -740,8 +718,6 @@ class WbAPI:
         call = AddExpirationDateToTheAssemblyOrder(order_id=order_id, expiration=expiration)
         return await self(call)
 
-    add_expiration_date_to_the_assembly_order.__wrapped_cls__ = AddExpirationDateToTheAssemblyOrder
-
     async def add_gtin_to_assembly_orders(
         self,
         orders: list[Any],
@@ -759,8 +735,6 @@ class WbAPI:
         """
         call = AddGtinToAssemblyOrders(orders=orders)
         return await self(call)
-
-    add_gtin_to_assembly_orders.__wrapped_cls__ = AddGtinToAssemblyOrders
 
     async def add_gtin_to_the_assembly_order(
         self,
@@ -781,8 +755,6 @@ class WbAPI:
         call = AddGtinToTheAssemblyOrder(order_id=order_id, gtin=gtin)
         return await self(call)
 
-    add_gtin_to_the_assembly_order.__wrapped_cls__ = AddGtinToTheAssemblyOrder
-
     async def add_gtin_to_the_assembly_orders(
         self,
         orders: list[Any],
@@ -802,8 +774,6 @@ class WbAPI:
         call = AddGtinToTheAssemblyOrders(orders=orders)
         return await self(call)
 
-    add_gtin_to_the_assembly_orders.__wrapped_cls__ = AddGtinToTheAssemblyOrders
-
     async def add_gtin_to_the_order(
         self,
         order_id: int,
@@ -822,8 +792,6 @@ class WbAPI:
         call = AddGtinToTheOrder(order_id=order_id, gtin=gtin)
         return await self(call)
 
-    add_gtin_to_the_order.__wrapped_cls__ = AddGtinToTheOrder
-
     async def add_imei_to_assembly_orders(
         self,
         orders: list[Any],
@@ -841,8 +809,6 @@ class WbAPI:
         """
         call = AddImeiToAssemblyOrders(orders=orders)
         return await self(call)
-
-    add_imei_to_assembly_orders.__wrapped_cls__ = AddImeiToAssemblyOrders
 
     async def add_imei_to_the_assembly_order(
         self,
@@ -864,8 +830,6 @@ class WbAPI:
         call = AddImeiToTheAssemblyOrder(order_id=order_id, imei=imei)
         return await self(call)
 
-    add_imei_to_the_assembly_order.__wrapped_cls__ = AddImeiToTheAssemblyOrder
-
     async def add_imei_to_the_assembly_orders(
         self,
         orders: list[Any],
@@ -883,8 +847,6 @@ class WbAPI:
         """
         call = AddImeiToTheAssemblyOrders(orders=orders)
         return await self(call)
-
-    add_imei_to_the_assembly_orders.__wrapped_cls__ = AddImeiToTheAssemblyOrders
 
     async def add_imei_to_the_order(
         self,
@@ -904,8 +866,6 @@ class WbAPI:
         call = AddImeiToTheOrder(order_id=order_id, imei=imei)
         return await self(call)
 
-    add_imei_to_the_order.__wrapped_cls__ = AddImeiToTheOrder
-
     async def add_product_to_the_promotion(
         self,
         data: dict[str, Any] | None = None,
@@ -922,8 +882,6 @@ class WbAPI:
         """
         call = AddProductToThePromotion(data=data)
         return await self(call)
-
-    add_product_to_the_promotion.__wrapped_cls__ = AddProductToThePromotion
 
     async def add_uin_unique_identification_number_to_assembly_orders(
         self,
@@ -943,10 +901,6 @@ class WbAPI:
         call = AddUinUniqueIdentificationNumberToAssemblyOrders(orders=orders)
         return await self(call)
 
-    add_uin_unique_identification_number_to_assembly_orders.__wrapped_cls__ = (
-        AddUinUniqueIdentificationNumberToAssemblyOrders
-    )
-
     async def add_uin_unique_identification_number_to_the_assembly_order(
         self,
         order_id: int,
@@ -964,10 +918,6 @@ class WbAPI:
         """
         call = AddUinUniqueIdentificationNumberToTheAssemblyOrder(order_id=order_id, uin=uin)
         return await self(call)
-
-    add_uin_unique_identification_number_to_the_assembly_order.__wrapped_cls__ = (
-        AddUinUniqueIdentificationNumberToTheAssemblyOrder
-    )
 
     async def add_uin_unique_identification_number_to_the_order(
         self,
@@ -987,10 +937,6 @@ class WbAPI:
         call = AddUinUniqueIdentificationNumberToTheOrder(order_id=order_id, uin=uin)
         return await self(call)
 
-    add_uin_unique_identification_number_to_the_order.__wrapped_cls__ = (
-        AddUinUniqueIdentificationNumberToTheOrder
-    )
-
     async def add_uin_unique_identification_numbers_to_the_assembly_orders(
         self,
         orders: list[Any],
@@ -1008,10 +954,6 @@ class WbAPI:
         """
         call = AddUinUniqueIdentificationNumbersToTheAssemblyOrders(orders=orders)
         return await self(call)
-
-    add_uin_unique_identification_numbers_to_the_assembly_orders.__wrapped_cls__ = (
-        AddUinUniqueIdentificationNumbersToTheAssemblyOrders
-    )
 
     async def answer_buyers_application(
         self,
@@ -1036,8 +978,6 @@ class WbAPI:
         call = AnswerBuyersApplication(id_=id_, action=action, comment=comment)
         return await self(call)
 
-    answer_buyers_application.__wrapped_cls__ = AnswerBuyersApplication
-
     async def assign_a_data_matrix_code_to_the_assembly_order(
         self,
         order_id: int,
@@ -1056,8 +996,6 @@ class WbAPI:
         call = AssignADataMatrixCodeToTheAssemblyOrder(order_id=order_id, sgtins=sgtins)
         return await self(call)
 
-    assign_a_data_matrix_code_to_the_assembly_order.__wrapped_cls__ = AssignADataMatrixCodeToTheAssemblyOrder
-
     async def b2b_buyer_information(
         self,
         orders_ids: list[int] | None = None,
@@ -1075,8 +1013,6 @@ class WbAPI:
         call = B2BBuyerInformation(orders_ids=orders_ids)
         return await self(call)
 
-    b2b_buyer_information.__wrapped_cls__ = B2BBuyerInformation
-
     async def buyer_information(
         self,
         orders: list[int] | None = None,
@@ -1091,8 +1027,6 @@ class WbAPI:
         """
         call = BuyerInformation(orders=orders)
         return await self(call)
-
-    buyer_information.__wrapped_cls__ = BuyerInformation
 
     async def cancel_assembly_orders(
         self,
@@ -1112,8 +1046,6 @@ class WbAPI:
         call = CancelAssemblyOrders(orders_ids=orders_ids)
         return await self(call)
 
-    cancel_assembly_orders.__wrapped_cls__ = CancelAssemblyOrders
-
     async def cancel_the_assembly_order(
         self,
         order_id: int,
@@ -1128,8 +1060,6 @@ class WbAPI:
         """
         call = CancelTheAssemblyOrder(order_id=order_id)
         return await self(call)
-
-    cancel_the_assembly_order.__wrapped_cls__ = CancelTheAssemblyOrder
 
     async def cancel_the_assembly_orders(
         self,
@@ -1150,8 +1080,6 @@ class WbAPI:
         call = CancelTheAssemblyOrders(orders_ids=orders_ids)
         return await self(call)
 
-    cancel_the_assembly_orders.__wrapped_cls__ = CancelTheAssemblyOrders
-
     async def cancel_the_order(
         self,
         order_id: int,
@@ -1166,8 +1094,6 @@ class WbAPI:
         """
         call = CancelTheOrder(order_id=order_id)
         return await self(call)
-
-    cancel_the_order.__wrapped_cls__ = CancelTheOrder
 
     async def changing_campaigns_bids(
         self,
@@ -1185,8 +1111,6 @@ class WbAPI:
         call = ChangingCampaignsBids(bids=bids)
         return await self(call)
 
-    changing_campaigns_bids.__wrapped_cls__ = ChangingCampaignsBids
-
     async def changing_placements_in_campaigns_with_custom_bid(
         self,
         placements: list[dict[str, Any]],
@@ -1203,10 +1127,6 @@ class WbAPI:
         call = ChangingPlacementsInCampaignsWithCustomBid(placements=placements)
         return await self(call)
 
-    changing_placements_in_campaigns_with_custom_bid.__wrapped_cls__ = (
-        ChangingPlacementsInCampaignsWithCustomBid
-    )
-
     async def changing_the_list_of_product_cards_in_campaigns(
         self,
         nms: list[dict[str, Any]],
@@ -1222,8 +1142,6 @@ class WbAPI:
         """
         call = ChangingTheListOfProductCardsInCampaigns(nms=nms)
         return await self(call)
-
-    changing_the_list_of_product_cards_in_campaigns.__wrapped_cls__ = ChangingTheListOfProductCardsInCampaigns
 
     async def check_if_the_order_belongs_to_the_buyer(
         self,
@@ -1244,8 +1162,6 @@ class WbAPI:
         call = CheckIfTheOrderBelongsToTheBuyer(order_code=order_code, passcode=passcode)
         return await self(call)
 
-    check_if_the_order_belongs_to_the_buyer.__wrapped_cls__ = CheckIfTheOrderBelongsToTheBuyer
-
     async def courier_info(
         self,
         orders: list[int] | None = None,
@@ -1262,8 +1178,6 @@ class WbAPI:
         call = CourierInfo(orders=orders)
         return await self(call)
 
-    courier_info.__wrapped_cls__ = CourierInfo
-
     async def create_a_new_supply(
         self,
         name: str | None = None,
@@ -1278,8 +1192,6 @@ class WbAPI:
         """
         call = CreateANewSupply(name=name)
         return await self(call)
-
-    create_a_new_supply.__wrapped_cls__ = CreateANewSupply
 
     async def create_a_tag(
         self,
@@ -1298,8 +1210,6 @@ class WbAPI:
         call = CreateATag(color=color, name=name)
         return await self(call)
 
-    create_a_tag.__wrapped_cls__ = CreateATag
-
     async def create_an_invitation_for_a_new_user(
         self,
         invite: dict[str, Any],
@@ -1315,8 +1225,6 @@ class WbAPI:
         """
         call = CreateAnInvitationForANewUser(invite=invite, access=access)
         return await self(call)
-
-    create_an_invitation_for_a_new_user.__wrapped_cls__ = CreateAnInvitationForANewUser
 
     async def create_campaign(
         self,
@@ -1352,8 +1260,6 @@ class WbAPI:
         )
         return await self(call)
 
-    create_campaign.__wrapped_cls__ = CreateCampaign
-
     async def create_pass(
         self,
         first_name: str,
@@ -1384,8 +1290,6 @@ class WbAPI:
         )
         return await self(call)
 
-    create_pass.__wrapped_cls__ = CreatePass
-
     async def create_product_cards(
         self,
     ) -> list[CreateProductCardsResponse]:
@@ -1397,8 +1301,6 @@ class WbAPI:
         """
         call = CreateProductCards()
         return await self(call)
-
-    create_product_cards.__wrapped_cls__ = CreateProductCards
 
     async def create_product_cards_with_merge(
         self,
@@ -1427,8 +1329,6 @@ class WbAPI:
         call = CreateProductCardsWithMerge(imt_id=imt_id, cards_to_add=cards_to_add)
         return await self(call)
 
-    create_product_cards_with_merge.__wrapped_cls__ = CreateProductCardsWithMerge
-
     async def create_the_report(
         self,
     ) -> list[CreateTheReportResponse]:
@@ -1442,8 +1342,6 @@ class WbAPI:
         """
         call = CreateTheReport()
         return await self(call)
-
-    create_the_report.__wrapped_cls__ = CreateTheReport
 
     async def create_warehouse(
         self,
@@ -1461,8 +1359,6 @@ class WbAPI:
         """
         call = CreateWarehouse(name=name, office_id=office_id)
         return await self(call)
-
-    create_warehouse.__wrapped_cls__ = CreateWarehouse
 
     async def daily_search_clusters_statistics(
         self,
@@ -1482,8 +1378,6 @@ class WbAPI:
         """
         call = DailySearchClustersStatistics(from_=from_, to=to, items=items)
         return await self(call)
-
-    daily_search_clusters_statistics.__wrapped_cls__ = DailySearchClustersStatistics
 
     async def delete_assembly_order_metadata(
         self,
@@ -1512,8 +1406,6 @@ class WbAPI:
         """
         call = DeleteAssemblyOrderMetadata(order_id=order_id, key=key)
         return await self(call)
-
-    delete_assembly_order_metadata.__wrapped_cls__ = DeleteAssemblyOrderMetadata
 
     async def delete_assembly_orders_metadata(
         self,
@@ -1545,8 +1437,6 @@ class WbAPI:
         call = DeleteAssemblyOrdersMetadata(key=key, order_ids=order_ids)
         return await self(call)
 
-    delete_assembly_orders_metadata.__wrapped_cls__ = DeleteAssemblyOrdersMetadata
-
     async def delete_bids_from_search_clusters(
         self,
         bids: list[Any],
@@ -1560,8 +1450,6 @@ class WbAPI:
         """
         call = DeleteBidsFromSearchClusters(bids=bids)
         return await self(call)
-
-    delete_bids_from_search_clusters.__wrapped_cls__ = DeleteBidsFromSearchClusters
 
     async def delete_boxes_from_the_supply(
         self,
@@ -1581,8 +1469,6 @@ class WbAPI:
         call = DeleteBoxesFromTheSupply(supply_id=supply_id, trbx_ids=trbx_ids)
         return await self(call)
 
-    delete_boxes_from_the_supply.__wrapped_cls__ = DeleteBoxesFromTheSupply
-
     async def delete_inventory(
         self,
         warehouse_id: int,
@@ -1599,8 +1485,6 @@ class WbAPI:
         """
         call = DeleteInventory(warehouse_id=warehouse_id, chrt_ids=chrt_ids)
         return await self(call)
-
-    delete_inventory.__wrapped_cls__ = DeleteInventory
 
     async def delete_order_metadata(
         self,
@@ -1621,8 +1505,6 @@ class WbAPI:
         call = DeleteOrderMetadata(order_id=order_id, key=key)
         return await self(call)
 
-    delete_order_metadata.__wrapped_cls__ = DeleteOrderMetadata
-
     async def delete_the_pass(
         self,
         pass_id: int,
@@ -1637,8 +1519,6 @@ class WbAPI:
         """
         call = DeleteThePass(pass_id=pass_id)
         return await self(call)
-
-    delete_the_pass.__wrapped_cls__ = DeleteThePass
 
     async def delete_the_supply(
         self,
@@ -1655,8 +1535,6 @@ class WbAPI:
         call = DeleteTheSupply(supply_id=supply_id)
         return await self(call)
 
-    delete_the_supply.__wrapped_cls__ = DeleteTheSupply
-
     async def delete_the_tag(
         self,
         id_: int,
@@ -1671,8 +1549,6 @@ class WbAPI:
         """
         call = DeleteTheTag(id_=id_)
         return await self(call)
-
-    delete_the_tag.__wrapped_cls__ = DeleteTheTag
 
     async def delete_user(
         self,
@@ -1689,8 +1565,6 @@ class WbAPI:
         call = DeleteUser(deleted_user_id=deleted_user_id)
         return await self(call)
 
-    delete_user.__wrapped_cls__ = DeleteUser
-
     async def delete_warehouse(
         self,
         warehouse_id: int,
@@ -1705,8 +1579,6 @@ class WbAPI:
         """
         call = DeleteWarehouse(warehouse_id=warehouse_id)
         return await self(call)
-
-    delete_warehouse.__wrapped_cls__ = DeleteWarehouse
 
     async def delivery_date_and_time(
         self,
@@ -1723,8 +1595,6 @@ class WbAPI:
         """
         call = DeliveryDateAndTime(orders=orders)
         return await self(call)
-
-    delivery_date_and_time.__wrapped_cls__ = DeliveryDateAndTime
 
     async def edit_response_to_feedback(
         self,
@@ -1745,8 +1615,6 @@ class WbAPI:
         call = EditResponseToFeedback(id_=id_, text=text)
         return await self(call)
 
-    edit_response_to_feedback.__wrapped_cls__ = EditResponseToFeedback
-
     async def generation_of_skus(
         self,
         count: int | None = None,
@@ -1761,8 +1629,6 @@ class WbAPI:
         """
         call = GenerationOfSkus(count=count)
         return await self(call)
-
-    generation_of_skus.__wrapped_cls__ = GenerationOfSkus
 
     async def get_a_list_of_seller_active_or_invited_users(
         self,
@@ -1789,8 +1655,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_a_list_of_seller_active_or_invited_users.__wrapped_cls__ = GetAListOfSellerActiveOrInvitedUsers
-
     async def get_a_supplies_list(
         self,
         limit: int,
@@ -1810,8 +1674,6 @@ class WbAPI:
         call = GetASuppliesList(limit=limit, next_=next_)
         return await self(call)
 
-    get_a_supplies_list.__wrapped_cls__ = GetASuppliesList
-
     async def get_all_assembly_orders_for_reshipment(
         self,
     ) -> list[AllAssemblyOrdersForReshipmentItem]:
@@ -1823,8 +1685,6 @@ class WbAPI:
         """
         call = GetAllAssemblyOrdersForReshipment()
         return await self(call)
-
-    get_all_assembly_orders_for_reshipment.__wrapped_cls__ = GetAllAssemblyOrdersForReshipment
 
     async def get_assembly_order_metadata(
         self,
@@ -1842,8 +1702,6 @@ class WbAPI:
         call = GetAssemblyOrderMetadata(order_id=order_id)
         return await self(call)
 
-    get_assembly_order_metadata.__wrapped_cls__ = GetAssemblyOrderMetadata
-
     async def get_assembly_order_statuses(
         self,
         orders_ids: list[int] | None = None,
@@ -1859,8 +1717,6 @@ class WbAPI:
         """
         call = GetAssemblyOrderStatuses(orders_ids=orders_ids)
         return await self(call)
-
-    get_assembly_order_statuses.__wrapped_cls__ = GetAssemblyOrderStatuses
 
     async def get_assembly_orders(
         self,
@@ -1886,8 +1742,6 @@ class WbAPI:
         """
         call = GetAssemblyOrders(limit=limit, next_=next_, date_from=date_from, date_to=date_to)
         return await self(call)
-
-    get_assembly_orders.__wrapped_cls__ = GetAssemblyOrders
 
     async def get_assembly_orders_metadata(
         self,
@@ -1918,8 +1772,6 @@ class WbAPI:
         call = GetAssemblyOrdersMetadata(orders=orders)
         return await self(call)
 
-    get_assembly_orders_metadata.__wrapped_cls__ = GetAssemblyOrdersMetadata
-
     async def get_assembly_orders_statuses(
         self,
         orders: list[int],
@@ -1934,8 +1786,6 @@ class WbAPI:
         """
         call = GetAssemblyOrdersStatuses(orders=orders)
         return await self(call)
-
-    get_assembly_orders_statuses.__wrapped_cls__ = GetAssemblyOrdersStatuses
 
     async def get_assembly_orders_stickers(
         self,
@@ -1959,8 +1809,6 @@ class WbAPI:
         call = GetAssemblyOrdersStickers(type_=type_, width=width, height=height, orders=orders)
         return await self(call)
 
-    get_assembly_orders_stickers.__wrapped_cls__ = GetAssemblyOrdersStickers
-
     async def get_balance(
         self,
     ) -> list[BalanceItem]:
@@ -1972,8 +1820,6 @@ class WbAPI:
         """
         call = GetBalance()
         return await self(call)
-
-    get_balance.__wrapped_cls__ = GetBalance
 
     async def get_blocked_product_cards(
         self,
@@ -1993,8 +1839,6 @@ class WbAPI:
         call = GetBlockedProductCards(sort=sort, order=order)
         return await self(call)
 
-    get_blocked_product_cards.__wrapped_cls__ = GetBlockedProductCards
-
     async def get_box_tariffs(
         self,
         date: str,
@@ -2013,8 +1857,6 @@ class WbAPI:
         call = GetBoxTariffs(date=date)
         return await self(call)
 
-    get_box_tariffs.__wrapped_cls__ = GetBoxTariffs
-
     async def get_brands(
         self,
         subject_id: int,
@@ -2032,8 +1874,6 @@ class WbAPI:
         """
         call = GetBrands(subject_id=subject_id, next_=next_)
         return await self(call)
-
-    get_brands.__wrapped_cls__ = GetBrands
 
     async def get_buyers_return_applications(
         self,
@@ -2064,8 +1904,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_buyers_return_applications.__wrapped_cls__ = GetBuyersReturnApplications
-
     async def get_campaign_budget(
         self,
         id_: int,
@@ -2080,8 +1918,6 @@ class WbAPI:
         """
         call = GetCampaignBudget(id_=id_)
         return await self(call)
-
-    get_campaign_budget.__wrapped_cls__ = GetCampaignBudget
 
     async def get_campaigns_information(
         self,
@@ -2103,8 +1939,6 @@ class WbAPI:
         call = GetCampaignsInformation(ids=ids, statuses=statuses, payment_type=payment_type)
         return await self(call)
 
-    get_campaigns_information.__wrapped_cls__ = GetCampaignsInformation
-
     async def get_campaigns_lists(
         self,
     ) -> list[CampaignsListsItem]:
@@ -2117,8 +1951,6 @@ class WbAPI:
         """
         call = GetCampaignsLists()
         return await self(call)
-
-    get_campaigns_lists.__wrapped_cls__ = GetCampaignsLists
 
     async def get_campaigns_statistics(
         self,
@@ -2140,8 +1972,6 @@ class WbAPI:
         call = GetCampaignsStatistics(ids=ids, begin_date=begin_date, end_date=end_date)
         return await self(call)
 
-    get_campaigns_statistics.__wrapped_cls__ = GetCampaignsStatistics
-
     async def get_chat_events(
         self,
         next_: int | None = None,
@@ -2158,8 +1988,6 @@ class WbAPI:
         call = GetChatEvents(next_=next_)
         return await self(call)
 
-    get_chat_events.__wrapped_cls__ = GetChatEvents
-
     async def get_chat_list(
         self,
     ) -> list[ChatListItem]:
@@ -2171,8 +1999,6 @@ class WbAPI:
         """
         call = GetChatList()
         return await self(call)
-
-    get_chat_list.__wrapped_cls__ = GetChatList
 
     async def get_check_the_status(
         self,
@@ -2189,8 +2015,6 @@ class WbAPI:
         call = GetCheckTheStatus(task_id=task_id)
         return await self(call)
 
-    get_check_the_status.__wrapped_cls__ = GetCheckTheStatus
-
     async def get_color(
         self,
         locale: str | None = None,
@@ -2206,8 +2030,6 @@ class WbAPI:
         call = GetColor(locale=locale)
         return await self(call)
 
-    get_color.__wrapped_cls__ = GetColor
-
     async def get_connection_check(
         self,
     ) -> list[ConnectionCheckResponse]:
@@ -2220,8 +2042,6 @@ class WbAPI:
         """
         call = GetConnectionCheck()
         return await self(call)
-
-    get_connection_check.__wrapped_cls__ = GetConnectionCheck
 
     async def get_contacts_list(
         self,
@@ -2239,8 +2059,6 @@ class WbAPI:
         call = GetContactsList(warehouse_id=warehouse_id)
         return await self(call)
 
-    get_contacts_list.__wrapped_cls__ = GetContactsList
-
     async def get_country_of_origin(
         self,
         locale: str | None = None,
@@ -2255,8 +2073,6 @@ class WbAPI:
         """
         call = GetCountryOfOrigin(locale=locale)
         return await self(call)
-
-    get_country_of_origin.__wrapped_cls__ = GetCountryOfOrigin
 
     async def get_create_the_report(
         self,
@@ -2303,8 +2119,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_create_the_report.__wrapped_cls__ = GetCreateTheReport
-
     async def get_delete_campaign(
         self,
         id_: int,
@@ -2319,8 +2133,6 @@ class WbAPI:
         """
         call = GetDeleteCampaign(id_=id_)
         return await self(call)
-
-    get_delete_campaign.__wrapped_cls__ = GetDeleteCampaign
 
     async def get_document(
         self,
@@ -2339,8 +2151,6 @@ class WbAPI:
         call = GetDocument(service_name=service_name, extension=extension)
         return await self(call)
 
-    get_document.__wrapped_cls__ = GetDocument
-
     async def get_documents(
         self,
         params: list[dict[str, Any]] | None = None,
@@ -2353,8 +2163,6 @@ class WbAPI:
         """
         call = GetDocuments(params=params)
         return await self(call)
-
-    get_documents.__wrapped_cls__ = GetDocuments
 
     async def get_documents_categories(
         self,
@@ -2370,8 +2178,6 @@ class WbAPI:
         """
         call = GetDocumentsCategories(locale=locale)
         return await self(call)
-
-    get_documents_categories.__wrapped_cls__ = GetDocumentsCategories
 
     async def get_documents_list(
         self,
@@ -2416,8 +2222,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_documents_list.__wrapped_cls__ = GetDocumentsList
-
     async def get_feedbacks_list(
         self,
         is_answered: bool,
@@ -2454,8 +2258,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_feedbacks_list.__wrapped_cls__ = GetFeedbacksList
-
     async def get_file_from_the_message(
         self,
         id_: str,
@@ -2473,8 +2275,6 @@ class WbAPI:
         call = GetFileFromTheMessage(id_=id_)
         return await self(call)
 
-    get_file_from_the_message.__wrapped_cls__ = GetFileFromTheMessage
-
     async def get_gender(
         self,
         locale: str | None = None,
@@ -2489,8 +2289,6 @@ class WbAPI:
         """
         call = GetGender(locale=locale)
         return await self(call)
-
-    get_gender.__wrapped_cls__ = GetGender
 
     async def get_generate_the_report(
         self,
@@ -2510,8 +2308,6 @@ class WbAPI:
         """
         call = GetGenerateTheReport(date_from=date_from, date_to=date_to)
         return await self(call)
-
-    get_generate_the_report.__wrapped_cls__ = GetGenerateTheReport
 
     async def get_getting_seller_portal_news(
         self,
@@ -2533,8 +2329,6 @@ class WbAPI:
         call = GetGettingSellerPortalNews(from_=from_, from_id=from_id)
         return await self(call)
 
-    get_getting_seller_portal_news.__wrapped_cls__ = GetGettingSellerPortalNews
-
     async def get_hidden_from_the_catalog(
         self,
         sort: SortShadowed,
@@ -2552,8 +2346,6 @@ class WbAPI:
         """
         call = GetHiddenFromTheCatalog(sort=sort, order=order)
         return await self(call)
-
-    get_hidden_from_the_catalog.__wrapped_cls__ = GetHiddenFromTheCatalog
 
     async def get_hscodes(
         self,
@@ -2574,8 +2366,6 @@ class WbAPI:
         call = GetHscodes(subject_id=subject_id, search=search, locale=locale)
         return await self(call)
 
-    get_hscodes.__wrapped_cls__ = GetHscodes
-
     async def get_information_about_media_campaign(
         self,
         id_: int,
@@ -2590,8 +2380,6 @@ class WbAPI:
         """
         call = GetInformationAboutMediaCampaign(id_=id_)
         return await self(call)
-
-    get_information_about_media_campaign.__wrapped_cls__ = GetInformationAboutMediaCampaign
 
     async def get_information_on_completed_orders(
         self,
@@ -2622,8 +2410,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_information_on_completed_orders.__wrapped_cls__ = GetInformationOnCompletedOrders
-
     async def get_information_on_paid_delivery(
         self,
         groups: list[str] | None = None,
@@ -2645,8 +2431,6 @@ class WbAPI:
         call = GetInformationOnPaidDelivery(groups=groups)
         return await self(call)
 
-    get_information_on_paid_delivery.__wrapped_cls__ = GetInformationOnPaidDelivery
-
     async def get_inventory(
         self,
         warehouse_id: int,
@@ -2664,8 +2448,6 @@ class WbAPI:
         call = GetInventory(warehouse_id=warehouse_id, chrt_ids=chrt_ids)
         return await self(call)
 
-    get_inventory.__wrapped_cls__ = GetInventory
-
     async def get_launch_campaign(
         self,
         id_: int,
@@ -2682,8 +2464,6 @@ class WbAPI:
         """
         call = GetLaunchCampaign(id_=id_)
         return await self(call)
-
-    get_launch_campaign.__wrapped_cls__ = GetLaunchCampaign
 
     async def get_limits_for_the_product_cards(
         self,
@@ -2703,8 +2483,6 @@ class WbAPI:
         """
         call = GetLimitsForTheProductCards()
         return await self(call)
-
-    get_limits_for_the_product_cards.__wrapped_cls__ = GetLimitsForTheProductCards
 
     async def get_list_of_archived_feedbacks(
         self,
@@ -2728,8 +2506,6 @@ class WbAPI:
         """
         call = GetListOfArchivedFeedbacks(take=take, skip=skip, nm_id=nm_id, order=order)
         return await self(call)
-
-    get_list_of_archived_feedbacks.__wrapped_cls__ = GetListOfArchivedFeedbacks
 
     async def get_list_of_media_campaigns(
         self,
@@ -2762,8 +2538,6 @@ class WbAPI:
             direction=direction,
         )
         return await self(call)
-
-    get_list_of_media_campaigns.__wrapped_cls__ = GetListOfMediaCampaigns
 
     async def get_list_of_pinned_and_unpinned_feedback(
         self,
@@ -2808,8 +2582,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_list_of_pinned_and_unpinned_feedback.__wrapped_cls__ = GetListOfPinnedAndUnpinnedFeedback
-
     async def get_list_of_products_for_participating_in_the_promotion(
         self,
         promotion_id: int,
@@ -2835,10 +2607,6 @@ class WbAPI:
             offset=offset,
         )
         return await self(call)
-
-    get_list_of_products_for_participating_in_the_promotion.__wrapped_cls__ = (
-        GetListOfProductsForParticipatingInThePromotion
-    )
 
     async def get_logistics_and_storage_costs_multiplier(
         self,
@@ -2869,8 +2637,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_logistics_and_storage_costs_multiplier.__wrapped_cls__ = GetLogisticsAndStorageCostsMultiplier
-
     async def get_media_campaigns_number(
         self,
     ) -> list[MediaCampaignsNumberResponse]:
@@ -2882,8 +2648,6 @@ class WbAPI:
         """
         call = GetMediaCampaignsNumber()
         return await self(call)
-
-    get_media_campaigns_number.__wrapped_cls__ = GetMediaCampaignsNumber
 
     async def get_new_assembly_orders(
         self,
@@ -2897,8 +2661,6 @@ class WbAPI:
         """
         call = GetNewAssemblyOrders()
         return await self(call)
-
-    get_new_assembly_orders.__wrapped_cls__ = GetNewAssemblyOrders
 
     async def get_new_assembly_orders_list(
         self,
@@ -2914,8 +2676,6 @@ class WbAPI:
         call = GetNewAssemblyOrdersList()
         return await self(call)
 
-    get_new_assembly_orders_list.__wrapped_cls__ = GetNewAssemblyOrdersList
-
     async def get_new_orders(
         self,
     ) -> list[NewOrdersItem]:
@@ -2928,8 +2688,6 @@ class WbAPI:
         call = GetNewOrders()
         return await self(call)
 
-    get_new_orders.__wrapped_cls__ = GetNewOrders
-
     async def get_new_orders_list(
         self,
     ) -> list[NewOrdersListItem]:
@@ -2941,8 +2699,6 @@ class WbAPI:
         """
         call = GetNewOrdersList()
         return await self(call)
-
-    get_new_orders_list.__wrapped_cls__ = GetNewOrdersList
 
     async def get_number_of_feedbacks(
         self,
@@ -2963,8 +2719,6 @@ class WbAPI:
         call = GetNumberOfFeedbacks(date_from=date_from, date_to=date_to, is_answered=is_answered)
         return await self(call)
 
-    get_number_of_feedbacks.__wrapped_cls__ = GetNumberOfFeedbacks
-
     async def get_number_of_questions(
         self,
         date_from: int | None = None,
@@ -2984,8 +2738,6 @@ class WbAPI:
         call = GetNumberOfQuestions(date_from=date_from, date_to=date_to, is_answered=is_answered)
         return await self(call)
 
-    get_number_of_questions.__wrapped_cls__ = GetNumberOfQuestions
-
     async def get_offices(
         self,
     ) -> list[OfficesResponse]:
@@ -2998,8 +2750,6 @@ class WbAPI:
         call = GetOffices()
         return await self(call)
 
-    get_offices.__wrapped_cls__ = GetOffices
-
     async def get_offices_for_pass(
         self,
     ) -> list[OfficesForPassResponse]:
@@ -3011,8 +2761,6 @@ class WbAPI:
         """
         call = GetOfficesForPass()
         return await self(call)
-
-    get_offices_for_pass.__wrapped_cls__ = GetOfficesForPass
 
     async def get_order_metadata(
         self,
@@ -3032,8 +2780,6 @@ class WbAPI:
         call = GetOrderMetadata(order_id=order_id)
         return await self(call)
 
-    get_order_metadata.__wrapped_cls__ = GetOrderMetadata
-
     async def get_orders(
         self,
         date_from: str,
@@ -3052,8 +2798,6 @@ class WbAPI:
         call = GetOrders(date_from=date_from, flag=flag)
         return await self(call)
 
-    get_orders.__wrapped_cls__ = GetOrders
-
     async def get_orders_statuses(
         self,
         orders: list[int],
@@ -3068,8 +2812,6 @@ class WbAPI:
         """
         call = GetOrdersStatuses(orders=orders)
         return await self(call)
-
-    get_orders_statuses.__wrapped_cls__ = GetOrdersStatuses
 
     async def get_orders_stickers(
         self,
@@ -3096,8 +2838,6 @@ class WbAPI:
         call = GetOrdersStickers(type_=type_, width=width, height=height, orders=orders)
         return await self(call)
 
-    get_orders_stickers.__wrapped_cls__ = GetOrdersStickers
-
     async def get_pallet_tariffs(
         self,
         date: str,
@@ -3115,8 +2855,6 @@ class WbAPI:
         """
         call = GetPalletTariffs(date=date)
         return await self(call)
-
-    get_pallet_tariffs.__wrapped_cls__ = GetPalletTariffs
 
     async def get_parent_categories_of_the_brand(
         self,
@@ -3144,8 +2882,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_parent_categories_of_the_brand.__wrapped_cls__ = GetParentCategoriesOfTheBrand
-
     async def get_passes(
         self,
     ) -> list[PassesResponse]:
@@ -3157,8 +2893,6 @@ class WbAPI:
         """
         call = GetPasses()
         return await self(call)
-
-    get_passes.__wrapped_cls__ = GetPasses
 
     async def get_pause_campaign(
         self,
@@ -3174,8 +2908,6 @@ class WbAPI:
         """
         call = GetPauseCampaign(id_=id_)
         return await self(call)
-
-    get_pause_campaign.__wrapped_cls__ = GetPauseCampaign
 
     async def get_pinned_and_unpinned_feedback_number(
         self,
@@ -3212,8 +2944,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_pinned_and_unpinned_feedback_number.__wrapped_cls__ = GetPinnedAndUnpinnedFeedbackNumber
-
     async def get_pinned_feedback_limits(
         self,
     ) -> list[PinnedFeedbackLimitsResponse]:
@@ -3225,8 +2955,6 @@ class WbAPI:
         """
         call = GetPinnedFeedbackLimits()
         return await self(call)
-
-    get_pinned_feedback_limits.__wrapped_cls__ = GetPinnedFeedbackLimits
 
     async def get_processed_upload_details(
         self,
@@ -3248,8 +2976,6 @@ class WbAPI:
         call = GetProcessedUploadDetails(limit=limit, upload_id=upload_id, offset=offset)
         return await self(call)
 
-    get_processed_upload_details.__wrapped_cls__ = GetProcessedUploadDetails
-
     async def get_processed_upload_state(
         self,
         upload_id: int,
@@ -3265,8 +2991,6 @@ class WbAPI:
         call = GetProcessedUploadState(upload_id=upload_id)
         return await self(call)
 
-    get_processed_upload_state.__wrapped_cls__ = GetProcessedUploadState
-
     async def get_product_category_commission(
         self,
         locale: str | None = None,
@@ -3281,8 +3005,6 @@ class WbAPI:
         """
         call = GetProductCategoryCommission(locale=locale)
         return await self(call)
-
-    get_product_category_commission.__wrapped_cls__ = GetProductCategoryCommission
 
     async def get_product_labeling(
         self,
@@ -3302,8 +3024,6 @@ class WbAPI:
         """
         call = GetProductLabeling(date_from=date_from, date_to=date_to)
         return await self(call)
-
-    get_product_labeling.__wrapped_cls__ = GetProductLabeling
 
     async def get_product_sizes_with_prices(
         self,
@@ -3325,8 +3045,6 @@ class WbAPI:
         """
         call = GetProductSizesWithPrices(limit=limit, nm_id=nm_id, offset=offset)
         return await self(call)
-
-    get_product_sizes_with_prices.__wrapped_cls__ = GetProductSizesWithPrices
 
     async def get_products_in_quarantine(
         self,
@@ -3355,8 +3073,6 @@ class WbAPI:
         call = GetProductsInQuarantine(limit=limit, offset=offset)
         return await self(call)
 
-    get_products_in_quarantine.__wrapped_cls__ = GetProductsInQuarantine
-
     async def get_products_parent_categories(
         self,
         locale: str | None = None,
@@ -3371,8 +3087,6 @@ class WbAPI:
         """
         call = GetProductsParentCategories(locale=locale)
         return await self(call)
-
-    get_products_parent_categories.__wrapped_cls__ = GetProductsParentCategories
 
     async def get_products_with_prices(
         self,
@@ -3401,8 +3115,6 @@ class WbAPI:
         call = GetProductsWithPrices(limit=limit, offset=offset, filter_nm_id=filter_nm_id)
         return await self(call)
 
-    get_products_with_prices.__wrapped_cls__ = GetProductsWithPrices
-
     async def get_products_with_prices_by_articles(
         self,
         nm_list: list[int],
@@ -3422,8 +3134,6 @@ class WbAPI:
         call = GetProductsWithPricesByArticles(nm_list=nm_list)
         return await self(call)
 
-    get_products_with_prices_by_articles.__wrapped_cls__ = GetProductsWithPricesByArticles
-
     async def get_promotions_details(
         self,
         promotion_i_ds: list[int],
@@ -3438,8 +3148,6 @@ class WbAPI:
         """
         call = GetPromotionsDetails(promotion_i_ds=promotion_i_ds)
         return await self(call)
-
-    get_promotions_details.__wrapped_cls__ = GetPromotionsDetails
 
     async def get_promotions_list(
         self,
@@ -3469,8 +3177,6 @@ class WbAPI:
             offset=offset,
         )
         return await self(call)
-
-    get_promotions_list.__wrapped_cls__ = GetPromotionsList
 
     async def get_question_list(
         self,
@@ -3512,8 +3218,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_question_list.__wrapped_cls__ = GetQuestionList
-
     async def get_realization_sales_report(
         self,
         date_from: str,
@@ -3547,8 +3251,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_realization_sales_report.__wrapped_cls__ = GetRealizationSalesReport
-
     async def get_receiving_costs_history(
         self,
         from_: str,
@@ -3566,8 +3268,6 @@ class WbAPI:
         call = GetReceivingCostsHistory(from_=from_, to=to)
         return await self(call)
 
-    get_receiving_costs_history.__wrapped_cls__ = GetReceivingCostsHistory
-
     async def get_receiving_the_history_of_account_topups(
         self,
         from_: str | None = None,
@@ -3584,8 +3284,6 @@ class WbAPI:
         """
         call = GetReceivingTheHistoryOfAccountTopups(from_=from_, to=to)
         return await self(call)
-
-    get_receiving_the_history_of_account_topups.__wrapped_cls__ = GetReceivingTheHistoryOfAccountTopups
 
     async def get_recommended_bids_for_items_and_search_clusters(
         self,
@@ -3605,10 +3303,6 @@ class WbAPI:
         call = GetRecommendedBidsForItemsAndSearchClusters(nm_id=nm_id, advert_id=advert_id)
         return await self(call)
 
-    get_recommended_bids_for_items_and_search_clusters.__wrapped_cls__ = (
-        GetRecommendedBidsForItemsAndSearchClusters
-    )
-
     async def get_report(
         self,
         date_from: str,
@@ -3626,8 +3320,6 @@ class WbAPI:
         """
         call = GetReport(date_from=date_from, date_to=date_to)
         return await self(call)
-
-    get_report.__wrapped_cls__ = GetReport
 
     async def get_retrieve_information_on_completed_assembly_orders(
         self,
@@ -3659,10 +3351,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_retrieve_information_on_completed_assembly_orders.__wrapped_cls__ = (
-        GetRetrieveInformationOnCompletedAssemblyOrders
-    )
-
     async def get_return_tariffs(
         self,
         date: str,
@@ -3679,8 +3367,6 @@ class WbAPI:
         """
         call = GetReturnTariffs(date=date)
         return await self(call)
-
-    get_return_tariffs.__wrapped_cls__ = GetReturnTariffs
 
     async def get_sales(
         self,
@@ -3700,8 +3386,6 @@ class WbAPI:
         call = GetSales(date_from=date_from, flag=flag)
         return await self(call)
 
-    get_sales.__wrapped_cls__ = GetSales
-
     async def get_season(
         self,
         locale: str | None = None,
@@ -3716,8 +3400,6 @@ class WbAPI:
         """
         call = GetSeason(locale=locale)
         return await self(call)
-
-    get_season.__wrapped_cls__ = GetSeason
 
     async def get_selfpurchases(
         self,
@@ -3738,8 +3420,6 @@ class WbAPI:
         call = GetSelfpurchases(date=date)
         return await self(call)
 
-    get_selfpurchases.__wrapped_cls__ = GetSelfpurchases
-
     async def get_seller_brands(
         self,
     ) -> list[SellerBrandsItem]:
@@ -3751,8 +3431,6 @@ class WbAPI:
         """
         call = GetSellerBrands()
         return await self(call)
-
-    get_seller_brands.__wrapped_cls__ = GetSellerBrands
 
     async def get_seller_information(
         self,
@@ -3767,8 +3445,6 @@ class WbAPI:
         call = GetSellerInformation()
         return await self(call)
 
-    get_seller_information.__wrapped_cls__ = GetSellerInformation
-
     async def get_sellers_balance(
         self,
     ) -> list[SellersBalanceResponse]:
@@ -3781,8 +3457,6 @@ class WbAPI:
         """
         call = GetSellersBalance()
         return await self(call)
-
-    get_sellers_balance.__wrapped_cls__ = GetSellersBalance
 
     async def get_stickers_for_assembly_orders_with_delivery_to_pickup_point(
         self,
@@ -3810,10 +3484,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_stickers_for_assembly_orders_with_delivery_to_pickup_point.__wrapped_cls__ = (
-        GetStickersForAssemblyOrdersWithDeliveryToPickupPoint
-    )
-
     async def get_stickers_for_crossborder_assembly_orders(
         self,
         orders: list[int] | None = None,
@@ -3828,8 +3498,6 @@ class WbAPI:
         """
         call = GetStickersForCrossborderAssemblyOrders(orders=orders)
         return await self(call)
-
-    get_stickers_for_crossborder_assembly_orders.__wrapped_cls__ = GetStickersForCrossborderAssemblyOrders
 
     async def get_stop_campaign(
         self,
@@ -3846,8 +3514,6 @@ class WbAPI:
         """
         call = GetStopCampaign(id_=id_)
         return await self(call)
-
-    get_stop_campaign.__wrapped_cls__ = GetStopCampaign
 
     async def get_subject_characteristics(
         self,
@@ -3866,8 +3532,6 @@ class WbAPI:
         call = GetSubjectCharacteristics(subject_id=subject_id, locale=locale)
         return await self(call)
 
-    get_subject_characteristics.__wrapped_cls__ = GetSubjectCharacteristics
-
     async def get_subjects_for_campaigns(
         self,
         payment_type: str | None = "cpm",
@@ -3882,8 +3546,6 @@ class WbAPI:
         """
         call = GetSubjectsForCampaigns(payment_type=payment_type)
         return await self(call)
-
-    get_subjects_for_campaigns.__wrapped_cls__ = GetSubjectsForCampaigns
 
     async def get_subjects_list(
         self,
@@ -3915,8 +3577,6 @@ class WbAPI:
             parent_id=parent_id,
         )
         return await self(call)
-
-    get_subjects_list.__wrapped_cls__ = GetSubjectsList
 
     async def get_substitutions_and_incorrect_attachments(
         self,
@@ -3954,8 +3614,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_substitutions_and_incorrect_attachments.__wrapped_cls__ = GetSubstitutionsAndIncorrectAttachments
-
     async def get_supply_assembly_order_ids(
         self,
         supply_id: str,
@@ -3970,8 +3628,6 @@ class WbAPI:
         """
         call = GetSupplyAssemblyOrderIds(supply_id=supply_id)
         return await self(call)
-
-    get_supply_assembly_order_ids.__wrapped_cls__ = GetSupplyAssemblyOrderIds
 
     async def get_supply_boxes_list(
         self,
@@ -3988,8 +3644,6 @@ class WbAPI:
         call = GetSupplyBoxesList(supply_id=supply_id)
         return await self(call)
 
-    get_supply_boxes_list.__wrapped_cls__ = GetSupplyBoxesList
-
     async def get_supply_details(
         self,
         supply_id: str,
@@ -4005,8 +3659,6 @@ class WbAPI:
         call = GetSupplyDetails(supply_id=supply_id)
         return await self(call)
 
-    get_supply_details.__wrapped_cls__ = GetSupplyDetails
-
     async def get_supply_package(
         self,
         id_: int,
@@ -4021,8 +3673,6 @@ class WbAPI:
         """
         call = GetSupplyPackage(id_=id_)
         return await self(call)
-
-    get_supply_package.__wrapped_cls__ = GetSupplyPackage
 
     async def get_supply_products(
         self,
@@ -4050,8 +3700,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_supply_products.__wrapped_cls__ = GetSupplyProducts
-
     async def get_supply_tariffs(
         self,
         warehouse_i_ds: str | None = None,
@@ -4067,8 +3715,6 @@ class WbAPI:
         call = GetSupplyTariffs(warehouse_i_ds=warehouse_i_ds)
         return await self(call)
 
-    get_supply_tariffs.__wrapped_cls__ = GetSupplyTariffs
-
     async def get_tags_list(
         self,
     ) -> list[TagsListResponse]:
@@ -4080,8 +3726,6 @@ class WbAPI:
         """
         call = GetTagsList()
         return await self(call)
-
-    get_tags_list.__wrapped_cls__ = GetTagsList
 
     async def get_the_feedback_by_id(
         self,
@@ -4098,8 +3742,6 @@ class WbAPI:
         call = GetTheFeedbackById(id_=id_)
         return await self(call)
 
-    get_the_feedback_by_id.__wrapped_cls__ = GetTheFeedbackById
-
     async def get_the_question_by_id(
         self,
         id_: str,
@@ -4114,8 +3756,6 @@ class WbAPI:
         """
         call = GetTheQuestionById(id_=id_)
         return await self(call)
-
-    get_the_question_by_id.__wrapped_cls__ = GetTheQuestionById
 
     async def get_the_report(
         self,
@@ -4135,8 +3775,6 @@ class WbAPI:
         call = GetTheReport(download_id=download_id)
         return await self(call)
 
-    get_the_report.__wrapped_cls__ = GetTheReport
-
     async def get_the_reports_list(
         self,
         filter_download_ids: list[str] | None = None,
@@ -4154,8 +3792,6 @@ class WbAPI:
         """
         call = GetTheReportsList(filter_download_ids=filter_download_ids)
         return await self(call)
-
-    get_the_reports_list.__wrapped_cls__ = GetTheReportsList
 
     async def get_the_supply_box_qr_code_stickers(
         self,
@@ -4177,8 +3813,6 @@ class WbAPI:
         call = GetTheSupplyBoxQrCodeStickers(supply_id=supply_id, type_=type_, trbx_ids=trbx_ids)
         return await self(call)
 
-    get_the_supply_box_qr_code_stickers.__wrapped_cls__ = GetTheSupplyBoxQrCodeStickers
-
     async def get_the_supply_qr_code(
         self,
         supply_id: str,
@@ -4197,8 +3831,6 @@ class WbAPI:
         call = GetTheSupplyQrCode(supply_id=supply_id, type_=type_)
         return await self(call)
 
-    get_the_supply_qr_code.__wrapped_cls__ = GetTheSupplyQrCode
-
     async def get_transit_directions(
         self,
     ) -> list[TransitDirectionsResponse]:
@@ -4210,8 +3842,6 @@ class WbAPI:
         """
         call = GetTransitDirections()
         return await self(call)
-
-    get_transit_directions.__wrapped_cls__ = GetTransitDirections
 
     async def get_unanswered_feedbacks(
         self,
@@ -4225,8 +3855,6 @@ class WbAPI:
         call = GetUnansweredFeedbacks()
         return await self(call)
 
-    get_unanswered_feedbacks.__wrapped_cls__ = GetUnansweredFeedbacks
-
     async def get_unanswered_questions(
         self,
     ) -> list[UnansweredQuestionsItem]:
@@ -4238,8 +3866,6 @@ class WbAPI:
         """
         call = GetUnansweredQuestions()
         return await self(call)
-
-    get_unanswered_questions.__wrapped_cls__ = GetUnansweredQuestions
 
     async def get_unprocessed_upload_details(
         self,
@@ -4261,8 +3887,6 @@ class WbAPI:
         call = GetUnprocessedUploadDetails(limit=limit, upload_id=upload_id, offset=offset)
         return await self(call)
 
-    get_unprocessed_upload_details.__wrapped_cls__ = GetUnprocessedUploadDetails
-
     async def get_unprocessed_upload_state(
         self,
         upload_id: int,
@@ -4278,8 +3902,6 @@ class WbAPI:
         call = GetUnprocessedUploadState(upload_id=upload_id)
         return await self(call)
 
-    get_unprocessed_upload_state.__wrapped_cls__ = GetUnprocessedUploadState
-
     async def get_unseen_feedbacks_and_questions(
         self,
     ) -> list[UnseenFeedbacksAndQuestionsItem]:
@@ -4291,8 +3913,6 @@ class WbAPI:
         """
         call = GetUnseenFeedbacksAndQuestions()
         return await self(call)
-
-    get_unseen_feedbacks_and_questions.__wrapped_cls__ = GetUnseenFeedbacksAndQuestions
 
     async def get_vat_rate(
         self,
@@ -4309,14 +3929,13 @@ class WbAPI:
         call = GetVatRate(locale=locale)
         return await self(call)
 
-    get_vat_rate.__wrapped_cls__ = GetVatRate
-
     async def get_warehouse(
         self,
         date_from: str,
     ) -> list[WarehouseResponse]:
         """
-        The method returns WB warehouses inventory.
+        This method is deprecated. It will be removed on [June
+        23](https://dev.wildberries.ru/en/release-notes?id=494)
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1stocks/get
 
@@ -4325,8 +3944,6 @@ class WbAPI:
         """
         call = GetWarehouse(date_from=date_from)
         return await self(call)
-
-    get_warehouse.__wrapped_cls__ = GetWarehouse
 
     async def get_warehouse_measurements(
         self,
@@ -4357,8 +3974,6 @@ class WbAPI:
         )
         return await self(call)
 
-    get_warehouse_measurements.__wrapped_cls__ = GetWarehouseMeasurements
-
     async def get_warehouses(
         self,
     ) -> list[WarehousesResponse]:
@@ -4370,8 +3985,6 @@ class WbAPI:
         """
         call = GetWarehouses()
         return await self(call)
-
-    get_warehouses.__wrapped_cls__ = GetWarehouses
 
     async def get_warehouses_list(
         self,
@@ -4385,8 +3998,6 @@ class WbAPI:
         call = GetWarehousesList()
         return await self(call)
 
-    get_warehouses_list.__wrapped_cls__ = GetWarehousesList
-
     async def group_data(
         self,
     ) -> list[GroupDataItem]:
@@ -4399,8 +4010,6 @@ class WbAPI:
         """
         call = GroupData()
         return await self(call)
-
-    group_data.__wrapped_cls__ = GroupData
 
     async def grouped_product_cards_statistics_per_days(
         self,
@@ -4434,8 +4043,6 @@ class WbAPI:
         )
         return await self(call)
 
-    grouped_product_cards_statistics_per_days.__wrapped_cls__ = GroupedProductCardsStatisticsPerDays
-
     async def list_of_campaign_minus_phrases(
         self,
         items: list[Any],
@@ -4448,8 +4055,6 @@ class WbAPI:
         """
         call = ListOfCampaignMinusPhrases(items=items)
         return await self(call)
-
-    list_of_campaign_minus_phrases.__wrapped_cls__ = ListOfCampaignMinusPhrases
 
     async def list_of_failed_product_cards_with_errors(
         self,
@@ -4479,8 +4084,6 @@ class WbAPI:
         call = ListOfFailedProductCardsWithErrors(locale=locale, cursor=cursor, order=order)
         return await self(call)
 
-    list_of_failed_product_cards_with_errors.__wrapped_cls__ = ListOfFailedProductCardsWithErrors
-
     async def list_of_search_clusters_bids(
         self,
         items: list[Any],
@@ -4493,8 +4096,6 @@ class WbAPI:
         """
         call = ListOfSearchClustersBids(items=items)
         return await self(call)
-
-    list_of_search_clusters_bids.__wrapped_cls__ = ListOfSearchClustersBids
 
     async def main_page(
         self,
@@ -4550,8 +4151,6 @@ class WbAPI:
         )
         return await self(call)
 
-    main_page.__wrapped_cls__ = MainPage
-
     async def media_campaign_statistics(
         self,
     ) -> list[MediaCampaignStatisticsResponse]:
@@ -4565,8 +4164,6 @@ class WbAPI:
         call = MediaCampaignStatistics()
         return await self(call)
 
-    media_campaign_statistics.__wrapped_cls__ = MediaCampaignStatistics
-
     async def merging_or_separating_of_product_cards(
         self,
     ) -> list[MergingOrSeparatingOfProductCardsResponse]:
@@ -4579,8 +4176,6 @@ class WbAPI:
         """
         call = MergingOrSeparatingOfProductCards()
         return await self(call)
-
-    merging_or_separating_of_product_cards.__wrapped_cls__ = MergingOrSeparatingOfProductCards
 
     async def minimum_bids_for_product_cards(
         self,
@@ -4609,8 +4204,6 @@ class WbAPI:
         )
         return await self(call)
 
-    minimum_bids_for_product_cards.__wrapped_cls__ = MinimumBidsForProductCards
-
     async def move_the_supply_to_the_delivery(
         self,
         supply_id: str,
@@ -4627,8 +4220,6 @@ class WbAPI:
         call = MoveTheSupplyToTheDelivery(supply_id=supply_id)
         return await self(call)
 
-    move_the_supply_to_the_delivery.__wrapped_cls__ = MoveTheSupplyToTheDelivery
-
     async def notify_that_the_assembly_order_is_ready_for_pickup(
         self,
         order_id: int,
@@ -4644,10 +4235,6 @@ class WbAPI:
         """
         call = NotifyThatTheAssemblyOrderIsReadyForPickup(order_id=order_id)
         return await self(call)
-
-    notify_that_the_assembly_order_is_ready_for_pickup.__wrapped_cls__ = (
-        NotifyThatTheAssemblyOrderIsReadyForPickup
-    )
 
     async def notify_that_the_assembly_orders_are_ready_for_pickup(
         self,
@@ -4668,10 +4255,6 @@ class WbAPI:
         call = NotifyThatTheAssemblyOrdersAreReadyForPickup(orders_ids=orders_ids)
         return await self(call)
 
-    notify_that_the_assembly_orders_are_ready_for_pickup.__wrapped_cls__ = (
-        NotifyThatTheAssemblyOrdersAreReadyForPickup
-    )
-
     async def notify_that_the_buyer_has_declined_the_order(
         self,
         order_id: int,
@@ -4691,8 +4274,6 @@ class WbAPI:
         call = NotifyThatTheBuyerHasDeclinedTheOrder(order_id=order_id, code=code)
         return await self(call)
 
-    notify_that_the_buyer_has_declined_the_order.__wrapped_cls__ = NotifyThatTheBuyerHasDeclinedTheOrder
-
     async def notify_that_the_buyer_refused_the_order(
         self,
         order_id: int,
@@ -4708,8 +4289,6 @@ class WbAPI:
         """
         call = NotifyThatTheBuyerRefusedTheOrder(order_id=order_id)
         return await self(call)
-
-    notify_that_the_buyer_refused_the_order.__wrapped_cls__ = NotifyThatTheBuyerRefusedTheOrder
 
     async def notify_that_the_order_has_been_accepted_by_the_buyer(
         self,
@@ -4730,10 +4309,6 @@ class WbAPI:
         call = NotifyThatTheOrderHasBeenAcceptedByTheBuyer(order_id=order_id, code=code)
         return await self(call)
 
-    notify_that_the_order_has_been_accepted_by_the_buyer.__wrapped_cls__ = (
-        NotifyThatTheOrderHasBeenAcceptedByTheBuyer
-    )
-
     async def notify_that_the_orders_are_declined(
         self,
         orders: list[Any],
@@ -4750,8 +4325,6 @@ class WbAPI:
         call = NotifyThatTheOrdersAreDeclined(orders=orders)
         return await self(call)
 
-    notify_that_the_orders_are_declined.__wrapped_cls__ = NotifyThatTheOrdersAreDeclined
-
     async def notify_that_the_orders_are_received(
         self,
         orders: list[Any],
@@ -4767,8 +4340,6 @@ class WbAPI:
         """
         call = NotifyThatTheOrdersAreReceived(orders=orders)
         return await self(call)
-
-    notify_that_the_orders_are_received.__wrapped_cls__ = NotifyThatTheOrdersAreReceived
 
     async def notify_that_the_orders_were_received_by_the_buyers(
         self,
@@ -4788,10 +4359,6 @@ class WbAPI:
         """
         call = NotifyThatTheOrdersWereReceivedByTheBuyers(orders_ids=orders_ids)
         return await self(call)
-
-    notify_that_the_orders_were_received_by_the_buyers.__wrapped_cls__ = (
-        NotifyThatTheOrdersWereReceivedByTheBuyers
-    )
 
     async def orders_and_positions_by_product_search_texts(
         self,
@@ -4819,8 +4386,6 @@ class WbAPI:
         )
         return await self(call)
 
-    orders_and_positions_by_product_search_texts.__wrapped_cls__ = OrdersAndPositionsByProductSearchTexts
-
     async def orders_with_client_information(
         self,
         orders: list[int] | None = None,
@@ -4836,8 +4401,6 @@ class WbAPI:
         """
         call = OrdersWithClientInformation(orders=orders)
         return await self(call)
-
-    orders_with_client_information.__wrapped_cls__ = OrdersWithClientInformation
 
     async def pagination_by_groups(
         self,
@@ -4893,8 +4456,6 @@ class WbAPI:
         )
         return await self(call)
 
-    pagination_by_groups.__wrapped_cls__ = PaginationByGroups
-
     async def pagination_by_products_within_a_group(
         self,
         current_period: dict[str, Any],
@@ -4949,8 +4510,6 @@ class WbAPI:
         )
         return await self(call)
 
-    pagination_by_products_within_a_group.__wrapped_cls__ = PaginationByProductsWithinAGroup
-
     async def pin_feedback(
         self,
     ) -> list[PinFeedbackResponse]:
@@ -4968,8 +4527,6 @@ class WbAPI:
         call = PinFeedback()
         return await self(call)
 
-    pin_feedback.__wrapped_cls__ = PinFeedback
-
     async def product_cards_for_campaigns(
         self,
     ) -> list[ProductCardsForCampaignsResponse]:
@@ -4981,8 +4538,6 @@ class WbAPI:
         """
         call = ProductCardsForCampaigns()
         return await self(call)
-
-    product_cards_for_campaigns.__wrapped_cls__ = ProductCardsForCampaigns
 
     async def product_cards_in_trash_list(
         self,
@@ -5001,8 +4556,6 @@ class WbAPI:
         call = ProductCardsInTrashList(locale=locale, settings=settings)
         return await self(call)
 
-    product_cards_in_trash_list.__wrapped_cls__ = ProductCardsInTrashList
-
     async def product_cards_list(
         self,
         locale: str | None = None,
@@ -5019,8 +4572,6 @@ class WbAPI:
         """
         call = ProductCardsList(locale=locale, settings=settings)
         return await self(call)
-
-    product_cards_list.__wrapped_cls__ = ProductCardsList
 
     async def product_cards_statistics_per_days(
         self,
@@ -5047,8 +4598,6 @@ class WbAPI:
             aggregation_level=aggregation_level,
         )
         return await self(call)
-
-    product_cards_statistics_per_days.__wrapped_cls__ = ProductCardsStatisticsPerDays
 
     async def product_cards_statistics_per_period(
         self,
@@ -5095,8 +4644,6 @@ class WbAPI:
         )
         return await self(call)
 
-    product_cards_statistics_per_period.__wrapped_cls__ = ProductCardsStatisticsPerPeriod
-
     async def product_data(
         self,
     ) -> list[ProductDataItem]:
@@ -5110,8 +4657,6 @@ class WbAPI:
         """
         call = ProductData()
         return await self(call)
-
-    product_data.__wrapped_cls__ = ProductData
 
     async def recover_product_card_from_trash(
         self,
@@ -5127,8 +4672,6 @@ class WbAPI:
         """
         call = RecoverProductCardFromTrash(nm_i_ds=nm_i_ds)
         return await self(call)
-
-    recover_product_card_from_trash.__wrapped_cls__ = RecoverProductCardFromTrash
 
     async def regenerate_the_report(
         self,
@@ -5149,8 +4692,6 @@ class WbAPI:
         call = RegenerateTheReport(download_id=download_id)
         return await self(call)
 
-    regenerate_the_report.__wrapped_cls__ = RegenerateTheReport
-
     async def rename_campaign(
         self,
         advert_id: int,
@@ -5167,8 +4708,6 @@ class WbAPI:
         """
         call = RenameCampaign(advert_id=advert_id, name=name)
         return await self(call)
-
-    rename_campaign.__wrapped_cls__ = RenameCampaign
 
     async def reply_to_feedback(
         self,
@@ -5187,8 +4726,6 @@ class WbAPI:
         """
         call = ReplyToFeedback(id_=id_, text=text)
         return await self(call)
-
-    reply_to_feedback.__wrapped_cls__ = ReplyToFeedback
 
     async def report_on_products_with_mandatory_labeling(
         self,
@@ -5214,8 +4751,6 @@ class WbAPI:
         )
         return await self(call)
 
-    report_on_products_with_mandatory_labeling.__wrapped_cls__ = ReportOnProductsWithMandatoryLabeling
-
     async def return_product_by_feedback_id(
         self,
         feedback_id: str | None = None,
@@ -5231,8 +4766,6 @@ class WbAPI:
         """
         call = ReturnProductByFeedbackId(feedback_id=feedback_id)
         return await self(call)
-
-    return_product_by_feedback_id.__wrapped_cls__ = ReturnProductByFeedbackId
 
     async def search_clusters_statistics(
         self,
@@ -5252,8 +4785,6 @@ class WbAPI:
         """
         call = SearchClustersStatistics(from_=from_, to=to, items=items)
         return await self(call)
-
-    search_clusters_statistics.__wrapped_cls__ = SearchClustersStatistics
 
     async def search_texts_by_product(
         self,
@@ -5294,8 +4825,6 @@ class WbAPI:
         )
         return await self(call)
 
-    search_texts_by_product.__wrapped_cls__ = SearchTextsByProduct
-
     async def send_message(
         self,
     ) -> list[SendMessageItem]:
@@ -5307,8 +4836,6 @@ class WbAPI:
         """
         call = SendMessage()
         return await self(call)
-
-    send_message.__wrapped_cls__ = SendMessage
 
     async def set_bids_for_search_clusters(
         self,
@@ -5323,8 +4850,6 @@ class WbAPI:
         """
         call = SetBidsForSearchClusters(bids=bids)
         return await self(call)
-
-    set_bids_for_search_clusters.__wrapped_cls__ = SetBidsForSearchClusters
 
     async def set_prices_and_discounts(
         self,
@@ -5342,8 +4867,6 @@ class WbAPI:
         call = SetPricesAndDiscounts(data=data)
         return await self(call)
 
-    set_prices_and_discounts.__wrapped_cls__ = SetPricesAndDiscounts
-
     async def set_size_prices(
         self,
         data: list[Any],
@@ -5359,8 +4882,6 @@ class WbAPI:
         call = SetSizePrices(data=data)
         return await self(call)
 
-    set_size_prices.__wrapped_cls__ = SetSizePrices
-
     async def set_wb_club_discounts(
         self,
         data: list[Any],
@@ -5375,8 +4896,6 @@ class WbAPI:
         """
         call = SetWbClubDiscounts(data=data)
         return await self(call)
-
-    set_wb_club_discounts.__wrapped_cls__ = SetWbClubDiscounts
 
     async def setting_and_deleting_minus_phrases(
         self,
@@ -5399,8 +4918,6 @@ class WbAPI:
             norm_queries=norm_queries,
         )
         return await self(call)
-
-    setting_and_deleting_minus_phrases.__wrapped_cls__ = SettingAndDeletingMinusPhrases
 
     async def size_data(
         self,
@@ -5427,8 +4944,6 @@ class WbAPI:
         call = SizeData()
         return await self(call)
 
-    size_data.__wrapped_cls__ = SizeData
-
     async def status_history_for_crossborder_orders(
         self,
         orders: list[int] | None = None,
@@ -5443,8 +4958,6 @@ class WbAPI:
         """
         call = StatusHistoryForCrossborderOrders(orders=orders)
         return await self(call)
-
-    status_history_for_crossborder_orders.__wrapped_cls__ = StatusHistoryForCrossborderOrders
 
     async def supplies_list(
         self,
@@ -5467,8 +4980,6 @@ class WbAPI:
         call = SuppliesList(limit=limit, offset=offset, dates=dates, status_i_ds=status_i_ds)
         return await self(call)
 
-    supplies_list.__wrapped_cls__ = SuppliesList
-
     async def tag_management_in_the_product_card(
         self,
         nm_id: int | None = None,
@@ -5487,8 +4998,6 @@ class WbAPI:
         """
         call = TagManagementInTheProductCard(nm_id=nm_id, tags_i_ds=tags_i_ds)
         return await self(call)
-
-    tag_management_in_the_product_card.__wrapped_cls__ = TagManagementInTheProductCard
 
     async def topup_of_the_campaign_budget(
         self,
@@ -5528,8 +5037,6 @@ class WbAPI:
         )
         return await self(call)
 
-    topup_of_the_campaign_budget.__wrapped_cls__ = TopupOfTheCampaignBudget
-
     async def transfer_product_card_to_trash(
         self,
         nm_i_ds: list[int] | None = None,
@@ -5546,8 +5053,6 @@ class WbAPI:
         call = TransferProductCardToTrash(nm_i_ds=nm_i_ds)
         return await self(call)
 
-    transfer_product_card_to_trash.__wrapped_cls__ = TransferProductCardToTrash
-
     async def transfer_to_assembly(
         self,
         order_id: int,
@@ -5562,8 +5067,6 @@ class WbAPI:
         """
         call = TransferToAssembly(order_id=order_id)
         return await self(call)
-
-    transfer_to_assembly.__wrapped_cls__ = TransferToAssembly
 
     async def transfer_to_delivery(
         self,
@@ -5583,8 +5086,6 @@ class WbAPI:
         call = TransferToDelivery(order_id=order_id)
         return await self(call)
 
-    transfer_to_delivery.__wrapped_cls__ = TransferToDelivery
-
     async def unpin_feedback(
         self,
     ) -> list[UnpinFeedbackResponse]:
@@ -5599,8 +5100,6 @@ class WbAPI:
         """
         call = UnpinFeedback()
         return await self(call)
-
-    unpin_feedback.__wrapped_cls__ = UnpinFeedback
 
     async def update_contacts_list(
         self,
@@ -5618,8 +5117,6 @@ class WbAPI:
         call = UpdateContactsList(warehouse_id=warehouse_id, contacts=contacts)
         return await self(call)
 
-    update_contacts_list.__wrapped_cls__ = UpdateContactsList
-
     async def update_inventory(
         self,
         warehouse_id: int,
@@ -5636,8 +5133,6 @@ class WbAPI:
         """
         call = UpdateInventory(warehouse_id=warehouse_id, stocks=stocks)
         return await self(call)
-
-    update_inventory.__wrapped_cls__ = UpdateInventory
 
     async def update_pass(
         self,
@@ -5671,8 +5166,6 @@ class WbAPI:
         )
         return await self(call)
 
-    update_pass.__wrapped_cls__ = UpdatePass
-
     async def update_product_cards(
         self,
     ) -> list[UpdateProductCardsResponse]:
@@ -5684,8 +5177,6 @@ class WbAPI:
         """
         call = UpdateProductCards()
         return await self(call)
-
-    update_product_cards.__wrapped_cls__ = UpdateProductCards
 
     async def update_the_tag(
         self,
@@ -5706,8 +5197,6 @@ class WbAPI:
         call = UpdateTheTag(id_=id_, color=color, name=name)
         return await self(call)
 
-    update_the_tag.__wrapped_cls__ = UpdateTheTag
-
     async def update_users_access_permissions(
         self,
         users_accesses: list[Any],
@@ -5722,8 +5211,6 @@ class WbAPI:
         """
         call = UpdateUsersAccessPermissions(users_accesses=users_accesses)
         return await self(call)
-
-    update_users_access_permissions.__wrapped_cls__ = UpdateUsersAccessPermissions
 
     async def update_warehouse(
         self,
@@ -5745,8 +5232,6 @@ class WbAPI:
         call = UpdateWarehouse(warehouse_id=warehouse_id, name=name, office_id=office_id)
         return await self(call)
 
-    update_warehouse.__wrapped_cls__ = UpdateWarehouse
-
     async def upload_media_file(
         self,
         x_nm_id: str,
@@ -5763,8 +5248,6 @@ class WbAPI:
         """
         call = UploadMediaFile(x_nm_id=x_nm_id, x_photo_number=x_photo_number)
         return await self(call)
-
-    upload_media_file.__wrapped_cls__ = UploadMediaFile
 
     async def upload_media_files_via_links(
         self,
@@ -5785,8 +5268,6 @@ class WbAPI:
         call = UploadMediaFilesViaLinks(nm_id=nm_id, data=data)
         return await self(call)
 
-    upload_media_files_via_links.__wrapped_cls__ = UploadMediaFilesViaLinks
-
     async def warehouse_data(
         self,
     ) -> list[WarehouseDataItem]:
@@ -5801,7 +5282,27 @@ class WbAPI:
         call = WarehouseData()
         return await self(call)
 
-    warehouse_data.__wrapped_cls__ = WarehouseData
+    async def wb_warehouses_inventory(
+        self,
+        nm_ids: list[int] | None = None,
+        chrt_ids: list[int] | None = None,
+        limit: int | None = 250000,
+        offset: int | None = 0,
+    ) -> list[WbWarehousesInventoryItem]:
+        """
+        Method is available by token types : Personal , Service
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1analytics~1v1~1stocks-report~1wb-warehouses/post
+
+        :param nm_ids: WB articles
+        :param chrt_ids: Size IDs. It is used only for the articles specified in the `nmIds` array
+        :param limit: Number of rows in the response
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :return: list[WbWarehousesInventoryItem]
+        """
+        call = WbWarehousesInventory(nm_ids=nm_ids, chrt_ids=chrt_ids, limit=limit, offset=offset)
+        return await self(call)
 
     async def working_with_questions(
         self,
@@ -5815,8 +5316,6 @@ class WbAPI:
         """
         call = WorkingWithQuestions()
         return await self(call)
-
-    working_with_questions.__wrapped_cls__ = WorkingWithQuestions
 
     # --- unofficial methods (hand-written, not generated) ---
 

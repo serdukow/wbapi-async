@@ -22,7 +22,6 @@ class GetProductsWithPrices(WbMethod):
     __api__ = "discounts-prices-api"
     __method__ = "api/v2/list/goods/filter"
     __data_key__ = "data.listGoods"
-    __pagination__ = "offset"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

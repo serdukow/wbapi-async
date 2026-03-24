@@ -33,10 +33,10 @@ __all__ = (
     "SalesResponse",
     "SelfpurchasesItem",
     "SellerBrandsItem",
-    "Sort",
-    "SortBlocked",
-    "SortShadowed",
     "SubstitutionsAndIncorrectAttachmentsItem",
     "WarehouseMeasurementsItem",
     "WarehouseResponse",
+    "Sort",
+    "SortBlocked",
+    "SortShadowed",
 )

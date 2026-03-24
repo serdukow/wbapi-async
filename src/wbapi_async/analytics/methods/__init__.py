@@ -14,6 +14,7 @@ from .regenerate_the_report import RegenerateTheReport
 from .search_texts_by_product import SearchTextsByProduct
 from .size_data import SizeData
 from .warehouse_data import WarehouseData
+from .wb_warehouses_inventory import WbWarehousesInventory
 
 
 __all__ = (
@@ -33,4 +34,5 @@ __all__ = (
     "SearchTextsByProduct",
     "SizeData",
     "WarehouseData",
+    "WbWarehousesInventory",
 )

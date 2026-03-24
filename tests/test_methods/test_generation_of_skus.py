@@ -1,20 +1,13 @@
 import pytest
 
-from wbapi_async.types import GenerationOfSkusItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import GenerationOfSkusItem
 
 
 @pytest.mark.unit
 class TestGenerationOfSkus:
-
     async def test_generation_of_skus(self, api: MockedAPI) -> None:
-        api.add_response(
-            {
-            "data": [{
-
-            }]
-        }
-        )
+        api.add_response({"data": [{}]})
 
         result = await api.generation_of_skus()
 

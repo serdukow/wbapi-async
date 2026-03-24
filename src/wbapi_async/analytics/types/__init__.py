@@ -16,6 +16,7 @@ from .size_data_item import SizeDataItem
 from .the_report_response import TheReportResponse
 from .the_reports_list_item import TheReportsListItem
 from .warehouse_data_item import WarehouseDataItem
+from .wb_warehouses_inventory_item import WbWarehousesInventoryItem
 
 
 __all__ = (
@@ -35,4 +36,5 @@ __all__ = (
     "TheReportResponse",
     "TheReportsListItem",
     "WarehouseDataItem",
+    "WbWarehousesInventoryItem",
 )

@@ -1,34 +1,35 @@
 import pytest
 
-from wbapi_async.types import PromotionsDetailsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import PromotionsDetailsItem
 
 
 @pytest.mark.unit
 class TestGetPromotionsDetails:
-
     async def test_get_promotions_details(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": {
-            "promotions": [{
-                "id": 1,
-                "name": "name",
-                "description": "description",
-                "advantages": [],
-                "startDateTime": "startDateTime",
-                "endDateTime": "endDateTime",
-                "inPromoActionLeftovers": 1,
-                "inPromoActionTotal": 1,
-                "notInPromoActionLeftovers": 1,
-                "notInPromoActionTotal": 1,
-                "participationPercentage": 1,
-                "type": "type",
-                "exceptionProductsCount": 1,
-                "ranging": [],
-            }]
-        }
-        }
+                "data": {
+                    "promotions": [
+                        {
+                            "id": 1,
+                            "name": "name",
+                            "description": "description",
+                            "advantages": [],
+                            "startDateTime": "startDateTime",
+                            "endDateTime": "endDateTime",
+                            "inPromoActionLeftovers": 1,
+                            "inPromoActionTotal": 1,
+                            "notInPromoActionLeftovers": 1,
+                            "notInPromoActionTotal": 1,
+                            "participationPercentage": 1,
+                            "type": "type",
+                            "exceptionProductsCount": 1,
+                            "ranging": [],
+                        }
+                    ]
+                }
+            }
         )
 
         result = await api.get_promotions_details(promotion_i_ds=[])

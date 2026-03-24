@@ -19,10 +19,10 @@ from .types.size_data_item import SizeDataItem
 from .types.the_report_response import TheReportResponse
 from .types.the_reports_list_item import TheReportsListItem
 from .types.warehouse_data_item import WarehouseDataItem
+from .types.wb_warehouses_inventory_item import WbWarehousesInventoryItem
 
 
 __all__ = (
-    "AggregationLevel",
     "CreateTheReportResponse",
     "GroupDataItem",
     "GroupedProductCardsStatisticsPerDaysItem",
@@ -30,7 +30,6 @@ __all__ = (
     "OrdersAndPositionsByProductSearchTextsResponse",
     "PaginationByGroupsResponse",
     "PaginationByProductsWithinAGroupResponse",
-    "PositionCluster",
     "ProductCardsStatisticsPerDaysResponse",
     "ProductCardsStatisticsPerPeriodResponse",
     "ProductDataItem",
@@ -39,6 +38,9 @@ __all__ = (
     "SizeDataItem",
     "TheReportResponse",
     "TheReportsListItem",
-    "TopOrderBy",
     "WarehouseDataItem",
+    "WbWarehousesInventoryItem",
+    "AggregationLevel",
+    "PositionCluster",
+    "TopOrderBy",
 )

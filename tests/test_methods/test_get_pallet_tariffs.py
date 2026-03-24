@@ -1,28 +1,29 @@
 import pytest
 
-from wbapi_async.types import PalletTariffsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import PalletTariffsItem
 
 
 @pytest.mark.unit
 class TestGetPalletTariffs:
-
     async def test_get_pallet_tariffs(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "response": {
-            "data": {
-            "warehouseList": [{
-                "palletDeliveryExpr": "palletDeliveryExpr",
-                "palletDeliveryValueBase": "palletDeliveryValueBase",
-                "palletDeliveryValueLiter": "palletDeliveryValueLiter",
-                "palletStorageExpr": "palletStorageExpr",
-                "palletStorageValueExpr": "palletStorageValueExpr",
-                "warehouseName": "warehouseName",
-            }]
-        }
-        }
-        }
+                "response": {
+                    "data": {
+                        "warehouseList": [
+                            {
+                                "palletDeliveryExpr": "palletDeliveryExpr",
+                                "palletDeliveryValueBase": "palletDeliveryValueBase",
+                                "palletDeliveryValueLiter": "palletDeliveryValueLiter",
+                                "palletStorageExpr": "palletStorageExpr",
+                                "palletStorageValueExpr": "palletStorageValueExpr",
+                                "warehouseName": "warehouseName",
+                            }
+                        ]
+                    }
+                }
+            }
         )
 
         result = await api.get_pallet_tariffs(date="date")

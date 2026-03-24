@@ -1,23 +1,24 @@
 import pytest
 
-from wbapi_async.types import BlockedProductCardsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import BlockedProductCardsItem
 
 
 @pytest.mark.unit
 class TestGetBlockedProductCards:
-
     async def test_get_blocked_product_cards(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "report": [{
-                "brand": "brand",
-                "nmId": 1,
-                "title": "title",
-                "vendorCode": "vendorCode",
-                "reason": "reason",
-            }]
-        }
+                "report": [
+                    {
+                        "brand": "brand",
+                        "nmId": 1,
+                        "title": "title",
+                        "vendorCode": "vendorCode",
+                        "reason": "reason",
+                    }
+                ]
+            }
         )
 
         result = await api.get_blocked_product_cards(sort="brand", order="desc")

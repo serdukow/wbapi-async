@@ -1,17 +1,18 @@
 import pytest
 
-from wbapi_async.types import RegenerateTheReportResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import RegenerateTheReportResponse
 
 
 @pytest.mark.unit
 class TestRegenerateTheReport:
-
     async def test_regenerate_the_report(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "data": "data",
-            }]
+            [
+                {
+                    "data": "data",
+                }
+            ]
         )
 
         result = await api.regenerate_the_report()

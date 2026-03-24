@@ -18,7 +18,6 @@ class PaginationByProductsWithinAGroup(WbMethod):
     __api__ = "seller-analytics-api"
     __method__ = "api/v2/search-report/table/details"
     __http_method__ = "POST"
-    __pagination__ = "offset"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

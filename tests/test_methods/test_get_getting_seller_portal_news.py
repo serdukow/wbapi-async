@@ -1,23 +1,24 @@
 import pytest
 
-from wbapi_async.types import GettingSellerPortalNewsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import GettingSellerPortalNewsItem
 
 
 @pytest.mark.unit
 class TestGetGettingSellerPortalNews:
-
     async def test_get_getting_seller_portal_news(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": [{
-                "content": "content",
-                "date": "date",
-                "header": "header",
-                "id": 1,
-                "types": [],
-            }]
-        }
+                "data": [
+                    {
+                        "content": "content",
+                        "date": "date",
+                        "header": "header",
+                        "id": 1,
+                        "types": [],
+                    }
+                ]
+            }
         )
 
         result = await api.get_getting_seller_portal_news()
