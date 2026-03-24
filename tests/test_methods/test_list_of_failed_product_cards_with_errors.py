@@ -1,25 +1,26 @@
 import pytest
 
-from wbapi_async.types import ListOfFailedProductCardsWithErrorsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ListOfFailedProductCardsWithErrorsItem
 
 
 @pytest.mark.unit
 class TestListOfFailedProductCardsWithErrors:
-
     async def test_list_of_failed_product_cards_with_errors(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": {
-            "items": [{
-                "batchUUID": "batchUUID",
-                "subjects": {},
-                "brands": {},
-                "vendorCodes": [],
-                "errors": {},
-            }]
-        }
-        }
+                "data": {
+                    "items": [
+                        {
+                            "batchUUID": "batchUUID",
+                            "subjects": {},
+                            "brands": {},
+                            "vendorCodes": [],
+                            "errors": {},
+                        }
+                    ]
+                }
+            }
         )
 
         result = await api.list_of_failed_product_cards_with_errors()

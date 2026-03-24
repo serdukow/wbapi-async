@@ -1,17 +1,18 @@
 import pytest
 
-from wbapi_async.types import CreateTheReportResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import CreateTheReportResponse
 
 
 @pytest.mark.unit
 class TestCreateTheReport:
-
     async def test_create_the_report(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "data": "data",
-            }]
+            [
+                {
+                    "data": "data",
+                }
+            ]
         )
 
         result = await api.create_the_report()

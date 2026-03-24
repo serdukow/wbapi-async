@@ -1,17 +1,18 @@
 import pytest
 
-from wbapi_async.types import AddProductToThePromotionResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import AddProductToThePromotionResponse
 
 
 @pytest.mark.unit
 class TestAddProductToThePromotion:
-
     async def test_add_product_to_the_promotion(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "data": {},
-            }]
+            [
+                {
+                    "data": {},
+                }
+            ]
         )
 
         result = await api.add_product_to_the_promotion()

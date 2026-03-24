@@ -1,30 +1,31 @@
 import pytest
 
-from wbapi_async.types import ProductCardsInTrashListItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ProductCardsInTrashListItem
 
 
 @pytest.mark.unit
 class TestProductCardsInTrashList:
-
     async def test_product_cards_in_trash_list(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "cards": [{
-                "nmID": 1,
-                "vendorCode": "vendorCode",
-                "subjectID": 1,
-                "subjectName": "subjectName",
-                "photos": [],
-                "video": "video",
-                "wholesale": {},
-                "sizes": [],
-                "dimensions": {},
-                "characteristics": [],
-                "createdAt": "createdAt",
-                "trashedAt": "trashedAt",
-            }]
-        }
+                "cards": [
+                    {
+                        "nmID": 1,
+                        "vendorCode": "vendorCode",
+                        "subjectID": 1,
+                        "subjectName": "subjectName",
+                        "photos": [],
+                        "video": "video",
+                        "wholesale": {},
+                        "sizes": [],
+                        "dimensions": {},
+                        "characteristics": [],
+                        "createdAt": "createdAt",
+                        "trashedAt": "trashedAt",
+                    }
+                ]
+            }
         )
 
         result = await api.product_cards_in_trash_list()

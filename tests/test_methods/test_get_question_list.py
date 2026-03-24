@@ -1,28 +1,29 @@
 import pytest
 
-from wbapi_async.types import QuestionListItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import QuestionListItem
 
 
 @pytest.mark.unit
 class TestGetQuestionList:
-
     async def test_get_question_list(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": {
-            "questions": [{
-                "id": "id",
-                "text": "text",
-                "createdDate": "createdDate",
-                "state": "state",
-                "answer": {},
-                "productDetails": {},
-                "wasViewed": True,
-                "isWarned": True,
-            }]
-        }
-        }
+                "data": {
+                    "questions": [
+                        {
+                            "id": "id",
+                            "text": "text",
+                            "createdDate": "createdDate",
+                            "state": "state",
+                            "answer": {},
+                            "productDetails": {},
+                            "wasViewed": True,
+                            "isWarned": True,
+                        }
+                    ]
+                }
+            }
         )
 
         result = await api.get_question_list(is_answered=True, take=1, skip=1)

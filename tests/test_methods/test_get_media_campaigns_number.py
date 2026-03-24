@@ -1,18 +1,19 @@
 import pytest
 
-from wbapi_async.types import MediaCampaignsNumberResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import MediaCampaignsNumberResponse
 
 
 @pytest.mark.unit
 class TestGetMediaCampaignsNumber:
-
     async def test_get_media_campaigns_number(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "all": 1,
-                "adverts": {},
-            }]
+            [
+                {
+                    "all": 1,
+                    "adverts": {},
+                }
+            ]
         )
 
         result = await api.get_media_campaigns_number()

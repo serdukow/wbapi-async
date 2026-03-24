@@ -1,21 +1,22 @@
 import pytest
 
-from wbapi_async.types import ListOfCampaignMinusPhrasesItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ListOfCampaignMinusPhrasesItem
 
 
 @pytest.mark.unit
 class TestListOfCampaignMinusPhrases:
-
     async def test_list_of_campaign_minus_phrases(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "items": [{
-                "advert_id": 1,
-                "nm_id": 1,
-                "norm_queries": [],
-            }]
-        }
+                "items": [
+                    {
+                        "advert_id": 1,
+                        "nm_id": 1,
+                        "norm_queries": [],
+                    }
+                ]
+            }
         )
 
         result = await api.list_of_campaign_minus_phrases(items=[])

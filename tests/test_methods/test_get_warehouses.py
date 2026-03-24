@@ -1,23 +1,24 @@
 import pytest
 
-from wbapi_async.types import WarehousesResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import WarehousesResponse
 
 
 @pytest.mark.unit
 class TestGetWarehouses:
-
     async def test_get_warehouses(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "name": "name",
-                "officeId": 1,
-                "id": 1,
-                "cargoType": 1,
-                "deliveryType": 1,
-                "isDeleting": True,
-                "isProcessing": True,
-            }]
+            [
+                {
+                    "name": "name",
+                    "officeId": 1,
+                    "id": 1,
+                    "cargoType": 1,
+                    "deliveryType": 1,
+                    "isDeleting": True,
+                    "isProcessing": True,
+                }
+            ]
         )
 
         result = await api.get_warehouses()

@@ -1,21 +1,22 @@
 import pytest
 
-from wbapi_async.types import TransitDirectionsResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import TransitDirectionsResponse
 
 
 @pytest.mark.unit
 class TestGetTransitDirections:
-
     async def test_get_transit_directions(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "transitWarehouseName": "transitWarehouseName",
-                "destinationWarehouseName": "destinationWarehouseName",
-                "activeFrom": "activeFrom",
-                "boxTariff": [],
-                "palletTariff": 1,
-            }]
+            [
+                {
+                    "transitWarehouseName": "transitWarehouseName",
+                    "destinationWarehouseName": "destinationWarehouseName",
+                    "activeFrom": "activeFrom",
+                    "boxTariff": [],
+                    "palletTariff": 1,
+                }
+            ]
         )
 
         result = await api.get_transit_directions()

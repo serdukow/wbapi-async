@@ -1,23 +1,24 @@
 import pytest
 
-from wbapi_async.types import SelfpurchasesItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import SelfpurchasesItem
 
 
 @pytest.mark.unit
 class TestGetSelfpurchases:
-
     async def test_get_selfpurchases(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "details": [{
-                "nmID": 1,
-                "sum": 1,
-                "currency": "currency",
-                "dateFrom": "dateFrom",
-                "dateTo": "dateTo",
-            }]
-        }
+                "details": [
+                    {
+                        "nmID": 1,
+                        "sum": 1,
+                        "currency": "currency",
+                        "dateFrom": "dateFrom",
+                        "dateTo": "dateTo",
+                    }
+                ]
+            }
         )
 
         result = await api.get_selfpurchases()
