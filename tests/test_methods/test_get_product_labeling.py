@@ -1,25 +1,26 @@
 import pytest
 
-from wbapi_async.types import ProductLabelingItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ProductLabelingItem
 
 
 @pytest.mark.unit
 class TestGetProductLabeling:
-
     async def test_get_product_labeling(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "report": [{
-                "amount": 1.0,
-                "date": "date",
-                "incomeId": 1,
-                "nmID": 1,
-                "photoUrls": [],
-                "shkID": 1,
-                "sku": "sku",
-            }]
-        }
+                "report": [
+                    {
+                        "amount": 1.0,
+                        "date": "date",
+                        "incomeId": 1,
+                        "nmID": 1,
+                        "photoUrls": [],
+                        "shkID": 1,
+                        "sku": "sku",
+                    }
+                ]
+            }
         )
 
         result = await api.get_product_labeling(date_from="date_from", date_to="date_to")

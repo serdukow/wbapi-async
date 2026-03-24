@@ -1,19 +1,20 @@
 import pytest
 
-from wbapi_async.types import ProductCardsStatisticsPerDaysResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ProductCardsStatisticsPerDaysResponse
 
 
 @pytest.mark.unit
 class TestProductCardsStatisticsPerDays:
-
     async def test_product_cards_statistics_per_days(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "product": None,
-                "history": [],
-                "currency": "currency",
-            }]
+            [
+                {
+                    "product": None,
+                    "history": [],
+                    "currency": "currency",
+                }
+            ]
         )
 
         result = await api.product_cards_statistics_per_days(selected_period=None, nm_ids=[])

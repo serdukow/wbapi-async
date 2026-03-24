@@ -274,6 +274,7 @@ from ..methods import (
     UploadMediaFilesViaLinks,
     WarehouseData,
     WbMethod,
+    WbWarehousesInventory,
     WorkingWithQuestions,
 )
 from ..types import (
@@ -475,6 +476,7 @@ from ..types import (
     WarehouseResponse,
     WarehousesListResponse,
     WarehousesResponse,
+    WbWarehousesInventoryItem,
     WorkingWithQuestionsItem,
 )
 from ..utils.token import validate_token
@@ -4316,7 +4318,8 @@ class WbAPI:
         date_from: str,
     ) -> list[WarehouseResponse]:
         """
-        The method returns WB warehouses inventory.
+        This method is deprecated. It will be removed on [June
+        23](https://dev.wildberries.ru/en/release-notes?id=494)
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1stocks/get
 
@@ -5802,6 +5805,30 @@ class WbAPI:
         return await self(call)
 
     warehouse_data.__wrapped_cls__ = WarehouseData
+
+    async def wb_warehouses_inventory(
+        self,
+        nm_ids: list[int] | None = None,
+        chrt_ids: list[int] | None = None,
+        limit: int | None = 250000,
+        offset: int | None = 0,
+    ) -> list[WbWarehousesInventoryItem]:
+        """
+        Method is available by token types : Personal , Service
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1analytics~1v1~1stocks-report~1wb-warehouses/post
+
+        :param nm_ids: WB articles
+        :param chrt_ids: Size IDs. It is used only for the articles specified in the `nmIds` array
+        :param limit: Number of rows in the response
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :return: list[WbWarehousesInventoryItem]
+        """
+        call = WbWarehousesInventory(nm_ids=nm_ids, chrt_ids=chrt_ids, limit=limit, offset=offset)
+        return await self(call)
+
+    wb_warehouses_inventory.__wrapped_cls__ = WbWarehousesInventory
 
     async def working_with_questions(
         self,

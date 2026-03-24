@@ -16,6 +16,7 @@ from ..analytics.methods.regenerate_the_report import RegenerateTheReport
 from ..analytics.methods.search_texts_by_product import SearchTextsByProduct
 from ..analytics.methods.size_data import SizeData
 from ..analytics.methods.warehouse_data import WarehouseData
+from ..analytics.methods.wb_warehouses_inventory import WbWarehousesInventory
 from ..communications.methods.answer_buyers_application import AnswerBuyersApplication
 from ..communications.methods.edit_response_to_feedback import EditResponseToFeedback
 from ..communications.methods.get_buyers_return_applications import GetBuyersReturnApplications
@@ -556,5 +557,6 @@ __all__ = (
     "UploadMediaFilesViaLinks",
     "WarehouseData",
     "WbMethod",
+    "WbWarehousesInventory",
     "WorkingWithQuestions",
 )

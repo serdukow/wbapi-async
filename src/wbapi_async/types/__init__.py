@@ -22,6 +22,7 @@ from ..analytics.types.size_data_item import SizeDataItem
 from ..analytics.types.the_report_response import TheReportResponse
 from ..analytics.types.the_reports_list_item import TheReportsListItem
 from ..analytics.types.warehouse_data_item import WarehouseDataItem
+from ..analytics.types.wb_warehouses_inventory_item import WbWarehousesInventoryItem
 from ..communications.types.answer_buyers_application_response import AnswerBuyersApplicationResponse
 from ..communications.types.buyers_return_applications_item import BuyersReturnApplicationsItem
 from ..communications.types.chat_events_item import ChatEventsItem
@@ -598,5 +599,6 @@ __all__ = (
     "WarehouseResponse",
     "WarehousesListResponse",
     "WarehousesResponse",
+    "WbWarehousesInventoryItem",
     "WorkingWithQuestionsItem",
 )

@@ -21,6 +21,7 @@ from wbapi_async.types.base import BaseType
 
 def _bound(api: MockedAPI, method_cls: type) -> Any:
     """Create a fake bound method with __wrapped_cls__ — mirrors what codegen generates."""
+
     class _FakeBound:
         __self__ = api
         __name__ = method_cls.__name__
@@ -32,6 +33,7 @@ def _bound(api: MockedAPI, method_cls: type) -> Any:
 # ---------------------------------------------------------------------------
 # Minimal return type and WbMethod subclasses for each pagination pattern
 # ---------------------------------------------------------------------------
+
 
 class _Item(BaseType):
     id: int = 0
@@ -67,6 +69,7 @@ class _TakeSkipMethod(WbMethod):
 # ---------------------------------------------------------------------------
 # Unit tests for individual strategies
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.unit
 class TestOffsetPagination:
@@ -179,6 +182,7 @@ class TestPaginationStrategiesRegistry:
 # ---------------------------------------------------------------------------
 # Integration tests — full pagination loop via paginate(bound_method, **kwargs)
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.unit
 class TestOffsetPaginationIntegration:

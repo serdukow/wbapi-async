@@ -1,17 +1,18 @@
 import pytest
 
-from wbapi_async.types import DocumentsResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import DocumentsResponse
 
 
 @pytest.mark.unit
 class TestGetDocuments:
-
     async def test_get_documents(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "data": {},
-            }]
+            [
+                {
+                    "data": {},
+                }
+            ]
         )
 
         result = await api.get_documents()

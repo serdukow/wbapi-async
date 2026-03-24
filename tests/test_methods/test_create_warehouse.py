@@ -1,17 +1,18 @@
 import pytest
 
-from wbapi_async.types import CreateWarehouseResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import CreateWarehouseResponse
 
 
 @pytest.mark.unit
 class TestCreateWarehouse:
-
     async def test_create_warehouse(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "id": 1,
-            }]
+            [
+                {
+                    "id": 1,
+                }
+            ]
         )
 
         result = await api.create_warehouse(name="name", office_id=1)

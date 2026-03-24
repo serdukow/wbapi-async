@@ -1,22 +1,23 @@
 import pytest
 
-from wbapi_async.types import ListOfSearchClustersBidsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ListOfSearchClustersBidsItem
 
 
 @pytest.mark.unit
 class TestListOfSearchClustersBids:
-
     async def test_list_of_search_clusters_bids(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "bids": [{
-                "advert_id": 1,
-                "nm_id": 1,
-                "norm_query": "norm_query",
-                "bid": 1,
-            }]
-        }
+                "bids": [
+                    {
+                        "advert_id": 1,
+                        "nm_id": 1,
+                        "norm_query": "norm_query",
+                        "bid": 1,
+                    }
+                ]
+            }
         )
 
         result = await api.list_of_search_clusters_bids(items=[])

@@ -1,20 +1,13 @@
 import pytest
 
-from wbapi_async.types import SupplyAssemblyOrderIdsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import SupplyAssemblyOrderIdsItem
 
 
 @pytest.mark.unit
 class TestGetSupplyAssemblyOrderIds:
-
     async def test_get_supply_assembly_order_ids(self, api: MockedAPI) -> None:
-        api.add_response(
-            {
-            "orderIds": [{
-
-            }]
-        }
-        )
+        api.add_response({"orderIds": [{}]})
 
         result = await api.get_supply_assembly_order_ids(supply_id="supply_id")
 
