@@ -1,20 +1,21 @@
 import pytest
 
-from wbapi_async.types import AllAssemblyOrdersForReshipmentItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import AllAssemblyOrdersForReshipmentItem
 
 
 @pytest.mark.unit
 class TestGetAllAssemblyOrdersForReshipment:
-
     async def test_get_all_assembly_orders_for_reshipment(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "orders": [{
-                "supplyID": None,
-                "orderID": None,
-            }]
-        }
+                "orders": [
+                    {
+                        "supplyID": None,
+                        "orderID": None,
+                    }
+                ]
+            }
         )
 
         result = await api.get_all_assembly_orders_for_reshipment()

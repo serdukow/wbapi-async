@@ -1,30 +1,31 @@
 import pytest
 
-from wbapi_async.types import ProcessedUploadDetailsItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ProcessedUploadDetailsItem
 
 
 @pytest.mark.unit
 class TestGetProcessedUploadDetails:
-
     async def test_get_processed_upload_details(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": {
-            "historyGoods": [{
-                "nmID": 1,
-                "vendorCode": "vendorCode",
-                "sizeID": 1,
-                "techSizeName": "techSizeName",
-                "price": 1,
-                "currencyIsoCode4217": "currencyIsoCode4217",
-                "discount": 1,
-                "clubDiscount": 1,
-                "status": 1,
-                "errorText": "errorText",
-            }]
-        }
-        }
+                "data": {
+                    "historyGoods": [
+                        {
+                            "nmID": 1,
+                            "vendorCode": "vendorCode",
+                            "sizeID": 1,
+                            "techSizeName": "techSizeName",
+                            "price": 1,
+                            "currencyIsoCode4217": "currencyIsoCode4217",
+                            "discount": 1,
+                            "clubDiscount": 1,
+                            "status": 1,
+                            "errorText": "errorText",
+                        }
+                    ]
+                }
+            }
         )
 
         result = await api.get_processed_upload_details(limit=1, upload_id=1)

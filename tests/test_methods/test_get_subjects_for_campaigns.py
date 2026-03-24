@@ -1,19 +1,20 @@
 import pytest
 
-from wbapi_async.types import SubjectsForCampaignsResponse
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import SubjectsForCampaignsResponse
 
 
 @pytest.mark.unit
 class TestGetSubjectsForCampaigns:
-
     async def test_get_subjects_for_campaigns(self, api: MockedAPI) -> None:
         api.add_response(
-            [{
-                "id": 1,
-                "name": "name",
-                "count": 1,
-            }]
+            [
+                {
+                    "id": 1,
+                    "name": "name",
+                    "count": 1,
+                }
+            ]
         )
 
         result = await api.get_subjects_for_campaigns()

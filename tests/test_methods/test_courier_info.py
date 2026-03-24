@@ -1,20 +1,21 @@
 import pytest
 
-from wbapi_async.types import CourierInfoItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import CourierInfoItem
 
 
 @pytest.mark.unit
 class TestCourierInfo:
-
     async def test_courier_info(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "orders": [{
-                "courierInfo": {},
-                "orderID": 1,
-            }]
-        }
+                "orders": [
+                    {
+                        "courierInfo": {},
+                        "orderID": 1,
+                    }
+                ]
+            }
         )
 
         result = await api.courier_info()

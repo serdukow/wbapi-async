@@ -1,22 +1,23 @@
 import pytest
 
-from wbapi_async.types import TheFeedbackByIdItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import TheFeedbackByIdItem
 
 
 @pytest.mark.unit
 class TestGetTheFeedbackById:
-
     async def test_get_the_feedback_by_id(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": {
-            "photoLinks": [{
-                "fullSize": "fullSize",
-                "miniSize": "miniSize",
-            }]
-        }
-        }
+                "data": {
+                    "photoLinks": [
+                        {
+                            "fullSize": "fullSize",
+                            "miniSize": "miniSize",
+                        }
+                    ]
+                }
+            }
         )
 
         result = await api.get_the_feedback_by_id(id_="id_")

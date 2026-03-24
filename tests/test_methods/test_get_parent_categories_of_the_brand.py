@@ -1,23 +1,26 @@
 import pytest
 
-from wbapi_async.types import ParentCategoriesOfTheBrandItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import ParentCategoriesOfTheBrandItem
 
 
 @pytest.mark.unit
 class TestGetParentCategoriesOfTheBrand:
-
     async def test_get_parent_categories_of_the_brand(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "data": [{
-                "parentId": 1,
-                "parentName": "parentName",
-            }]
-        }
+                "data": [
+                    {
+                        "parentId": 1,
+                        "parentName": "parentName",
+                    }
+                ]
+            }
         )
 
-        result = await api.get_parent_categories_of_the_brand(brand="brand", date_from="date_from", date_to="date_to")
+        result = await api.get_parent_categories_of_the_brand(
+            brand="brand", date_from="date_from", date_to="date_to"
+        )
 
         assert isinstance(result, list)
         assert len(result) == 1

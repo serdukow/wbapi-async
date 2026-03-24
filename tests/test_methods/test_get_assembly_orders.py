@@ -1,43 +1,44 @@
 import pytest
 
-from wbapi_async.types import AssemblyOrdersItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import AssemblyOrdersItem
 
 
 @pytest.mark.unit
 class TestGetAssemblyOrders:
-
     async def test_get_assembly_orders(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "orders": [{
-                "address": {},
-                "scanPrice": 1.0,
-                "deliveryType": "deliveryType",
-                "supplyId": "supplyId",
-                "orderUid": "orderUid",
-                "article": "article",
-                "colorCode": "colorCode",
-                "rid": "rid",
-                "createdAt": "createdAt",
-                "offices": [],
-                "skus": [],
-                "id": 1,
-                "warehouseId": 1,
-                "officeId": 1,
-                "nmId": 1,
-                "chrtId": 1,
-                "price": 1,
-                "convertedPrice": 1,
-                "currencyCode": 1,
-                "convertedCurrencyCode": 1,
-                "cargoType": 1,
-                "crossBorderType": 1,
-                "comment": "comment",
-                "isZeroOrder": True,
-                "options": {},
-            }]
-        }
+                "orders": [
+                    {
+                        "address": {},
+                        "scanPrice": 1.0,
+                        "deliveryType": "deliveryType",
+                        "supplyId": "supplyId",
+                        "orderUid": "orderUid",
+                        "article": "article",
+                        "colorCode": "colorCode",
+                        "rid": "rid",
+                        "createdAt": "createdAt",
+                        "offices": [],
+                        "skus": [],
+                        "id": 1,
+                        "warehouseId": 1,
+                        "officeId": 1,
+                        "nmId": 1,
+                        "chrtId": 1,
+                        "price": 1,
+                        "convertedPrice": 1,
+                        "currencyCode": 1,
+                        "convertedCurrencyCode": 1,
+                        "cargoType": 1,
+                        "crossBorderType": 1,
+                        "comment": "comment",
+                        "isZeroOrder": True,
+                        "options": {},
+                    }
+                ]
+            }
         )
 
         result = await api.get_assembly_orders(limit=1, next_=1)

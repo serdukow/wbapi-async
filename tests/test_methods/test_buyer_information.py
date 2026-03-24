@@ -1,26 +1,27 @@
 import pytest
 
-from wbapi_async.types import BuyerInformationItem
 from tests.mocked_api import MockedAPI
+from wbapi_async.types import BuyerInformationItem
 
 
 @pytest.mark.unit
 class TestBuyerInformation:
-
     async def test_buyer_information(self, api: MockedAPI) -> None:
         api.add_response(
             {
-            "orders": [{
-                "replacementPhone": "replacementPhone",
-                "phone": "phone",
-                "firstName": "firstName",
-                "fullName": "fullName",
-                "additionalPhones": [],
-                "additionalPhoneCodes": [],
-                "orderId": 1,
-                "phoneCode": 1,
-            }]
-        }
+                "orders": [
+                    {
+                        "replacementPhone": "replacementPhone",
+                        "phone": "phone",
+                        "firstName": "firstName",
+                        "fullName": "fullName",
+                        "additionalPhones": [],
+                        "additionalPhoneCodes": [],
+                        "orderId": 1,
+                        "phoneCode": 1,
+                    }
+                ]
+            }
         )
 
         result = await api.buyer_information()

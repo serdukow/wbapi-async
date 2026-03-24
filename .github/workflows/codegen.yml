@@ -60,19 +60,32 @@ jobs:
           ruff check --fix --unsafe-fixes src/ tests/ || true
           ruff format src/ tests/
 
-          METHODS=$(echo "$OUTPUT" | grep '\[method\]' | sed 's|.*\[method\][[:space:]]*||;s|.*/||;s|\.py$||' | sort)
-          TYPES=$(echo "$OUTPUT"   | grep '\[type\]'   | sed 's|.*\[type\][[:space:]]*||;s|.*/||;s|\.py$||'   | sort)
+          TYPES=$(echo "$OUTPUT"   | grep '\[type\]'   | sed 's|.*\[type\][[:space:]]*||;s|.*/||;s|\.py$||' | sort)
           REMOVED=$(echo "$OUTPUT" | grep '\[removed\]' | sed 's|.*\[removed\][[:space:]]*||;s|.*/||;s|\.py$||' | sort)
 
-          M_COUNT=$(echo "$METHODS" | grep -c . || true)
           T_COUNT=$(echo "$TYPES"   | grep -c . || true)
           R_COUNT=$(echo "$REMOVED" | grep -c . || true)
+
+          # Build methods list with links: "- method_name (source_url)"
+          METHOD_LINES=""
+          M_COUNT=0
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            stem=$(echo "$line" | awk '{print $1}' | sed 's|.*/||;s|\.py$||')
+            url=$(echo "$line"  | awk '{print $2}')
+            if [ -n "$url" ]; then
+              METHOD_LINES+="- [${stem}](${url})"$'\n'
+            else
+              METHOD_LINES+="- ${stem}"$'\n'
+            fi
+            M_COUNT=$((M_COUNT + 1))
+          done < <(echo "$OUTPUT" | grep '\[method\]' | sed 's|.*\[method\][[:space:]]*||' | sort)
 
           BODY="Automated PR from [wbapi-codegen](https://github.com/serdukow/wbapi-codegen)."$'\n'
           BODY+="Generated from the latest Wildberries OpenAPI YAML specs."$'\n\n'
 
           if [ "$M_COUNT" -gt 0 ]; then
-            BODY+="**Methods updated (${M_COUNT}):**"$'\n''```'$'\n'"$METHODS"$'\n''```'$'\n\n'
+            BODY+="**Methods updated (${M_COUNT}):**"$'\n'"$METHOD_LINES"$'\n'
           else
             BODY+="_No method changes._"$'\n\n'
           fi
