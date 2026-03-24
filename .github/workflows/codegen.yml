@@ -1,0 +1,105 @@
+name: Codegen → PR
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  codegen:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.WBAPI_PAT }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install wbapi-codegen and ruff
+        run: uv pip install --system wbapi-codegen ruff
+
+      - name: Download Swagger YAMLs
+        run: |
+          mkdir -p internal/.wb/swagger
+          BASE="https://dev.wildberries.ru/api/swagger/yaml/en"
+          for f in \
+            01-general \
+            02-products \
+            03-orders-fbs \
+            04-orders-dbw \
+            05-orders-dbs \
+            06-in-store-pickup \
+            07-orders-fbw \
+            08-promotion \
+            09-communications \
+            10-tariffs \
+            11-analytics \
+            12-reports \
+            13-finances \
+          ; do
+            curl -fsSL "$BASE/$f.yaml" -o "internal/.wb/swagger/$f.yaml" \
+              && echo "Downloaded $f.yaml" \
+              || echo "WARN: failed to download $f.yaml"
+          done
+
+      - name: Run codegen
+        id: codegen
+        run: |
+          OUTPUT=$(wbapi-codegen --target . --swagger-dir internal/.wb/swagger 2>&1)
+          echo "$OUTPUT"
+          ruff check --fix --unsafe-fixes src/ tests/ || true
+          ruff format src/ tests/
+
+          METHODS=$(echo "$OUTPUT" | grep '\[method\]' | sed 's|.*\[method\][[:space:]]*||;s|.*/||;s|\.py$||' | sort)
+          TYPES=$(echo "$OUTPUT"   | grep '\[type\]'   | sed 's|.*\[type\][[:space:]]*||;s|.*/||;s|\.py$||'   | sort)
+          REMOVED=$(echo "$OUTPUT" | grep '\[removed\]' | sed 's|.*\[removed\][[:space:]]*||;s|.*/||;s|\.py$||' | sort)
+
+          M_COUNT=$(echo "$METHODS" | grep -c . || true)
+          T_COUNT=$(echo "$TYPES"   | grep -c . || true)
+          R_COUNT=$(echo "$REMOVED" | grep -c . || true)
+
+          BODY="Automated PR from [wbapi-codegen](https://github.com/serdukow/wbapi-codegen)."$'\n'
+          BODY+="Generated from the latest Wildberries OpenAPI YAML specs."$'\n\n'
+
+          if [ "$M_COUNT" -gt 0 ]; then
+            BODY+="**Methods updated (${M_COUNT}):**"$'\n''```'$'\n'"$METHODS"$'\n''```'$'\n\n'
+          else
+            BODY+="_No method changes._"$'\n\n'
+          fi
+
+          if [ "$T_COUNT" -gt 0 ]; then
+            BODY+="**Types updated (${T_COUNT}):**"$'\n''```'$'\n'"$TYPES"$'\n''```'$'\n\n'
+          fi
+
+          if [ "$R_COUNT" -gt 0 ]; then
+            BODY+="**Removed (${R_COUNT}):**"$'\n''```'$'\n'"$REMOVED"$'\n''```'$'\n\n'
+          fi
+
+          BODY+="> Hand-written (\`@unofficial\`) methods are preserved automatically."
+
+          {
+            echo "body<<EOF"
+            echo "$BODY"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.WBAPI_PAT }}
+          branch: codegen/auto-update
+          commit-message: "chore: auto-update generated API code"
+          title: "chore: auto-update generated API code"
+          body: ${{ steps.codegen.outputs.body }}
+          labels: codegen
+          delete-branch: true
