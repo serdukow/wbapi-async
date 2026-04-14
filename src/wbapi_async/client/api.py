@@ -122,6 +122,7 @@ from ..methods import (
     GetGender,
     GetGenerateTheReport,
     GetGettingSellerPortalNews,
+    GetGoodsReturn,
     GetHiddenFromTheCatalog,
     GetHscodes,
     GetInformationAboutMediaCampaign,
@@ -344,6 +345,7 @@ from ..types import (
     GenerateTheReportResponse,
     GenerationOfSkusItem,
     GettingSellerPortalNewsItem,
+    GoodsReturnItem,
     GroupDataItem,
     GroupedProductCardsStatisticsPerDaysItem,
     HiddenFromTheCatalogItem,
@@ -2512,6 +2514,26 @@ class WbAPI:
         return await self(call)
 
     get_generate_the_report.__wrapped_cls__ = GetGenerateTheReport
+
+    async def get_goods_return(
+        self,
+        date_from: str,
+        date_to: str,
+    ) -> list[GoodsReturnItem]:
+        """
+        Returns a list of goods returns to the seller. With one request, you can obtain a report
+        for a maximum of 31 days.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Returns-and-Product-Movement-Report/paths/~1api~1v1~1analytics~1goods-return/get
+
+        :param date_from: Beginning date of the reporting period (YYYY-MM-DD)
+        :param date_to: End date of the reporting period (YYYY-MM-DD)
+        :return: list[GoodsReturnItem]
+        """
+        call = GetGoodsReturn(date_from=date_from, date_to=date_to)
+        return await self(call)
+
+    get_goods_return.__wrapped_cls__ = GetGoodsReturn
 
     async def get_getting_seller_portal_news(
         self,

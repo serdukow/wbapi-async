@@ -306,6 +306,7 @@ from ..promotion.types.topup_of_the_campaign_budget_response import TopupOfTheCa
 from ..reports.types.blocked_product_cards_item import BlockedProductCardsItem
 from ..reports.types.check_the_status_response import CheckTheStatusResponse
 from ..reports.types.generate_the_report_response import GenerateTheReportResponse
+from ..reports.types.goods_return_item import GoodsReturnItem
 from ..reports.types.hidden_from_the_catalog_item import HiddenFromTheCatalogItem
 from ..reports.types.logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
 from ..reports.types.orders_response import OrdersResponse
@@ -439,6 +440,7 @@ __all__ = (
     "GenderItem",
     "GenerateTheReportResponse",
     "GenerationOfSkusItem",
+    "GoodsReturnItem",
     "GettingSellerPortalNewsItem",
     "GroupDataItem",
     "GroupedProductCardsStatisticsPerDaysItem",

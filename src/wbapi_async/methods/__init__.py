@@ -282,6 +282,7 @@ from ..reports.methods.get_blocked_product_cards import GetBlockedProductCards
 from ..reports.methods.get_check_the_status import GetCheckTheStatus
 from ..reports.methods.get_create_the_report import GetCreateTheReport
 from ..reports.methods.get_generate_the_report import GetGenerateTheReport
+from ..reports.methods.get_goods_return import GetGoodsReturn
 from ..reports.methods.get_hidden_from_the_catalog import GetHiddenFromTheCatalog
 from ..reports.methods.get_logistics_and_storage_costs_multiplier import GetLogisticsAndStorageCostsMultiplier
 from ..reports.methods.get_orders import GetOrders
@@ -403,6 +404,7 @@ __all__ = (
     "GetFileFromTheMessage",
     "GetGender",
     "GetGenerateTheReport",
+    "GetGoodsReturn",
     "GetGettingSellerPortalNews",
     "GetHiddenFromTheCatalog",
     "GetHscodes",
