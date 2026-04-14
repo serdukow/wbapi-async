@@ -4,6 +4,7 @@ from .enums.sort_shadowed import SortShadowed
 from .types.blocked_product_cards_item import BlockedProductCardsItem
 from .types.check_the_status_response import CheckTheStatusResponse
 from .types.generate_the_report_response import GenerateTheReportResponse
+from .types.goods_return_item import GoodsReturnItem
 from .types.hidden_from_the_catalog_item import HiddenFromTheCatalogItem
 from .types.logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
 from .types.orders_response import OrdersResponse
@@ -21,6 +22,7 @@ from .types.warehouse_response import WarehouseResponse
 
 __all__ = (
     "BlockedProductCardsItem",
+    "GoodsReturnItem",
     "CheckTheStatusResponse",
     "GenerateTheReportResponse",
     "HiddenFromTheCatalogItem",

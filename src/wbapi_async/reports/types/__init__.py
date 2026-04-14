@@ -1,6 +1,7 @@
 from .blocked_product_cards_item import BlockedProductCardsItem
 from .check_the_status_response import CheckTheStatusResponse
 from .generate_the_report_response import GenerateTheReportResponse
+from .goods_return_item import GoodsReturnItem
 from .hidden_from_the_catalog_item import HiddenFromTheCatalogItem
 from .logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
 from .orders_response import OrdersResponse
@@ -18,6 +19,7 @@ from .warehouse_response import WarehouseResponse
 
 __all__ = (
     "BlockedProductCardsItem",
+    "GoodsReturnItem",
     "CheckTheStatusResponse",
     "GenerateTheReportResponse",
     "HiddenFromTheCatalogItem",
