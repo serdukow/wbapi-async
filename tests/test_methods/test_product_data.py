@@ -1,7 +1,8 @@
 import pytest
 
 from tests.mocked_api import MockedAPI
-from wbapi_async.types import ProductDataItem
+from wbapi_async.enums import ProductDataAvailability, ProductDataOrderField, ProductDataOrderMode, ProductDataStockType
+from wbapi_async.types import ProductDataItem, ProductDataOrderBy, ProductDataPeriod
 
 
 @pytest.mark.unit
@@ -28,11 +29,14 @@ class TestGetProductData:
         )
 
         result = await api.get_product_data(
-            current_period={"start": "2024-01-01", "end": "2024-01-31"},
-            stock_type="wb",
+            current_period=ProductDataPeriod(start="2024-01-01", end="2024-01-31"),
+            stock_type=ProductDataStockType.WB,
             skip_deleted_nm=False,
-            order_by={"field": "ordersCount", "mode": "desc"},
-            availability_filters=[],
+            order_by=ProductDataOrderBy(
+                field=ProductDataOrderField.ORDERS_COUNT,
+                mode=ProductDataOrderMode.DESC,
+            ),
+            availability_filters=list(ProductDataAvailability),
         )
 
         assert isinstance(result, list)

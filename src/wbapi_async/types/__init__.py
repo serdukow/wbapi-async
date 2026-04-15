@@ -16,6 +16,8 @@ from ..analytics.types.product_cards_statistics_per_period_response import (
     ProductCardsStatisticsPerPeriodResponse,
 )
 from ..analytics.types.product_data_item import ProductDataItem
+from ..analytics.types.product_data_order_by import ProductDataOrderBy
+from ..analytics.types.product_data_period import ProductDataPeriod
 from ..analytics.types.regenerate_the_report_response import RegenerateTheReportResponse
 from ..analytics.types.search_texts_by_product_response import SearchTextsByProductResponse
 from ..analytics.types.size_data_item import SizeDataItem
@@ -506,6 +508,8 @@ __all__ = (
     "ProductCardsStatisticsPerPeriodResponse",
     "ProductCategoryCommissionResponse",
     "ProductDataItem",
+    "ProductDataOrderBy",
+    "ProductDataPeriod",
     "ProductDetail",
     "ProductDetailColor",
     "ProductDetailPrice",
