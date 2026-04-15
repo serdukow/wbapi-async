@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1](https://github.com/serdukow/wbapi-async/compare/v0.2.0...v0.2.1) (2026-04-15)
+
+
+### Bug Fixes
+
+* **analytics:** add request params to product_data method ([4b13005](https://github.com/serdukow/wbapi-async/commit/4b13005cc8c7895cdf3ce326011ad0765154a545))
+* **analytics:** add request params to product_data method ([b7a0161](https://github.com/serdukow/wbapi-async/commit/b7a0161ff82e5dc635f097979bfb9208194070ce))
+
 ## [0.2.0](https://github.com/serdukow/wbapi-async/compare/v0.1.0...v0.2.0) (2026-04-14)
 
 
