@@ -13,6 +13,8 @@ from ..enums import (
     Period,
     PinOn,
     PositionCluster,
+    ProductDataAvailability,
+    ProductDataStockType,
     Sort,
     SortBlocked,
     SortList,
@@ -403,6 +405,8 @@ from ..types import (
     ProductCardsStatisticsPerPeriodResponse,
     ProductCategoryCommissionResponse,
     ProductDataItem,
+    ProductDataOrderBy,
+    ProductDataPeriod,
     ProductDetail,
     ProductLabelingItem,
     ProductsInQuarantineItem,
@@ -5121,16 +5125,16 @@ class WbAPI:
 
     async def get_product_data(
         self,
-        current_period: Any,
-        stock_type: str,
+        current_period: ProductDataPeriod,
+        stock_type: ProductDataStockType,
         skip_deleted_nm: bool,
-        order_by: dict[str, Any],
-        availability_filters: list[str],
+        order_by: ProductDataOrderBy,
+        availability_filters: list[ProductDataAvailability],
         nm_ids: list[int] | None = None,
         subject_id: int | None = None,
         brand_name: str | None = None,
         tag_id: int | None = None,
-        limit: int | None = 100,
+        limit: int | None = 1000,
         offset: int = 0,
     ) -> list[ProductDataItem]:
         """
@@ -5140,19 +5144,16 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1products/post
 
-        :param current_period: Period with `start` and `end` date strings (format: YYYY-MM-DD,
-                               no earlier than 3 months from today)
-        :param stock_type: Type of storage warehouse — `""` all, `"wb"` WB warehouses,
-                           `"mp"` seller's warehouses
+        :param current_period: Period (format: YYYY-MM-DD, no earlier than 3 months from today)
+        :param stock_type: Type of storage warehouse
         :param skip_deleted_nm: Skip deleted items
-        :param order_by: Sorting parameters with `field` and `mode` keys
-        :param availability_filters: Item availability filters — `deficient`, `actual`, `balanced`,
-                                     `nonActual`, `nonLiquid`, `invalidData`
+        :param order_by: Sorting parameters
+        :param availability_filters: Item availability filters
         :param nm_ids: List of WB article numbers for filtering
         :param subject_id: Subject ID
         :param brand_name: Brand name
         :param tag_id: Tag ID
-        :param limit: Number of groups in the response (max 1000, default 100)
+        :param limit: Number of groups in the response (max 1000)
         :param offset: From which element to start outputting data
         :return: list[ProductDataItem]
         """

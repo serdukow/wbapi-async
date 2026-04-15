@@ -10,6 +10,8 @@ from .pagination_by_products_within_a_group_response import PaginationByProducts
 from .product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from .product_cards_statistics_per_period_response import ProductCardsStatisticsPerPeriodResponse
 from .product_data_item import ProductDataItem
+from .product_data_order_by import ProductDataOrderBy
+from .product_data_period import ProductDataPeriod
 from .regenerate_the_report_response import RegenerateTheReportResponse
 from .search_texts_by_product_response import SearchTextsByProductResponse
 from .size_data_item import SizeDataItem
@@ -29,6 +31,8 @@ __all__ = (
     "ProductCardsStatisticsPerDaysResponse",
     "ProductCardsStatisticsPerPeriodResponse",
     "ProductDataItem",
+    "ProductDataOrderBy",
+    "ProductDataPeriod",
     "RegenerateTheReportResponse",
     "SearchTextsByProductResponse",
     "SizeDataItem",
