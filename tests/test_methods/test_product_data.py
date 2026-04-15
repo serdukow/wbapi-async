@@ -5,8 +5,8 @@ from wbapi_async.types import ProductDataItem
 
 
 @pytest.mark.unit
-class TestProductData:
-    async def test_product_data(self, api: MockedAPI) -> None:
+class TestGetProductData:
+    async def test_get_product_data(self, api: MockedAPI) -> None:
         api.add_response(
             {
                 "data": {
@@ -27,7 +27,13 @@ class TestProductData:
             }
         )
 
-        result = await api.product_data()
+        result = await api.get_product_data(
+            current_period={"start": "2024-01-01", "end": "2024-01-31"},
+            stock_type="wb",
+            skip_deleted_nm=False,
+            order_by={"field": "ordersCount", "mode": "desc"},
+            availability_filters=[],
+        )
 
         assert isinstance(result, list)
         assert len(result) == 1
