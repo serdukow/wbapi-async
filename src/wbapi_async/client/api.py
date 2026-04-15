@@ -5119,21 +5119,59 @@ class WbAPI:
 
     product_cards_statistics_per_period.__wrapped_cls__ = ProductCardsStatisticsPerPeriod
 
-    async def product_data(
+    async def get_product_data(
         self,
+        current_period: Any,
+        stock_type: str,
+        skip_deleted_nm: bool,
+        order_by: dict[str, Any],
+        availability_filters: list[str],
+        nm_ids: list[int] | None = None,
+        subject_id: int | None = None,
+        brand_name: str | None = None,
+        tag_id: int | None = None,
+        limit: int | None = 100,
+        offset: int = 0,
     ) -> list[ProductDataItem]:
         """
         Forms a dataset for inventory by products. You can get data for individual products as well
-        asfor the entire report if there are no filters in the query: `nmIDs`, `subjectID`,
-        `brandName`,`tagID`.
+        as for the entire report if there are no filters in the query: `nmIDs`, `subjectID`,
+        `brandName`, `tagID`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1products/post
+
+        :param current_period: Period with `start` and `end` date strings (format: YYYY-MM-DD,
+                               no earlier than 3 months from today)
+        :param stock_type: Type of storage warehouse — `""` all, `"wb"` WB warehouses,
+                           `"mp"` seller's warehouses
+        :param skip_deleted_nm: Skip deleted items
+        :param order_by: Sorting parameters with `field` and `mode` keys
+        :param availability_filters: Item availability filters — `deficient`, `actual`, `balanced`,
+                                     `nonActual`, `nonLiquid`, `invalidData`
+        :param nm_ids: List of WB article numbers for filtering
+        :param subject_id: Subject ID
+        :param brand_name: Brand name
+        :param tag_id: Tag ID
+        :param limit: Number of groups in the response (max 1000, default 100)
+        :param offset: From which element to start outputting data
         :return: list[ProductDataItem]
         """
-        call = ProductData()
+        call = ProductData(
+            current_period=current_period,
+            stock_type=stock_type,
+            skip_deleted_nm=skip_deleted_nm,
+            order_by=order_by,
+            availability_filters=availability_filters,
+            nm_ids=nm_ids,
+            subject_id=subject_id,
+            brand_name=brand_name,
+            tag_id=tag_id,
+            limit=limit,
+            offset=offset,
+        )
         return await self(call)
 
-    product_data.__wrapped_cls__ = ProductData
+    get_product_data.__wrapped_cls__ = ProductData
 
     async def recover_product_card_from_trash(
         self,
