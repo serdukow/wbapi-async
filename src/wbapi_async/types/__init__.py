@@ -154,6 +154,8 @@ from ..orders_dbs.types.api_uin import ApiUin
 from ..orders_dbs.types.assembly_order_statuses_item import AssemblyOrderStatusesItem
 from ..orders_dbs.types.b2_bbuyer_information_item import B2BBuyerInformationItem
 from ..orders_dbs.types.cancel_assembly_orders_item import CancelAssemblyOrdersItem
+from ..orders_dbs.types.dbs_orders_item import DbsOrdersItem
+from ..orders_dbs.types.dbs_orders_order_id_meta_item import DbsOrdersOrderIdMetaItem
 from ..orders_dbs.types.delete_assembly_orders_metadata_item import DeleteAssemblyOrdersMetadataItem
 from ..orders_dbs.types.errors_item import ErrorsItem
 from ..orders_dbs.types.information_on_paid_delivery_response import InformationOnPaidDeliveryResponse
@@ -248,6 +250,7 @@ from ..orders_fbw.types.acceptance_options_item import AcceptanceOptionsItem
 from ..orders_fbw.types.models_date_filter_request import ModelsDateFilterRequest
 from ..orders_fbw.types.models_good_in_box import ModelsGoodInBox
 from ..orders_fbw.types.models_volume_tariff import ModelsVolumeTariff
+from ..orders_fbw.types.supplies_id_response import SuppliesIdResponse
 from ..orders_fbw.types.supplies_list_response import SuppliesListResponse
 from ..orders_fbw.types.supply_package_response import SupplyPackageResponse
 from ..orders_fbw.types.supply_products_response import SupplyProductsResponse
@@ -418,6 +421,15 @@ from ..promotion.types.v1_get_norm_query_stats_response_item_daily_stat import (
     V1GetNormQueryStatsResponseItemDailyStat,
 )
 from ..promotion.types.v1_get_norm_query_stats_response_item_stat import V1GetNormQueryStatsResponseItemStat
+from ..reports.types.acceptance_report_response import AcceptanceReportResponse
+from ..reports.types.acceptance_report_tasks_task_id_download_response import (
+    AcceptanceReportTasksTaskIdDownloadResponse,
+)
+from ..reports.types.acceptance_report_tasks_task_id_status_response import (
+    AcceptanceReportTasksTaskIdStatusResponse,
+)
+from ..reports.types.analytics_brand_share_item import AnalyticsBrandShareItem
+from ..reports.types.analytics_goods_return_item import AnalyticsGoodsReturnItem
 from ..reports.types.blocked_product_cards_item import BlockedProductCardsItem
 from ..reports.types.check_the_status_response import CheckTheStatusResponse
 from ..reports.types.create_task_response_data import CreateTaskResponseData
@@ -426,6 +438,10 @@ from ..reports.types.get_tasks_response_data import GetTasksResponseData
 from ..reports.types.hidden_from_the_catalog_item import HiddenFromTheCatalogItem
 from ..reports.types.logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
 from ..reports.types.orders_response import OrdersResponse
+from ..reports.types.paid_storage_tasks_task_id_download_response import (
+    PaidStorageTasksTaskIdDownloadResponse,
+)
+from ..reports.types.paid_storage_tasks_task_id_status_response import PaidStorageTasksTaskIdStatusResponse
 from ..reports.types.parent_categories_of_the_brand_item import ParentCategoriesOfTheBrandItem
 from ..reports.types.product_labeling_item import ProductLabelingItem
 from ..reports.types.report_item import ReportItem
@@ -439,6 +455,10 @@ from ..reports.types.substitutions_and_incorrect_attachments_item import (
     SubstitutionsAndIncorrectAttachmentsItem,
 )
 from ..reports.types.warehouse_measurements_item import WarehouseMeasurementsItem
+from ..reports.types.warehouse_remains_response import WarehouseRemainsResponse
+from ..reports.types.warehouse_remains_tasks_task_id_download_response import (
+    WarehouseRemainsTasksTaskIdDownloadResponse,
+)
 from ..reports.types.warehouse_response import WarehouseResponse
 from ..reports.types.warehouses_item_2 import WarehousesItem2
 from ..tariffs.types.box_tariffs_item import BoxTariffsItem
@@ -460,6 +480,9 @@ from .request_limit import RequestLimit
 
 __all__ = (
     "AcceptanceOptionsItem",
+    "AcceptanceReportResponse",
+    "AcceptanceReportTasksTaskIdDownloadResponse",
+    "AcceptanceReportTasksTaskIdStatusResponse",
     "AccessItem",
     "ActiveAndInactiveSearchClusterListsItem",
     "AddAssemblyOrdersToTheSupplyResponse",
@@ -492,6 +515,8 @@ __all__ = (
     "AdvertSubject",
     "AListOfSellerActiveOrInvitedUsersItem",
     "AllAssemblyOrdersForReshipmentItem",
+    "AnalyticsBrandShareItem",
+    "AnalyticsGoodsReturnItem",
     "Answer",
     "AnswerBuyersApplicationResponse",
     "ApiB2BClientInfo",
@@ -570,6 +595,8 @@ __all__ = (
     "DataItem",
     "DataUpload",
     "DaysItem",
+    "DbsOrdersItem",
+    "DbsOrdersOrderIdMetaItem",
     "DeleteAssemblyOrderMetadataItem",
     "DeleteAssemblyOrderMetadataResponse",
     "DeleteAssemblyOrdersMetadataItem",
@@ -676,6 +703,8 @@ __all__ = (
     "OrdersWithClientInformationItem",
     "PaginationByGroupsResponse",
     "PaginationByProductsWithinAGroupResponse",
+    "PaidStorageTasksTaskIdDownloadResponse",
+    "PaidStorageTasksTaskIdStatusResponse",
     "PalletTariffsItem",
     "ParamsItem",
     "ParentCategoriesOfTheBrandItem",
@@ -766,6 +795,7 @@ __all__ = (
     "SubstitutionsAndIncorrectAttachmentsItem",
     "SupplierTaskMetadata",
     "SupplierTaskMetadataBuffer",
+    "SuppliesIdResponse",
     "SuppliesListResponse",
     "SupplyAssemblyOrderIdsItem",
     "SupplyBoxesListItem",
@@ -825,6 +855,8 @@ __all__ = (
     "Video",
     "WarehouseDataItem",
     "WarehouseMeasurementsItem",
+    "WarehouseRemainsResponse",
+    "WarehouseRemainsTasksTaskIdDownloadResponse",
     "WarehouseResponse",
     "WarehousesItem",
     "WarehousesItem2",

@@ -55,9 +55,14 @@ from ..methods import (
     EditResponseToFeedback,
     GenerationOfSkus,
     GetAcceptanceOptions,
+    GetAcceptanceReport,
+    GetAcceptanceReportTasksTaskIdDownload,
+    GetAcceptanceReportTasksTaskIdStatus,
     GetActiveAndInactiveSearchClusterLists,
     GetAListOfSellerActiveOrInvitedUsers,
     GetAllAssemblyOrdersForReshipment,
+    GetAnalyticsBrandShare,
+    GetAnalyticsGoodsReturn,
     GetAssemblyOrderMetadata,
     GetAssemblyOrders,
     GetAssemblyOrdersMetadata,
@@ -87,6 +92,8 @@ from ..methods import (
     GetCourierInfo,
     GetCreateTheReport,
     GetDailySearchClustersStatistics,
+    GetDbsOrders,
+    GetDbsOrdersOrderIdMeta,
     GetDeleteCampaign,
     GetDeliveryDateAndTime,
     GetDocument,
@@ -136,6 +143,8 @@ from ..methods import (
     GetOrdersWithClientInformation,
     GetPaginationByGroups,
     GetPaginationByProductsWithinAGroup,
+    GetPaidStorageTasksTaskIdDownload,
+    GetPaidStorageTasksTaskIdStatus,
     GetPalletTariffs,
     GetParentCategoriesOfTheBrand,
     GetPasses,
@@ -187,6 +196,7 @@ from ..methods import (
     GetSubjectsForCampaigns,
     GetSubjectsList,
     GetSubstitutionsAndIncorrectAttachments,
+    GetSuppliesId,
     GetSuppliesList,
     GetSupplyAssemblyOrderIds,
     GetSupplyBoxesList,
@@ -211,6 +221,8 @@ from ..methods import (
     GetWarehouse,
     GetWarehouseData,
     GetWarehouseMeasurements,
+    GetWarehouseRemains,
+    GetWarehouseRemainsTasksTaskIdDownload,
     GetWarehouses,
     GetWarehousesList,
     MergingOrSeparatingOfProductCards,
@@ -254,6 +266,9 @@ from ..methods import (
 )
 from ..types import (
     AcceptanceOptionsItem,
+    AcceptanceReportResponse,
+    AcceptanceReportTasksTaskIdDownloadResponse,
+    AcceptanceReportTasksTaskIdStatusResponse,
     AccessItem,
     ActiveAndInactiveSearchClusterListsItem,
     AddBoxesToTheSupplyItem,
@@ -268,6 +283,8 @@ from ..types import (
     AddUinUniqueIdentificationNumberToAssemblyOrdersItem,
     AListOfSellerActiveOrInvitedUsersItem,
     AllAssemblyOrdersForReshipmentItem,
+    AnalyticsBrandShareItem,
+    AnalyticsGoodsReturnItem,
     ApiGtin,
     ApiImei,
     ApiOrderCodeRequest,
@@ -320,6 +337,8 @@ from ..types import (
     Cursor,
     DailySearchClustersStatisticsItem,
     DataUpload,
+    DbsOrdersItem,
+    DbsOrdersOrderIdMetaItem,
     DeleteAssemblyOrdersMetadataItem,
     DeleteTheTagResponse,
     DeliveryDateAndTimeItem,
@@ -381,6 +400,8 @@ from ..types import (
     OrdersWithClientInformationItem,
     PaginationByGroupsResponse,
     PaginationByProductsWithinAGroupResponse,
+    PaidStorageTasksTaskIdDownloadResponse,
+    PaidStorageTasksTaskIdStatusResponse,
     PalletTariffsItem,
     ParamsItem,
     ParentCategoriesOfTheBrandItem,
@@ -444,6 +465,7 @@ from ..types import (
     SubjectsForCampaignsResponse,
     SubjectsListItem,
     SubstitutionsAndIncorrectAttachmentsItem,
+    SuppliesIdResponse,
     SuppliesListResponse,
     SupplyAssemblyOrderIdsItem,
     SupplyBoxesListItem,
@@ -479,6 +501,8 @@ from ..types import (
     VatRateItem,
     WarehouseDataItem,
     WarehouseMeasurementsItem,
+    WarehouseRemainsResponse,
+    WarehouseRemainsTasksTaskIdDownloadResponse,
     WarehouseResponse,
     WarehousesListResponse,
     WarehousesResponse,
@@ -1673,6 +1697,59 @@ class WbAPI:
 
     get_acceptance_options.__wrapped_cls__ = GetAcceptanceOptions
 
+    async def get_acceptance_report(
+        self,
+        date_from: str,
+        date_to: str,
+    ) -> list[AcceptanceReportResponse]:
+        """
+        Creates a task for report generation. Maximum of report period is 31 days.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Acceptance-Expenses/paths/~1api~1v1~1acceptance_report/get
+
+        :param date_from: Report period start, `YYYY-MM-DD`
+        :param date_to: Report period end, `YYYY-MM-DD`
+        :return: list[AcceptanceReportResponse]
+        """
+        call = GetAcceptanceReport(date_from=date_from, date_to=date_to)
+        return await self(call)
+
+    get_acceptance_report.__wrapped_cls__ = GetAcceptanceReport
+
+    async def get_acceptance_report_tasks_task_id_download(
+        self,
+        task_id: str,
+    ) -> list[AcceptanceReportTasksTaskIdDownloadResponse]:
+        """
+        Returns the report by task ID
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Acceptance-Expenses/paths/~1api~1v1~1acceptance_report~1tasks~1%7Btask_id%7D~1download/get
+
+        :param task_id: Generation task ID
+        :return: list[AcceptanceReportTasksTaskIdDownloadResponse]
+        """
+        call = GetAcceptanceReportTasksTaskIdDownload(task_id=task_id)
+        return await self(call)
+
+    get_acceptance_report_tasks_task_id_download.__wrapped_cls__ = GetAcceptanceReportTasksTaskIdDownload
+
+    async def get_acceptance_report_tasks_task_id_status(
+        self,
+        task_id: str,
+    ) -> list[AcceptanceReportTasksTaskIdStatusResponse]:
+        """
+        Returns the status of the generation task
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Acceptance-Expenses/paths/~1api~1v1~1acceptance_report~1tasks~1%7Btask_id%7D~1status/get
+
+        :param task_id: Generation task ID
+        :return: list[AcceptanceReportTasksTaskIdStatusResponse]
+        """
+        call = GetAcceptanceReportTasksTaskIdStatus(task_id=task_id)
+        return await self(call)
+
+    get_acceptance_report_tasks_task_id_status.__wrapped_cls__ = GetAcceptanceReportTasksTaskIdStatus
+
     async def get_active_and_inactive_search_cluster_lists(
         self,
         items: list[V0GetNormQueryListRequestItem],
@@ -1702,6 +1779,55 @@ class WbAPI:
         return await self(call)
 
     get_all_assembly_orders_for_reshipment.__wrapped_cls__ = GetAllAssemblyOrdersForReshipment
+
+    async def get_analytics_brand_share(
+        self,
+        parent_id: int,
+        brand: str,
+        date_from: str,
+        date_to: str,
+    ) -> list[AnalyticsBrandShareItem]:
+        """
+        Returns a report on the brand's share in sales.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Share-of-Brand-in-Sales/paths/~1api~1v1~1analytics~1brand-share/get
+
+        :param parent_id: Parent category ID
+        :param brand: Brand
+        :param date_from: Report period start, `YYYY-MM-DD`
+        :param date_to: Report period end, `YYYY-MM-DD`
+        :return: list[AnalyticsBrandShareItem]
+        """
+        call = GetAnalyticsBrandShare(
+            parent_id=parent_id,
+            brand=brand,
+            date_from=date_from,
+            date_to=date_to,
+        )
+        return await self(call)
+
+    get_analytics_brand_share.__wrapped_cls__ = GetAnalyticsBrandShare
+
+    async def get_analytics_goods_return(
+        self,
+        date_from: str,
+        date_to: str,
+    ) -> list[AnalyticsGoodsReturnItem]:
+        """
+        Returns a list of [goods returns to the
+        seller](https://seller.wildberries.ru/analytics-reports/goods-return).With one request, you
+        canobtain a report for a maximum of 31 days.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Returns-and-Product-Movement-Report/paths/~1api~1v1~1analytics~1goods-return/get
+
+        :param date_from: Beginning date of the reporting period
+        :param date_to: End date of the reporting period
+        :return: list[AnalyticsGoodsReturnItem]
+        """
+        call = GetAnalyticsGoodsReturn(date_from=date_from, date_to=date_to)
+        return await self(call)
+
+    get_analytics_goods_return.__wrapped_cls__ = GetAnalyticsGoodsReturn
 
     async def get_assembly_order_metadata(
         self,
@@ -2246,6 +2372,50 @@ class WbAPI:
         return await self(call)
 
     get_daily_search_clusters_statistics.__wrapped_cls__ = GetDailySearchClustersStatistics
+
+    async def get_dbs_orders(
+        self,
+        limit: int,
+        next_: int,
+        date_from: int,
+        date_to: int,
+    ) -> list[DbsOrdersItem]:
+        """
+        Returns information on completed orders (either canceled or sold). You can get data for a
+        specifiedperiod, maximum of 30 calendar days per request.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Assembly-Orders/paths/~1api~1v3~1dbs~1orders/get
+
+        :param limit: Pagination parameter. Sets the limit for the amount of data returned.
+        :param next_: Pagination parameter. Sets the value from which to retrieve the next batch.
+                      Itshould start at 0 to get the full list of data. For the subsequent
+                      requests,you must take the value from the `next` field in the response.
+        :param date_from: Period start date in Unix timestamp format
+        :param date_to: Period end date in Unix timestamp format
+        :return: list[DbsOrdersItem]
+        """
+        call = GetDbsOrders(limit=limit, next_=next_, date_from=date_from, date_to=date_to)
+        return await self(call)
+
+    get_dbs_orders.__wrapped_cls__ = GetDbsOrders
+
+    async def get_dbs_orders_order_id_meta(
+        self,
+        order_id: int,
+    ) -> list[DbsOrdersOrderIdMetaItem]:
+        """
+        This method is deprecated. It will be removed on [April
+        13](https://dev.wildberries.ru/en/release-notes?id=378)
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/orders-dbs#tag/DBS-Metadata/paths/~1api~1v3~1dbs~1orders~1%7BorderId%7D~1meta/get
+
+        :param order_id: Assembly order ID
+        :return: list[DbsOrdersOrderIdMetaItem]
+        """
+        call = GetDbsOrdersOrderIdMeta(order_id=order_id)
+        return await self(call)
+
+    get_dbs_orders_order_id_meta.__wrapped_cls__ = GetDbsOrdersOrderIdMeta
 
     async def get_delete_campaign(
         self,
@@ -3462,6 +3632,40 @@ class WbAPI:
 
     get_pagination_by_products_within_a_group.__wrapped_cls__ = GetPaginationByProductsWithinAGroup
 
+    async def get_paid_storage_tasks_task_id_download(
+        self,
+        task_id: str,
+    ) -> list[PaidStorageTasksTaskIdDownloadResponse]:
+        """
+        Returns the report by task ID
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Paid-Storage/paths/~1api~1v1~1paid_storage~1tasks~1%7Btask_id%7D~1download/get
+
+        :param task_id: Task ID
+        :return: list[PaidStorageTasksTaskIdDownloadResponse]
+        """
+        call = GetPaidStorageTasksTaskIdDownload(task_id=task_id)
+        return await self(call)
+
+    get_paid_storage_tasks_task_id_download.__wrapped_cls__ = GetPaidStorageTasksTaskIdDownload
+
+    async def get_paid_storage_tasks_task_id_status(
+        self,
+        task_id: str,
+    ) -> list[PaidStorageTasksTaskIdStatusResponse]:
+        """
+        Returns the status of task
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Paid-Storage/paths/~1api~1v1~1paid_storage~1tasks~1%7Btask_id%7D~1status/get
+
+        :param task_id: Task ID
+        :return: list[PaidStorageTasksTaskIdStatusResponse]
+        """
+        call = GetPaidStorageTasksTaskIdStatus(task_id=task_id)
+        return await self(call)
+
+    get_paid_storage_tasks_task_id_status.__wrapped_cls__ = GetPaidStorageTasksTaskIdStatus
+
     async def get_pallet_tariffs(
         self,
         date: str,
@@ -4651,6 +4855,25 @@ class WbAPI:
 
     get_substitutions_and_incorrect_attachments.__wrapped_cls__ = GetSubstitutionsAndIncorrectAttachments
 
+    async def get_supplies_id_(
+        self,
+        id_: int,
+        is_preorder_id: bool | None = False,
+    ) -> list[SuppliesIdResponse]:
+        """
+        The method returns supply details by ID.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/orders-fbw#tag/Supplies-Information/paths/~1api~1v1~1supplies~1%7BID%7D/get
+
+        :param id_: ID of the supply or the order
+        :param is_preorder_id: Search by:
+        :return: list[SuppliesIdResponse]
+        """
+        call = GetSuppliesId(id_=id_, is_preorder_id=is_preorder_id)
+        return await self(call)
+
+    get_supplies_id_.__wrapped_cls__ = GetSuppliesId
+
     async def get_supplies_list(
         self,
         limit: int | None = 1000,
@@ -5092,6 +5315,70 @@ class WbAPI:
         return await self(call)
 
     get_warehouse_measurements.__wrapped_cls__ = GetWarehouseMeasurements
+
+    async def get_warehouse_remains(
+        self,
+        locale: str | None = "ru",
+        group_by_brand: bool | None = False,
+        group_by_subject: bool | None = False,
+        group_by_sa: bool | None = False,
+        group_by_nm: bool | None = False,
+        group_by_barcode: bool | None = False,
+        group_by_size: bool | None = False,
+        filter_pics: int | None = 0,
+        filter_volume: int | None = 0,
+    ) -> list[WarehouseRemainsResponse]:
+        """
+        Creates a task for report generation. The parameters `groupBy` and `filter` can be set in
+        anycombination — similar to the
+        [version](https://seller.wildberries.ru/analytics-reports/warehouse-remains)in the personal
+        account.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Warehouses-Inventory-Report/paths/~1api~1v1~1warehouse_remains/get
+
+        :param locale: Language of the `subjectName` and `warehouseName` response fields:
+        :param group_by_brand: Group by brand
+        :param group_by_subject: Group by subject
+        :param group_by_sa: Group by seller's article
+        :param group_by_nm: Group by WB article. If `groupByNm=true`, there will be `volume` field
+                            inthe response
+        :param group_by_barcode: Group by barcode
+        :param group_by_size: Group by size
+        :param filter_pics: Photo filter:
+        :param filter_volume: Volume filter:
+        :return: list[WarehouseRemainsResponse]
+        """
+        call = GetWarehouseRemains(
+            locale=locale,
+            group_by_brand=group_by_brand,
+            group_by_subject=group_by_subject,
+            group_by_sa=group_by_sa,
+            group_by_nm=group_by_nm,
+            group_by_barcode=group_by_barcode,
+            group_by_size=group_by_size,
+            filter_pics=filter_pics,
+            filter_volume=filter_volume,
+        )
+        return await self(call)
+
+    get_warehouse_remains.__wrapped_cls__ = GetWarehouseRemains
+
+    async def get_warehouse_remains_tasks_task_id_download(
+        self,
+        task_id: str,
+    ) -> list[WarehouseRemainsTasksTaskIdDownloadResponse]:
+        """
+        Returns the report by task ID
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Warehouses-Inventory-Report/paths/~1api~1v1~1warehouse_remains~1tasks~1%7Btask_id%7D~1download/get
+
+        :param task_id: Generation task ID
+        :return: list[WarehouseRemainsTasksTaskIdDownloadResponse]
+        """
+        call = GetWarehouseRemainsTasksTaskIdDownload(task_id=task_id)
+        return await self(call)
+
+    get_warehouse_remains_tasks_task_id_download.__wrapped_cls__ = GetWarehouseRemainsTasksTaskIdDownload
 
     async def get_warehouses(
         self,

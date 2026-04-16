@@ -17,6 +17,8 @@ from .api_uin import ApiUin
 from .assembly_order_statuses_item import AssemblyOrderStatusesItem
 from .b2_bbuyer_information_item import B2BBuyerInformationItem
 from .cancel_assembly_orders_item import CancelAssemblyOrdersItem
+from .dbs_orders_item import DbsOrdersItem
+from .dbs_orders_order_id_meta_item import DbsOrdersOrderIdMetaItem
 from .delete_assembly_orders_metadata_item import DeleteAssemblyOrdersMetadataItem
 from .errors_item import ErrorsItem
 from .information_on_paid_delivery_response import InformationOnPaidDeliveryResponse
@@ -53,6 +55,8 @@ __all__ = (
     "AssemblyOrderStatusesItem",
     "B2BBuyerInformationItem",
     "CancelAssemblyOrdersItem",
+    "DbsOrdersItem",
+    "DbsOrdersOrderIdMetaItem",
     "DeleteAssemblyOrdersMetadataItem",
     "ErrorsItem",
     "InformationOnPaidDeliveryResponse",

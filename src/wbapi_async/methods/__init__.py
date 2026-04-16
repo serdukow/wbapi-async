@@ -105,6 +105,8 @@ from ..orders_dbs.methods.cancel_assembly_orders import CancelAssemblyOrders
 from ..orders_dbs.methods.delete_assembly_orders_metadata import DeleteAssemblyOrdersMetadata
 from ..orders_dbs.methods.get_assembly_order_statuses import GetAssemblyOrderStatuses
 from ..orders_dbs.methods.get_b2_bbuyer_information import GetB2BBuyerInformation
+from ..orders_dbs.methods.get_dbs_orders import GetDbsOrders
+from ..orders_dbs.methods.get_dbs_orders_order_id_meta import GetDbsOrdersOrderIdMeta
 from ..orders_dbs.methods.get_information_on_paid_delivery import GetInformationOnPaidDelivery
 from ..orders_dbs.methods.get_new_orders_list import GetNewOrdersList
 from ..orders_dbs.methods.get_stickers_for_assembly_orders_with_delivery_to_pickup_point import (
@@ -181,6 +183,7 @@ from ..orders_fbs.methods.get_the_supply_qr_code import GetTheSupplyQrCode
 from ..orders_fbs.methods.move_the_supply_to_the_delivery import MoveTheSupplyToTheDelivery
 from ..orders_fbs.methods.update_pass import UpdatePass
 from ..orders_fbw.methods.get_acceptance_options import GetAcceptanceOptions
+from ..orders_fbw.methods.get_supplies_id import GetSuppliesId
 from ..orders_fbw.methods.get_supplies_list import GetSuppliesList
 from ..orders_fbw.methods.get_supply_package import GetSupplyPackage
 from ..orders_fbw.methods.get_supply_products import GetSupplyProducts
@@ -286,12 +289,21 @@ from ..promotion.methods.rename_campaign import RenameCampaign
 from ..promotion.methods.set_bids_for_search_clusters import SetBidsForSearchClusters
 from ..promotion.methods.setting_and_deleting_minus_phrases import SettingAndDeletingMinusPhrases
 from ..promotion.methods.topup_of_the_campaign_budget import TopupOfTheCampaignBudget
+from ..reports.methods.get_acceptance_report import GetAcceptanceReport
+from ..reports.methods.get_acceptance_report_tasks_task_id_download import (
+    GetAcceptanceReportTasksTaskIdDownload,
+)
+from ..reports.methods.get_acceptance_report_tasks_task_id_status import GetAcceptanceReportTasksTaskIdStatus
+from ..reports.methods.get_analytics_brand_share import GetAnalyticsBrandShare
+from ..reports.methods.get_analytics_goods_return import GetAnalyticsGoodsReturn
 from ..reports.methods.get_blocked_product_cards import GetBlockedProductCards
 from ..reports.methods.get_check_the_status import GetCheckTheStatus
 from ..reports.methods.get_generate_the_report import GetGenerateTheReport
 from ..reports.methods.get_hidden_from_the_catalog import GetHiddenFromTheCatalog
 from ..reports.methods.get_logistics_and_storage_costs_multiplier import GetLogisticsAndStorageCostsMultiplier
 from ..reports.methods.get_orders import GetOrders
+from ..reports.methods.get_paid_storage_tasks_task_id_download import GetPaidStorageTasksTaskIdDownload
+from ..reports.methods.get_paid_storage_tasks_task_id_status import GetPaidStorageTasksTaskIdStatus
 from ..reports.methods.get_parent_categories_of_the_brand import GetParentCategoriesOfTheBrand
 from ..reports.methods.get_product_labeling import GetProductLabeling
 from ..reports.methods.get_report import GetReport
@@ -306,6 +318,10 @@ from ..reports.methods.get_substitutions_and_incorrect_attachments import (
 )
 from ..reports.methods.get_warehouse import GetWarehouse
 from ..reports.methods.get_warehouse_measurements import GetWarehouseMeasurements
+from ..reports.methods.get_warehouse_remains import GetWarehouseRemains
+from ..reports.methods.get_warehouse_remains_tasks_task_id_download import (
+    GetWarehouseRemainsTasksTaskIdDownload,
+)
 from ..tariffs.methods.get_box_tariffs import GetBoxTariffs
 from ..tariffs.methods.get_pallet_tariffs import GetPalletTariffs
 from ..tariffs.methods.get_product_category_commission import GetProductCategoryCommission
@@ -369,9 +385,14 @@ __all__ = (
     "EditResponseToFeedback",
     "GenerationOfSkus",
     "GetAcceptanceOptions",
+    "GetAcceptanceReport",
+    "GetAcceptanceReportTasksTaskIdDownload",
+    "GetAcceptanceReportTasksTaskIdStatus",
     "GetActiveAndInactiveSearchClusterLists",
     "GetAListOfSellerActiveOrInvitedUsers",
     "GetAllAssemblyOrdersForReshipment",
+    "GetAnalyticsBrandShare",
+    "GetAnalyticsGoodsReturn",
     "GetAssemblyOrderMetadata",
     "GetAssemblyOrders",
     "GetAssemblyOrdersMetadata",
@@ -401,6 +422,8 @@ __all__ = (
     "GetCourierInfo",
     "GetCreateTheReport",
     "GetDailySearchClustersStatistics",
+    "GetDbsOrders",
+    "GetDbsOrdersOrderIdMeta",
     "GetDeleteCampaign",
     "GetDeliveryDateAndTime",
     "GetDocument",
@@ -450,6 +473,8 @@ __all__ = (
     "GetOrdersWithClientInformation",
     "GetPaginationByGroups",
     "GetPaginationByProductsWithinAGroup",
+    "GetPaidStorageTasksTaskIdDownload",
+    "GetPaidStorageTasksTaskIdStatus",
     "GetPalletTariffs",
     "GetParentCategoriesOfTheBrand",
     "GetPasses",
@@ -501,6 +526,7 @@ __all__ = (
     "GetSubjectsForCampaigns",
     "GetSubjectsList",
     "GetSubstitutionsAndIncorrectAttachments",
+    "GetSuppliesId",
     "GetSuppliesList",
     "GetSupplyAssemblyOrderIds",
     "GetSupplyBoxesList",
@@ -525,6 +551,8 @@ __all__ = (
     "GetWarehouse",
     "GetWarehouseData",
     "GetWarehouseMeasurements",
+    "GetWarehouseRemains",
+    "GetWarehouseRemainsTasksTaskIdDownload",
     "GetWarehouses",
     "GetWarehousesList",
     "MergingOrSeparatingOfProductCards",

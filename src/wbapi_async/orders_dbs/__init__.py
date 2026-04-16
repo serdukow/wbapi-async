@@ -17,6 +17,8 @@ from .types.api_uin import ApiUin
 from .types.assembly_order_statuses_item import AssemblyOrderStatusesItem
 from .types.b2_bbuyer_information_item import B2BBuyerInformationItem
 from .types.cancel_assembly_orders_item import CancelAssemblyOrdersItem
+from .types.dbs_orders_item import DbsOrdersItem
+from .types.dbs_orders_order_id_meta_item import DbsOrdersOrderIdMetaItem
 from .types.delete_assembly_orders_metadata_item import DeleteAssemblyOrdersMetadataItem
 from .types.errors_item import ErrorsItem
 from .types.information_on_paid_delivery_response import InformationOnPaidDeliveryResponse
@@ -53,6 +55,8 @@ __all__ = (
     "AssemblyOrderStatusesItem",
     "B2BBuyerInformationItem",
     "CancelAssemblyOrdersItem",
+    "DbsOrdersItem",
+    "DbsOrdersOrderIdMetaItem",
     "DeleteAssemblyOrdersMetadataItem",
     "ErrorsItem",
     "InformationOnPaidDeliveryResponse",

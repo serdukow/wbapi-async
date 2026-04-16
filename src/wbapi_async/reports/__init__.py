@@ -1,3 +1,10 @@
+from .types.acceptance_report_response import AcceptanceReportResponse
+from .types.acceptance_report_tasks_task_id_download_response import (
+    AcceptanceReportTasksTaskIdDownloadResponse,
+)
+from .types.acceptance_report_tasks_task_id_status_response import AcceptanceReportTasksTaskIdStatusResponse
+from .types.analytics_brand_share_item import AnalyticsBrandShareItem
+from .types.analytics_goods_return_item import AnalyticsGoodsReturnItem
 from .types.blocked_product_cards_item import BlockedProductCardsItem
 from .types.check_the_status_response import CheckTheStatusResponse
 from .types.create_task_response_data import CreateTaskResponseData
@@ -6,6 +13,8 @@ from .types.get_tasks_response_data import GetTasksResponseData
 from .types.hidden_from_the_catalog_item import HiddenFromTheCatalogItem
 from .types.logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
 from .types.orders_response import OrdersResponse
+from .types.paid_storage_tasks_task_id_download_response import PaidStorageTasksTaskIdDownloadResponse
+from .types.paid_storage_tasks_task_id_status_response import PaidStorageTasksTaskIdStatusResponse
 from .types.parent_categories_of_the_brand_item import ParentCategoriesOfTheBrandItem
 from .types.product_labeling_item import ProductLabelingItem
 from .types.report_item import ReportItem
@@ -15,11 +24,20 @@ from .types.selfpurchases_item import SelfpurchasesItem
 from .types.seller_brands_item import SellerBrandsItem
 from .types.substitutions_and_incorrect_attachments_item import SubstitutionsAndIncorrectAttachmentsItem
 from .types.warehouse_measurements_item import WarehouseMeasurementsItem
+from .types.warehouse_remains_response import WarehouseRemainsResponse
+from .types.warehouse_remains_tasks_task_id_download_response import (
+    WarehouseRemainsTasksTaskIdDownloadResponse,
+)
 from .types.warehouse_response import WarehouseResponse
 from .types.warehouses_item_2 import WarehousesItem2
 
 
 __all__ = (
+    "AcceptanceReportResponse",
+    "AcceptanceReportTasksTaskIdDownloadResponse",
+    "AcceptanceReportTasksTaskIdStatusResponse",
+    "AnalyticsBrandShareItem",
+    "AnalyticsGoodsReturnItem",
     "BlockedProductCardsItem",
     "CheckTheStatusResponse",
     "CreateTaskResponseData",
@@ -28,6 +46,8 @@ __all__ = (
     "HiddenFromTheCatalogItem",
     "LogisticsAndStorageCostsMultiplierItem",
     "OrdersResponse",
+    "PaidStorageTasksTaskIdDownloadResponse",
+    "PaidStorageTasksTaskIdStatusResponse",
     "ParentCategoriesOfTheBrandItem",
     "ProductLabelingItem",
     "ReportItem",
@@ -37,6 +57,8 @@ __all__ = (
     "SellerBrandsItem",
     "SubstitutionsAndIncorrectAttachmentsItem",
     "WarehouseMeasurementsItem",
+    "WarehouseRemainsResponse",
+    "WarehouseRemainsTasksTaskIdDownloadResponse",
     "WarehouseResponse",
     "WarehousesItem2",
 )

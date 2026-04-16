@@ -11,6 +11,8 @@ from .cancel_assembly_orders import CancelAssemblyOrders
 from .delete_assembly_orders_metadata import DeleteAssemblyOrdersMetadata
 from .get_assembly_order_statuses import GetAssemblyOrderStatuses
 from .get_b2_bbuyer_information import GetB2BBuyerInformation
+from .get_dbs_orders import GetDbsOrders
+from .get_dbs_orders_order_id_meta import GetDbsOrdersOrderIdMeta
 from .get_information_on_paid_delivery import GetInformationOnPaidDelivery
 from .get_new_orders_list import GetNewOrdersList
 from .get_stickers_for_assembly_orders_with_delivery_to_pickup_point import (
@@ -32,6 +34,8 @@ __all__ = (
     "DeleteAssemblyOrdersMetadata",
     "GetAssemblyOrderStatuses",
     "GetB2BBuyerInformation",
+    "GetDbsOrders",
+    "GetDbsOrdersOrderIdMeta",
     "GetInformationOnPaidDelivery",
     "GetNewOrdersList",
     "GetStickersForAssemblyOrdersWithDeliveryToPickupPoint",
