@@ -1,16 +1,13 @@
-_DEFAULT_UA = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/124.0.0.0 Safari/537.36"
-)
-
-
 class Headers:
     def __init__(self) -> None:
         self.accept = "application/json;charset=utf-8"
         self.content_type = "application/json"
         self.authorization: str | None = None
-        self.user_agent = _DEFAULT_UA
+        self.user_agent = (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/124.0.0.0 Safari/537.36"
+        )
 
     def set_token(self, token: str) -> None:
         self.authorization = f"Bearer {token}"
