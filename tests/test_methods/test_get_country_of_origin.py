@@ -10,7 +10,7 @@ class TestGetCountryOfOrigin:
         api.add_response(
             [
                 {
-                    "data": None,
+                    "data": [{"name": "Электроника", "id": 479, "isVisible": True}],
                     "error": False,
                     "errorText": "",
                     "additionalErrors": "",

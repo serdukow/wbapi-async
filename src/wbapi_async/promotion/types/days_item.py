@@ -1,22 +1,18 @@
 from pydantic import Field
 
 from ...types.base import BaseType
-from .booster_stats_item import BoosterStatsItem
-from .days_item import DaysItem
+from .apps_item import AppsItem
 
 
-class CampaignsStatisticsResponse(BaseType):
-    """Campaigns Statistics"""
-
-    advert_id: int = Field(alias="advertId")
+class DaysItem(BaseType):
+    apps: list[AppsItem] = Field()
     atbs: int = Field()
-    booster_stats: list[BoosterStatsItem] | None = Field(None, alias="boosterStats")
     canceled: int = Field()
+    date: str = Field()
     clicks: int = Field()
     cpc: float = Field()
     cr: float = Field()
     ctr: float = Field()
-    days: list[DaysItem] = Field()
     orders: int = Field()
     shks: int = Field()
     sum_: float = Field(alias="sum")

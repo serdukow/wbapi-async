@@ -1,3 +1,4 @@
+from .enums.app_type import AppType
 from .enums.bid_type import BidType
 from .enums.payment_type import PaymentType
 from .enums.placement_types_item import PlacementTypesItem
@@ -11,8 +12,10 @@ from .types.advert_n_ms_settings import AdvertNMsSettings
 from .types.advert_settings import AdvertSettings
 from .types.advert_subject import AdvertSubject
 from .types.adverts import Adverts
+from .types.apps_item import AppsItem
 from .types.balance_item import BalanceItem
 from .types.bids_item import BidsItem
+from .types.booster_stats_item import BoosterStatsItem
 from .types.campaign_budget_response import CampaignBudgetResponse
 from .types.campaigns_information_item import CampaignsInformationItem
 from .types.campaigns_lists_item import CampaignsListsItem
@@ -26,6 +29,7 @@ from .types.changing_the_list_of_product_cards_in_campaigns_item import (
 )
 from .types.create_campaign_response import CreateCampaignResponse
 from .types.daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
+from .types.days_item import DaysItem
 from .types.delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from .types.delete_campaign_response import DeleteCampaignResponse
 from .types.information_about_media_campaign_item import InformationAboutMediaCampaignItem
@@ -85,9 +89,12 @@ __all__ = (
     "Adverts",
     "AdvertSettings",
     "AdvertSubject",
+    "AppsItem",
+    "AppType",
     "BalanceItem",
     "BidsItem",
     "BidType",
+    "BoosterStatsItem",
     "CampaignBudgetResponse",
     "CampaignsInformationItem",
     "CampaignsListsItem",
@@ -97,6 +104,7 @@ __all__ = (
     "ChangingTheListOfProductCardsInCampaignsItem",
     "CreateCampaignResponse",
     "DailySearchClustersStatisticsItem",
+    "DaysItem",
     "DeleteBidsFromSearchClustersResponse",
     "DeleteCampaignResponse",
     "InformationAboutMediaCampaignItem",
