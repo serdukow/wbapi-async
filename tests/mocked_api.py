@@ -4,7 +4,6 @@ from typing import Any
 from wbapi_async import WbAPI
 from wbapi_async.client.session.base import BaseSession
 from wbapi_async.exceptions import WbAPIError
-from wbapi_async.types import RequestLimit
 
 
 class _CapturedRequest:
@@ -34,7 +33,7 @@ class MockedSession(BaseSession):
         *,
         params: dict[str, Any] | None = None,
         json: Any | None = None,
-        limit: RequestLimit | None = None,
+        limit: Any = None,
     ) -> Any:
         self.requests.append(_CapturedRequest(method, url, params, json))
 

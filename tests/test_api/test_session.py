@@ -17,7 +17,7 @@ class TestBaseSession:
             await session.get("https://common-api.wildberries.ru/ping")
 
         assert exc_info.value.http_status == 401
-        assert exc_info.value.error.error_text == "Unauthorized"
+        assert exc_info.value.detail["errorText"] == "Unauthorized"
 
     async def test_error_raises_on_5xx(self, session: BaseSession, httpx_mock: HTTPXMock) -> None:
         httpx_mock.add_response(

@@ -7,17 +7,11 @@ import httpx
 from httpx import RequestError
 
 from ...exceptions import WbAPIError
-from ...types import RequestLimit
 from .headers import Headers
 
 
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
-
-
-# Shared limiters keyed by (burst, interval) — one token bucket per unique
-# rate-limit config, shared across all instances and method calls.
-_limiters: dict[tuple[int, int], AsyncLimiter] = {}
 
 
 class BaseSession:
@@ -35,19 +29,8 @@ class BaseSession:
         self.headers = Headers()
         self._client = httpx.AsyncClient(timeout=self.timeout)
 
-    def build_url(self, api: str, method: str) -> str:
-        base = self.base_url.removeprefix("https://").removeprefix("http://")
-        return f"https://{api}.{base}/{method}"
-
     async def close(self) -> None:
         await self._client.aclose()
-
-    @staticmethod
-    def _get_limiter(limit: RequestLimit) -> AsyncLimiter:
-        key = (limit.burst, limit.interval)
-        if key not in _limiters:
-            _limiters[key] = AsyncLimiter(max_rate=limit.burst, time_period=limit.interval / 1000)
-        return _limiters[key]
 
     async def _request(
         self,
@@ -56,10 +39,10 @@ class BaseSession:
         *,
         params: dict[str, Any] | None = None,
         json: Any | None = None,
-        limit: RequestLimit | None = None,
+        limit: AsyncLimiter | None = None,
     ) -> Any:
         if limit is not None:
-            await self._get_limiter(limit).acquire()
+            await limit.acquire()
 
         try:
             response = await self._client.request(
@@ -67,7 +50,7 @@ class BaseSession:
                 url=url,
                 params=params,
                 json=json,
-                headers=self.headers.model_dump(),
+                headers=self.headers.as_dict(),
             )
         except RequestError:
             raise
@@ -100,7 +83,7 @@ class BaseSession:
         url: str,
         *,
         params: dict[str, Any] | None = None,
-        limit: RequestLimit | None = None,
+        limit: AsyncLimiter | None = None,
     ) -> Any:
         return await self._request("GET", url, params=params, limit=limit)
 
@@ -109,7 +92,7 @@ class BaseSession:
         url: str,
         *,
         json: Any | None = None,
-        limit: RequestLimit | None = None,
+        limit: AsyncLimiter | None = None,
     ) -> Any:
         return await self._request("POST", url, json=json, limit=limit)
 
@@ -118,7 +101,7 @@ class BaseSession:
         url: str,
         *,
         json: Any | None = None,
-        limit: RequestLimit | None = None,
+        limit: AsyncLimiter | None = None,
     ) -> Any:
         return await self._request("PUT", url, json=json, limit=limit)
 
@@ -127,7 +110,7 @@ class BaseSession:
         url: str,
         *,
         json: Any | None = None,
-        limit: RequestLimit | None = None,
+        limit: AsyncLimiter | None = None,
     ) -> Any:
         return await self._request("PATCH", url, json=json, limit=limit)
 
@@ -136,6 +119,6 @@ class BaseSession:
         url: str,
         *,
         params: dict[str, Any] | None = None,
-        limit: RequestLimit | None = None,
+        limit: AsyncLimiter | None = None,
     ) -> Any:
         return await self._request("DELETE", url, params=params, limit=limit)
