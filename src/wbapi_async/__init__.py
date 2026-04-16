@@ -1,10 +1,17 @@
 from importlib.metadata import version
 
-from .client.api import WbAPI
-from .exceptions import TokenValidationError, WbAPIError
-from .utils.paginate import paginate
+from .api import WbAPI
+from .exceptions import PaginationNotSupported, TokenValidationError, WbAPIError
+from .type import ApiResponse
 
 
 __version__ = version("wbapi-async")
 
-__all__ = ("WbAPI", "WbAPIError", "TokenValidationError", "paginate", "__version__")
+__all__ = (
+    "WbAPI",
+    "WbAPIError",
+    "TokenValidationError",
+    "PaginationNotSupported",
+    "ApiResponse",
+    "__version__",
+)
