@@ -8,7 +8,9 @@ from .types.connection_check_response import ConnectionCheckResponse
 from .types.create_an_invitation_for_a_new_user_response import CreateAnInvitationForANewUserResponse
 from .types.delete_user_response import DeleteUserResponse
 from .types.getting_seller_portal_news_item import GettingSellerPortalNewsItem
+from .types.jam_subscription_information_response import JamSubscriptionInformationResponse
 from .types.seller_information_response import SellerInformationResponse
+from .types.seller_rating_response import SellerRatingResponse
 from .types.update_users_access_permissions_response import UpdateUsersAccessPermissionsResponse
 
 
@@ -19,8 +21,10 @@ __all__ = (
     "DeleteUserResponse",
     "GettingSellerPortalNewsItem",
     "HeightStickers",
+    "JamSubscriptionInformationResponse",
     "OrderDeductions",
     "SellerInformationResponse",
+    "SellerRatingResponse",
     "SortList",
     "TypeStickers",
     "UpdateUsersAccessPermissionsResponse",

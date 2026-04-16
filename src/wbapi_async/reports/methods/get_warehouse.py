@@ -6,7 +6,8 @@ from ...types import RequestLimit, WarehouseResponse
 
 class GetWarehouse(WbMethod):
     """
-    The method returns WB warehouses inventory.
+    This method is deprecated. It will be removed on [June
+    23](https://dev.wildberries.ru/en/release-notes?id=494)
 
     Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1stocks/get
     """

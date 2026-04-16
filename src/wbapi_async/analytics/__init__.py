@@ -1,9 +1,5 @@
 from .enums.aggregation_level import AggregationLevel
 from .enums.position_cluster import PositionCluster
-from .enums.product_data_availability import ProductDataAvailability
-from .enums.product_data_order_field import ProductDataOrderField
-from .enums.product_data_order_mode import ProductDataOrderMode
-from .enums.product_data_stock_type import ProductDataStockType
 from .enums.top_order_by import TopOrderBy
 from .types.create_the_report_response import CreateTheReportResponse
 from .types.group_data_item import GroupDataItem
@@ -17,14 +13,13 @@ from .types.pagination_by_products_within_a_group_response import PaginationByPr
 from .types.product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from .types.product_cards_statistics_per_period_response import ProductCardsStatisticsPerPeriodResponse
 from .types.product_data_item import ProductDataItem
-from .types.product_data_order_by import ProductDataOrderBy
-from .types.product_data_period import ProductDataPeriod
 from .types.regenerate_the_report_response import RegenerateTheReportResponse
 from .types.search_texts_by_product_response import SearchTextsByProductResponse
 from .types.size_data_item import SizeDataItem
 from .types.the_report_response import TheReportResponse
 from .types.the_reports_list_item import TheReportsListItem
 from .types.warehouse_data_item import WarehouseDataItem
+from .types.wb_warehouses_inventory_item import WbWarehousesInventoryItem
 
 
 __all__ = (
@@ -37,12 +32,6 @@ __all__ = (
     "PaginationByGroupsResponse",
     "PaginationByProductsWithinAGroupResponse",
     "PositionCluster",
-    "ProductDataAvailability",
-    "ProductDataOrderBy",
-    "ProductDataOrderField",
-    "ProductDataOrderMode",
-    "ProductDataPeriod",
-    "ProductDataStockType",
     "ProductCardsStatisticsPerDaysResponse",
     "ProductCardsStatisticsPerPeriodResponse",
     "ProductDataItem",
@@ -53,4 +42,5 @@ __all__ = (
     "TheReportsListItem",
     "TopOrderBy",
     "WarehouseDataItem",
+    "WbWarehousesInventoryItem",
 )

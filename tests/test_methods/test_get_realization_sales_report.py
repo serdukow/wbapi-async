@@ -97,6 +97,10 @@ class TestGetRealizationSalesReport:
                     "loyalty_discount": 1.0,
                     "uuid_promocode": "uuid_promocode",
                     "sale_price_promocode_discount_prc": 1.0,
+                    "article_substitution": "article_substitution",
+                    "sale_price_affiliated_discount_prc": 1.0,
+                    "agency_vat": 1.0,
+                    "sale_price_wholesale_discount_prc": 1.0,
                 }
             ]
         )

@@ -17,6 +17,7 @@ class TestListOfFailedProductCardsWithErrors:
                             "brands": {},
                             "vendorCodes": [],
                             "errors": {},
+                            "updatedAt": "updatedAt",
                         }
                     ]
                 }

@@ -3,7 +3,9 @@ from .delete_user import DeleteUser
 from .get_a_list_of_seller_active_or_invited_users import GetAListOfSellerActiveOrInvitedUsers
 from .get_connection_check import GetConnectionCheck
 from .get_getting_seller_portal_news import GetGettingSellerPortalNews
+from .get_jam_subscription_information import GetJamSubscriptionInformation
 from .get_seller_information import GetSellerInformation
+from .get_seller_rating import GetSellerRating
 from .update_users_access_permissions import UpdateUsersAccessPermissions
 
 
@@ -13,6 +15,8 @@ __all__ = (
     "GetAListOfSellerActiveOrInvitedUsers",
     "GetConnectionCheck",
     "GetGettingSellerPortalNews",
+    "GetJamSubscriptionInformation",
     "GetSellerInformation",
+    "GetSellerRating",
     "UpdateUsersAccessPermissions",
 )

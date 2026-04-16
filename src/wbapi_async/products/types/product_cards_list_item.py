@@ -18,6 +18,7 @@ class ProductCardsListItem(BaseType):
     title: str | None = Field(None)
     description: str | None = Field(None)
     need_kiz: bool | None = Field(None, alias="needKiz")
+    kiz_marked: bool | None = Field(None, alias="kizMarked")
     photos: list[dict[str, Any]] | None = Field(None)
     video: str | None = Field(None)
     wholesale: dict[str, Any] | None = Field(None)

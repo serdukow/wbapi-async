@@ -2,5 +2,7 @@ from enum import StrEnum
 
 
 class Period(StrEnum):
-    WEEKLY = "weekly"
+    """Report periodicity:"""
+
     DAILY = "daily"
+    WEEKLY = "weekly"

@@ -12,8 +12,8 @@ class TestGetAssemblyOrdersStickers:
                 "stickers": [
                     {
                         "orderId": 1,
-                        "partA": 1,
-                        "partB": 1,
+                        "partA": "partA",
+                        "partB": "partB",
                         "barcode": "barcode",
                         "file": "file",
                     }
@@ -27,5 +27,5 @@ class TestGetAssemblyOrdersStickers:
         assert len(result) == 1
         assert isinstance(result[0], AssemblyOrdersStickersItem)
         assert result[0].order_id == 1
-        assert result[0].part_a == 1
-        assert result[0].part_b == 1
+        assert result[0].part_a == "partA"
+        assert result[0].part_b == "partB"

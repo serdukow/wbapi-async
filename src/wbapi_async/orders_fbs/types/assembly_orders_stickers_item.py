@@ -7,7 +7,7 @@ class AssemblyOrdersStickersItem(BaseType):
     """Get Assembly Orders Stickers"""
 
     order_id: int | None = Field(None, alias="orderId")
-    part_a: int | None = Field(None, alias="partA")
-    part_b: int | None = Field(None, alias="partB")
+    part_a: str | None = Field(None, alias="partA")
+    part_b: str | None = Field(None, alias="partB")
     barcode: str | None = Field(None)
     file: str | None = Field(None)

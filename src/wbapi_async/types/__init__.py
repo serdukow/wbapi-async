@@ -16,14 +16,13 @@ from ..analytics.types.product_cards_statistics_per_period_response import (
     ProductCardsStatisticsPerPeriodResponse,
 )
 from ..analytics.types.product_data_item import ProductDataItem
-from ..analytics.types.product_data_order_by import ProductDataOrderBy
-from ..analytics.types.product_data_period import ProductDataPeriod
 from ..analytics.types.regenerate_the_report_response import RegenerateTheReportResponse
 from ..analytics.types.search_texts_by_product_response import SearchTextsByProductResponse
 from ..analytics.types.size_data_item import SizeDataItem
 from ..analytics.types.the_report_response import TheReportResponse
 from ..analytics.types.the_reports_list_item import TheReportsListItem
 from ..analytics.types.warehouse_data_item import WarehouseDataItem
+from ..analytics.types.wb_warehouses_inventory_item import WbWarehousesInventoryItem
 from ..communications.types.answer_buyers_application_response import AnswerBuyersApplicationResponse
 from ..communications.types.buyers_return_applications_item import BuyersReturnApplicationsItem
 from ..communications.types.chat_events_item import ChatEventsItem
@@ -53,11 +52,25 @@ from ..communications.types.unanswered_questions_item import UnansweredQuestions
 from ..communications.types.unpin_feedback_response import UnpinFeedbackResponse
 from ..communications.types.unseen_feedbacks_and_questions_item import UnseenFeedbacksAndQuestionsItem
 from ..communications.types.working_with_questions_item import WorkingWithQuestionsItem
+from ..finances.types.acquiring_expenses_report_list_response import AcquiringExpensesReportListResponse
+from ..finances.types.details_for_the_acquiring_expenses_reports_by_period_response import (
+    DetailsForTheAcquiringExpensesReportsByPeriodResponse,
+)
+from ..finances.types.details_for_the_acquiring_expenses_reports_by_report_id_response import (
+    DetailsForTheAcquiringExpensesReportsByReportIdResponse,
+)
+from ..finances.types.details_for_the_sales_reports_by_period_response import (
+    DetailsForTheSalesReportsByPeriodResponse,
+)
+from ..finances.types.details_for_the_sales_reports_by_report_id_response import (
+    DetailsForTheSalesReportsByReportIdResponse,
+)
 from ..finances.types.document_response import DocumentResponse
 from ..finances.types.documents_categories_item import DocumentsCategoriesItem
 from ..finances.types.documents_list_item import DocumentsListItem
 from ..finances.types.documents_response import DocumentsResponse
 from ..finances.types.realization_sales_report_response import RealizationSalesReportResponse
+from ..finances.types.sales_report_list_response import SalesReportListResponse
 from ..finances.types.sellers_balance_response import SellersBalanceResponse
 from ..general.types.a_list_of_seller_active_or_invited_users_item import (
     AListOfSellerActiveOrInvitedUsersItem,
@@ -66,7 +79,9 @@ from ..general.types.connection_check_response import ConnectionCheckResponse
 from ..general.types.create_an_invitation_for_a_new_user_response import CreateAnInvitationForANewUserResponse
 from ..general.types.delete_user_response import DeleteUserResponse
 from ..general.types.getting_seller_portal_news_item import GettingSellerPortalNewsItem
+from ..general.types.jam_subscription_information_response import JamSubscriptionInformationResponse
 from ..general.types.seller_information_response import SellerInformationResponse
+from ..general.types.seller_rating_response import SellerRatingResponse
 from ..general.types.update_users_access_permissions_response import UpdateUsersAccessPermissionsResponse
 from ..in_store_pickup.types.add_data_matrix_codes_to_the_assembly_orders_chestny_znak_item import (
     AddDataMatrixCodesToTheAssemblyOrdersChestnyZnakItem,
@@ -308,7 +323,6 @@ from ..promotion.types.topup_of_the_campaign_budget_response import TopupOfTheCa
 from ..reports.types.blocked_product_cards_item import BlockedProductCardsItem
 from ..reports.types.check_the_status_response import CheckTheStatusResponse
 from ..reports.types.generate_the_report_response import GenerateTheReportResponse
-from ..reports.types.goods_return_item import GoodsReturnItem
 from ..reports.types.hidden_from_the_catalog_item import HiddenFromTheCatalogItem
 from ..reports.types.logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
 from ..reports.types.orders_response import OrdersResponse
@@ -345,6 +359,7 @@ from .request_limit import RequestLimit
 
 __all__ = (
     "AcceptanceOptionsItem",
+    "AcquiringExpensesReportListResponse",
     "ActiveAndInactiveSearchClusterListsItem",
     "AddAssemblyOrdersToTheSupplyResponse",
     "AddBoxesToTheSupplyItem",
@@ -431,6 +446,10 @@ __all__ = (
     "DeleteUserResponse",
     "DeleteWarehouseResponse",
     "DeliveryDateAndTimeItem",
+    "DetailsForTheAcquiringExpensesReportsByPeriodResponse",
+    "DetailsForTheAcquiringExpensesReportsByReportIdResponse",
+    "DetailsForTheSalesReportsByPeriodResponse",
+    "DetailsForTheSalesReportsByReportIdResponse",
     "DocumentResponse",
     "DocumentsCategoriesItem",
     "DocumentsListItem",
@@ -442,7 +461,6 @@ __all__ = (
     "GenderItem",
     "GenerateTheReportResponse",
     "GenerationOfSkusItem",
-    "GoodsReturnItem",
     "GettingSellerPortalNewsItem",
     "GroupDataItem",
     "GroupedProductCardsStatisticsPerDaysItem",
@@ -452,6 +470,7 @@ __all__ = (
     "InformationOnCompletedOrdersItem",
     "InformationOnPaidDeliveryResponse",
     "InventoryItem",
+    "JamSubscriptionInformationResponse",
     "LaunchCampaignResponse",
     "LimitsForTheProductCardsResponse",
     "ListOfArchivedFeedbacksItem",
@@ -508,8 +527,6 @@ __all__ = (
     "ProductCardsStatisticsPerPeriodResponse",
     "ProductCategoryCommissionResponse",
     "ProductDataItem",
-    "ProductDataOrderBy",
-    "ProductDataPeriod",
     "ProductDetail",
     "ProductDetailColor",
     "ProductDetailPrice",
@@ -538,6 +555,7 @@ __all__ = (
     "RetrieveInformationOnCompletedAssemblyOrdersItem",
     "ReturnProductByFeedbackIdItem",
     "ReturnTariffsItem",
+    "SalesReportListResponse",
     "SalesResponse",
     "SearchClustersStatisticsItem",
     "SearchTextsByProductResponse",
@@ -545,6 +563,7 @@ __all__ = (
     "SelfpurchasesItem",
     "SellerBrandsItem",
     "SellerInformationResponse",
+    "SellerRatingResponse",
     "SellersBalanceResponse",
     "SendMessageItem",
     "SetBidsForSearchClustersResponse",
@@ -604,5 +623,6 @@ __all__ = (
     "WarehouseResponse",
     "WarehousesListResponse",
     "WarehousesResponse",
+    "WbWarehousesInventoryItem",
     "WorkingWithQuestionsItem",
 )

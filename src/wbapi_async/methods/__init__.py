@@ -16,6 +16,7 @@ from ..analytics.methods.regenerate_the_report import RegenerateTheReport
 from ..analytics.methods.search_texts_by_product import SearchTextsByProduct
 from ..analytics.methods.size_data import SizeData
 from ..analytics.methods.warehouse_data import WarehouseData
+from ..analytics.methods.wb_warehouses_inventory import WbWarehousesInventory
 from ..communications.methods.answer_buyers_application import AnswerBuyersApplication
 from ..communications.methods.edit_response_to_feedback import EditResponseToFeedback
 from ..communications.methods.get_buyers_return_applications import GetBuyersReturnApplications
@@ -45,12 +46,22 @@ from ..communications.methods.return_product_by_feedback_id import ReturnProduct
 from ..communications.methods.send_message import SendMessage
 from ..communications.methods.unpin_feedback import UnpinFeedback
 from ..communications.methods.working_with_questions import WorkingWithQuestions
+from ..finances.methods.acquiring_expenses_report_list import AcquiringExpensesReportList
+from ..finances.methods.details_for_the_acquiring_expenses_reports_by_period import (
+    DetailsForTheAcquiringExpensesReportsByPeriod,
+)
+from ..finances.methods.details_for_the_acquiring_expenses_reports_by_report_id import (
+    DetailsForTheAcquiringExpensesReportsByReportId,
+)
+from ..finances.methods.details_for_the_sales_reports_by_period import DetailsForTheSalesReportsByPeriod
+from ..finances.methods.details_for_the_sales_reports_by_report_id import DetailsForTheSalesReportsByReportId
 from ..finances.methods.get_document import GetDocument
 from ..finances.methods.get_documents import GetDocuments
 from ..finances.methods.get_documents_categories import GetDocumentsCategories
 from ..finances.methods.get_documents_list import GetDocumentsList
 from ..finances.methods.get_realization_sales_report import GetRealizationSalesReport
 from ..finances.methods.get_sellers_balance import GetSellersBalance
+from ..finances.methods.sales_report_list import SalesReportList
 from ..general.methods.create_an_invitation_for_a_new_user import CreateAnInvitationForANewUser
 from ..general.methods.delete_user import DeleteUser
 from ..general.methods.get_a_list_of_seller_active_or_invited_users import (
@@ -58,7 +69,9 @@ from ..general.methods.get_a_list_of_seller_active_or_invited_users import (
 )
 from ..general.methods.get_connection_check import GetConnectionCheck
 from ..general.methods.get_getting_seller_portal_news import GetGettingSellerPortalNews
+from ..general.methods.get_jam_subscription_information import GetJamSubscriptionInformation
 from ..general.methods.get_seller_information import GetSellerInformation
+from ..general.methods.get_seller_rating import GetSellerRating
 from ..general.methods.update_users_access_permissions import UpdateUsersAccessPermissions
 from ..in_store_pickup.methods.add_data_matrix_codes_to_the_assembly_orders_chestny_znak import (
     AddDataMatrixCodesToTheAssemblyOrdersChestnyZnak,
@@ -282,7 +295,6 @@ from ..reports.methods.get_blocked_product_cards import GetBlockedProductCards
 from ..reports.methods.get_check_the_status import GetCheckTheStatus
 from ..reports.methods.get_create_the_report import GetCreateTheReport
 from ..reports.methods.get_generate_the_report import GetGenerateTheReport
-from ..reports.methods.get_goods_return import GetGoodsReturn
 from ..reports.methods.get_hidden_from_the_catalog import GetHiddenFromTheCatalog
 from ..reports.methods.get_logistics_and_storage_costs_multiplier import GetLogisticsAndStorageCostsMultiplier
 from ..reports.methods.get_orders import GetOrders
@@ -309,6 +321,7 @@ from .get_product_detail import GetProductDetail
 
 __all__ = (
     "AcceptanceOptions",
+    "AcquiringExpensesReportList",
     "ActiveAndInactiveSearchClusterLists",
     "AddAssemblyOrdersToTheSupply",
     "AddBoxesToTheSupply",
@@ -367,6 +380,10 @@ __all__ = (
     "DeleteUser",
     "DeleteWarehouse",
     "DeliveryDateAndTime",
+    "DetailsForTheAcquiringExpensesReportsByPeriod",
+    "DetailsForTheAcquiringExpensesReportsByReportId",
+    "DetailsForTheSalesReportsByPeriod",
+    "DetailsForTheSalesReportsByReportId",
     "EditResponseToFeedback",
     "GenerationOfSkus",
     "GetAListOfSellerActiveOrInvitedUsers",
@@ -404,7 +421,6 @@ __all__ = (
     "GetFileFromTheMessage",
     "GetGender",
     "GetGenerateTheReport",
-    "GetGoodsReturn",
     "GetGettingSellerPortalNews",
     "GetHiddenFromTheCatalog",
     "GetHscodes",
@@ -412,6 +428,7 @@ __all__ = (
     "GetInformationOnCompletedOrders",
     "GetInformationOnPaidDelivery",
     "GetInventory",
+    "GetJamSubscriptionInformation",
     "GetLaunchCampaign",
     "GetLimitsForTheProductCards",
     "GetListOfArchivedFeedbacks",
@@ -463,6 +480,7 @@ __all__ = (
     "GetSelfpurchases",
     "GetSellerBrands",
     "GetSellerInformation",
+    "GetSellerRating",
     "GetSellersBalance",
     "GetStickersForAssemblyOrdersWithDeliveryToPickupPoint",
     "GetStickersForCrossborderAssemblyOrders",
@@ -530,6 +548,7 @@ __all__ = (
     "ReplyToFeedback",
     "ReportOnProductsWithMandatoryLabeling",
     "ReturnProductByFeedbackId",
+    "SalesReportList",
     "SearchClustersStatistics",
     "SearchTextsByProduct",
     "SendMessage",
@@ -558,5 +577,6 @@ __all__ = (
     "UploadMediaFilesViaLinks",
     "WarehouseData",
     "WbMethod",
+    "WbWarehousesInventory",
     "WorkingWithQuestions",
 )

@@ -13,8 +13,6 @@ from ..enums import (
     Period,
     PinOn,
     PositionCluster,
-    ProductDataAvailability,
-    ProductDataStockType,
     Sort,
     SortBlocked,
     SortList,
@@ -28,6 +26,7 @@ from ..enums import (
 )
 from ..methods import (
     AcceptanceOptions,
+    AcquiringExpensesReportList,
     ActiveAndInactiveSearchClusterLists,
     AddAssemblyOrdersToTheSupply,
     AddBoxesToTheSupply,
@@ -86,6 +85,10 @@ from ..methods import (
     DeleteUser,
     DeleteWarehouse,
     DeliveryDateAndTime,
+    DetailsForTheAcquiringExpensesReportsByPeriod,
+    DetailsForTheAcquiringExpensesReportsByReportId,
+    DetailsForTheSalesReportsByPeriod,
+    DetailsForTheSalesReportsByReportId,
     EditResponseToFeedback,
     GenerationOfSkus,
     GetAListOfSellerActiveOrInvitedUsers,
@@ -124,13 +127,13 @@ from ..methods import (
     GetGender,
     GetGenerateTheReport,
     GetGettingSellerPortalNews,
-    GetGoodsReturn,
     GetHiddenFromTheCatalog,
     GetHscodes,
     GetInformationAboutMediaCampaign,
     GetInformationOnCompletedOrders,
     GetInformationOnPaidDelivery,
     GetInventory,
+    GetJamSubscriptionInformation,
     GetLaunchCampaign,
     GetLimitsForTheProductCards,
     GetListOfArchivedFeedbacks,
@@ -182,6 +185,7 @@ from ..methods import (
     GetSelfpurchases,
     GetSellerBrands,
     GetSellerInformation,
+    GetSellerRating,
     GetSellersBalance,
     GetStickersForAssemblyOrdersWithDeliveryToPickupPoint,
     GetStickersForCrossborderAssemblyOrders,
@@ -249,6 +253,7 @@ from ..methods import (
     ReplyToFeedback,
     ReportOnProductsWithMandatoryLabeling,
     ReturnProductByFeedbackId,
+    SalesReportList,
     SearchClustersStatistics,
     SearchTextsByProduct,
     SendMessage,
@@ -277,10 +282,12 @@ from ..methods import (
     UploadMediaFilesViaLinks,
     WarehouseData,
     WbMethod,
+    WbWarehousesInventory,
     WorkingWithQuestions,
 )
 from ..types import (
     AcceptanceOptionsItem,
+    AcquiringExpensesReportListResponse,
     ActiveAndInactiveSearchClusterListsItem,
     AddBoxesToTheSupplyItem,
     AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem,
@@ -338,6 +345,10 @@ from ..types import (
     DeleteAssemblyOrdersMetadataItem,
     DeleteTheTagResponse,
     DeliveryDateAndTimeItem,
+    DetailsForTheAcquiringExpensesReportsByPeriodResponse,
+    DetailsForTheAcquiringExpensesReportsByReportIdResponse,
+    DetailsForTheSalesReportsByPeriodResponse,
+    DetailsForTheSalesReportsByReportIdResponse,
     DocumentResponse,
     DocumentsCategoriesItem,
     DocumentsListItem,
@@ -347,7 +358,6 @@ from ..types import (
     GenerateTheReportResponse,
     GenerationOfSkusItem,
     GettingSellerPortalNewsItem,
-    GoodsReturnItem,
     GroupDataItem,
     GroupedProductCardsStatisticsPerDaysItem,
     HiddenFromTheCatalogItem,
@@ -356,6 +366,7 @@ from ..types import (
     InformationOnCompletedOrdersItem,
     InformationOnPaidDeliveryResponse,
     InventoryItem,
+    JamSubscriptionInformationResponse,
     LimitsForTheProductCardsResponse,
     ListOfArchivedFeedbacksItem,
     ListOfCampaignMinusPhrasesItem,
@@ -405,8 +416,6 @@ from ..types import (
     ProductCardsStatisticsPerPeriodResponse,
     ProductCategoryCommissionResponse,
     ProductDataItem,
-    ProductDataOrderBy,
-    ProductDataPeriod,
     ProductDetail,
     ProductLabelingItem,
     ProductsInQuarantineItem,
@@ -428,6 +437,7 @@ from ..types import (
     RetrieveInformationOnCompletedAssemblyOrdersItem,
     ReturnProductByFeedbackIdItem,
     ReturnTariffsItem,
+    SalesReportListResponse,
     SalesResponse,
     SearchClustersStatisticsItem,
     SearchTextsByProductResponse,
@@ -435,6 +445,7 @@ from ..types import (
     SelfpurchasesItem,
     SellerBrandsItem,
     SellerInformationResponse,
+    SellerRatingResponse,
     SellersBalanceResponse,
     SendMessageItem,
     SetPricesAndDiscountsResponse,
@@ -481,6 +492,7 @@ from ..types import (
     WarehouseResponse,
     WarehousesListResponse,
     WarehousesResponse,
+    WbWarehousesInventoryItem,
     WorkingWithQuestionsItem,
 )
 from ..utils.token import validate_token
@@ -537,6 +549,41 @@ class WbAPI:
         return await self(call)
 
     acceptance_options.__wrapped_cls__ = AcceptanceOptions
+
+    async def acquiring_expenses_report_list(
+        self,
+        date_from: str,
+        date_to: str,
+        limit: int | None = 1000,
+        offset: int | None = 0,
+    ) -> list[AcquiringExpensesReportListResponse]:
+        """
+        Method is available by token types : Personal , Service
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1finance~1v1~1acquiring~1list/post
+
+        :param date_from: Report start date. Date in the
+                          [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339)format. You may
+                          senddate or date with time. Time could be specified in seconds or
+                          milliseconds.The time stands in Moscow time zone `UTC+3`. Examples:
+        :param date_to: Report end date. Date in the
+                        [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339)format. You may
+                        senddate or date with time. Time could be specified in seconds or
+                        milliseconds.The time stands in Moscow time zone `UTC+3`. Examples:
+        :param limit: Number of reports in the response
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :return: list[AcquiringExpensesReportListResponse]
+        """
+        call = AcquiringExpensesReportList(
+            date_from=date_from,
+            date_to=date_to,
+            limit=limit,
+            offset=offset,
+        )
+        return await self(call)
+
+    acquiring_expenses_report_list.__wrapped_cls__ = AcquiringExpensesReportList
 
     async def active_and_inactive_search_cluster_lists(
         self,
@@ -1478,7 +1525,7 @@ class WbAPI:
     ) -> list[DailySearchClustersStatisticsItem]:
         """
         Returns statistics (views, clicks, add-to-cart, orders, CTR, CPC, CPM, etc.) by search
-        clustersfor the specified period detailed by day. Request limit per one seller's account:
+        clustersfor the specified period detailed by day.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Statistics/paths/~1adv~1v1~1normquery~1stats/post
 
@@ -1731,6 +1778,163 @@ class WbAPI:
         return await self(call)
 
     delivery_date_and_time.__wrapped_cls__ = DeliveryDateAndTime
+
+    async def details_for_the_acquiring_expenses_reports_by_period(
+        self,
+        date_from: str,
+        date_to: str,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
+        fields: list[str] | None = None,
+    ) -> list[DetailsForTheAcquiringExpensesReportsByPeriodResponse]:
+        """
+        Method is available by token types : Personal , Service
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1finance~1v1~1acquiring~1detailed/post
+
+        :param date_from: Report start date. Date in the
+                          [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339)format. You may
+                          senddate or date with time. Time could be specified in seconds or
+                          milliseconds.The time stands in Moscow time zone `UTC+3`. Examples:
+        :param date_to: Report end date. Date in the
+                        [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339)format. You may
+                        senddate or date with time. Time could be specified in seconds or
+                        milliseconds.The time stands in Moscow time zone `UTC+3`. Examples:
+        :param limit: Number of rows in the response
+        :param rrd_id: Response row ID. Required to get the report in parts. Start report uploading
+                       with`"rrdid":0`. In subsequent requests, specify the `rrdId` value from the
+                       lastrow of the previous response. Repeat the request until you get `204`
+                       response
+        :param fields: List of fields that will be returned in response. If the parameter is not
+                       specified,all fields are returned
+        :return: list[DetailsForTheAcquiringExpensesReportsByPeriodResponse]
+        """
+        call = DetailsForTheAcquiringExpensesReportsByPeriod(
+            date_from=date_from,
+            date_to=date_to,
+            limit=limit,
+            rrd_id=rrd_id,
+            fields=fields,
+        )
+        return await self(call)
+
+    details_for_the_acquiring_expenses_reports_by_period.__wrapped_cls__ = (
+        DetailsForTheAcquiringExpensesReportsByPeriod
+    )
+
+    async def details_for_the_acquiring_expenses_reports_by_report_id(
+        self,
+        report_id: int,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
+        fields: list[str] | None = None,
+    ) -> list[DetailsForTheAcquiringExpensesReportsByReportIdResponse]:
+        """
+        Method is available by token types : Personal , Service
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1finance~1v1~1acquiring~1detailed~1%7BreportId%7D/post
+
+        :param report_id: Report ID
+        :param limit: Number of rows in the response
+        :param rrd_id: Response row ID. Required to get the report in parts. Start report uploading
+                       with`"rrdid":0`. In subsequent requests, specify the `rrdId` value from the
+                       lastrow of the previous response. Repeat the request until you get `204`
+                       response
+        :param fields: List of fields that will be returned in response. If the parameter is not
+                       specified,all fields are returned
+        :return: list[DetailsForTheAcquiringExpensesReportsByReportIdResponse]
+        """
+        call = DetailsForTheAcquiringExpensesReportsByReportId(
+            report_id=report_id,
+            limit=limit,
+            rrd_id=rrd_id,
+            fields=fields,
+        )
+        return await self(call)
+
+    details_for_the_acquiring_expenses_reports_by_report_id.__wrapped_cls__ = (
+        DetailsForTheAcquiringExpensesReportsByReportId
+    )
+
+    async def details_for_the_sales_reports_by_period(
+        self,
+        date_from: str,
+        date_to: str,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
+        period: Period | None = Period.WEEKLY,
+        fields: list[str] | None = None,
+    ) -> list[DetailsForTheSalesReportsByPeriodResponse]:
+        """
+        The method returns details for the [sales
+        reports](https://seller.wildberries.ru/suppliers-mutual-settlements)by specified period.
+        Thedata is available since January 29, 2024.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1finance~1v1~1sales-reports~1detailed/post
+
+        :param date_from: Report start date. Date in the
+                          [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339)format. You may
+                          senddate or date with time. Time could be specified in seconds or
+                          milliseconds.The time stands in Moscow time zone `UTC+3`. Examples:
+        :param date_to: Report end date. Date in the
+                        [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339)format. You may
+                        senddate or date with time. Time could be specified in seconds or
+                        milliseconds.The time stands in Moscow time zone `UTC+3`. Examples:
+        :param limit: Number of rows in the response
+        :param rrd_id: Response row ID. Required to get the report in parts. Start report uploading
+                       with`"rrdid":0`. In subsequent requests, specify the `rrdId` value from the
+                       lastrow of the previous response. Repeat the request until you get `204`
+                       response
+        :param period: Report periodicity:
+        :param fields: List of fields that will be returned in response. If the parameter is not
+                       specified,all fields are returned
+        :return: list[DetailsForTheSalesReportsByPeriodResponse]
+        """
+        call = DetailsForTheSalesReportsByPeriod(
+            date_from=date_from,
+            date_to=date_to,
+            limit=limit,
+            rrd_id=rrd_id,
+            period=period,
+            fields=fields,
+        )
+        return await self(call)
+
+    details_for_the_sales_reports_by_period.__wrapped_cls__ = DetailsForTheSalesReportsByPeriod
+
+    async def details_for_the_sales_reports_by_report_id(
+        self,
+        report_id: int,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
+        fields: list[str] | None = None,
+    ) -> list[DetailsForTheSalesReportsByReportIdResponse]:
+        """
+        Method is available by token types : Personal , Service
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1finance~1v1~1sales-reports~1detailed~1%7BreportId%7D/post
+
+        :param report_id: Report ID. For daily reports, we recommend using non-standard libraries
+                          with[BigInt](https://www.npmjs.com/package/json-bigint) support, instead
+                          ofstandard deserialization
+        :param limit: Number of rows in the response
+        :param rrd_id: Response row ID. Required to get the report in parts. Start report uploading
+                       with`"rrdid":0`. In subsequent requests, specify the `rrdId` value from the
+                       lastrow of the previous response. Repeat the request until you get `204`
+                       response
+        :param fields: List of fields that will be returned in response. If the parameter is not
+                       specified,all fields are returned
+        :return: list[DetailsForTheSalesReportsByReportIdResponse]
+        """
+        call = DetailsForTheSalesReportsByReportId(
+            report_id=report_id,
+            limit=limit,
+            rrd_id=rrd_id,
+            fields=fields,
+        )
+        return await self(call)
+
+    details_for_the_sales_reports_by_report_id.__wrapped_cls__ = DetailsForTheSalesReportsByReportId
 
     async def edit_response_to_feedback(
         self,
@@ -2519,26 +2723,6 @@ class WbAPI:
 
     get_generate_the_report.__wrapped_cls__ = GetGenerateTheReport
 
-    async def get_goods_return(
-        self,
-        date_from: str,
-        date_to: str,
-    ) -> list[GoodsReturnItem]:
-        """
-        Returns a list of goods returns to the seller. With one request, you can obtain a report
-        for a maximum of 31 days.
-
-        Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Returns-and-Product-Movement-Report/paths/~1api~1v1~1analytics~1goods-return/get
-
-        :param date_from: Beginning date of the reporting period (YYYY-MM-DD)
-        :param date_to: End date of the reporting period (YYYY-MM-DD)
-        :return: list[GoodsReturnItem]
-        """
-        call = GetGoodsReturn(date_from=date_from, date_to=date_to)
-        return await self(call)
-
-    get_goods_return.__wrapped_cls__ = GetGoodsReturn
-
     async def get_getting_seller_portal_news(
         self,
         from_: str | None = None,
@@ -2691,6 +2875,20 @@ class WbAPI:
         return await self(call)
 
     get_inventory.__wrapped_cls__ = GetInventory
+
+    async def get_jam_subscription_information(
+        self,
+    ) -> list[JamSubscriptionInformationResponse]:
+        """
+        You can get Jam subscription information with a token of any category.
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-Information/paths/~1api~1common~1v1~1subscriptions/get
+        :return: list[JamSubscriptionInformationResponse]
+        """
+        call = GetJamSubscriptionInformation()
+        return await self(call)
+
+    get_jam_subscription_information.__wrapped_cls__ = GetJamSubscriptionInformation
 
     async def get_launch_campaign(
         self,
@@ -3549,15 +3747,14 @@ class WbAPI:
         period: Period | None = Period.WEEKLY,
     ) -> list[RealizationSalesReportResponse]:
         """
-        Details for the [realization
-        reports](https://seller.wildberries.ru/suppliers-mutual-settlements).The report contains
-        datasince 29 January 2024.
+        This method is deprecated. It will be removed on [July
+        15](https://dev.wildberries.ru/en/release-notes?id=498).
 
         Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1v5~1supplier~1reportDetailByPeriod/get
 
-        :param date_from: Starting date of the report. Date format: RFC3339. You may send date or
-                          datewith time. Time could be specified in seconds or milliseconds. The
-                          timestands in Moscow time zone (UTC+3). Examples:
+        :param date_from: Report start date. Date format: RFC3339. You may send date or date with
+                          time.Time could be specified in seconds or milliseconds. The time stands
+                          inMoscow time zone (UTC+3). Examples:
         :param date_to: Report end date
         :param limit: Number of strings in the response
         :param rrdid: The unique ID of the report line. Required to receive the report in parts.
@@ -3784,8 +3981,7 @@ class WbAPI:
         self,
     ) -> list[SellerInformationResponse]:
         """
-        This method allows you to obtain the seller's name and account ID. You can use any token in
-        request,as long as the **Test Environment** option is not selected.
+        You can get seller information with a token of any category.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-Information/paths/~1api~1v1~1seller-info/get
         :return: list[SellerInformationResponse]
@@ -3794,6 +3990,20 @@ class WbAPI:
         return await self(call)
 
     get_seller_information.__wrapped_cls__ = GetSellerInformation
+
+    async def get_seller_rating(
+        self,
+    ) -> list[SellerRatingResponse]:
+        """
+        To access the method, use a token for the Feedbacks and Questions category
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-Information/paths/~1api~1common~1v1~1rating/get
+        :return: list[SellerRatingResponse]
+        """
+        call = GetSellerRating()
+        return await self(call)
+
+    get_seller_rating.__wrapped_cls__ = GetSellerRating
 
     async def get_sellers_balance(
         self,
@@ -4342,7 +4552,8 @@ class WbAPI:
         date_from: str,
     ) -> list[WarehouseResponse]:
         """
-        The method returns WB warehouses inventory.
+        This method is deprecated. It will be removed on [June
+        23](https://dev.wildberries.ru/en/release-notes?id=494)
 
         Source: https://dev.wildberries.ru/en/docs/openapi/reports#tag/Main-Reports/paths/~1api~1v1~1supplier~1stocks/get
 
@@ -5123,56 +5334,21 @@ class WbAPI:
 
     product_cards_statistics_per_period.__wrapped_cls__ = ProductCardsStatisticsPerPeriod
 
-    async def get_product_data(
+    async def product_data(
         self,
-        current_period: ProductDataPeriod,
-        stock_type: ProductDataStockType,
-        skip_deleted_nm: bool,
-        order_by: ProductDataOrderBy,
-        availability_filters: list[ProductDataAvailability],
-        nm_ids: list[int] | None = None,
-        subject_id: int | None = None,
-        brand_name: str | None = None,
-        tag_id: int | None = None,
-        limit: int | None = 1000,
-        offset: int = 0,
     ) -> list[ProductDataItem]:
         """
         Forms a dataset for inventory by products. You can get data for individual products as well
-        as for the entire report if there are no filters in the query: `nmIDs`, `subjectID`,
-        `brandName`, `tagID`.
+        asfor the entire report if there are no filters in the query: `nmIDs`, `subjectID`,
+        `brandName`,`tagID`.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1v2~1stocks-report~1products~1products/post
-
-        :param current_period: Period (format: YYYY-MM-DD, no earlier than 3 months from today)
-        :param stock_type: Type of storage warehouse
-        :param skip_deleted_nm: Skip deleted items
-        :param order_by: Sorting parameters
-        :param availability_filters: Item availability filters
-        :param nm_ids: List of WB article numbers for filtering
-        :param subject_id: Subject ID
-        :param brand_name: Brand name
-        :param tag_id: Tag ID
-        :param limit: Number of groups in the response (max 1000)
-        :param offset: From which element to start outputting data
         :return: list[ProductDataItem]
         """
-        call = ProductData(
-            current_period=current_period,
-            stock_type=stock_type,
-            skip_deleted_nm=skip_deleted_nm,
-            order_by=order_by,
-            availability_filters=availability_filters,
-            nm_ids=nm_ids,
-            subject_id=subject_id,
-            brand_name=brand_name,
-            tag_id=tag_id,
-            limit=limit,
-            offset=offset,
-        )
+        call = ProductData()
         return await self(call)
 
-    get_product_data.__wrapped_cls__ = ProductData
+    product_data.__wrapped_cls__ = ProductData
 
     async def recover_product_card_from_trash(
         self,
@@ -5294,6 +5470,44 @@ class WbAPI:
         return await self(call)
 
     return_product_by_feedback_id.__wrapped_cls__ = ReturnProductByFeedbackId
+
+    async def sales_report_list(
+        self,
+        date_from: str,
+        date_to: str,
+        limit: int | None = 1000,
+        offset: int | None = 0,
+        period: Period | None = Period.WEEKLY,
+    ) -> list[SalesReportListResponse]:
+        """
+        Method is available by token types : Personal , Service
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1finance~1v1~1sales-reports~1list/post
+
+        :param date_from: Report start date. Date in the
+                          [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339)format. You may
+                          senddate or date with time. Time could be specified in seconds or
+                          milliseconds.The time stands in Moscow time zone `UTC+3`. Examples:
+        :param date_to: Report end date. Date in the
+                        [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339)format. You may
+                        senddate or date with time. Time could be specified in seconds or
+                        milliseconds.The time stands in Moscow time zone `UTC+3`. Examples:
+        :param limit: Number of reports in the response
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :param period: Report periodicity:
+        :return: list[SalesReportListResponse]
+        """
+        call = SalesReportList(
+            date_from=date_from,
+            date_to=date_to,
+            limit=limit,
+            offset=offset,
+            period=period,
+        )
+        return await self(call)
+
+    sales_report_list.__wrapped_cls__ = SalesReportList
 
     async def search_clusters_statistics(
         self,
@@ -5863,6 +6077,30 @@ class WbAPI:
         return await self(call)
 
     warehouse_data.__wrapped_cls__ = WarehouseData
+
+    async def wb_warehouses_inventory(
+        self,
+        nm_ids: list[int] | None = None,
+        chrt_ids: list[int] | None = None,
+        limit: int | None = 250000,
+        offset: int | None = 0,
+    ) -> list[WbWarehousesInventoryItem]:
+        """
+        Method is available by token types : Personal , Service
+
+        Source: https://dev.wildberries.ru/en/docs/openapi/analytics#tag/Stocks-Report/paths/~1api~1analytics~1v1~1stocks-report~1wb-warehouses/post
+
+        :param nm_ids: WB articles
+        :param chrt_ids: Size IDs. It is used only for the articles specified in the `nmIds` array
+        :param limit: Number of rows in the response
+        :param offset: How many results to skip. For example, with value `10`, the response will
+                       startwith the 11 element
+        :return: list[WbWarehousesInventoryItem]
+        """
+        call = WbWarehousesInventory(nm_ids=nm_ids, chrt_ids=chrt_ids, limit=limit, offset=offset)
+        return await self(call)
+
+    wb_warehouses_inventory.__wrapped_cls__ = WbWarehousesInventory
 
     async def working_with_questions(
         self,

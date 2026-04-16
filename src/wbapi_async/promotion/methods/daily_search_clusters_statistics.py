@@ -9,7 +9,7 @@ from ...types import DailySearchClustersStatisticsItem, RequestLimit
 class DailySearchClustersStatistics(WbMethod):
     """
     Returns statistics (views, clicks, add-to-cart, orders, CTR, CPC, CPM, etc.) by search clusters
-    forthe specified period detailed by day. Request limit per one seller's account:
+    forthe specified period detailed by day.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Statistics/paths/~1adv~1v1~1normquery~1stats/post
     """

@@ -11,9 +11,13 @@ class TestGetStickersForCrossborderAssemblyOrders:
             {
                 "stickers": [
                     {
-                        "file": "file",
                         "orderId": 1,
+                        "status": "status",
                         "parcelId": "parcelId",
+                        "file": "file",
+                        "partA": "partA",
+                        "partB": "partB",
+                        "barcode": "barcode",
                     }
                 ]
             }
@@ -24,6 +28,6 @@ class TestGetStickersForCrossborderAssemblyOrders:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], StickersForCrossborderAssemblyOrdersItem)
-        assert result[0].file == "file"
         assert result[0].order_id == 1
+        assert result[0].status == "status"
         assert result[0].parcel_id == "parcelId"

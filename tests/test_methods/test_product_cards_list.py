@@ -21,6 +21,7 @@ class TestProductCardsList:
                         "title": "title",
                         "description": "description",
                         "needKiz": True,
+                        "kizMarked": True,
                         "photos": [],
                         "video": "video",
                         "wholesale": {},

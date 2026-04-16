@@ -10,6 +10,7 @@ class ProductCardsInTrashListItem(BaseType):
 
     nm_id: int | None = Field(None, alias="nmID")
     vendor_code: str | None = Field(None, alias="vendorCode")
+    kiz_marked: bool | None = Field(None, alias="kizMarked")
     subject_id: int | None = Field(None, alias="subjectID")
     subject_name: str | None = Field(None, alias="subjectName")
     photos: list[dict[str, Any]] | None = Field(None)

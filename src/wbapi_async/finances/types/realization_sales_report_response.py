@@ -95,3 +95,7 @@ class RealizationSalesReportResponse(BaseType):
     loyalty_discount: float | None = Field(None)
     uuid_promocode: str | None = Field(None)
     sale_price_promocode_discount_prc: float | None = Field(None)
+    article_substitution: str | None = Field(None)
+    sale_price_affiliated_discount_prc: float | None = Field(None)
+    agency_vat: float | None = Field(None)
+    sale_price_wholesale_discount_prc: float | None = Field(None)

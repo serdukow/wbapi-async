@@ -13,3 +13,4 @@ class ListOfFailedProductCardsWithErrorsItem(BaseType):
     brands: dict[str, Any] = Field()
     vendor_codes: list[str] = Field(alias="vendorCodes")
     errors: dict[str, Any] = Field()
+    updated_at: str = Field(alias="updatedAt")

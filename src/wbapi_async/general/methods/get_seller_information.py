@@ -4,8 +4,7 @@ from ...types import RequestLimit, SellerInformationResponse
 
 class GetSellerInformation(WbMethod):
     """
-    This method allows you to obtain the seller's name and account ID. You can use any token in
-    request,as long as the **Test Environment** option is not selected.
+    You can get seller information with a token of any category.
 
     Source: https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Seller-Information/paths/~1api~1v1~1seller-info/get
     """

@@ -12,6 +12,7 @@ class TestGetAssemblyOrdersMetadata:
                 "orders": [
                     {
                         "id": 1,
+                        "metaDetails": [],
                         "meta": {},
                     }
                 ]
@@ -24,4 +25,5 @@ class TestGetAssemblyOrdersMetadata:
         assert len(result) == 1
         assert isinstance(result[0], AssemblyOrdersMetadataItem)
         assert result[0].id_ == 1
+        assert result[0].meta_details == []
         assert result[0].meta == {}

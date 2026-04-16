@@ -13,6 +13,7 @@ class TestProductCardsInTrashList:
                     {
                         "nmID": 1,
                         "vendorCode": "vendorCode",
+                        "kizMarked": True,
                         "subjectID": 1,
                         "subjectName": "subjectName",
                         "photos": [],
@@ -35,4 +36,4 @@ class TestProductCardsInTrashList:
         assert isinstance(result[0], ProductCardsInTrashListItem)
         assert result[0].nm_id == 1
         assert result[0].vendor_code == "vendorCode"
-        assert result[0].subject_id == 1
+        assert result[0].kiz_marked

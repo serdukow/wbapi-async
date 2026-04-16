@@ -7,9 +7,8 @@ from ...types import RealizationSalesReportResponse, RequestLimit
 
 class GetRealizationSalesReport(WbMethod):
     """
-    Details for the [realization
-    reports](https://seller.wildberries.ru/suppliers-mutual-settlements).The report contains data
-    since29 January 2024.
+    This method is deprecated. It will be removed on [July
+    15](https://dev.wildberries.ru/en/release-notes?id=498).
 
     Source: https://dev.wildberries.ru/en/docs/openapi/financial-reports-and-accounting#tag/Financial-Reports/paths/~1api~1v5~1supplier~1reportDetailByPeriod/get
     """

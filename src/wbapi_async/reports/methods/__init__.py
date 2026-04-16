@@ -2,7 +2,6 @@ from .get_blocked_product_cards import GetBlockedProductCards
 from .get_check_the_status import GetCheckTheStatus
 from .get_create_the_report import GetCreateTheReport
 from .get_generate_the_report import GetGenerateTheReport
-from .get_goods_return import GetGoodsReturn
 from .get_hidden_from_the_catalog import GetHiddenFromTheCatalog
 from .get_logistics_and_storage_costs_multiplier import GetLogisticsAndStorageCostsMultiplier
 from .get_orders import GetOrders
@@ -20,7 +19,6 @@ from .report_on_products_with_mandatory_labeling import ReportOnProductsWithMand
 
 __all__ = (
     "GetBlockedProductCards",
-    "GetGoodsReturn",
     "GetCheckTheStatus",
     "GetCreateTheReport",
     "GetGenerateTheReport",
