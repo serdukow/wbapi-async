@@ -98,3 +98,4 @@ pyrightconfig.json
 .ruff_cache/
 
 internal/
+TODO.md
