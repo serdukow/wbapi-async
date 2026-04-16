@@ -15,7 +15,7 @@ from .api_order_code_request import ApiOrderCodeRequest
 from .api_sgti_ns import ApiSgtiNs
 from .api_uin import ApiUin
 from .assembly_order_statuses_item import AssemblyOrderStatusesItem
-from .b2_b_buyer_information_item import B2BBuyerInformationItem
+from .b2_bbuyer_information_item import B2BBuyerInformationItem
 from .cancel_assembly_orders_item import CancelAssemblyOrdersItem
 from .delete_assembly_orders_metadata_item import DeleteAssemblyOrdersMetadataItem
 from .errors_item import ErrorsItem

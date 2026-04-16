@@ -21,7 +21,7 @@ class TestGetHiddenFromTheCatalog:
             }
         )
 
-        result = await api.get_hidden_from_the_catalog(sort="brand", order="asc")
+        result = await api.get_hidden_from_the_catalog(sort="sort", order="order")
 
         assert isinstance(result, list)
         assert len(result) == 1

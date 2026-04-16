@@ -19,6 +19,6 @@ class GetOrdersAndPositionsByProductSearchTexts(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    period: SelectedPeriod = Field()
+    period: SelectedPeriod = Field(alias="period")
     nm_id: int = Field(alias="nmId")
     search_texts: list[str] = Field(alias="searchTexts")

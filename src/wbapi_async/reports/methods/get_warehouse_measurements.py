@@ -22,5 +22,5 @@ class GetWarehouseMeasurements(WbMethod):
 
     date_from: str | None = Field(None, alias="dateFrom")
     date_to: str = Field(alias="dateTo")
-    limit: int = Field()
-    offset: int | None = Field(0)
+    limit: int = Field(alias="limit")
+    offset: int | None = Field(0, alias="offset")

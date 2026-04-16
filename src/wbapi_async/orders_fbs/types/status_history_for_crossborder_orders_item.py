@@ -8,5 +8,5 @@ class StatusHistoryForCrossborderOrdersItem(BaseType):
     """Status History for Cross-Border Orders"""
 
     delivery_date: str | None = Field(None, alias="deliveryDate")
-    statuses: list[StatusesItem] | None = Field(None)
+    statuses: list[StatusesItem] | None = Field(None, alias="statuses")
     order_id: int | None = Field(None, alias="orderID")

@@ -19,7 +19,7 @@ class TestGetTheSupplyBoxQrCodeStickers:
         )
 
         result = await api.get_the_supply_box_qr_code_stickers(
-            supply_id="supply_id", type_="svg", trbx_ids=[]
+            supply_id="supply_id", type_="type_", trbx_ids=[]
         )
 
         assert isinstance(result, list)

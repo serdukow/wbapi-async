@@ -9,4 +9,4 @@ class CancelTheAssemblyOrdersItem(BaseType):
 
     order_id: int = Field(alias="orderId")
     is_error: bool = Field(alias="isError")
-    errors: list[ApiBatchErrorResponse] | None = Field(None)
+    errors: list[ApiBatchErrorResponse] | None = Field(None, alias="errors")

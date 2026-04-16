@@ -21,7 +21,7 @@ class TestGetBlockedProductCards:
             }
         )
 
-        result = await api.get_blocked_product_cards(sort="brand", order="asc")
+        result = await api.get_blocked_product_cards(sort="sort", order="order")
 
         assert isinstance(result, list)
         assert len(result) == 1

@@ -22,4 +22,4 @@ class AddGtinToTheAssemblyOrder(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     order_id: int = Field(alias="orderId", exclude=True)
-    gtin: str = Field()
+    gtin: str = Field(alias="gtin")

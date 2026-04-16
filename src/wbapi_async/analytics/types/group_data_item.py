@@ -13,5 +13,5 @@ class GroupDataItem(BaseType):
     brand_name: str = Field(alias="brandName")
     tag_id: int = Field(alias="tagID")
     tag_name: str = Field(alias="tagName")
-    metrics: Metrics = Field()
-    items: list[TableProductItemSt] = Field()
+    metrics: Metrics = Field(alias="metrics")
+    items: list[TableProductItemSt] = Field(alias="items")

@@ -9,4 +9,4 @@ class DeleteAssemblyOrderMetadataItem(BaseType):
 
     order_id: int = Field(alias="orderId")
     is_error: bool = Field(alias="isError")
-    errors: list[ApiOrdersErrorResponse] | None = Field(None)
+    errors: list[ApiOrdersErrorResponse] | None = Field(None, alias="errors")

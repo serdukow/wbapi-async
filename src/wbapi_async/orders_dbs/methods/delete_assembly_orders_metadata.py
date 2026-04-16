@@ -31,5 +31,5 @@ class DeleteAssemblyOrdersMetadata(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    key: str = Field()
+    key: str = Field(alias="key")
     order_ids: list[int] = Field(alias="orderIds")

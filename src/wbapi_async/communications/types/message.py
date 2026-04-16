@@ -7,5 +7,5 @@ from .event_attachments import EventAttachments
 class Message(BaseType):
     """Message data"""
 
-    attachments: EventAttachments | None = Field(None)
-    text: str | None = Field(None)
+    attachments: EventAttachments | None = Field(None, alias="attachments")
+    text: str | None = Field(None, alias="text")

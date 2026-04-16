@@ -4,5 +4,5 @@ from ...types.base import BaseType
 
 
 class StatusesItem(BaseType):
-    date: str | None = Field(None)
-    code: str | None = Field(None)
+    date: str | None = Field(None, alias="date")
+    code: str | None = Field(None, alias="code")

@@ -17,7 +17,7 @@ class TestGetAssemblyOrders:
                             "latitude": 40.20192,
                         },
                         "scanPrice": 1500,
-                        "deliveryType": "fbs",
+                        "deliveryType": "deliveryType",
                         "supplyId": "WB-GI-92937123",
                         "orderUid": "165918930_629fbc924b984618a44354475ca58675",
                         "article": "one-ring-7548",
@@ -36,7 +36,7 @@ class TestGetAssemblyOrders:
                         "currencyCode": 933,
                         "convertedCurrencyCode": 643,
                         "cargoType": 1,
-                        "crossBorderType": 0,
+                        "crossBorderType": 1,
                         "comment": "Упакуйте в плёнку, пожалуйста",
                         "isZeroOrder": False,
                         "options": {"isB2B": True},
@@ -51,6 +51,6 @@ class TestGetAssemblyOrders:
         assert len(result) == 1
         assert isinstance(result[0], AssemblyOrdersItem)
         assert result[0].scan_price == 1500
-        assert result[0].delivery_type == "fbs"
+        assert result[0].delivery_type == "deliveryType"
         assert result[0].supply_id == "WB-GI-92937123"
         assert result[0].order_uid == "165918930_629fbc924b984618a44354475ca58675"

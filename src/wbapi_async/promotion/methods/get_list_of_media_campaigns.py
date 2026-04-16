@@ -18,9 +18,9 @@ class GetListOfMediaCampaigns(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    status: int | None = Field(None)
+    status: int | None = Field(None, alias="status")
     type_: int | None = Field(None, alias="type")
-    limit: int | None = Field(None)
-    offset: int | None = Field(None)
-    order: str | None = Field(None)
-    direction: str | None = Field(None)
+    limit: int | None = Field(None, alias="limit")
+    offset: int | None = Field(None, alias="offset")
+    order: str | None = Field(None, alias="order")
+    direction: str | None = Field(None, alias="direction")

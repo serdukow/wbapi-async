@@ -6,6 +6,6 @@ from .selected import Selected
 
 
 class Statistic(BaseType):
-    selected: Selected = Field()
-    past: Selected | None = Field(None)
-    comparison: Comparison | None = Field(None)
+    selected: Selected = Field(alias="selected")
+    past: Selected | None = Field(None, alias="past")
+    comparison: Comparison | None = Field(None, alias="comparison")

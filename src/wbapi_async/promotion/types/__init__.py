@@ -1,7 +1,7 @@
 from .active_and_inactive_search_cluster_lists_item import ActiveAndInactiveSearchClusterListsItem
 from .add_product_to_the_promotion_response import AddProductToThePromotionResponse
 from .advert_list_item import AdvertListItem
-from .advert_n_ms_settings import AdvertNMsSettings
+from .advert_nms_settings import AdvertNmsSettings
 from .advert_settings import AdvertSettings
 from .advert_subject import AdvertSubject
 from .adverts import Adverts
@@ -79,7 +79,7 @@ __all__ = (
     "ActiveAndInactiveSearchClusterListsItem",
     "AddProductToThePromotionResponse",
     "AdvertListItem",
-    "AdvertNMsSettings",
+    "AdvertNmsSettings",
     "Adverts",
     "AdvertSettings",
     "AdvertSubject",

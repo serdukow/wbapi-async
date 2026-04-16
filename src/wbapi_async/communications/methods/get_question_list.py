@@ -22,8 +22,8 @@ class GetQuestionList(WbMethod):
 
     is_answered: bool = Field(alias="isAnswered")
     nm_id: int | None = Field(None, alias="nmId")
-    take: int = Field()
-    skip: int = Field()
-    order: str | None = Field(None)
+    take: int = Field(alias="take")
+    skip: int = Field(alias="skip")
+    order: str | None = Field(None, alias="order")
     date_from: int | None = Field(None, alias="dateFrom")
     date_to: int | None = Field(None, alias="dateTo")

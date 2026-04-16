@@ -7,4 +7,4 @@ class AdvertSubject(BaseType):
     """Subject"""
 
     id_: int = Field(alias="id")
-    name: str = Field()
+    name: str = Field(alias="name")

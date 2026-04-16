@@ -6,4 +6,4 @@ from .access_item import AccessItem
 
 class UserAccess(BaseType):
     user_id: int | None = Field(None, alias="userId")
-    access: list[AccessItem] | None = Field(None)
+    access: list[AccessItem] | None = Field(None, alias="access")

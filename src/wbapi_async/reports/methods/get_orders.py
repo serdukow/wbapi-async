@@ -18,4 +18,4 @@ class GetOrders(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     date_from: str = Field(alias="dateFrom")
-    flag: int | None = Field(0)
+    flag: int | None = Field(0, alias="flag")

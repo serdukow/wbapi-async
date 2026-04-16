@@ -1,9 +1,7 @@
 from pydantic import Field
 
-from ...analytics.enums.mode import Mode
 from ...methods.base import WbMethod
 from ...types import RequestLimit, SubstitutionsAndIncorrectAttachmentsItem
-from ..enums.sort import Sort
 
 
 class GetSubstitutionsAndIncorrectAttachments(WbMethod):
@@ -25,7 +23,7 @@ class GetSubstitutionsAndIncorrectAttachments(WbMethod):
 
     date_from: str | None = Field(None, alias="dateFrom")
     date_to: str = Field(alias="dateTo")
-    sort: Sort | None = Field(Sort.DTBONUS)
-    order: Mode | None = Field(Mode.DESC)
-    limit: int = Field()
-    offset: int | None = Field(0)
+    sort: str | None = Field("dtBonus", alias="sort")
+    order: str | None = Field("desc", alias="order")
+    limit: int = Field(alias="limit")
+    offset: int | None = Field(0, alias="offset")

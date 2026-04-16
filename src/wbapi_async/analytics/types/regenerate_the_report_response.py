@@ -6,4 +6,4 @@ from ...types.base import BaseType
 class RegenerateTheReportResponse(BaseType):
     """Regenerate the Report"""
 
-    data: str = Field()
+    data: str = Field(alias="data")

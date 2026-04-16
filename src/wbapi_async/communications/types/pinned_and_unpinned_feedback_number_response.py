@@ -8,4 +8,4 @@ from ...types.base import BaseType
 class PinnedAndUnpinnedFeedbackNumberResponse(BaseType):
     """Pinned and Unpinned Feedback Number"""
 
-    data: dict[str, Any] = Field()
+    data: dict[str, Any] = Field(alias="data")

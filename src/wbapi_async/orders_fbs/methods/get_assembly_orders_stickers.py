@@ -2,9 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import AssemblyOrdersStickersItem, RequestLimit
-from ..enums.height import Height
-from ..enums.type_ import Type
-from ..enums.width import Width
 
 
 class GetAssemblyOrdersStickers(WbMethod):
@@ -23,7 +20,7 @@ class GetAssemblyOrdersStickers(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    type_: Type = Field(alias="type")
-    width: Width = Field()
-    height: Height = Field()
-    orders: list[int] | None = Field(None)
+    type_: str = Field(alias="type")
+    width: int = Field(alias="width")
+    height: int = Field(alias="height")
+    orders: list[int] | None = Field(None, alias="orders")

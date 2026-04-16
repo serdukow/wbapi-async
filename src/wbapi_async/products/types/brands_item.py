@@ -8,4 +8,4 @@ class BrandsItem(BaseType):
 
     id_: int = Field(alias="id")
     logo_url: str = Field(alias="logoUrl")
-    name: str = Field()
+    name: str = Field(alias="name")

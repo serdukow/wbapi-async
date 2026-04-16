@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import CampaignsInformationItem, RequestLimit
-from ..enums.payment_type import PaymentType
 
 
 class GetCampaignsInformation(WbMethod):
@@ -20,6 +19,6 @@ class GetCampaignsInformation(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    ids: str | None = Field(None)
-    statuses: str | None = Field(None)
-    payment_type: PaymentType | None = Field(None)
+    ids: str | None = Field(None, alias="ids")
+    statuses: str | None = Field(None, alias="statuses")
+    payment_type: str | None = Field(None, alias="payment_type")

@@ -21,5 +21,5 @@ class GetListOfProductsForParticipatingInThePromotion(WbMethod):
 
     promotion_id: int = Field(alias="promotionID")
     in_action: bool = Field(False, alias="inAction")
-    limit: int | None = Field(None)
-    offset: int | None = Field(None)
+    limit: int | None = Field(None, alias="limit")
+    offset: int | None = Field(None, alias="offset")

@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import ReportOnProductsWithMandatoryLabelingItem, RequestLimit
-from ..enums.countries_item import CountriesItem
 
 
 class GetReportOnProductsWithMandatoryLabeling(WbMethod):
@@ -22,4 +21,4 @@ class GetReportOnProductsWithMandatoryLabeling(WbMethod):
 
     date_from: str = Field(alias="dateFrom")
     date_to: str = Field(alias="dateTo")
-    countries: list[CountriesItem] | None = Field(None)
+    countries: list[str] | None = Field(None, alias="countries")

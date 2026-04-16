@@ -1,8 +1,3 @@
-from .enums.event_type import EventType
-from .enums.order import Order
-from .enums.pin_on import PinOn
-from .enums.sender import Sender
-from .enums.state import State
 from .types.answer import Answer
 from .types.answer_buyers_application_response import AnswerBuyersApplicationResponse
 from .types.buyers_return_applications_item import BuyersReturnApplicationsItem
@@ -48,7 +43,6 @@ __all__ = (
     "ChatListItem",
     "EditResponseToFeedbackResponse",
     "EventAttachments",
-    "EventType",
     "FeedbacksListItem",
     "File",
     "FileFromTheMessageResponse",
@@ -60,19 +54,15 @@ __all__ = (
     "Message",
     "NumberOfFeedbacksItem",
     "NumberOfQuestionsItem",
-    "Order",
     "PhotoLinksItem",
     "PinFeedbackResponse",
     "PinnedAndUnpinnedFeedbackNumberResponse",
     "PinnedFeedbackLimitsResponse",
-    "PinOn",
     "ProductDetails",
     "QuestionListItem",
     "ReplyToFeedbackResponse",
     "ReturnProductByFeedbackIdItem",
-    "Sender",
     "SendMessageItem",
-    "State",
     "TheFeedbackByIdItem",
     "TheQuestionByIdItem",
     "UnansweredFeedbacksItem",

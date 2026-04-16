@@ -1,12 +1,10 @@
-from pydantic import Field as PydanticField
+from pydantic import Field
 
 from ...types.base import BaseType
-from ..enums.field import Field
-from ..enums.mode import Mode
 
 
 class OrderBy(BaseType):
     """Sorting parameters"""
 
-    field: Field = PydanticField()
-    mode: Mode = PydanticField()
+    field: str = Field(alias="field")
+    mode: str = Field(alias="mode")

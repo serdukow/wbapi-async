@@ -18,4 +18,4 @@ class GetCheckTheStatus(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    task_id: str = Field(exclude=True)
+    task_id: str = Field(alias="task_id", exclude=True)

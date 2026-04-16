@@ -19,4 +19,4 @@ class GenerationOfSkus(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    count: int | None = Field(None)
+    count: int | None = Field(None, alias="count")

@@ -1,8 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...reports.enums.sort import Sort
-from ...types import Cursor, ListOfFailedProductCardsWithErrorsItem, RequestLimit
+from ...types import Cursor, ListOfFailedProductCardsWithErrorsItem, RequestLimit, Sort
 
 
 class GetListOfFailedProductCardsWithErrors(WbMethod):
@@ -29,6 +28,6 @@ class GetListOfFailedProductCardsWithErrors(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    locale: str | None = Field(None)
-    cursor: Cursor | None = Field(None)
-    order: Sort | None = Field(None)
+    locale: str | None = Field(None, alias="locale")
+    cursor: Cursor | None = Field(None, alias="cursor")
+    order: Sort | None = Field(None, alias="order")

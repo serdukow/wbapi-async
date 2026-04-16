@@ -19,4 +19,4 @@ class AddProductToThePromotion(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    data: DataUpload | None = Field(None)
+    data: DataUpload | None = Field(None, alias="data")

@@ -18,4 +18,4 @@ class GetDocumentsCategories(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    locale: str | None = Field("en")
+    locale: str | None = Field("en", alias="locale")

@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import MainPageResponse, OrderBy, RequestLimit, SelectedPeriod
-from ..enums.position_cluster import PositionCluster
 
 
 class GetMainPage(WbMethod):
@@ -27,9 +26,9 @@ class GetMainPage(WbMethod):
     subject_ids: list[int] | None = Field(None, alias="subjectIds")
     brand_names: list[str] | None = Field(None, alias="brandNames")
     tag_ids: list[int] | None = Field(None, alias="tagIds")
-    position_cluster: PositionCluster = Field(alias="positionCluster")
+    position_cluster: str = Field(alias="positionCluster")
     order_by: OrderBy = Field(alias="orderBy")
-    include_substituted_sk_us: bool | None = Field(True, alias="includeSubstitutedSKUs")
+    include_substituted_skus: bool | None = Field(True, alias="includeSubstitutedSKUs")
     include_search_texts: bool | None = Field(True, alias="includeSearchTexts")
-    limit: int = Field()
-    offset: int = Field()
+    limit: int = Field(alias="limit")
+    offset: int = Field(alias="offset")

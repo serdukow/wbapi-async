@@ -20,4 +20,4 @@ class SetBidsForSearchClusters(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    bids: list[V0SetNormQueryBidsRequestItem] = Field()
+    bids: list[V0SetNormQueryBidsRequestItem] = Field(alias="bids")

@@ -19,6 +19,6 @@ class SettingAndDeletingMinusPhrases(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    advert_id: int = Field()
-    nm_id: int = Field()
-    norm_queries: list[str] = Field()
+    advert_id: int = Field(alias="advert_id")
+    nm_id: int = Field(alias="nm_id")
+    norm_queries: list[str] = Field(alias="norm_queries")

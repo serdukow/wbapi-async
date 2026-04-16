@@ -1,5 +1,3 @@
-from .enums.status_i_ds_item import StatusIDsItem
-from .enums.type__models_date_filter_request import TypeModelsDateFilterRequest
 from .types.acceptance_options_item import AcceptanceOptionsItem
 from .types.error import Error
 from .types.models_date_filter_request import ModelsDateFilterRequest
@@ -19,12 +17,10 @@ __all__ = (
     "ModelsDateFilterRequest",
     "ModelsGoodInBox",
     "ModelsVolumeTariff",
-    "StatusIDsItem",
     "SuppliesListResponse",
     "SupplyPackageResponse",
     "SupplyProductsResponse",
     "TransitDirectionsResponse",
-    "TypeModelsDateFilterRequest",
     "WarehousesItem",
     "WarehousesListResponse",
 )

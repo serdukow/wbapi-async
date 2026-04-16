@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import RequestLimit, TheSupplyBoxQrCodeStickersItem
-from ..enums.type_ import Type
 
 
 class GetTheSupplyBoxQrCodeStickers(WbMethod):
@@ -23,5 +22,5 @@ class GetTheSupplyBoxQrCodeStickers(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     supply_id: str = Field(alias="supplyId", exclude=True)
-    type_: Type = Field(alias="type")
+    type_: str = Field(alias="type")
     trbx_ids: list[str] = Field(alias="trbxIds")

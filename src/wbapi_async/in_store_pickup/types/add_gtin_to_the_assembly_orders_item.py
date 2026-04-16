@@ -9,4 +9,4 @@ class AddGtinToTheAssemblyOrdersItem(BaseType):
 
     order_id: int = Field(alias="orderId")
     is_error: bool = Field(alias="isError")
-    errors: list[ApiMetaErrorResponse] | None = Field(None)
+    errors: list[ApiMetaErrorResponse] | None = Field(None, alias="errors")

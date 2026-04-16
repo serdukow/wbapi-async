@@ -18,4 +18,4 @@ class GetDocument(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     service_name: str = Field(alias="serviceName")
-    extension: str = Field()
+    extension: str = Field(alias="extension")

@@ -20,5 +20,5 @@ class UpdateTheTag(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     id_: int = Field(alias="id", exclude=True)
-    color: str | None = Field(None)
-    name: str | None = Field(None)
+    color: str | None = Field(None, alias="color")
+    name: str | None = Field(None, alias="name")

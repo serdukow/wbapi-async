@@ -9,5 +9,5 @@ class WarehouseDataItem(BaseType):
     """Warehouse Data"""
 
     region_name: str = Field(alias="regionName")
-    metrics: Metrics = Field()
-    offices: list[OfficesItem] = Field()
+    metrics: Metrics = Field(alias="metrics")
+    offices: list[OfficesItem] = Field(alias="offices")

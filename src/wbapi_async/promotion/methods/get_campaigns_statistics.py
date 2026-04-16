@@ -18,6 +18,6 @@ class GetCampaignsStatistics(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    ids: str = Field()
+    ids: str = Field(alias="ids")
     begin_date: str = Field(alias="beginDate")
     end_date: str = Field(alias="endDate")

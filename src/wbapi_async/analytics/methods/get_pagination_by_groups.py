@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import OrderBy, PaginationByGroupsResponse, RequestLimit, SelectedPeriod
-from ..enums.position_cluster import PositionCluster
 
 
 class GetPaginationByGroups(WbMethod):
@@ -28,8 +27,8 @@ class GetPaginationByGroups(WbMethod):
     brand_names: list[str] | None = Field(None, alias="brandNames")
     tag_ids: list[int] | None = Field(None, alias="tagIds")
     order_by: OrderBy = Field(alias="orderBy")
-    position_cluster: PositionCluster = Field(alias="positionCluster")
-    include_substituted_sk_us: bool | None = Field(True, alias="includeSubstitutedSKUs")
+    position_cluster: str = Field(alias="positionCluster")
+    include_substituted_skus: bool | None = Field(True, alias="includeSubstitutedSKUs")
     include_search_texts: bool | None = Field(True, alias="includeSearchTexts")
-    limit: int = Field()
-    offset: int = Field()
+    limit: int = Field(alias="limit")
+    offset: int = Field(alias="offset")

@@ -4,5 +4,5 @@ from ...types.base import BaseType
 
 
 class ApiOrdersErrorResponse(BaseType):
-    code: int = Field()
-    detail: str = Field()
+    code: int = Field(alias="code")
+    detail: str = Field(alias="detail")

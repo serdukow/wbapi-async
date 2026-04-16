@@ -8,4 +8,4 @@ from ...types.base import BaseType
 class PaginationByGroupsResponse(BaseType):
     """Pagination by Groups"""
 
-    data: dict[str, Any] = Field()
+    data: dict[str, Any] = Field(alias="data")

@@ -8,4 +8,4 @@ class AssemblyOrdersMetadataItem(BaseType):
     """Get Assembly Orders Metadata"""
 
     id_: int | None = Field(None, alias="id")
-    meta: Meta | None = Field(None)
+    meta: Meta | None = Field(None, alias="meta")

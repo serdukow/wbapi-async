@@ -13,7 +13,7 @@ class TestGetAssemblyOrdersStatuses:
                     {
                         "id": 5632423,
                         "supplierStatus": "new",
-                        "wbStatus": "waiting",
+                        "wbStatus": "wbStatus",
                     }
                 ]
             }
@@ -26,4 +26,4 @@ class TestGetAssemblyOrdersStatuses:
         assert isinstance(result[0], AssemblyOrdersStatusesItem)
         assert result[0].id_ == 5632423
         assert result[0].supplier_status == "new"
-        assert result[0].wb_status == "waiting"
+        assert result[0].wb_status == "wbStatus"

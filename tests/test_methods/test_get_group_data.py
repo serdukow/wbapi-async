@@ -81,10 +81,10 @@ class TestGetGroupData:
 
         result = await api.get_group_data(
             current_period={"start": "2023-06-01", "end": "2024-03-01"},
-            stock_type="",
+            stock_type="stock_type",
             skip_deleted_nm=True,
             availability_filters=[],
-            order_by={"field": "openCard", "mode": "asc"},
+            order_by={"field": "openCard", "mode": "mode"},
             offset=1,
         )
 

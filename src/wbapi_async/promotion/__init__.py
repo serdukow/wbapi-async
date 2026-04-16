@@ -1,15 +1,7 @@
-from .enums.app_type import AppType
-from .enums.bid_type import BidType
-from .enums.payment_type import PaymentType
-from .enums.placement import Placement
-from .enums.placement_types_item import PlacementTypesItem
-from .enums.placement_types_item_2 import PlacementTypesItem2
-from .enums.status_2 import Status2
-from .enums.type__2 import Type2
 from .types.active_and_inactive_search_cluster_lists_item import ActiveAndInactiveSearchClusterListsItem
 from .types.add_product_to_the_promotion_response import AddProductToThePromotionResponse
 from .types.advert_list_item import AdvertListItem
-from .types.advert_n_ms_settings import AdvertNMsSettings
+from .types.advert_nms_settings import AdvertNmsSettings
 from .types.advert_settings import AdvertSettings
 from .types.advert_subject import AdvertSubject
 from .types.adverts import Adverts
@@ -91,16 +83,14 @@ __all__ = (
     "ActiveAndInactiveSearchClusterListsItem",
     "AddProductToThePromotionResponse",
     "AdvertListItem",
-    "AdvertNMsSettings",
+    "AdvertNmsSettings",
     "Adverts",
     "AdvertSettings",
     "AdvertSubject",
     "AppsItem",
-    "AppType",
     "BalanceItem",
     "BidsItem",
     "BidsItem2",
-    "BidType",
     "BoosterStatsItem",
     "CampaignBudgetResponse",
     "CampaignsInformationItem",
@@ -132,12 +122,8 @@ __all__ = (
     "NmsItem",
     "NmsItem2",
     "PauseCampaignResponse",
-    "PaymentType",
-    "Placement",
     "Placements",
     "PlacementsItem",
-    "PlacementTypesItem",
-    "PlacementTypesItem2",
     "ProductCardsForCampaignsResponse",
     "PromotionsDetailsItem",
     "PromotionsListItem",
@@ -150,12 +136,10 @@ __all__ = (
     "SetBidsForSearchClustersResponse",
     "SettingAndDeletingMinusPhrasesResponse",
     "ShowHoursItem",
-    "Status2",
     "StopCampaignResponse",
     "SubjectsForCampaignsResponse",
     "Timestamps",
     "TopupOfTheCampaignBudgetResponse",
-    "Type2",
     "V0BidRecommendationReachMax",
     "V0BidRecommendationReachMedium",
     "V0BidRecommendationReachMin",

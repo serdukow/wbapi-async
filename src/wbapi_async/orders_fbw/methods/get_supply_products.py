@@ -19,7 +19,7 @@ class GetSupplyProducts(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    limit: int | None = Field(100)
-    offset: int | None = Field(0)
+    limit: int | None = Field(100, alias="limit")
+    offset: int | None = Field(0, alias="offset")
     is_preorder_id: bool | None = Field(False, alias="isPreorderID")
     id_: int = Field(alias="ID", exclude=True)

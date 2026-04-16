@@ -16,7 +16,7 @@ class TestGetPromotionsList:
                             "name": "скидки",
                             "startDateTime": "2023-06-05T21:00:00Z",
                             "endDateTime": "2023-06-05T21:00:00Z",
-                            "type": "regular",
+                            "type": "type",
                         }
                     ]
                 }
@@ -34,4 +34,4 @@ class TestGetPromotionsList:
         assert result[0].name == "скидки"
         assert result[0].start_date_time == "2023-06-05T21:00:00Z"
         assert result[0].end_date_time == "2023-06-05T21:00:00Z"
-        assert result[0].type_ == "regular"
+        assert result[0].type_ == "type"

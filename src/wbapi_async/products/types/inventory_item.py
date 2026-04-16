@@ -7,4 +7,4 @@ class InventoryItem(BaseType):
     """Get Inventory"""
 
     chrt_id: int | None = Field(None, alias="chrtId")
-    amount: int | None = Field(None)
+    amount: int | None = Field(None, alias="amount")

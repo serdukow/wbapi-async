@@ -16,7 +16,7 @@ class TestGetTheSupplyQrCode:
             ]
         )
 
-        result = await api.get_the_supply_qr_code(supply_id="supply_id", type_="svg")
+        result = await api.get_the_supply_qr_code(supply_id="supply_id", type_="type_")
 
         assert isinstance(result, list)
         assert len(result) == 1

@@ -1,4 +1,4 @@
-from .create_a_tag import CreateATag
+from .create_atag import CreateATag
 from .create_product_cards import CreateProductCards
 from .create_product_cards_with_merge import CreateProductCardsWithMerge
 from .create_warehouse import CreateWarehouse

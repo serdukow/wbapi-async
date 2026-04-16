@@ -23,7 +23,7 @@ class TopupOfTheCampaignBudget(WbMethod):
 
     id_: int = Field(alias="id")
     sum_: int | None = Field(None, alias="sum")
-    cashback_sum: int | None = Field(None)
-    cashback_percent: int | None = Field(None)
+    cashback_sum: int | None = Field(None, alias="cashback_sum")
+    cashback_percent: int | None = Field(None, alias="cashback_percent")
     type_: int | None = Field(None, alias="type")
     return_: bool | None = Field(None, alias="return")

@@ -14,7 +14,7 @@ class TestGetChatEvents:
                         {
                             "chatID": "chatID",
                             "eventID": "eventID",
-                            "eventType": "message",
+                            "eventType": "eventType",
                             "isNewChat": True,
                             "message": {
                                 "attachments": {"goodCard": {}, "files": [], "images": []},
@@ -24,7 +24,7 @@ class TestGetChatEvents:
                             "addTimestamp": 1,
                             "addTime": "addTime",
                             "replySign": "replySign",
-                            "sender": "client",
+                            "sender": "sender",
                             "clientName": "clientName",
                         }
                     ]
@@ -39,5 +39,5 @@ class TestGetChatEvents:
         assert isinstance(result[0], ChatEventsItem)
         assert result[0].chat_id == "chatID"
         assert result[0].event_id == "eventID"
-        assert result[0].event_type == "message"
+        assert result[0].event_type == "eventType"
         assert result[0].is_new_chat

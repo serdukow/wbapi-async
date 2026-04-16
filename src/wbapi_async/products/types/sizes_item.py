@@ -7,4 +7,4 @@ class SizesItem(BaseType):
     chrt_id: int | None = Field(None, alias="chrtID")
     tech_size: str | None = Field(None, alias="techSize")
     wb_size: str | None = Field(None, alias="wbSize")
-    skus: list[str] | None = Field(None)
+    skus: list[str] | None = Field(None, alias="skus")

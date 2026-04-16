@@ -23,7 +23,7 @@ class TestGetPromotionsDetails:
                             "notInPromoActionLeftovers": 3,
                             "notInPromoActionTotal": 10,
                             "participationPercentage": 10,
-                            "type": "regular",
+                            "type": "auto",
                             "exceptionProductsCount": 10,
                             "ranging": [{"condition": "condition", "participationRate": 1, "boost": 1}],
                         }
@@ -32,7 +32,7 @@ class TestGetPromotionsDetails:
             }
         )
 
-        result = await api.get_promotions_details(promotion_i_ds=[])
+        result = await api.get_promotions_details(promotion_ids=[])
 
         assert isinstance(result, list)
         assert len(result) == 1

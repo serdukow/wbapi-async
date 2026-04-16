@@ -9,5 +9,5 @@ class AssemblyOrdersStickersItem(BaseType):
     order_id: int | None = Field(None, alias="orderId")
     part_a: int | None = Field(None, alias="partA")
     part_b: int | None = Field(None, alias="partB")
-    barcode: str | None = Field(None)
-    file: str | None = Field(None)
+    barcode: str | None = Field(None, alias="barcode")
+    file: str | None = Field(None, alias="file")

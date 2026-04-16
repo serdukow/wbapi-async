@@ -9,7 +9,7 @@ from .add_uin_unique_identification_numbers_to_the_assembly_orders_item import (
 from .api_meta_error_response import ApiMetaErrorResponse
 from .api_orders_error_response import ApiOrdersErrorResponse
 from .assembly_order_metadata_item import AssemblyOrderMetadataItem
-from .assign_a_data_matrix_code_to_the_assembly_order_response import (
+from .assign_adata_matrix_code_to_the_assembly_order_response import (
     AssignADataMatrixCodeToTheAssemblyOrderResponse,
 )
 from .cancel_the_assembly_orders_item import CancelTheAssemblyOrdersItem

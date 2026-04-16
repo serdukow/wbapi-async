@@ -22,4 +22,4 @@ class Comparison(BaseType):
     time_to_ready_dynamic: TimeToReady = Field(alias="timeToReadyDynamic")
     localization_percent_dynamic: int = Field(alias="localizationPercentDynamic")
     wb_club_dynamic: WbClub = Field(alias="wbClubDynamic")
-    conversions: Conversions = Field()
+    conversions: Conversions = Field(alias="conversions")

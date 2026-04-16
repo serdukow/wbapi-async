@@ -7,4 +7,4 @@ from .get_tasks_response_data import GetTasksResponseData
 class CheckTheStatusResponse(BaseType):
     """Check the Status"""
 
-    data: GetTasksResponseData | None = Field(None)
+    data: GetTasksResponseData | None = Field(None, alias="data")

@@ -11,5 +11,5 @@ class OrdersWithClientInformationItem(BaseType):
     last_name: str | None = Field(None, alias="lastName")
     middle_name: str | None = Field(None, alias="middleName")
     order_id: int | None = Field(None, alias="orderID")
-    phone: str | None = Field(None)
+    phone: str | None = Field(None, alias="phone")
     phone_code: str | None = Field(None, alias="phoneCode")

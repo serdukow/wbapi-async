@@ -21,7 +21,7 @@ class TestGetNewAssemblyOrders:
                         "salePrice": 504600,
                         "requiredMeta": [],
                         "optionalMeta": [],
-                        "deliveryType": "fbs",
+                        "deliveryType": "deliveryType",
                         "comment": "Упакуйте в плёнку, пожалуйста",
                         "scanPrice": 1.0,
                         "orderUid": "165918930_629fbc924b984618a44354475ca58675",
@@ -43,7 +43,7 @@ class TestGetNewAssemblyOrders:
                         "currencyCode": 933,
                         "convertedCurrencyCode": 643,
                         "cargoType": 1,
-                        "crossBorderType": 0,
+                        "crossBorderType": 1,
                         "isZeroOrder": False,
                         "options": {"isB2B": True},
                     }

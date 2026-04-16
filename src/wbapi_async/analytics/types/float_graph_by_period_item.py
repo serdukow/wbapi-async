@@ -6,6 +6,6 @@ from ...types.base import BaseType
 class FloatGraphByPeriodItem(BaseType):
     """Average monthly orders"""
 
-    start: str = Field()
-    end: str = Field()
-    value: float = Field()
+    start: str = Field(alias="start")
+    end: str = Field(alias="end")
+    value: float = Field(alias="value")

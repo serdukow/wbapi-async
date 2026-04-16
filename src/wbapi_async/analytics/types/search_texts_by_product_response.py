@@ -8,4 +8,4 @@ from ...types.base import BaseType
 class SearchTextsByProductResponse(BaseType):
     """Search Texts by Product"""
 
-    data: dict[str, Any] = Field()
+    data: dict[str, Any] = Field(alias="data")

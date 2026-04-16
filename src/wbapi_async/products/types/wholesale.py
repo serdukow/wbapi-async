@@ -6,5 +6,5 @@ from ...types.base import BaseType
 class Wholesale(BaseType):
     """Wholesale"""
 
-    enabled: bool | None = Field(None)
-    quantum: float | None = Field(None)
+    enabled: bool | None = Field(None, alias="enabled")
+    quantum: float | None = Field(None, alias="quantum")

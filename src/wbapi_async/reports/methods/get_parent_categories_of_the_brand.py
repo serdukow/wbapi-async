@@ -18,7 +18,7 @@ class GetParentCategoriesOfTheBrand(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    locale: str | None = Field("ru")
-    brand: str = Field()
+    locale: str | None = Field("ru", alias="locale")
+    brand: str = Field(alias="brand")
     date_from: str = Field(alias="dateFrom")
     date_to: str = Field(alias="dateTo")

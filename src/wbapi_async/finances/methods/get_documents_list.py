@@ -1,9 +1,7 @@
 from pydantic import Field
 
-from ...analytics.enums.mode import Mode
 from ...methods.base import WbMethod
 from ...types import DocumentsListItem, RequestLimit
-from ..enums.sort_list_ import SortList
 
 
 class GetDocumentsList(WbMethod):
@@ -21,12 +19,12 @@ class GetDocumentsList(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    locale: str | None = Field("en")
+    locale: str | None = Field("en", alias="locale")
     begin_time: str | None = Field(None, alias="beginTime")
     end_time: str | None = Field(None, alias="endTime")
-    sort: SortList | None = Field(SortList.DATE)
-    order: Mode | None = Field(Mode.DESC)
-    category: str | None = Field(None)
+    sort: str | None = Field("date", alias="sort")
+    order: str | None = Field("desc", alias="order")
+    category: str | None = Field(None, alias="category")
     service_name: str | None = Field(None, alias="serviceName")
-    limit: int | None = Field(50)
-    offset: int | None = Field(0)
+    limit: int | None = Field(50, alias="limit")
+    offset: int | None = Field(0, alias="offset")

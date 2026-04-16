@@ -19,6 +19,6 @@ class GetProcessedUploadDetails(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    limit: int = Field()
-    offset: int | None = Field(None)
+    limit: int = Field(alias="limit")
+    offset: int | None = Field(None, alias="offset")
     upload_id: int = Field(alias="uploadID")

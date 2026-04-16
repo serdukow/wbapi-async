@@ -8,6 +8,6 @@ from .product import Product
 class ProductCardsStatisticsPerDaysResponse(BaseType):
     """Product Cards Statistics per Days"""
 
-    product: Product = Field()
-    history: list[History] = Field()
-    currency: str = Field()
+    product: Product = Field(alias="product")
+    history: list[History] = Field(alias="history")
+    currency: str = Field(alias="currency")

@@ -9,6 +9,6 @@ from .sort import Sort
 class Settings(BaseType):
     """Settings"""
 
-    sort: Sort | None = Field(None)
+    sort: Sort | None = Field(None, alias="sort")
     filter_: Filter | None = Field(None, alias="filter")
-    cursor: Cursor | None = Field(None)
+    cursor: Cursor | None = Field(None, alias="cursor")

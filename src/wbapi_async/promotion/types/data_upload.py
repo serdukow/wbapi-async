@@ -8,4 +8,4 @@ class DataUpload(BaseType):
 
     promotion_id: int | None = Field(None, alias="promotionID")
     upload_now: bool | None = Field(None, alias="uploadNow")
-    nomenclatures: list[int] | None = Field(None)
+    nomenclatures: list[int] | None = Field(None, alias="nomenclatures")

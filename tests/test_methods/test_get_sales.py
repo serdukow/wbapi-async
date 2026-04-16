@@ -13,7 +13,7 @@ class TestGetSales:
                     "date": "date",
                     "lastChangeDate": "lastChangeDate",
                     "warehouseName": "warehouseName",
-                    "warehouseType": "Склад WB",
+                    "warehouseType": "warehouseType",
                     "countryName": "countryName",
                     "oblastOkrugName": "oblastOkrugName",
                     "regionName": "regionName",
@@ -50,5 +50,5 @@ class TestGetSales:
         assert result[0].date == "date"
         assert result[0].last_change_date == "lastChangeDate"
         assert result[0].warehouse_name == "warehouseName"
-        assert result[0].warehouse_type == "Склад WB"
+        assert result[0].warehouse_type == "warehouseType"
         assert result[0].country_name == "countryName"

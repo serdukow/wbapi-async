@@ -10,7 +10,7 @@ from .add_uin_unique_identification_number_to_assembly_orders import (
 from .cancel_assembly_orders import CancelAssemblyOrders
 from .delete_assembly_orders_metadata import DeleteAssemblyOrdersMetadata
 from .get_assembly_order_statuses import GetAssemblyOrderStatuses
-from .get_b2_b_buyer_information import GetB2BBuyerInformation
+from .get_b2_bbuyer_information import GetB2BBuyerInformation
 from .get_information_on_paid_delivery import GetInformationOnPaidDelivery
 from .get_new_orders_list import GetNewOrdersList
 from .get_stickers_for_assembly_orders_with_delivery_to_pickup_point import (
