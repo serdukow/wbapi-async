@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0](https://github.com/serdukow/wbapi-async/compare/v0.2.3...v0.3.0) (2026-04-16)
+
+
+### Features
+
+* add typed models for promotion stats and product data ([3b4281a](https://github.com/serdukow/wbapi-async/commit/3b4281a5b9db57faf994b5cc5645cdb4c6e6f87a))
+
+
+### Bug Fixes
+
+* add typed models for promotion stats and product data ([47f5b8e](https://github.com/serdukow/wbapi-async/commit/47f5b8e3194068cf363f02e2203388ad9551d7ee))
+
 ## [0.2.3](https://github.com/serdukow/wbapi-async/compare/v0.2.2...v0.2.3) (2026-04-16)
 
 
