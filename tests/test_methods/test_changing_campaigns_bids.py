@@ -12,13 +12,15 @@ class TestChangingCampaignsBids:
                 "bids": [
                     {
                         "advert_id": 1,
-                        "nm_bids": [{"nm_id": 1, "bid_kopecks": 1, "placement": "placement"}],
+                        "nm_bids": [{"nm_id": 1, "bid_kopecks": 1, "placement": "search"}],
                     }
                 ]
             }
         )
 
-        result = await api.changing_campaigns_bids(bids=[{"type": "combined", "value": 1}])
+        result = await api.changing_campaigns_bids(
+            bids=[{"advert_id": 1, "nm_bids": [{"nm_id": 1, "bid_kopecks": 1, "placement": "search"}]}]
+        )
 
         assert isinstance(result, list)
         assert len(result) == 1

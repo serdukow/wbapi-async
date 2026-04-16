@@ -12,7 +12,7 @@ class TestChangingTheListOfProductCardsInCampaigns:
                 "nms": [
                     {
                         "advert_id": 1,
-                        "nms": {"add": [], "delete": []},
+                        "nms": {"added": [], "deleted": []},
                     }
                 ]
             }

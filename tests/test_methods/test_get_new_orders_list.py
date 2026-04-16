@@ -14,7 +14,7 @@ class TestGetNewOrdersList:
                         "salePrice": 504600,
                         "requiredMeta": [],
                         "comment": "Упакуйте в пленку, пожалуйста",
-                        "options": {"isB2B": True},
+                        "options": {"isB2b": True},
                         "address": {
                             "fullAddress": "Chelyabinsk Region, Chelyabinsk, 51st Arabkir Street, Building 10A, Apartment 42",
                             "longitude": 44.519068,
@@ -38,7 +38,7 @@ class TestGetNewOrdersList:
                         "convertedPrice": 1014,
                         "currencyCode": 643,
                         "convertedCurrencyCode": 643,
-                        "cargoType": "1",
+                        "cargoType": 1,
                         "isZeroOrder": False,
                         "wbStickerId": 123456,
                     }

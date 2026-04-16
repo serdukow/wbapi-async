@@ -12,7 +12,7 @@ class TestGetRetrieveInformationOnCompletedAssemblyOrders:
                 "orders": [
                     {
                         "article": "wb6scpbwvp",
-                        "cargoType": "1",
+                        "cargoType": 1,
                         "chrtId": 12345676,
                         "createdAt": "2025-03-21T09:53:31Z",
                         "price": 5000,
@@ -43,7 +43,7 @@ class TestGetRetrieveInformationOnCompletedAssemblyOrders:
         assert len(result) == 1
         assert isinstance(result[0], RetrieveInformationOnCompletedAssemblyOrdersItem)
         assert result[0].article == "wb6scpbwvp"
-        assert result[0].cargo_type == "1"
+        assert result[0].cargo_type == 1
         assert result[0].chrt_id == 12345676
         assert result[0].created_at == "2025-03-21T09:53:31Z"
         assert result[0].price == 5000

@@ -15,6 +15,7 @@ from .types.create_product_cards_with_merge_response import CreateProductCardsWi
 from .types.create_warehouse_response import CreateWarehouseResponse
 from .types.cursor import Cursor
 from .types.data import Data
+from .types.data_2 import Data2
 from .types.data_item import DataItem
 from .types.delete_inventory_response import DeleteInventoryResponse
 from .types.delete_the_tag_response import DeleteTheTagResponse
@@ -30,7 +31,6 @@ from .types.limits_for_the_product_cards_response import LimitsForTheProductCard
 from .types.list_of_failed_product_cards_with_errors_item import ListOfFailedProductCardsWithErrorsItem
 from .types.merging_or_separating_of_product_cards_response import MergingOrSeparatingOfProductCardsResponse
 from .types.offices_response import OfficesResponse
-from .types.order import Order
 from .types.photos_item import PhotosItem
 from .types.processed_upload_details_item import ProcessedUploadDetailsItem
 from .types.processed_upload_state_response import ProcessedUploadStateResponse
@@ -49,6 +49,7 @@ from .types.set_wb_club_discounts_response import SetWbClubDiscountsResponse
 from .types.settings import Settings
 from .types.size_good_req import SizeGoodReq
 from .types.sizes_item import SizesItem
+from .types.sizes_item_2 import SizesItem2
 from .types.sort import Sort
 from .types.stocks_item import StocksItem
 from .types.subject_characteristics_item import SubjectCharacteristicsItem
@@ -89,6 +90,7 @@ __all__ = (
     "CreateWarehouseResponse",
     "Cursor",
     "Data",
+    "Data2",
     "DataItem",
     "DeleteInventoryResponse",
     "DeleteTheTagResponse",
@@ -106,7 +108,6 @@ __all__ = (
     "Locale",
     "MergingOrSeparatingOfProductCardsResponse",
     "OfficesResponse",
-    "Order",
     "PhotosItem",
     "ProcessedUploadDetailsItem",
     "ProcessedUploadStateResponse",
@@ -125,6 +126,7 @@ __all__ = (
     "SetWbClubDiscountsResponse",
     "SizeGoodReq",
     "SizesItem",
+    "SizesItem2",
     "Sort",
     "StocksItem",
     "SubjectCharacteristicsItem",

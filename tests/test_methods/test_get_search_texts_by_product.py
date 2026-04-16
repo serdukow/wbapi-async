@@ -16,7 +16,7 @@ class TestGetSearchTextsByProduct:
         )
 
         result = await api.get_search_texts_by_product(
-            current_period={"start": "2024-02-10", "end": "2024-02-10"},
+            current_period={"start": "2023-06-01", "end": "2024-03-01"},
             nm_ids=[],
             top_order_by="openCard",
             order_by={"field": "openCard", "mode": "asc"},

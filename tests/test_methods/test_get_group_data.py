@@ -80,7 +80,7 @@ class TestGetGroupData:
         )
 
         result = await api.get_group_data(
-            current_period={"start": "2024-02-10", "end": "2024-02-10"},
+            current_period={"start": "2023-06-01", "end": "2024-03-01"},
             stock_type="",
             skip_deleted_nm=True,
             availability_filters=[],

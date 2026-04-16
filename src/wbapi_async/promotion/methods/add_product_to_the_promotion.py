@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import AddProductToThePromotionResponse, Data, RequestLimit
+from ...types import AddProductToThePromotionResponse, DataUpload, RequestLimit
 
 
 class AddProductToThePromotion(WbMethod):
@@ -19,4 +19,4 @@ class AddProductToThePromotion(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    data: Data | None = Field(None)
+    data: DataUpload | None = Field(None)

@@ -42,8 +42,8 @@ class TestGetNewAssemblyOrders:
                         "convertedFinalPrice": 1014,
                         "currencyCode": 933,
                         "convertedCurrencyCode": 643,
-                        "cargoType": "1",
-                        "crossBorderType": "0",
+                        "cargoType": 1,
+                        "crossBorderType": 0,
                         "isZeroOrder": False,
                         "options": {"isB2B": True},
                     }

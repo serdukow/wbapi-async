@@ -16,7 +16,7 @@ class TestGetInformationOnCompletedOrders:
                             "longitude": 44.519068,
                             "latitude": 40.20192,
                         },
-                        "options": {"isB2B": True},
+                        "options": {"isB2b": True},
                         "orderUid": "165918930_629fbc924b984618a44354475ca58675",
                         "groupId": "7a2c8810-1db2-4011-9682-5c7fa33afd83",
                         "article": "one-ring-7548",
@@ -32,7 +32,7 @@ class TestGetInformationOnCompletedOrders:
                         "convertedPrice": 1014,
                         "currencyCode": 933,
                         "convertedCurrencyCode": 643,
-                        "cargoType": "1",
+                        "cargoType": 1,
                         "comment": "Упакуйте в пленку, пожалуйста",
                         "isZeroOrder": False,
                     }

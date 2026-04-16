@@ -1,10 +1,10 @@
 from pydantic import Field
 
-from ...products.types.data import Data
 from ...types.base import BaseType
+from .data_3 import Data3
 
 
 class AddProductToThePromotionResponse(BaseType):
     """Add Product to the Promotion"""
 
-    data: Data | None = Field(None)
+    data: Data3 | None = Field(None)

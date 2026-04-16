@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import DailySearchClustersStatisticsItem, ItemsItem, RequestLimit
+from ...types import DailySearchClustersStatisticsItem, RequestLimit, V0GetNormQueryListRequestItem
 
 
 class GetDailySearchClustersStatistics(WbMethod):
@@ -22,4 +22,4 @@ class GetDailySearchClustersStatistics(WbMethod):
 
     from_: str = Field(alias="from")
     to: str = Field()
-    items: list[ItemsItem] = Field()
+    items: list[V0GetNormQueryListRequestItem] = Field()

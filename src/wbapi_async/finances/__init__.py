@@ -1,6 +1,7 @@
 from .enums.period import Period
 from .enums.report_type import ReportType
 from .enums.sort_list_ import SortList
+from .types.data_4 import Data4
 from .types.document_response import DocumentResponse
 from .types.documents_categories_item import DocumentsCategoriesItem
 from .types.documents_list_item import DocumentsListItem
@@ -11,6 +12,7 @@ from .types.sellers_balance_response import SellersBalanceResponse
 
 
 __all__ = (
+    "Data4",
     "DocumentResponse",
     "DocumentsCategoriesItem",
     "DocumentsListItem",

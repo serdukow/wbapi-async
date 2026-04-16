@@ -2,8 +2,8 @@ from pydantic import Field
 
 from ...types.base import BaseType
 from .conversions import Conversions
-from .time_to_ready_dynamic import TimeToReadyDynamic
-from .wb_club_dynamic import WbClubDynamic
+from .time_to_ready import TimeToReady
+from .wb_club import WbClub
 
 
 class Comparison(BaseType):
@@ -19,7 +19,7 @@ class Comparison(BaseType):
     avg_price_dynamic: int = Field(alias="avgPriceDynamic")
     share_order_percent_dynamic: int = Field(alias="shareOrderPercentDynamic")
     add_to_wishlist_dynamic: int = Field(alias="addToWishlistDynamic")
-    time_to_ready_dynamic: TimeToReadyDynamic = Field(alias="timeToReadyDynamic")
+    time_to_ready_dynamic: TimeToReady = Field(alias="timeToReadyDynamic")
     localization_percent_dynamic: int = Field(alias="localizationPercentDynamic")
-    wb_club_dynamic: WbClubDynamic = Field(alias="wbClubDynamic")
+    wb_club_dynamic: WbClub = Field(alias="wbClubDynamic")
     conversions: Conversions = Field()

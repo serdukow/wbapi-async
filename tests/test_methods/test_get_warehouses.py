@@ -13,8 +13,8 @@ class TestGetWarehouses:
                     "name": "Kosmonavtov 14",
                     "officeId": 15,
                     "id": 1,
-                    "cargoType": "1",
-                    "deliveryType": "1",
+                    "cargoType": 1,
+                    "deliveryType": 1,
                     "isDeleting": False,
                     "isProcessing": True,
                 }
@@ -29,5 +29,5 @@ class TestGetWarehouses:
         assert result[0].name == "Kosmonavtov 14"
         assert result[0].office_id == 15
         assert result[0].id_ == 1
-        assert result[0].cargo_type == "1"
-        assert result[0].delivery_type == "1"
+        assert result[0].cargo_type == 1
+        assert result[0].delivery_type == 1

@@ -1,6 +1,6 @@
-from enum import StrEnum
+from enum import IntEnum
 
 
-class Width(StrEnum):
-    V_58 = "58"
-    V_40 = "40"
+class Width(IntEnum):
+    V_58 = 58
+    V_40 = 40

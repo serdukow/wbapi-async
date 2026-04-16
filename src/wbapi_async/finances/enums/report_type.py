@@ -1,10 +1,10 @@
-from enum import StrEnum
+from enum import IntEnum
 
 
-class ReportType(StrEnum):
+class ReportType(IntEnum):
     """Type of report:"""
 
-    V_1 = "1"
-    V_2 = "2"
-    V_3 = "3"
-    V_4 = "4"
+    V_1 = 1
+    V_2 = 2
+    V_3 = 3
+    V_4 = 4

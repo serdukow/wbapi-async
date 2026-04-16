@@ -17,8 +17,8 @@ class TestGetSupplyDetails:
                     "closedAt": "2022-05-04T07:56:29Z",
                     "scanDt": "2022-05-04T07:56:29Z",
                     "name": "My test supply",
-                    "cargoType": "0",
-                    "crossBorderType": "0",
+                    "cargoType": 0,
+                    "crossBorderType": 0,
                     "destinationOfficeId": 123,
                 }
             ]

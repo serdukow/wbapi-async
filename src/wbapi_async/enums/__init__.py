@@ -36,6 +36,7 @@ from ..products.enums.locale import Locale
 from ..promotion.enums.app_type import AppType
 from ..promotion.enums.bid_type import BidType
 from ..promotion.enums.payment_type import PaymentType
+from ..promotion.enums.placement import Placement
 from ..promotion.enums.placement_types_item import PlacementTypesItem
 from ..promotion.enums.placement_types_item_2 import PlacementTypesItem2
 from ..promotion.enums.status_2 import Status2
@@ -86,6 +87,7 @@ __all__ = (
     "AppType",
     "BidType",
     "PaymentType",
+    "Placement",
     "PlacementTypesItem",
     "PlacementTypesItem2",
     "Status2",

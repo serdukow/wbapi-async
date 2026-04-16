@@ -12,6 +12,7 @@ from .create_product_cards_with_merge_response import CreateProductCardsWithMerg
 from .create_warehouse_response import CreateWarehouseResponse
 from .cursor import Cursor
 from .data import Data
+from .data_2 import Data2
 from .data_item import DataItem
 from .delete_inventory_response import DeleteInventoryResponse
 from .delete_the_tag_response import DeleteTheTagResponse
@@ -27,7 +28,6 @@ from .limits_for_the_product_cards_response import LimitsForTheProductCardsRespo
 from .list_of_failed_product_cards_with_errors_item import ListOfFailedProductCardsWithErrorsItem
 from .merging_or_separating_of_product_cards_response import MergingOrSeparatingOfProductCardsResponse
 from .offices_response import OfficesResponse
-from .order import Order
 from .photos_item import PhotosItem
 from .processed_upload_details_item import ProcessedUploadDetailsItem
 from .processed_upload_state_response import ProcessedUploadStateResponse
@@ -46,6 +46,7 @@ from .set_wb_club_discounts_response import SetWbClubDiscountsResponse
 from .settings import Settings
 from .size_good_req import SizeGoodReq
 from .sizes_item import SizesItem
+from .sizes_item_2 import SizesItem2
 from .sort import Sort
 from .stocks_item import StocksItem
 from .subject_characteristics_item import SubjectCharacteristicsItem
@@ -85,6 +86,7 @@ __all__ = (
     "CreateWarehouseResponse",
     "Cursor",
     "Data",
+    "Data2",
     "DataItem",
     "DeleteInventoryResponse",
     "DeleteTheTagResponse",
@@ -100,7 +102,6 @@ __all__ = (
     "ListOfFailedProductCardsWithErrorsItem",
     "MergingOrSeparatingOfProductCardsResponse",
     "OfficesResponse",
-    "Order",
     "PhotosItem",
     "ProcessedUploadDetailsItem",
     "ProcessedUploadStateResponse",
@@ -119,6 +120,7 @@ __all__ = (
     "SetWbClubDiscountsResponse",
     "SizeGoodReq",
     "SizesItem",
+    "SizesItem2",
     "Sort",
     "StocksItem",
     "SubjectCharacteristicsItem",

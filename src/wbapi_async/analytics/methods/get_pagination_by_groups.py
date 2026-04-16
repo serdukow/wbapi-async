@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import CurrentPeriod, OrderBy, PaginationByGroupsResponse, PastPeriod, RequestLimit
+from ...types import OrderBy, PaginationByGroupsResponse, RequestLimit, SelectedPeriod
 from ..enums.position_cluster import PositionCluster
 
 
@@ -21,8 +21,8 @@ class GetPaginationByGroups(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    current_period: CurrentPeriod = Field(alias="currentPeriod")
-    past_period: PastPeriod | None = Field(None, alias="pastPeriod")
+    current_period: SelectedPeriod = Field(alias="currentPeriod")
+    past_period: SelectedPeriod | None = Field(None, alias="pastPeriod")
     nm_ids: list[int] | None = Field(None, alias="nmIds")
     subject_ids: list[int] | None = Field(None, alias="subjectIds")
     brand_names: list[str] | None = Field(None, alias="brandNames")

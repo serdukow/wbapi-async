@@ -49,7 +49,7 @@ class TestGetProductData:
         )
 
         result = await api.get_product_data(
-            current_period={"start": "2024-02-10", "end": "2024-02-10"},
+            current_period={"start": "2023-06-01", "end": "2024-03-01"},
             stock_type="",
             skip_deleted_nm=True,
             order_by={"field": "openCard", "mode": "asc"},

@@ -1,6 +1,7 @@
 from .enums.app_type import AppType
 from .enums.bid_type import BidType
 from .enums.payment_type import PaymentType
+from .enums.placement import Placement
 from .enums.placement_types_item import PlacementTypesItem
 from .enums.placement_types_item_2 import PlacementTypesItem2
 from .enums.status_2 import Status2
@@ -15,6 +16,7 @@ from .types.adverts import Adverts
 from .types.apps_item import AppsItem
 from .types.balance_item import BalanceItem
 from .types.bids_item import BidsItem
+from .types.bids_item_2 import BidsItem2
 from .types.booster_stats_item import BoosterStatsItem
 from .types.campaign_budget_response import CampaignBudgetResponse
 from .types.campaigns_information_item import CampaignsInformationItem
@@ -29,6 +31,8 @@ from .types.changing_the_list_of_product_cards_in_campaigns_item import (
 )
 from .types.create_campaign_response import CreateCampaignResponse
 from .types.daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
+from .types.data_3 import Data3
+from .types.data_upload import DataUpload
 from .types.days_item import DaysItem
 from .types.delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from .types.delete_campaign_response import DeleteCampaignResponse
@@ -46,7 +50,9 @@ from .types.media_campaigns_number_response import MediaCampaignsNumberResponse
 from .types.minimum_bids_for_product_cards_item import MinimumBidsForProductCardsItem
 from .types.nm_bids_item import NmBidsItem
 from .types.nms import Nms
+from .types.nms_2 import Nms2
 from .types.nms_item import NmsItem
+from .types.nms_item_2 import NmsItem2
 from .types.pause_campaign_response import PauseCampaignResponse
 from .types.placements import Placements
 from .types.placements_item import PlacementsItem
@@ -93,6 +99,7 @@ __all__ = (
     "AppType",
     "BalanceItem",
     "BidsItem",
+    "BidsItem2",
     "BidType",
     "BoosterStatsItem",
     "CampaignBudgetResponse",
@@ -104,6 +111,8 @@ __all__ = (
     "ChangingTheListOfProductCardsInCampaignsItem",
     "CreateCampaignResponse",
     "DailySearchClustersStatisticsItem",
+    "Data3",
+    "DataUpload",
     "DaysItem",
     "DeleteBidsFromSearchClustersResponse",
     "DeleteCampaignResponse",
@@ -119,9 +128,12 @@ __all__ = (
     "MinimumBidsForProductCardsItem",
     "NmBidsItem",
     "Nms",
+    "Nms2",
     "NmsItem",
+    "NmsItem2",
     "PauseCampaignResponse",
     "PaymentType",
+    "Placement",
     "Placements",
     "PlacementsItem",
     "PlacementTypesItem",

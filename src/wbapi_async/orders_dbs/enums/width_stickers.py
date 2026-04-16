@@ -1,5 +1,5 @@
-from enum import StrEnum
+from enum import IntEnum
 
 
-class WidthStickers(StrEnum):
-    V_58 = "58"
+class WidthStickers(IntEnum):
+    V_58 = 58

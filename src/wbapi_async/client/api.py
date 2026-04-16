@@ -311,7 +311,7 @@ from ..types import (
     ASuppliesListItem,
     B2BBuyerInformationItem,
     BalanceItem,
-    BidsItem,
+    BidsItem2,
     BlockedProductCardsItem,
     BoxTariffsItem,
     BrandsItem,
@@ -346,10 +346,9 @@ from ..types import (
     CreateProductCardsWithMergeResponse,
     CreateTheReportResponse,
     CreateWarehouseResponse,
-    CurrentPeriod,
     Cursor,
     DailySearchClustersStatisticsItem,
-    Data,
+    DataUpload,
     DeleteAssemblyOrdersMetadataItem,
     DeleteTheTagResponse,
     DeliveryDateAndTimeItem,
@@ -415,7 +414,6 @@ from ..types import (
     ParamsItem,
     ParentCategoriesOfTheBrandItem,
     PassesResponse,
-    PastPeriod,
     PinFeedbackResponse,
     PinnedAndUnpinnedFeedbackNumberResponse,
     PinnedFeedbackLimitsResponse,
@@ -910,7 +908,7 @@ class WbAPI:
 
     async def add_product_to_the_promotion(
         self,
-        data: Data | None = None,
+        data: DataUpload | None = None,
     ) -> list[AddProductToThePromotionResponse]:
         """
         Creates a product upload for the promotion. The upload status can be checked using
@@ -1137,7 +1135,7 @@ class WbAPI:
 
     async def changing_campaigns_bids(
         self,
-        bids: list[BidsItem],
+        bids: list[BidsItem2],
     ) -> list[ChangingCampaignsBidsItem]:
         """
         The method changes the bids of product cards by WB articles in campaigns: - with standard
@@ -2260,7 +2258,7 @@ class WbAPI:
         self,
         from_: str,
         to: str,
-        items: list[ItemsItem],
+        items: list[V0GetNormQueryListRequestItem],
     ) -> list[DailySearchClustersStatisticsItem]:
         """
         Returns statistics (views, clicks, add-to-cart, orders, CTR, CPC, CPM, etc.) by search
@@ -2527,7 +2525,7 @@ class WbAPI:
 
     async def get_group_data(
         self,
-        current_period: CurrentPeriod,
+        current_period: SelectedPeriod,
         stock_type: StockType,
         skip_deleted_nm: bool,
         availability_filters: list[AvailabilityFiltersItem],
@@ -2824,7 +2822,7 @@ class WbAPI:
         self,
         locale: str | None = None,
         cursor: Cursor | None = None,
-        order: Order | None = None,
+        order: Sort | None = None,
     ) -> list[ListOfFailedProductCardsWithErrorsItem]:
         """
         Returns the list of product cards
@@ -3007,12 +3005,12 @@ class WbAPI:
 
     async def get_main_page(
         self,
-        current_period: CurrentPeriod,
+        current_period: SelectedPeriod,
         position_cluster: PositionCluster,
         order_by: OrderBy,
         limit: int,
         offset: int,
-        past_period: PastPeriod | None = None,
+        past_period: SelectedPeriod | None = None,
         nm_ids: list[int] | None = None,
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
@@ -3290,7 +3288,7 @@ class WbAPI:
 
     async def get_orders_and_positions_by_product_search_texts(
         self,
-        period: Period,
+        period: SelectedPeriod,
         nm_id: int,
         search_texts: list[str],
     ) -> list[OrdersAndPositionsByProductSearchTextsResponse]:
@@ -3382,12 +3380,12 @@ class WbAPI:
 
     async def get_pagination_by_groups(
         self,
-        current_period: CurrentPeriod,
+        current_period: SelectedPeriod,
         order_by: OrderBy,
         position_cluster: PositionCluster,
         limit: int,
         offset: int,
-        past_period: PastPeriod | None = None,
+        past_period: SelectedPeriod | None = None,
         nm_ids: list[int] | None = None,
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
@@ -3438,12 +3436,12 @@ class WbAPI:
 
     async def get_pagination_by_products_within_a_group(
         self,
-        current_period: CurrentPeriod,
+        current_period: SelectedPeriod,
         order_by: OrderBy,
         position_cluster: PositionCluster,
         limit: int,
         offset: int,
-        past_period: PastPeriod | None = None,
+        past_period: SelectedPeriod | None = None,
         subject_id: int | None = None,
         brand_name: str | None = None,
         tag_id: int | None = None,
@@ -3744,7 +3742,7 @@ class WbAPI:
     async def get_product_cards_statistics_per_period(
         self,
         selected_period: SelectedPeriod,
-        past_period: PastPeriod | None = None,
+        past_period: SelectedPeriod | None = None,
         nm_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
         subject_ids: list[int] | None = None,
@@ -3807,7 +3805,7 @@ class WbAPI:
 
     async def get_product_data(
         self,
-        current_period: CurrentPeriod,
+        current_period: SelectedPeriod,
         stock_type: StockType,
         skip_deleted_nm: bool,
         order_by: OrderBy,
@@ -4344,12 +4342,12 @@ class WbAPI:
 
     async def get_search_texts_by_product(
         self,
-        current_period: CurrentPeriod,
+        current_period: SelectedPeriod,
         nm_ids: list[int],
         top_order_by: TopOrderBy,
         order_by: OrderBy,
         limit: Any,
-        past_period: PastPeriod | None = None,
+        past_period: SelectedPeriod | None = None,
         include_substituted_sk_us: bool | None = True,
         include_search_texts: bool | None = True,
     ) -> list[SearchTextsByProductResponse]:

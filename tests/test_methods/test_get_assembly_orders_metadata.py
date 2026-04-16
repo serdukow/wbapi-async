@@ -16,9 +16,9 @@ class TestGetAssemblyOrdersMetadata:
                             "imei": {"value": "123456789012345"},
                             "uin": {"value": "123456789012345"},
                             "gtin": {"value": "123456789012345"},
-                            "sgtin": {"value": []},
-                            "expiration": {"value": "12.09.2030"},
-                            "customsDeclaration": {"value": "10704010/010624/0000302"},
+                            "sgtin": {"value": "123456789012345"},
+                            "expiration": {"value": "123456789012345"},
+                            "customsDeclaration": {"value": "123456789012345"},
                         },
                     }
                 ]
