@@ -1,10 +1,10 @@
 <p align="center">
-  <a href="https://dev.wildberries.ru/"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Wildberries_2023_Pink.svg" alt="WbAPI"></a>
+  <a href="https://dev.wildberries.ru/"><img src="docs/assets/logo.svg" alt="WbAPI" width="200"></a>
 </p>
 
 <div align="center">
 
-## Async client for Wildberries Seller API
+### Lightweight async client for Wildberries Seller API
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://img.shields.io/pypi/v/wild-api.svg)](https://pypi.org/project/wild-api/)
