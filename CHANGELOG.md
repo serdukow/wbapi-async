@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0](https://github.com/serdukow/wbapi-async/compare/v0.3.2...v0.4.0) (2026-04-16)
+
+
+### Features
+
+* fallback to URL-based naming for duplicate GET method summaries ([9cff9c4](https://github.com/serdukow/wbapi-async/commit/9cff9c4e7c37a23185550d813b75a8d64a590dc8))
+* fallback to URL-based naming for duplicate GET method summaries ([e1ec3b6](https://github.com/serdukow/wbapi-async/commit/e1ec3b6bf73ece41996b0cd8b3d79f4f7c51d1a2))
+
 ## [0.3.2](https://github.com/serdukow/wbapi-async/compare/v0.3.1...v0.3.2) (2026-04-16)
 
 
