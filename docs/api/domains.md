@@ -1,19 +1,20 @@
-# API Domains
+# API Reference
 
-All methods are auto-generated from the [official Wildberries OpenAPI specifications](https://dev.wildberries.ru).
+All paths come from the [official Wildberries OpenAPI specs](https://dev.wildberries.ru).
+The path registry in `method.py` is auto-updated daily from these specs.
 
-| Domain              | Description                        | WB Docs                                                    |
-| ------------------- | ---------------------------------- | ---------------------------------------------------------- |
-| **General**         | Warehouses, users, tariffs         | [→](https://dev.wildberries.ru/openapi/api-information)    |
-| **Products**        | Cards, prices, discounts, stocks   | [→](https://dev.wildberries.ru/openapi/work-with-products) |
-| **Orders FBS**      | Seller warehouse fulfillment       | [→](https://dev.wildberries.ru/openapi/orders-fbs)         |
-| **Orders FBW**      | Wildberries warehouse fulfillment  | [→](https://dev.wildberries.ru/openapi/orders-fbw)         |
-| **Orders DBW**      | Delivery by Wildberries            | [→](https://dev.wildberries.ru/openapi/orders-dbw)         |
-| **Orders DBS**      | Delivery by seller                 | [→](https://dev.wildberries.ru/openapi/orders-dbs)         |
-| **In-Store Pickup** | Self-pickup orders                 | [→](https://dev.wildberries.ru/openapi/orders-dbs)         |
-| **Promotion**       | Campaigns, budgets, auto-campaigns | [→](https://dev.wildberries.ru/openapi/promotion)          |
-| **Communications**  | Feedbacks, questions               | [→](https://dev.wildberries.ru/openapi/communications)     |
-| **Analytics**       | Search queries, clicks, views      | [→](https://dev.wildberries.ru/openapi/analytics)          |
-| **Reports**         | Sales, logistics, paid storage     | [→](https://dev.wildberries.ru/openapi/reports)            |
-| **Finances**        | Documents, payments, deductions    | [→](https://dev.wildberries.ru/openapi/finances)           |
-| **Tariffs**         | Box, pallet, return tariffs        | [→](https://dev.wildberries.ru/openapi/tariffs)            |
+| Section         | WB Docs                                                    |
+| --------------- | ---------------------------------------------------------- |
+| General         | [→](https://dev.wildberries.ru/openapi/api-information)    |
+| Products        | [→](https://dev.wildberries.ru/openapi/work-with-products) |
+| Orders FBS      | [→](https://dev.wildberries.ru/openapi/orders-fbs)         |
+| Orders FBW      | [→](https://dev.wildberries.ru/openapi/orders-fbw)         |
+| Orders DBW      | [→](https://dev.wildberries.ru/openapi/orders-dbw)         |
+| Orders DBS      | [→](https://dev.wildberries.ru/openapi/orders-dbs)         |
+| In-Store Pickup | [→](https://dev.wildberries.ru/openapi/orders-dbs)         |
+| Promotion       | [→](https://dev.wildberries.ru/openapi/promotion)          |
+| Communications  | [→](https://dev.wildberries.ru/openapi/communications)     |
+| Analytics       | [→](https://dev.wildberries.ru/openapi/analytics)          |
+| Reports         | [→](https://dev.wildberries.ru/openapi/reports)            |
+| Finances        | [→](https://dev.wildberries.ru/openapi/finances)           |
+| Tariffs         | [→](https://dev.wildberries.ru/openapi/tariffs)            |

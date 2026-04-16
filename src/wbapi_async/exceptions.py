@@ -1,7 +1,5 @@
 from typing import Any
 
-from .types import Error
-
 
 class BaseWbAPIError(Exception):
     pass
@@ -9,10 +7,15 @@ class BaseWbAPIError(Exception):
 
 class WbAPIError(BaseWbAPIError):
     def __init__(self, http_status: int = 0, **kwargs: Any) -> None:
-        self.error = Error(**kwargs)
         self.http_status = http_status
-        super().__init__(str(self.error))
+        self.detail: dict[str, Any] = kwargs
+        msg = kwargs.get("errorText") or kwargs.get("detail") or kwargs.get("title") or str(kwargs)
+        super().__init__(msg)
 
 
 class TokenValidationError(BaseWbAPIError):
+    pass
+
+
+class PaginationNotSupported(BaseWbAPIError):
     pass

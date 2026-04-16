@@ -28,9 +28,10 @@ jobs:
       - name: Install wbapi-codegen and ruff
         run: uv pip install --system wbapi-codegen ruff
 
-      - name: Download Swagger YAMLs
+      - name: Run codegen
+        id: codegen
         run: |
-          mkdir -p internal/.wb/swagger
+          SWAGGER_DIR=$(mktemp -d)
           BASE="https://dev.wildberries.ru/api/swagger/yaml/en"
           for f in \
             01-general \
@@ -47,58 +48,19 @@ jobs:
             12-reports \
             13-finances \
           ; do
-            curl -fsSL "$BASE/$f.yaml" -o "internal/.wb/swagger/$f.yaml" \
+            curl -fsSL "$BASE/$f.yaml" -o "$SWAGGER_DIR/$f.yaml" \
               && echo "Downloaded $f.yaml" \
               || echo "WARN: failed to download $f.yaml"
           done
-
-      - name: Run codegen
-        id: codegen
-        run: |
-          OUTPUT=$(wbapi-codegen --target . --swagger-dir internal/.wb/swagger 2>&1)
+          OUTPUT=$(wbapi-codegen --target . --swagger-dir "$SWAGGER_DIR" 2>&1)
           echo "$OUTPUT"
           ruff check --fix --unsafe-fixes src/ tests/ || true
           ruff format src/ tests/
 
-          TYPES=$(echo "$OUTPUT"   | grep '\[type\]'   | sed 's|.*\[type\][[:space:]]*||;s|.*/||;s|\.py$||' | sort)
-          REMOVED=$(echo "$OUTPUT" | grep '\[removed\]' | sed 's|.*\[removed\][[:space:]]*||;s|.*/||;s|\.py$||' | sort)
-
-          T_COUNT=$(echo "$TYPES"   | grep -c . || true)
-          R_COUNT=$(echo "$REMOVED" | grep -c . || true)
-
-          # Build methods list with links: "- method_name (source_url)"
-          METHOD_LINES=""
-          M_COUNT=0
-          while IFS= read -r line; do
-            [ -z "$line" ] && continue
-            stem=$(echo "$line" | awk '{print $1}' | sed 's|.*/||;s|\.py$||')
-            url=$(echo "$line"  | awk '{print $2}')
-            if [ -n "$url" ]; then
-              METHOD_LINES+="- [${stem}](${url})"$'\n'
-            else
-              METHOD_LINES+="- ${stem}"$'\n'
-            fi
-            M_COUNT=$((M_COUNT + 1))
-          done < <(echo "$OUTPUT" | grep '\[method\]' | sed 's|.*\[method\][[:space:]]*||' | sort)
+          PATHS_COUNT=$(grep -c '": "https://' src/wbapi_async/method.py || true)
 
           BODY="Automated PR from [wbapi-codegen](https://github.com/serdukow/wbapi-codegen)."$'\n'
-          BODY+="Generated from the latest Wildberries OpenAPI YAML specs."$'\n\n'
-
-          if [ "$M_COUNT" -gt 0 ]; then
-            BODY+="**Methods updated (${M_COUNT}):**"$'\n'"$METHOD_LINES"$'\n'
-          else
-            BODY+="_No method changes._"$'\n\n'
-          fi
-
-          if [ "$T_COUNT" -gt 0 ]; then
-            BODY+="**Types updated (${T_COUNT}):**"$'\n''```'$'\n'"$TYPES"$'\n''```'$'\n\n'
-          fi
-
-          if [ "$R_COUNT" -gt 0 ]; then
-            BODY+="**Removed (${R_COUNT}):**"$'\n''```'$'\n'"$REMOVED"$'\n''```'$'\n\n'
-          fi
-
-          BODY+="> Hand-written (\`@unofficial\`) methods are preserved automatically."
+          BODY+="Updated registry: **${PATHS_COUNT} paths** from the latest Wildberries OpenAPI specs."
 
           {
             echo "body<<EOF"

@@ -1,46 +1,41 @@
 # Quick Start
 
-## Basic usage
-
 ```python
 import asyncio
 from wbapi_async import WbAPI
 
 async def main():
     async with WbAPI(token="your_token_here") as api:
-        # Single request — parameters match the WB API spec exactly
-        products = await api.get_products_with_prices(limit=100)
-        for p in products:
-            print(p.nm_id, p.vendor_code)
+        # GET — kwargs become query params
+        orders = await api.get("/api/v3/orders/new", limit=10, next=0)
+        print(f"orders: {orders.orders!r}")
+
+        # Fetch all pages automatically
+        supplies = await api.get_all("/api/v3/supplies")
+        print(f"supplies: {supplies!r}")
+
+        # POST with JSON body
+        result = await api.post("/adv/v0/rename", body={"advertId": 2233344, "name": "newname"})
+        print(f"rename: {result!r}")
 
 asyncio.run(main())
 ```
 
-## Pagination
+Use paths exactly as they appear in the [WB API docs](https://dev.wildberries.ru) —
+base URL is resolved automatically.
 
-Use `paginate()` to fetch all pages automatically:
+## Attribute access
+
+Responses support attribute access with field names as returned by the API (camelCase):
 
 ```python
-from wbapi_async import WbAPI, paginate
-
-async with WbAPI(token="...") as api:
-    # All products — no limit/offset needed
-    all_products = await paginate(api.get_products_with_prices)
-
-    # With parameters
-    feedbacks = await paginate(api.get_feedbacks_list, is_answered=False)
+orders = await api.get("/api/v3/orders/new", limit=10)
+for order in orders.orders:
+    print(order.id, order.article, order.convertedPrice)
 ```
 
-`paginate()` returns `list[T]` with all items combined across pages.
-
-## Working with responses
-
-All responses are typed Pydantic models:
+Use `.unwrap()` to get the raw dict/list:
 
 ```python
-products = await api.get_products_with_prices(limit=10)
-for product in products:
-    print(product.nm_id)        # int
-    print(product.vendor_code)  # str
-    print(product.sizes)        # list[...]
+raw = orders.unwrap()
 ```
