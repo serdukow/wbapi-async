@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import RequestLimit, UpdateInventoryResponse
+from ...types import RequestLimit, StocksItem, UpdateInventoryResponse
 
 
 class UpdateInventory(WbMethod):
@@ -23,4 +21,4 @@ class UpdateInventory(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     warehouse_id: int = Field(alias="warehouseId", exclude=True)
-    stocks: list[dict[str, Any]] = Field()
+    stocks: list[StocksItem] = Field()

@@ -12,15 +12,15 @@ class TestGetProductsInQuarantine:
                 "data": {
                     "quarantineGoods": [
                         {
-                            "nmID": 1,
+                            "nmID": 206025152,
                             "sizeID": 1,
-                            "techSizeName": "techSizeName",
-                            "currencyIsoCode4217": "currencyIsoCode4217",
-                            "newPrice": 1.0,
-                            "oldPrice": 1.0,
-                            "newDiscount": 1,
-                            "oldDiscount": 1,
-                            "priceDiff": 1.0,
+                            "techSizeName": "",
+                            "currencyIsoCode4217": "RUB",
+                            "newPrice": 134,
+                            "oldPrice": 4000,
+                            "newDiscount": 25,
+                            "oldDiscount": 25,
+                            "priceDiff": -2899.5,
                         }
                     ]
                 }
@@ -32,6 +32,8 @@ class TestGetProductsInQuarantine:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], ProductsInQuarantineItem)
-        assert result[0].nm_id == 1
+        assert result[0].nm_id == 206025152
         assert result[0].size_id == 1
-        assert result[0].tech_size_name == "techSizeName"
+        assert result[0].tech_size_name == ""
+        assert result[0].currency_iso_code4217 == "RUB"
+        assert result[0].new_price == 134

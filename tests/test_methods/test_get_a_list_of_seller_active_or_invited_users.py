@@ -12,7 +12,7 @@ class TestGetAListOfSellerActiveOrInvitedUsers:
                 "users": [
                     {
                         "id": 1,
-                        "role": "role",
+                        "role": "user",
                         "position": "position",
                         "phone": "phone",
                         "email": "email",
@@ -22,8 +22,14 @@ class TestGetAListOfSellerActiveOrInvitedUsers:
                         "patronymic": "patronymic",
                         "goodsReturn": True,
                         "isInvitee": True,
-                        "inviteeInfo": {},
-                        "access": [],
+                        "inviteeInfo": {
+                            "phoneNumber": "phoneNumber",
+                            "position": "position",
+                            "inviteUuid": "inviteUuid",
+                            "expiredAt": "expiredAt",
+                            "isActive": True,
+                        },
+                        "access": [{"code": "balance", "disabled": True}],
                     }
                 ]
             }
@@ -35,5 +41,7 @@ class TestGetAListOfSellerActiveOrInvitedUsers:
         assert len(result) == 1
         assert isinstance(result[0], AListOfSellerActiveOrInvitedUsersItem)
         assert result[0].id_ == 1
-        assert result[0].role == "role"
+        assert result[0].role == "user"
         assert result[0].position == "position"
+        assert result[0].phone == "phone"
+        assert result[0].email == "email"

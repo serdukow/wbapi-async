@@ -6,6 +6,8 @@ from .types.add_uin_unique_identification_number_to_the_order_response import (
 )
 from .types.buyer_information_item import BuyerInformationItem
 from .types.cancel_the_order_response import CancelTheOrderResponse
+from .types.contacts import Contacts
+from .types.courier_info import CourierInfo
 from .types.courier_info_item import CourierInfoItem
 from .types.delete_order_metadata_response import DeleteOrderMetadataResponse
 from .types.delivery_date_and_time_item import DeliveryDateAndTimeItem
@@ -25,6 +27,8 @@ __all__ = (
     "AddUinUniqueIdentificationNumberToTheOrderResponse",
     "BuyerInformationItem",
     "CancelTheOrderResponse",
+    "Contacts",
+    "CourierInfo",
     "CourierInfoItem",
     "DeleteOrderMetadataResponse",
     "DeliveryDateAndTimeItem",

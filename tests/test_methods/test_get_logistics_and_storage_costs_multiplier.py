@@ -12,24 +12,24 @@ class TestGetLogisticsAndStorageCostsMultiplier:
                 "data": {
                     "reports": [
                         {
-                            "nmId": 1,
-                            "subjectName": "subjectName",
-                            "dimId": 1,
-                            "prcOver": 1.0,
-                            "volume": 1.0,
-                            "width": 1,
-                            "length": 1,
-                            "height": 1,
-                            "volumeSup": 1.0,
-                            "widthSup": 1,
-                            "lengthSup": 1,
-                            "heightSup": 1,
+                            "nmId": 123456789,
+                            "subjectName": "Костюмы спортивные",
+                            "dimId": 123456789,
+                            "prcOver": 130.71,
+                            "volume": 6.47,
+                            "width": 7,
+                            "length": 28,
+                            "height": 33,
+                            "volumeSup": 4.95,
+                            "widthSup": 8,
+                            "lengthSup": 33,
+                            "heightSup": 33,
                             "photoUrls": [],
-                            "dtBonus": "dtBonus",
+                            "dtBonus": "2025-06-02T00:00:00Z",
                             "isValid": True,
-                            "isValidDt": "isValidDt",
-                            "reversalAmount": 1.0,
-                            "penaltyAmount": 1.0,
+                            "isValidDt": "2025-05-29T13:35:57Z",
+                            "reversalAmount": 0,
+                            "penaltyAmount": 449.83,
                         }
                     ]
                 }
@@ -41,6 +41,8 @@ class TestGetLogisticsAndStorageCostsMultiplier:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], LogisticsAndStorageCostsMultiplierItem)
-        assert result[0].nm_id == 1
-        assert result[0].subject_name == "subjectName"
-        assert result[0].dim_id == 1
+        assert result[0].nm_id == 123456789
+        assert result[0].subject_name == "Костюмы спортивные"
+        assert result[0].dim_id == 123456789
+        assert result[0].prc_over == 130.71
+        assert result[0].volume == 6.47

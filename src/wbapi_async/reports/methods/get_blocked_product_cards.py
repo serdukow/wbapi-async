@@ -1,8 +1,9 @@
 from pydantic import Field
 
-from ...enums import OrderDeductions, SortBlocked
+from ...analytics.enums.mode import Mode
 from ...methods.base import WbMethod
 from ...types import BlockedProductCardsItem, RequestLimit
+from ..enums.sort_blocked import SortBlocked
 
 
 class GetBlockedProductCards(WbMethod):
@@ -21,4 +22,4 @@ class GetBlockedProductCards(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     sort: SortBlocked = Field()
-    order: OrderDeductions = Field()
+    order: Mode = Field()

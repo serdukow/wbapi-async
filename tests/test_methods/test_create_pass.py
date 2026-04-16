@@ -10,7 +10,7 @@ class TestCreatePass:
         api.add_response(
             [
                 {
-                    "id": 1,
+                    "id": 2,
                 }
             ]
         )
@@ -26,4 +26,4 @@ class TestCreatePass:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], CreatePassResponse)
-        assert result[0].id_ == 1
+        assert result[0].id_ == 2

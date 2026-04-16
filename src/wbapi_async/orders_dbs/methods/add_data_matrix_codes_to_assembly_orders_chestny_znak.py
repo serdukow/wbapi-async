@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem, RequestLimit
+from ...types import AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem, ApiSgtiNs, RequestLimit
 
 
 class AddDataMatrixCodesToAssemblyOrdersChestnyZnak(WbMethod):
@@ -25,4 +23,4 @@ class AddDataMatrixCodesToAssemblyOrdersChestnyZnak(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    orders: list[Any] = Field()
+    orders: list[ApiSgtiNs] = Field()

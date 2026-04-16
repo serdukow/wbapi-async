@@ -10,15 +10,15 @@ class TestGetOffices:
         api.add_response(
             [
                 {
-                    "address": "address",
-                    "name": "name",
-                    "city": "city",
-                    "id": 1,
-                    "longitude": 1.0,
-                    "latitude": 1.0,
-                    "cargoType": 1,
-                    "deliveryType": 1,
-                    "federalDistrict": "federalDistrict",
+                    "address": "ул. Троицкая, Подольск, Московская обл.",
+                    "name": "Коледино",
+                    "city": "Москва",
+                    "id": 15,
+                    "longitude": 55.386871,
+                    "latitude": 37.588898,
+                    "cargoType": "1",
+                    "deliveryType": "1",
+                    "federalDistrict": "Центральный",
                     "selected": True,
                 }
             ]
@@ -29,6 +29,8 @@ class TestGetOffices:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], OfficesResponse)
-        assert result[0].address == "address"
-        assert result[0].name == "name"
-        assert result[0].city == "city"
+        assert result[0].address == "ул. Троицкая, Подольск, Московская обл."
+        assert result[0].name == "Коледино"
+        assert result[0].city == "Москва"
+        assert result[0].id_ == 15
+        assert result[0].longitude == 55.386871

@@ -1,8 +1,10 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from .answer import Answer
+from .photo_links_item import PhotoLinksItem
+from .product_details import ProductDetails
+from .video import Video
 
 
 class FeedbacksListItem(BaseType):
@@ -14,11 +16,11 @@ class FeedbacksListItem(BaseType):
     cons: str | None = Field(None)
     product_valuation: int | None = Field(None, alias="productValuation")
     created_date: str | None = Field(None, alias="createdDate")
-    answer: dict[str, Any] | None = Field(None)
+    answer: Answer | None = Field(None)
     state: str | None = Field(None)
-    product_details: dict[str, Any] | None = Field(None, alias="productDetails")
-    photo_links: list[dict[str, Any]] | None = Field(None, alias="photoLinks")
-    video: dict[str, Any] | None = Field(None)
+    product_details: ProductDetails | None = Field(None, alias="productDetails")
+    photo_links: list[PhotoLinksItem] | None = Field(None, alias="photoLinks")
+    video: Video | None = Field(None)
     was_viewed: bool | None = Field(None, alias="wasViewed")
     user_name: str | None = Field(None, alias="userName")
     order_status: str | None = Field(None, alias="orderStatus")

@@ -12,15 +12,15 @@ class TestGetWarehouseMeasurements:
                 "data": {
                     "reports": [
                         {
-                            "nmId": 1,
-                            "subjectName": "subjectName",
-                            "dimId": 1,
+                            "nmId": 123456789,
+                            "subjectName": "",
+                            "dimId": 123456789,
                             "volume": 1.0,
-                            "width": 1,
-                            "length": 1,
-                            "height": 1,
+                            "width": 66,
+                            "length": 54,
+                            "height": 11,
                             "photoUrls": [],
-                            "dt": "dt",
+                            "dt": "2025-04-01T00:06:00Z",
                         }
                     ]
                 }
@@ -32,6 +32,8 @@ class TestGetWarehouseMeasurements:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], WarehouseMeasurementsItem)
-        assert result[0].nm_id == 1
-        assert result[0].subject_name == "subjectName"
-        assert result[0].dim_id == 1
+        assert result[0].nm_id == 123456789
+        assert result[0].subject_name == ""
+        assert result[0].dim_id == 123456789
+        assert result[0].volume == 1.0
+        assert result[0].width == 66

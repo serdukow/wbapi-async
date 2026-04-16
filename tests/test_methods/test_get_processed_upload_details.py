@@ -12,16 +12,16 @@ class TestGetProcessedUploadDetails:
                 "data": {
                     "historyGoods": [
                         {
-                            "nmID": 1,
-                            "vendorCode": "vendorCode",
-                            "sizeID": 1,
-                            "techSizeName": "techSizeName",
-                            "price": 1,
-                            "currencyIsoCode4217": "currencyIsoCode4217",
-                            "discount": 1,
-                            "clubDiscount": 1,
+                            "nmID": 544833232,
+                            "vendorCode": "34552332",
+                            "sizeID": 54483342,
+                            "techSizeName": "42",
+                            "price": 1500,
+                            "currencyIsoCode4217": "RUB",
+                            "discount": 25,
+                            "clubDiscount": 5,
                             "status": 1,
-                            "errorText": "errorText",
+                            "errorText": "You can't change the item price. Item was added to the Sale due to high inventory",
                         }
                     ]
                 }
@@ -33,6 +33,8 @@ class TestGetProcessedUploadDetails:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], ProcessedUploadDetailsItem)
-        assert result[0].nm_id == 1
-        assert result[0].vendor_code == "vendorCode"
-        assert result[0].size_id == 1
+        assert result[0].nm_id == 544833232
+        assert result[0].vendor_code == "34552332"
+        assert result[0].size_id == 54483342
+        assert result[0].tech_size_name == "42"
+        assert result[0].price == 1500

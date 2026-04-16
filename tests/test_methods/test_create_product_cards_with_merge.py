@@ -23,6 +23,5 @@ class TestCreateProductCardsWithMerge:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], CreateProductCardsWithMergeResponse)
-        assert result[0].data == {}
         assert result[0].error
         assert result[0].error_text == "errorText"

@@ -43,3 +43,5 @@ class TestGetBuyersReturnApplications:
         assert result[0].id_ == "id"
         assert result[0].claim_type == 1
         assert result[0].status == 1
+        assert result[0].status_ex == 1
+        assert result[0].nm_id == 1

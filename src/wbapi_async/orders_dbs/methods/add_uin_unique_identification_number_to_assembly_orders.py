@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import AddUinUniqueIdentificationNumberToAssemblyOrdersItem, RequestLimit
+from ...types import AddUinUniqueIdentificationNumberToAssemblyOrdersItem, ApiUin, RequestLimit
 
 
 class AddUinUniqueIdentificationNumberToAssemblyOrders(WbMethod):
@@ -25,4 +23,4 @@ class AddUinUniqueIdentificationNumberToAssemblyOrders(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    orders: list[Any] = Field()
+    orders: list[ApiUin] = Field()

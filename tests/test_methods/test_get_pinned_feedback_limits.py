@@ -7,7 +7,13 @@ from wbapi_async.types import PinnedFeedbackLimitsResponse
 @pytest.mark.unit
 class TestGetPinnedFeedbackLimits:
     async def test_get_pinned_feedback_limits(self, api: MockedAPI) -> None:
-        api.add_response([{}])
+        api.add_response(
+            [
+                {
+                    "data": {},
+                }
+            ]
+        )
 
         result = await api.get_pinned_feedback_limits()
 

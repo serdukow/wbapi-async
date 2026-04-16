@@ -1,8 +1,8 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from .metrics import Metrics
+from .table_product_item_st import TableProductItemSt
 
 
 class GroupDataItem(BaseType):
@@ -13,5 +13,5 @@ class GroupDataItem(BaseType):
     brand_name: str = Field(alias="brandName")
     tag_id: int = Field(alias="tagID")
     tag_name: str = Field(alias="tagName")
-    metrics: Any = Field()
-    items: list[Any] = Field()
+    metrics: Metrics = Field()
+    items: list[TableProductItemSt] = Field()

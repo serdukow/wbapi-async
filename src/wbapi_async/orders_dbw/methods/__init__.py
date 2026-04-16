@@ -2,11 +2,11 @@ from .add_data_matrix_code_to_the_order import AddDataMatrixCodeToTheOrder
 from .add_gtin_to_the_order import AddGtinToTheOrder
 from .add_imei_to_the_order import AddImeiToTheOrder
 from .add_uin_unique_identification_number_to_the_order import AddUinUniqueIdentificationNumberToTheOrder
-from .buyer_information import BuyerInformation
 from .cancel_the_order import CancelTheOrder
-from .courier_info import CourierInfo
 from .delete_order_metadata import DeleteOrderMetadata
-from .delivery_date_and_time import DeliveryDateAndTime
+from .get_buyer_information import GetBuyerInformation
+from .get_courier_info import GetCourierInfo
+from .get_delivery_date_and_time import GetDeliveryDateAndTime
 from .get_information_on_completed_orders import GetInformationOnCompletedOrders
 from .get_new_orders import GetNewOrders
 from .get_order_metadata import GetOrderMetadata
@@ -21,11 +21,11 @@ __all__ = (
     "AddGtinToTheOrder",
     "AddImeiToTheOrder",
     "AddUinUniqueIdentificationNumberToTheOrder",
-    "BuyerInformation",
     "CancelTheOrder",
-    "CourierInfo",
     "DeleteOrderMetadata",
-    "DeliveryDateAndTime",
+    "GetBuyerInformation",
+    "GetCourierInfo",
+    "GetDeliveryDateAndTime",
     "GetInformationOnCompletedOrders",
     "GetNewOrders",
     "GetOrderMetadata",

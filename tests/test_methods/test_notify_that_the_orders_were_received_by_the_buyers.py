@@ -11,9 +11,9 @@ class TestNotifyThatTheOrdersWereReceivedByTheBuyers:
             {
                 "results": [
                     {
-                        "orderId": 1,
+                        "orderId": 123456,
                         "isError": True,
-                        "errors": [],
+                        "errors": [{"code": 404, "detail": "NotFound"}],
                     }
                 ]
             }
@@ -24,6 +24,5 @@ class TestNotifyThatTheOrdersWereReceivedByTheBuyers:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], NotifyThatTheOrdersWereReceivedByTheBuyersItem)
-        assert result[0].order_id == 1
+        assert result[0].order_id == 123456
         assert result[0].is_error
-        assert result[0].errors == []

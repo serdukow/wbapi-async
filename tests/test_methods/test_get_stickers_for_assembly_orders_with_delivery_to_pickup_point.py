@@ -13,11 +13,11 @@ class TestGetStickersForAssemblyOrdersWithDeliveryToPickupPoint:
             {
                 "stickers": [
                     {
-                        "orderId": 1,
-                        "partA": "partA",
-                        "partB": "partB",
-                        "barcode": "barcode",
-                        "file": "file",
+                        "orderId": 5346346,
+                        "partA": "231648",
+                        "partB": "9753",
+                        "barcode": "!uKEtQZVx",
+                        "file": "JVBER...ZWYKMTM5MQolJUVPRg==",
                     }
                 ]
             }
@@ -30,6 +30,8 @@ class TestGetStickersForAssemblyOrdersWithDeliveryToPickupPoint:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], StickersForAssemblyOrdersWithDeliveryToPickupPointItem)
-        assert result[0].order_id == 1
-        assert result[0].part_a == "partA"
-        assert result[0].part_b == "partB"
+        assert result[0].order_id == 5346346
+        assert result[0].part_a == "231648"
+        assert result[0].part_b == "9753"
+        assert result[0].barcode == "!uKEtQZVx"
+        assert result[0].file == "JVBER...ZWYKMTM5MQolJUVPRg=="

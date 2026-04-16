@@ -28,3 +28,5 @@ class TestGetWarehousesList:
         assert result[0].id_ == 1
         assert result[0].name == "name"
         assert result[0].address == "address"
+        assert result[0].work_time == "workTime"
+        assert result[0].is_active

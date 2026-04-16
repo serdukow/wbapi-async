@@ -10,8 +10,8 @@ class TestGetOfficesForPass:
         api.add_response(
             [
                 {
-                    "name": "name",
-                    "address": "address",
+                    "name": "Koledino",
+                    "address": "Kosmonavtov 10А",
                     "id": 1,
                 }
             ]
@@ -22,6 +22,6 @@ class TestGetOfficesForPass:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], OfficesForPassResponse)
-        assert result[0].name == "name"
-        assert result[0].address == "address"
+        assert result[0].name == "Koledino"
+        assert result[0].address == "Kosmonavtov 10А"
         assert result[0].id_ == 1

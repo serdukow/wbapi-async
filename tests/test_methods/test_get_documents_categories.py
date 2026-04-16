@@ -12,8 +12,8 @@ class TestGetDocumentsCategories:
                 "data": {
                     "categories": [
                         {
-                            "name": "name",
-                            "title": "title",
+                            "name": "redeem-notification",
+                            "title": "Уведомление о выкупе",
                         }
                     ]
                 }
@@ -25,5 +25,5 @@ class TestGetDocumentsCategories:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], DocumentsCategoriesItem)
-        assert result[0].name == "name"
-        assert result[0].title == "title"
+        assert result[0].name == "redeem-notification"
+        assert result[0].title == "Уведомление о выкупе"

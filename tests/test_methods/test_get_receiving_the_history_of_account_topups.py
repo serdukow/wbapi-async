@@ -28,3 +28,5 @@ class TestGetReceivingTheHistoryOfAccountTopups:
         assert result[0].id_ == 1
         assert result[0].date == "date"
         assert result[0].sum_ == 1
+        assert result[0].type_ == 1
+        assert result[0].status_id == 1

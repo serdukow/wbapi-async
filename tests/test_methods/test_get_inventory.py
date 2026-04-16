@@ -11,8 +11,8 @@ class TestGetInventory:
             {
                 "stocks": [
                     {
-                        "chrtId": 1,
-                        "amount": 1,
+                        "chrtId": 12345678,
+                        "amount": 10,
                     }
                 ]
             }
@@ -23,5 +23,5 @@ class TestGetInventory:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], InventoryItem)
-        assert result[0].chrt_id == 1
-        assert result[0].amount == 1
+        assert result[0].chrt_id == 12345678
+        assert result[0].amount == 10

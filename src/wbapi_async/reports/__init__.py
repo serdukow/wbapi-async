@@ -1,10 +1,13 @@
+from .enums.countries_item import CountriesItem
 from .enums.sort import Sort
 from .enums.sort_blocked import SortBlocked
 from .enums.sort_shadowed import SortShadowed
+from .enums.warehouse_type import WarehouseType
 from .types.blocked_product_cards_item import BlockedProductCardsItem
 from .types.check_the_status_response import CheckTheStatusResponse
+from .types.create_task_response_data import CreateTaskResponseData
 from .types.generate_the_report_response import GenerateTheReportResponse
-from .types.goods_return_item import GoodsReturnItem
+from .types.get_tasks_response_data import GetTasksResponseData
 from .types.hidden_from_the_catalog_item import HiddenFromTheCatalogItem
 from .types.logistics_and_storage_costs_multiplier_item import LogisticsAndStorageCostsMultiplierItem
 from .types.orders_response import OrdersResponse
@@ -22,9 +25,11 @@ from .types.warehouse_response import WarehouseResponse
 
 __all__ = (
     "BlockedProductCardsItem",
-    "GoodsReturnItem",
     "CheckTheStatusResponse",
+    "CountriesItem",
+    "CreateTaskResponseData",
     "GenerateTheReportResponse",
+    "GetTasksResponseData",
     "HiddenFromTheCatalogItem",
     "LogisticsAndStorageCostsMultiplierItem",
     "OrdersResponse",
@@ -41,4 +46,5 @@ __all__ = (
     "SubstitutionsAndIncorrectAttachmentsItem",
     "WarehouseMeasurementsItem",
     "WarehouseResponse",
+    "WarehouseType",
 )

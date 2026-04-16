@@ -7,7 +7,13 @@ from wbapi_async.types import PinnedAndUnpinnedFeedbackNumberResponse
 @pytest.mark.unit
 class TestGetPinnedAndUnpinnedFeedbackNumber:
     async def test_get_pinned_and_unpinned_feedback_number(self, api: MockedAPI) -> None:
-        api.add_response([{}])
+        api.add_response(
+            [
+                {
+                    "data": {},
+                }
+            ]
+        )
 
         result = await api.get_pinned_and_unpinned_feedback_number()
 

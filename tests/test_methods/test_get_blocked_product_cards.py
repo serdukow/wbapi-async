@@ -11,21 +11,26 @@ class TestGetBlockedProductCards:
             {
                 "report": [
                     {
-                        "brand": "brand",
-                        "nmId": 1,
-                        "title": "title",
-                        "vendorCode": "vendorCode",
-                        "reason": "reason",
+                        "brand": "Тест22",
+                        "nmId": 82722944,
+                        "title": "Гуминовые кислоты - биоактивный противовирусный комплекс на",
+                        "vendorCode": "пкdeир76",
+                        "reason": "Контактные данные Продавца и ссылки на иные сайты/группы/сообщества на фотографиях Товара",
                     }
                 ]
             }
         )
 
-        result = await api.get_blocked_product_cards(sort="brand", order="desc")
+        result = await api.get_blocked_product_cards(sort="brand", order="asc")
 
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], BlockedProductCardsItem)
-        assert result[0].brand == "brand"
-        assert result[0].nm_id == 1
-        assert result[0].title == "title"
+        assert result[0].brand == "Тест22"
+        assert result[0].nm_id == 82722944
+        assert result[0].title == "Гуминовые кислоты - биоактивный противовирусный комплекс на"
+        assert result[0].vendor_code == "пкdeир76"
+        assert (
+            result[0].reason
+            == "Контактные данные Продавца и ссылки на иные сайты/группы/сообщества на фотографиях Товара"
+        )

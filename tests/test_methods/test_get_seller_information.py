@@ -26,3 +26,4 @@ class TestGetSellerInformation:
         assert result[0].name == "name"
         assert result[0].sid == "sid"
         assert result[0].tin == "tin"
+        assert result[0].trade_mark == "tradeMark"

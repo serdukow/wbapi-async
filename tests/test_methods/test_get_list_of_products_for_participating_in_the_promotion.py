@@ -12,13 +12,13 @@ class TestGetListOfProductsForParticipatingInThePromotion:
                 "data": {
                     "nomenclatures": [
                         {
-                            "id": 1,
+                            "id": 162579635,
                             "inAction": True,
-                            "price": 1.0,
-                            "currencyCode": "currencyCode",
-                            "planPrice": 1.0,
-                            "discount": 1,
-                            "planDiscount": 1,
+                            "price": 1500,
+                            "currencyCode": "RUB",
+                            "planPrice": 1000,
+                            "discount": 15,
+                            "planDiscount": 34,
                         }
                     ]
                 }
@@ -30,6 +30,8 @@ class TestGetListOfProductsForParticipatingInThePromotion:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], ListOfProductsForParticipatingInThePromotionItem)
-        assert result[0].id_ == 1
+        assert result[0].id_ == 162579635
         assert result[0].in_action
-        assert result[0].price == 1.0
+        assert result[0].price == 1500
+        assert result[0].currency_code == "RUB"
+        assert result[0].plan_price == 1000

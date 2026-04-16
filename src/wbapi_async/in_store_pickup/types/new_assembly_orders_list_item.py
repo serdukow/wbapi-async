@@ -1,5 +1,6 @@
 from pydantic import Field
 
+from ...products.enums.cargo_type import CargoType
 from ...types.base import BaseType
 
 
@@ -26,5 +27,5 @@ class NewAssemblyOrdersListItem(BaseType):
     converted_final_price: int | None = Field(None, alias="convertedFinalPrice")
     currency_code: int | None = Field(None, alias="currencyCode")
     converted_currency_code: int | None = Field(None, alias="convertedCurrencyCode")
-    cargo_type: int | None = Field(None, alias="cargoType")
+    cargo_type: CargoType | None = Field(None, alias="cargoType")
     is_zero_order: bool | None = Field(None, alias="isZeroOrder")

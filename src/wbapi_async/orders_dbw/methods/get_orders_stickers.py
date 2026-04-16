@@ -1,7 +1,9 @@
 from pydantic import Field
 
-from ...enums import Height, Type, Width
 from ...methods.base import WbMethod
+from ...orders_fbs.enums.height import Height
+from ...orders_fbs.enums.type_ import Type
+from ...orders_fbs.enums.width import Width
 from ...types import OrdersStickersItem, RequestLimit
 
 

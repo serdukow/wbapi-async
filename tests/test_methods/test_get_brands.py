@@ -11,9 +11,9 @@ class TestGetBrands:
             {
                 "brands": [
                     {
-                        "id": 1,
+                        "id": 9007199254,
                         "logoUrl": "logoUrl",
-                        "name": "name",
+                        "name": "Brand",
                     }
                 ]
             }
@@ -24,6 +24,6 @@ class TestGetBrands:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], BrandsItem)
-        assert result[0].id_ == 1
+        assert result[0].id_ == 9007199254
         assert result[0].logo_url == "logoUrl"
-        assert result[0].name == "name"
+        assert result[0].name == "Brand"

@@ -1,8 +1,10 @@
 from pydantic import Field
 
-from ...enums import Height, Type, Width
 from ...methods.base import WbMethod
 from ...types import AssemblyOrdersStickersItem, RequestLimit
+from ..enums.height import Height
+from ..enums.type_ import Type
+from ..enums.width import Width
 
 
 class GetAssemblyOrdersStickers(WbMethod):

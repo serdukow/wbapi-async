@@ -33,3 +33,5 @@ class TestGetSubjectCharacteristics:
         assert result[0].charc_id == 1
         assert result[0].subject_name == "subjectName"
         assert result[0].subject_id == 1
+        assert result[0].name == "name"
+        assert result[0].required

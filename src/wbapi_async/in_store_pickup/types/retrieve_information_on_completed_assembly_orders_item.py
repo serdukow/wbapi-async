@@ -1,5 +1,6 @@
 from pydantic import Field
 
+from ...products.enums.cargo_type import CargoType
 from ...types.base import BaseType
 
 
@@ -7,7 +8,7 @@ class RetrieveInformationOnCompletedAssemblyOrdersItem(BaseType):
     """Retrieve Information on Completed Assembly Orders"""
 
     article: str | None = Field(None)
-    cargo_type: int | None = Field(None, alias="cargoType")
+    cargo_type: CargoType | None = Field(None, alias="cargoType")
     chrt_id: int | None = Field(None, alias="chrtId")
     created_at: str | None = Field(None, alias="createdAt")
     price: int | None = Field(None)

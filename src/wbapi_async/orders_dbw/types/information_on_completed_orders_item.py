@@ -1,15 +1,16 @@
-from typing import Any
-
 from pydantic import Field
 
+from ...orders_fbs.types.address import Address
+from ...orders_fbs.types.options import Options
+from ...products.enums.cargo_type import CargoType
 from ...types.base import BaseType
 
 
 class InformationOnCompletedOrdersItem(BaseType):
     """Get Information on Completed Orders"""
 
-    address: dict[str, Any] | None = Field(None)
-    options: dict[str, Any] | None = Field(None)
+    address: Address | None = Field(None)
+    options: Options | None = Field(None)
     order_uid: str | None = Field(None, alias="orderUid")
     group_id: str | None = Field(None, alias="groupId")
     article: str | None = Field(None)
@@ -25,6 +26,6 @@ class InformationOnCompletedOrdersItem(BaseType):
     converted_price: int | None = Field(None, alias="convertedPrice")
     currency_code: int | None = Field(None, alias="currencyCode")
     converted_currency_code: int | None = Field(None, alias="convertedCurrencyCode")
-    cargo_type: int | None = Field(None, alias="cargoType")
+    cargo_type: CargoType | None = Field(None, alias="cargoType")
     comment: str | None = Field(None)
     is_zero_order: bool | None = Field(None, alias="isZeroOrder")

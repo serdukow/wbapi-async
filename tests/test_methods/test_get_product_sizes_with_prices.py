@@ -12,16 +12,16 @@ class TestGetProductSizesWithPrices:
                 "data": {
                     "listGoods": [
                         {
-                            "nmID": 1,
-                            "sizeID": 1,
-                            "vendorCode": "vendorCode",
-                            "price": 1,
-                            "currencyIsoCode4217": "currencyIsoCode4217",
-                            "discountedPrice": 1.0,
-                            "clubDiscountedPrice": 1.0,
-                            "discount": 1,
-                            "clubDiscount": 1,
-                            "techSizeName": "techSizeName",
+                            "nmID": 123,
+                            "sizeID": 98989887,
+                            "vendorCode": "34552332",
+                            "price": 1000,
+                            "currencyIsoCode4217": "RUB",
+                            "discountedPrice": 700,
+                            "clubDiscountedPrice": 665,
+                            "discount": 30,
+                            "clubDiscount": 5,
+                            "techSizeName": "42",
                             "editableSizePrice": True,
                             "isBadTurnover": True,
                         }
@@ -35,6 +35,8 @@ class TestGetProductSizesWithPrices:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], ProductSizesWithPricesItem)
-        assert result[0].nm_id == 1
-        assert result[0].size_id == 1
-        assert result[0].vendor_code == "vendorCode"
+        assert result[0].nm_id == 123
+        assert result[0].size_id == 98989887
+        assert result[0].vendor_code == "34552332"
+        assert result[0].price == 1000
+        assert result[0].currency_iso_code4217 == "RUB"

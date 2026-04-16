@@ -1,8 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from .api_meta_error_response import ApiMetaErrorResponse
 
 
 class AddImeiToTheAssemblyOrdersItem(BaseType):
@@ -10,4 +9,4 @@ class AddImeiToTheAssemblyOrdersItem(BaseType):
 
     order_id: int = Field(alias="orderId")
     is_error: bool = Field(alias="isError")
-    errors: list[Any] | None = Field(None)
+    errors: list[ApiMetaErrorResponse] | None = Field(None)

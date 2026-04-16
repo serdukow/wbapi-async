@@ -11,8 +11,8 @@ class TestGetContactsList:
             {
                 "contacts": [
                     {
-                        "comment": "comment",
-                        "phone": "phone",
+                        "comment": "Иванов Иван Иванович. Звонить с 10 до 21 часа.",
+                        "phone": "+79998887766",
                     }
                 ]
             }
@@ -23,5 +23,5 @@ class TestGetContactsList:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], ContactsListItem)
-        assert result[0].comment == "comment"
-        assert result[0].phone == "phone"
+        assert result[0].comment == "Иванов Иван Иванович. Звонить с 10 до 21 часа."
+        assert result[0].phone == "+79998887766"

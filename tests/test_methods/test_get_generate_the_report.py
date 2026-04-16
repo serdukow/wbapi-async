@@ -10,7 +10,7 @@ class TestGetGenerateTheReport:
         api.add_response(
             [
                 {
-                    "data": {},
+                    "data": {"taskId": "taskId"},
                 }
             ]
         )
@@ -20,4 +20,3 @@ class TestGetGenerateTheReport:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], GenerateTheReportResponse)
-        assert result[0].data == {}

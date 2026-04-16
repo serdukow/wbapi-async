@@ -11,15 +11,15 @@ class TestGetReport:
             {
                 "report": [
                     {
-                        "cityName": "cityName",
-                        "countryName": "countryName",
-                        "foName": "foName",
-                        "nmID": 1,
-                        "regionName": "regionName",
-                        "sa": "sa",
-                        "saleInvoiceCostPrice": 1.0,
-                        "saleInvoiceCostPricePerc": 1.0,
-                        "saleItemInvoiceQty": 1,
+                        "cityName": "деревня Суханово",
+                        "countryName": "Россия",
+                        "foName": "Центральный федеральный округ",
+                        "nmID": 177974431,
+                        "regionName": "Московская область",
+                        "sa": "112233445566778899",
+                        "saleInvoiceCostPrice": 592.11,
+                        "saleInvoiceCostPricePerc": 43.0547333297454,
+                        "saleItemInvoiceQty": 4,
                     }
                 ]
             }
@@ -30,6 +30,8 @@ class TestGetReport:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], ReportItem)
-        assert result[0].city_name == "cityName"
-        assert result[0].country_name == "countryName"
-        assert result[0].fo_name == "foName"
+        assert result[0].city_name == "деревня Суханово"
+        assert result[0].country_name == "Россия"
+        assert result[0].fo_name == "Центральный федеральный округ"
+        assert result[0].nm_id == 177974431
+        assert result[0].region_name == "Московская область"

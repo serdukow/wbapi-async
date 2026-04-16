@@ -18,11 +18,18 @@ class TestGetFeedbacksList:
                             "cons": "cons",
                             "productValuation": 1,
                             "createdDate": "createdDate",
-                            "answer": {},
+                            "answer": {"text": "text", "editable": True, "createDate": "createDate"},
                             "state": "state",
-                            "productDetails": {},
-                            "photoLinks": [],
-                            "video": {},
+                            "productDetails": {
+                                "nmId": 1,
+                                "imtId": 1,
+                                "productName": "productName",
+                                "supplierArticle": "supplierArticle",
+                                "supplierName": "supplierName",
+                                "brandName": "brandName",
+                            },
+                            "photoLinks": [{"fullSize": "fullSize", "miniSize": "miniSize"}],
+                            "video": {"previewImage": "previewImage", "link": "link", "durationSec": 1},
                             "wasViewed": True,
                             "userName": "userName",
                             "orderStatus": "orderStatus",
@@ -55,3 +62,5 @@ class TestGetFeedbacksList:
         assert result[0].id_ == "id"
         assert result[0].text == "text"
         assert result[0].pros == "pros"
+        assert result[0].cons == "cons"
+        assert result[0].product_valuation == 1

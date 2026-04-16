@@ -9,6 +9,7 @@ from .add_imei_to_the_assembly_order_response import AddImeiToTheAssemblyOrderRe
 from .add_uin_unique_identification_number_to_the_assembly_order_response import (
     AddUinUniqueIdentificationNumberToTheAssemblyOrderResponse,
 )
+from .address import Address
 from .all_assembly_orders_for_reshipment_item import AllAssemblyOrdersForReshipmentItem
 from .assembly_orders_item import AssemblyOrdersItem
 from .assembly_orders_metadata_item import AssemblyOrdersMetadataItem
@@ -17,22 +18,31 @@ from .assembly_orders_stickers_item import AssemblyOrdersStickersItem
 from .cancel_the_assembly_order_response import CancelTheAssemblyOrderResponse
 from .create_a_new_supply_response import CreateANewSupplyResponse
 from .create_pass_response import CreatePassResponse
+from .customs_declaration import CustomsDeclaration
 from .delete_assembly_order_metadata_response import DeleteAssemblyOrderMetadataResponse
 from .delete_boxes_from_the_supply_response import DeleteBoxesFromTheSupplyResponse
 from .delete_the_pass_response import DeleteThePassResponse
 from .delete_the_supply_response import DeleteTheSupplyResponse
+from .expiration import Expiration
+from .gtin import Gtin
+from .imei import Imei
+from .meta import Meta
 from .move_the_supply_to_the_delivery_response import MoveTheSupplyToTheDeliveryResponse
 from .new_assembly_orders_item import NewAssemblyOrdersItem
 from .offices_for_pass_response import OfficesForPassResponse
+from .options import Options
 from .orders_with_client_information_item import OrdersWithClientInformationItem
 from .passes_response import PassesResponse
+from .sgtin import Sgtin
 from .status_history_for_crossborder_orders_item import StatusHistoryForCrossborderOrdersItem
+from .statuses_item import StatusesItem
 from .stickers_for_crossborder_assembly_orders_item import StickersForCrossborderAssemblyOrdersItem
 from .supply_assembly_order_ids_item import SupplyAssemblyOrderIdsItem
 from .supply_boxes_list_item import SupplyBoxesListItem
 from .supply_details_response import SupplyDetailsResponse
 from .the_supply_box_qr_code_stickers_item import TheSupplyBoxQrCodeStickersItem
 from .the_supply_qr_code_response import TheSupplyQrCodeResponse
+from .uin import Uin
 from .update_pass_response import UpdatePassResponse
 
 
@@ -44,6 +54,7 @@ __all__ = (
     "AddExpirationDateToTheAssemblyOrderResponse",
     "AddGtinToTheAssemblyOrderResponse",
     "AddImeiToTheAssemblyOrderResponse",
+    "Address",
     "AddUinUniqueIdentificationNumberToTheAssemblyOrderResponse",
     "AllAssemblyOrdersForReshipmentItem",
     "AssemblyOrdersItem",
@@ -54,15 +65,23 @@ __all__ = (
     "CancelTheAssemblyOrderResponse",
     "CreateANewSupplyResponse",
     "CreatePassResponse",
+    "CustomsDeclaration",
     "DeleteAssemblyOrderMetadataResponse",
     "DeleteBoxesFromTheSupplyResponse",
     "DeleteThePassResponse",
     "DeleteTheSupplyResponse",
+    "Expiration",
+    "Gtin",
+    "Imei",
+    "Meta",
     "MoveTheSupplyToTheDeliveryResponse",
     "NewAssemblyOrdersItem",
     "OfficesForPassResponse",
+    "Options",
     "OrdersWithClientInformationItem",
     "PassesResponse",
+    "Sgtin",
+    "StatusesItem",
     "StatusHistoryForCrossborderOrdersItem",
     "StickersForCrossborderAssemblyOrdersItem",
     "SupplyAssemblyOrderIdsItem",
@@ -70,5 +89,6 @@ __all__ = (
     "SupplyDetailsResponse",
     "TheSupplyBoxQrCodeStickersItem",
     "TheSupplyQrCodeResponse",
+    "Uin",
     "UpdatePassResponse",
 )

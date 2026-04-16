@@ -1,8 +1,8 @@
 from pydantic import Field
 
-from ...enums import Order
 from ...methods.base import WbMethod
 from ...types import FeedbacksListItem, RequestLimit
+from ..enums.order import Order
 
 
 class GetFeedbacksList(WbMethod):

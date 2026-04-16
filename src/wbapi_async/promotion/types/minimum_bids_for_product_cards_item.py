@@ -1,12 +1,11 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from .bids_item import BidsItem
 
 
 class MinimumBidsForProductCardsItem(BaseType):
     """Minimum Bids for Product Cards"""
 
-    bids: list[dict[str, Any]] = Field()
+    bids: list[BidsItem] = Field()
     nm_id: int = Field()

@@ -11,11 +11,11 @@ class TestGetSelfpurchases:
             {
                 "details": [
                     {
-                        "nmID": 1,
-                        "sum": 1,
-                        "currency": "currency",
-                        "dateFrom": "dateFrom",
-                        "dateTo": "dateTo",
+                        "nmID": 123456789,
+                        "sum": 3540,
+                        "currency": "RUB",
+                        "dateFrom": "2023-08-23",
+                        "dateTo": "2023-08-29",
                     }
                 ]
             }
@@ -26,6 +26,8 @@ class TestGetSelfpurchases:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], SelfpurchasesItem)
-        assert result[0].nm_id == 1
-        assert result[0].sum_ == 1
-        assert result[0].currency == "currency"
+        assert result[0].nm_id == 123456789
+        assert result[0].sum_ == 3540
+        assert result[0].currency == "RUB"
+        assert result[0].date_from == "2023-08-23"
+        assert result[0].date_to == "2023-08-29"

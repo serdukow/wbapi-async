@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import CreateProductCardsWithMergeResponse, RequestLimit
+from ...types import CardsToAddItem, CreateProductCardsWithMergeResponse, RequestLimit
 
 
 class CreateProductCardsWithMerge(WbMethod):
@@ -30,4 +28,4 @@ class CreateProductCardsWithMerge(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     imt_id: int | None = Field(None, alias="imtID")
-    cards_to_add: list[dict[str, Any]] | None = Field(None, alias="cardsToAdd")
+    cards_to_add: list[CardsToAddItem] | None = Field(None, alias="cardsToAdd")

@@ -11,28 +11,32 @@ class TestGetNewOrders:
             {
                 "orders": [
                     {
-                        "address": {},
-                        "salePrice": 1,
+                        "address": {
+                            "fullAddress": "Chelyabinsk Region, Chelyabinsk, 51st Arabkir Street, Building 10A, Apartment 42",
+                            "longitude": 44.519068,
+                            "latitude": 40.20192,
+                        },
+                        "salePrice": 504600,
                         "requiredMeta": [],
-                        "comment": "comment",
-                        "options": {},
-                        "orderUid": "orderUid",
-                        "groupId": "groupId",
-                        "article": "article",
-                        "colorCode": "colorCode",
-                        "rid": "rid",
-                        "createdAt": "createdAt",
+                        "comment": "Упакуйте в пленку, пожалуйста",
+                        "options": {"isB2B": True},
+                        "orderUid": "165918930_629fbc924b984618a44354475ca58675",
+                        "groupId": "7a2c8810-1db2-4011-9682-5c7fa33afd83",
+                        "article": "one-ring-7548",
+                        "colorCode": "RAL 3017",
+                        "rid": "f884001e44e511edb8780242ac120002",
+                        "createdAt": "2022-05-04T07:56:29Z",
                         "skus": [],
-                        "id": 1,
-                        "warehouseId": 1,
-                        "nmId": 1,
-                        "chrtId": 1,
-                        "price": 1,
-                        "convertedPrice": 1,
-                        "currencyCode": 1,
-                        "convertedCurrencyCode": 1,
-                        "cargoType": 1,
-                        "isZeroOrder": True,
+                        "id": 13833711,
+                        "warehouseId": 658434,
+                        "nmId": 123456789,
+                        "chrtId": 987654321,
+                        "price": 1014,
+                        "convertedPrice": 1014,
+                        "currencyCode": 933,
+                        "convertedCurrencyCode": 643,
+                        "cargoType": "1",
+                        "isZeroOrder": False,
                     }
                 ]
             }
@@ -43,6 +47,5 @@ class TestGetNewOrders:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], NewOrdersItem)
-        assert result[0].address == {}
-        assert result[0].sale_price == 1
-        assert result[0].required_meta == []
+        assert result[0].sale_price == 504600
+        assert result[0].comment == "Упакуйте в пленку, пожалуйста"

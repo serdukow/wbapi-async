@@ -13,17 +13,17 @@ class TestGetBoxTariffs:
                     "data": {
                         "warehouseList": [
                             {
-                                "boxDeliveryBase": "boxDeliveryBase",
-                                "boxDeliveryCoefExpr": "boxDeliveryCoefExpr",
-                                "boxDeliveryLiter": "boxDeliveryLiter",
-                                "boxDeliveryMarketplaceBase": "boxDeliveryMarketplaceBase",
-                                "boxDeliveryMarketplaceCoefExpr": "boxDeliveryMarketplaceCoefExpr",
-                                "boxDeliveryMarketplaceLiter": "boxDeliveryMarketplaceLiter",
-                                "boxStorageBase": "boxStorageBase",
-                                "boxStorageCoefExpr": "boxStorageCoefExpr",
-                                "boxStorageLiter": "boxStorageLiter",
-                                "geoName": "geoName",
-                                "warehouseName": "warehouseName",
+                                "boxDeliveryBase": "48",
+                                "boxDeliveryCoefExpr": "160",
+                                "boxDeliveryLiter": "11,2",
+                                "boxDeliveryMarketplaceBase": "40",
+                                "boxDeliveryMarketplaceCoefExpr": "125",
+                                "boxDeliveryMarketplaceLiter": "11",
+                                "boxStorageBase": "0,14",
+                                "boxStorageCoefExpr": "115",
+                                "boxStorageLiter": "0,07",
+                                "geoName": "Центральный федеральный округ",
+                                "warehouseName": "Коледино",
                             }
                         ]
                     }
@@ -36,6 +36,8 @@ class TestGetBoxTariffs:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], BoxTariffsItem)
-        assert result[0].box_delivery_base == "boxDeliveryBase"
-        assert result[0].box_delivery_coef_expr == "boxDeliveryCoefExpr"
-        assert result[0].box_delivery_liter == "boxDeliveryLiter"
+        assert result[0].box_delivery_base == "48"
+        assert result[0].box_delivery_coef_expr == "160"
+        assert result[0].box_delivery_liter == "11,2"
+        assert result[0].box_delivery_marketplace_base == "40"
+        assert result[0].box_delivery_marketplace_coef_expr == "125"

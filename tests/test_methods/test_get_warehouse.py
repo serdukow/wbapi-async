@@ -40,3 +40,5 @@ class TestGetWarehouse:
         assert result[0].last_change_date == "lastChangeDate"
         assert result[0].warehouse_name == "warehouseName"
         assert result[0].supplier_article == "supplierArticle"
+        assert result[0].nm_id == 1
+        assert result[0].barcode == "barcode"

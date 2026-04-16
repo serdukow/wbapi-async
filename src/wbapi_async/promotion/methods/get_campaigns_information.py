@@ -1,8 +1,8 @@
 from pydantic import Field
 
-from ...enums import PaymentType
 from ...methods.base import WbMethod
 from ...types import CampaignsInformationItem, RequestLimit
+from ..enums.payment_type import PaymentType
 
 
 class GetCampaignsInformation(WbMethod):

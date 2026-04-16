@@ -1,8 +1,9 @@
 from pydantic import Field
 
-from ...enums import OrderDeductions, SortShadowed
+from ...analytics.enums.mode import Mode
 from ...methods.base import WbMethod
 from ...types import HiddenFromTheCatalogItem, RequestLimit
+from ..enums.sort_shadowed import SortShadowed
 
 
 class GetHiddenFromTheCatalog(WbMethod):
@@ -21,4 +22,4 @@ class GetHiddenFromTheCatalog(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     sort: SortShadowed = Field()
-    order: OrderDeductions = Field()
+    order: Mode = Field()

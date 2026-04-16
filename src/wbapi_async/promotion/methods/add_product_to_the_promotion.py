@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import AddProductToThePromotionResponse, RequestLimit
+from ...types import AddProductToThePromotionResponse, Data, RequestLimit
 
 
 class AddProductToThePromotion(WbMethod):
@@ -21,4 +19,4 @@ class AddProductToThePromotion(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    data: dict[str, Any] | None = Field(None)
+    data: Data | None = Field(None)

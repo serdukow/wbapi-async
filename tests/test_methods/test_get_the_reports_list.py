@@ -11,13 +11,13 @@ class TestGetTheReportsList:
             {
                 "data": [
                     {
-                        "id": "id",
-                        "createdAt": "createdAt",
-                        "status": "status",
-                        "name": "name",
-                        "size": 1,
-                        "startDate": "startDate",
-                        "endDate": "endDate",
+                        "id": "06eae887-9d9f-491f-b16a-bb1766fcb8d2",
+                        "createdAt": "2024-06-26 20:05:32",
+                        "status": "SUCCESS",
+                        "name": "Card report",
+                        "size": 123,
+                        "startDate": "2024-06-21",
+                        "endDate": "2023-04-23",
                     }
                 ]
             }
@@ -28,6 +28,8 @@ class TestGetTheReportsList:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], TheReportsListItem)
-        assert result[0].id_ == "id"
-        assert result[0].created_at == "createdAt"
-        assert result[0].status == "status"
+        assert result[0].id_ == "06eae887-9d9f-491f-b16a-bb1766fcb8d2"
+        assert result[0].created_at == "2024-06-26 20:05:32"
+        assert result[0].status == "SUCCESS"
+        assert result[0].name == "Card report"
+        assert result[0].size == 123

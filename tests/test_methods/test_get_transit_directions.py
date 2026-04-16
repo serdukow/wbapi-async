@@ -13,7 +13,7 @@ class TestGetTransitDirections:
                     "transitWarehouseName": "transitWarehouseName",
                     "destinationWarehouseName": "destinationWarehouseName",
                     "activeFrom": "activeFrom",
-                    "boxTariff": [],
+                    "boxTariff": [{"from": 1, "to": 1, "value": 1.0}],
                     "palletTariff": 1,
                 }
             ]
@@ -27,3 +27,4 @@ class TestGetTransitDirections:
         assert result[0].transit_warehouse_name == "transitWarehouseName"
         assert result[0].destination_warehouse_name == "destinationWarehouseName"
         assert result[0].active_from == "activeFrom"
+        assert result[0].pallet_tariff == 1

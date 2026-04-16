@@ -23,7 +23,9 @@ from .get_assembly_orders_statuses import GetAssemblyOrdersStatuses
 from .get_assembly_orders_stickers import GetAssemblyOrdersStickers
 from .get_new_assembly_orders import GetNewAssemblyOrders
 from .get_offices_for_pass import GetOfficesForPass
+from .get_orders_with_client_information import GetOrdersWithClientInformation
 from .get_passes import GetPasses
+from .get_status_history_for_crossborder_orders import GetStatusHistoryForCrossborderOrders
 from .get_stickers_for_crossborder_assembly_orders import GetStickersForCrossborderAssemblyOrders
 from .get_supply_assembly_order_ids import GetSupplyAssemblyOrderIds
 from .get_supply_boxes_list import GetSupplyBoxesList
@@ -31,8 +33,6 @@ from .get_supply_details import GetSupplyDetails
 from .get_the_supply_box_qr_code_stickers import GetTheSupplyBoxQrCodeStickers
 from .get_the_supply_qr_code import GetTheSupplyQrCode
 from .move_the_supply_to_the_delivery import MoveTheSupplyToTheDelivery
-from .orders_with_client_information import OrdersWithClientInformation
-from .status_history_for_crossborder_orders import StatusHistoryForCrossborderOrders
 from .update_pass import UpdatePass
 
 
@@ -60,7 +60,9 @@ __all__ = (
     "GetASuppliesList",
     "GetNewAssemblyOrders",
     "GetOfficesForPass",
+    "GetOrdersWithClientInformation",
     "GetPasses",
+    "GetStatusHistoryForCrossborderOrders",
     "GetStickersForCrossborderAssemblyOrders",
     "GetSupplyAssemblyOrderIds",
     "GetSupplyBoxesList",
@@ -68,7 +70,5 @@ __all__ = (
     "GetTheSupplyBoxQrCodeStickers",
     "GetTheSupplyQrCode",
     "MoveTheSupplyToTheDelivery",
-    "OrdersWithClientInformation",
-    "StatusHistoryForCrossborderOrders",
     "UpdatePass",
 )

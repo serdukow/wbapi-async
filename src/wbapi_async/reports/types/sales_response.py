@@ -1,6 +1,7 @@
 from pydantic import Field
 
 from ...types.base import BaseType
+from ..enums.warehouse_type import WarehouseType
 
 
 class SalesResponse(BaseType):
@@ -9,7 +10,7 @@ class SalesResponse(BaseType):
     date: str | None = Field(None)
     last_change_date: str | None = Field(None, alias="lastChangeDate")
     warehouse_name: str | None = Field(None, alias="warehouseName")
-    warehouse_type: str | None = Field(None, alias="warehouseType")
+    warehouse_type: WarehouseType | None = Field(None, alias="warehouseType")
     country_name: str | None = Field(None, alias="countryName")
     oblast_okrug_name: str | None = Field(None, alias="oblastOkrugName")
     region_name: str | None = Field(None, alias="regionName")

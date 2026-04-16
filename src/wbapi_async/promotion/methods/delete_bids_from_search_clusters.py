@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import DeleteBidsFromSearchClustersResponse, RequestLimit
+from ...types import DeleteBidsFromSearchClustersResponse, RequestLimit, V0SetNormQueryBidsRequestItem
 
 
 class DeleteBidsFromSearchClusters(WbMethod):
@@ -22,4 +20,4 @@ class DeleteBidsFromSearchClusters(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    bids: list[Any] = Field()
+    bids: list[V0SetNormQueryBidsRequestItem] = Field()

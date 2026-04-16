@@ -1,8 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from .show_hours_item import ShowHoursItem
 
 
 class InformationAboutMediaCampaignItem(BaseType):
@@ -31,5 +30,5 @@ class InformationAboutMediaCampaignItem(BaseType):
     subject_id: int | None = Field(None)
     subject_name: str | None = Field(None)
     action_name: str | None = Field(None)
-    show_hours: list[dict[str, Any]] | None = Field(None)
+    show_hours: list[ShowHoursItem] | None = Field(None)
     erid: str | None = Field(None, alias="Erid")

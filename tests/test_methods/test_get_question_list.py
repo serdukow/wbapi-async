@@ -16,8 +16,15 @@ class TestGetQuestionList:
                             "text": "text",
                             "createdDate": "createdDate",
                             "state": "state",
-                            "answer": {},
-                            "productDetails": {},
+                            "answer": {"text": "text", "editable": True, "createDate": "createDate"},
+                            "productDetails": {
+                                "nmId": 1,
+                                "imtId": 1,
+                                "productName": "productName",
+                                "supplierArticle": "supplierArticle",
+                                "supplierName": "supplierName",
+                                "brandName": "brandName",
+                            },
                             "wasViewed": True,
                             "isWarned": True,
                         }
@@ -34,3 +41,4 @@ class TestGetQuestionList:
         assert result[0].id_ == "id"
         assert result[0].text == "text"
         assert result[0].created_date == "createdDate"
+        assert result[0].state == "state"

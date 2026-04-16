@@ -35,3 +35,5 @@ class TestGetCampaignsStatistics:
         assert isinstance(result[0], CampaignsStatisticsResponse)
         assert result[0].advert_id == 1
         assert result[0].atbs == 1
+        assert result[0].canceled == 1
+        assert result[0].clicks == 1

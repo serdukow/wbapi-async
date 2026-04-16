@@ -7,7 +7,13 @@ from wbapi_async.types import PinFeedbackResponse
 @pytest.mark.unit
 class TestPinFeedback:
     async def test_pin_feedback(self, api: MockedAPI) -> None:
-        api.add_response([{}])
+        api.add_response(
+            [
+                {
+                    "data": {},
+                }
+            ]
+        )
 
         result = await api.pin_feedback()
 

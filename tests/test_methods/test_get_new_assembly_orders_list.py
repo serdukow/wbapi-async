@@ -12,26 +12,26 @@ class TestGetNewAssemblyOrdersList:
                 "orders": [
                     {
                         "ddate": "ddate",
-                        "salePrice": 1,
+                        "salePrice": 504600,
                         "requiredMeta": [],
                         "article": "article",
                         "rid": "rid",
                         "createdAt": "createdAt",
                         "warehouseAddress": "warehouseAddress",
                         "orderCode": "orderCode",
-                        "payMode": "payMode",
+                        "payMode": "prepaid",
                         "skus": [],
                         "id": 1,
                         "warehouseId": 1,
                         "nmId": 1,
                         "chrtId": 1,
                         "price": 1,
-                        "finalPrice": 1,
-                        "convertedPrice": 1,
-                        "convertedFinalPrice": 1,
-                        "currencyCode": 1,
-                        "convertedCurrencyCode": 1,
-                        "cargoType": 1,
+                        "finalPrice": 1014,
+                        "convertedPrice": 5000,
+                        "convertedFinalPrice": 1014,
+                        "currencyCode": 643,
+                        "convertedCurrencyCode": 643,
+                        "cargoType": "1",
                         "isZeroOrder": True,
                     }
                 ]
@@ -44,5 +44,6 @@ class TestGetNewAssemblyOrdersList:
         assert len(result) == 1
         assert isinstance(result[0], NewAssemblyOrdersListItem)
         assert result[0].ddate == "ddate"
-        assert result[0].sale_price == 1
-        assert result[0].required_meta == []
+        assert result[0].sale_price == 504600
+        assert result[0].article == "article"
+        assert result[0].rid == "rid"

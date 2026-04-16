@@ -11,8 +11,8 @@ class TestGetOrdersStatuses:
             {
                 "orders": [
                     {
-                        "id": 1,
-                        "supplierStatus": "supplierStatus",
+                        "id": 5632423,
+                        "supplierStatus": "new",
                         "wbStatus": "wbStatus",
                     }
                 ]
@@ -24,6 +24,6 @@ class TestGetOrdersStatuses:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], OrdersStatusesItem)
-        assert result[0].id_ == 1
-        assert result[0].supplier_status == "supplierStatus"
+        assert result[0].id_ == 5632423
+        assert result[0].supplier_status == "new"
         assert result[0].wb_status == "wbStatus"
