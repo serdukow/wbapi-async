@@ -10,7 +10,6 @@ from ..analytics.types.history import History
 from ..analytics.types.main_page_response import MainPageResponse
 from ..analytics.types.metrics import Metrics
 from ..analytics.types.offices_item import OfficesItem
-from ..analytics.types.order_by import OrderBy
 from ..analytics.types.orders_and_positions_by_product_search_texts_response import (
     OrdersAndPositionsByProductSearchTextsResponse,
 )
@@ -18,6 +17,7 @@ from ..analytics.types.pagination_by_groups_response import PaginationByGroupsRe
 from ..analytics.types.pagination_by_products_within_agroup_response import (
     PaginationByProductsWithinAGroupResponse,
 )
+from ..analytics.types.period import Period
 from ..analytics.types.product import Product
 from ..analytics.types.product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from ..analytics.types.product_cards_statistics_per_period_item import ProductCardsStatisticsPerPeriodItem
@@ -26,7 +26,6 @@ from ..analytics.types.regenerate_the_report_response import RegenerateTheReport
 from ..analytics.types.sale_rate import SaleRate
 from ..analytics.types.search_texts_by_product_response import SearchTextsByProductResponse
 from ..analytics.types.selected import Selected
-from ..analytics.types.selected_period import SelectedPeriod
 from ..analytics.types.size_data_item import SizeDataItem
 from ..analytics.types.statistic import Statistic
 from ..analytics.types.stocks import Stocks
@@ -92,7 +91,6 @@ from ..general.types.connection_check_response import ConnectionCheckResponse
 from ..general.types.create_an_invitation_for_anew_user_response import CreateAnInvitationForANewUserResponse
 from ..general.types.delete_user_response import DeleteUserResponse
 from ..general.types.getting_seller_portal_news_item import GettingSellerPortalNewsItem
-from ..general.types.invite import Invite
 from ..general.types.invitee_info import InviteeInfo
 from ..general.types.seller_information_response import SellerInformationResponse
 from ..general.types.types_item import TypesItem
@@ -269,7 +267,6 @@ from ..products.types.create_atag_response import CreateATagResponse
 from ..products.types.create_product_cards_response import CreateProductCardsResponse
 from ..products.types.create_product_cards_with_merge_response import CreateProductCardsWithMergeResponse
 from ..products.types.create_warehouse_response import CreateWarehouseResponse
-from ..products.types.cursor import Cursor
 from ..products.types.data import Data
 from ..products.types.data_2 import Data2
 from ..products.types.data_item import DataItem
@@ -277,7 +274,6 @@ from ..products.types.delete_inventory_response import DeleteInventoryResponse
 from ..products.types.delete_the_tag_response import DeleteTheTagResponse
 from ..products.types.delete_warehouse_response import DeleteWarehouseResponse
 from ..products.types.dimensions import Dimensions
-from ..products.types.filter_ import Filter
 from ..products.types.gender_item import GenderItem
 from ..products.types.generation_of_skus_item import GenerationOfSkusItem
 from ..products.types.good import Good
@@ -306,11 +302,9 @@ from ..products.types.season_item import SeasonItem
 from ..products.types.set_prices_and_discounts_response import SetPricesAndDiscountsResponse
 from ..products.types.set_size_prices_response import SetSizePricesResponse
 from ..products.types.set_wb_club_discounts_response import SetWbClubDiscountsResponse
-from ..products.types.settings import Settings
 from ..products.types.size_good_req import SizeGoodReq
 from ..products.types.sizes_item import SizesItem
 from ..products.types.sizes_item_2 import SizesItem2
-from ..products.types.sort import Sort
 from ..products.types.stocks_item import StocksItem
 from ..products.types.subject_characteristics_item import SubjectCharacteristicsItem
 from ..products.types.subjects_list_item import SubjectsListItem
@@ -360,7 +354,6 @@ from ..promotion.types.changing_the_list_of_product_cards_in_campaigns_item impo
 from ..promotion.types.create_campaign_response import CreateCampaignResponse
 from ..promotion.types.daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
 from ..promotion.types.data_3 import Data3
-from ..promotion.types.data_upload import DataUpload
 from ..promotion.types.days_item import DaysItem
 from ..promotion.types.delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from ..promotion.types.delete_campaign_response import DeleteCampaignResponse
@@ -586,14 +579,12 @@ __all__ = (
     "CreateTaskResponseData",
     "CreateTheReportResponse",
     "CreateWarehouseResponse",
-    "Cursor",
     "DailySearchClustersStatisticsItem",
     "Data",
     "Data2",
     "Data3",
     "Data4",
     "DataItem",
-    "DataUpload",
     "DaysItem",
     "DbsOrdersItem",
     "DbsOrdersOrderIdMetaItem",
@@ -623,7 +614,6 @@ __all__ = (
     "FeedbacksListItem",
     "File",
     "FileFromTheMessageResponse",
-    "Filter",
     "FloatGraphByPeriodItem",
     "GenderItem",
     "GenerateTheReportResponse",
@@ -643,7 +633,6 @@ __all__ = (
     "InformationOnCompletedOrdersItem",
     "InformationOnPaidDeliveryResponse",
     "InventoryItem",
-    "Invite",
     "InviteeInfo",
     "ItemsItem",
     "LastMessage",
@@ -693,7 +682,6 @@ __all__ = (
     "OfficesResponse",
     "Options",
     "Options2",
-    "OrderBy",
     "OrderMetadataItem",
     "OrdersAndPositionsByProductSearchTextsResponse",
     "OrdersItem",
@@ -710,6 +698,7 @@ __all__ = (
     "ParentCategoriesOfTheBrandItem",
     "PassesResponse",
     "PauseCampaignResponse",
+    "Period",
     "PhotoLinksItem",
     "PhotosItem",
     "PinFeedbackResponse",
@@ -763,7 +752,6 @@ __all__ = (
     "SearchTextsByProductResponse",
     "SeasonItem",
     "Selected",
-    "SelectedPeriod",
     "SelfpurchasesItem",
     "SellerBrandsItem",
     "SellerInformationResponse",
@@ -773,14 +761,12 @@ __all__ = (
     "SetPricesAndDiscountsResponse",
     "SetSizePricesResponse",
     "SettingAndDeletingMinusPhrasesResponse",
-    "Settings",
     "SetWbClubDiscountsResponse",
     "ShowHoursItem",
     "SizeDataItem",
     "SizeGoodReq",
     "SizesItem",
     "SizesItem2",
-    "Sort",
     "Statistic",
     "StatusesItem",
     "StatusHistoryForCrossborderOrdersItem",

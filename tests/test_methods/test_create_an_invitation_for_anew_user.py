@@ -18,9 +18,7 @@ class TestCreateAnInvitationForANewUser:
             ]
         )
 
-        result = await api.create_an_invitation_for_a_new_user(
-            invite={"phoneNumber": "phoneNumber", "position": "position"}
-        )
+        result = await api.create_an_invitation_for_a_new_user(invite={})
 
         assert isinstance(result, list)
         assert len(result) == 1

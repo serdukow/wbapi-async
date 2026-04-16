@@ -2,13 +2,13 @@ from pydantic import Field
 
 from ...types.base import BaseType
 from .conversions import Conversions
-from .selected_period import SelectedPeriod
+from .period import Period
 from .time_to_ready import TimeToReady
 from .wb_club import WbClub
 
 
 class Selected(BaseType):
-    period: SelectedPeriod = Field(alias="period")
+    period: Period = Field(alias="period")
     open_count: int = Field(alias="openCount")
     cart_count: int = Field(alias="cartCount")
     order_count: int = Field(alias="orderCount")

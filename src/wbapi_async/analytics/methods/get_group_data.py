@@ -1,7 +1,9 @@
+from typing import Any
+
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import GroupDataItem, OrderBy, RequestLimit, SelectedPeriod
+from ...types import GroupDataItem, RequestLimit
 
 
 class GetGroupData(WbMethod):
@@ -25,10 +27,10 @@ class GetGroupData(WbMethod):
     subject_ids: list[int] | None = Field(None, alias="subjectIDs")
     brand_names: list[str] | None = Field(None, alias="brandNames")
     tag_ids: list[int] | None = Field(None, alias="tagIDs")
-    current_period: SelectedPeriod = Field(alias="currentPeriod")
+    current_period: dict[str, Any] = Field(alias="currentPeriod")
     stock_type: str = Field(alias="stockType")
     skip_deleted_nm: bool = Field(alias="skipDeletedNm")
     availability_filters: list[str] = Field(alias="availabilityFilters")
-    order_by: OrderBy = Field(alias="orderBy")
+    order_by: dict[str, Any] = Field(alias="orderBy")
     limit: int | None = Field(100, alias="limit")
     offset: int = Field(alias="offset")

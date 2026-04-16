@@ -24,7 +24,6 @@ from .types.changing_the_list_of_product_cards_in_campaigns_item import (
 from .types.create_campaign_response import CreateCampaignResponse
 from .types.daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
 from .types.data_3 import Data3
-from .types.data_upload import DataUpload
 from .types.days_item import DaysItem
 from .types.delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from .types.delete_campaign_response import DeleteCampaignResponse
@@ -102,7 +101,6 @@ __all__ = (
     "CreateCampaignResponse",
     "DailySearchClustersStatisticsItem",
     "Data3",
-    "DataUpload",
     "DaysItem",
     "DeleteBidsFromSearchClustersResponse",
     "DeleteCampaignResponse",

@@ -16,11 +16,7 @@ class TestGetMainPage:
         )
 
         result = await api.get_main_page(
-            current_period={"start": "2023-06-01", "end": "2024-03-01"},
-            position_cluster="position_cluster",
-            order_by={"field": "openCard", "mode": "mode"},
-            limit=1,
-            offset=1,
+            current_period={}, position_cluster="position_cluster", order_by={}, limit=1, offset=1
         )
 
         assert isinstance(result, list)

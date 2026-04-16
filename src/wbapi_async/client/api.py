@@ -334,9 +334,7 @@ from ..types import (
     CreateProductCardsWithMergeResponse,
     CreateTheReportResponse,
     CreateWarehouseResponse,
-    Cursor,
     DailySearchClustersStatisticsItem,
-    DataUpload,
     DbsOrdersItem,
     DbsOrdersOrderIdMetaItem,
     DeleteAssemblyOrdersMetadataItem,
@@ -360,7 +358,6 @@ from ..types import (
     InformationOnCompletedOrdersItem,
     InformationOnPaidDeliveryResponse,
     InventoryItem,
-    Invite,
     ItemsItem,
     LimitsForTheProductCardsResponse,
     ListOfArchivedFeedbacksItem,
@@ -390,7 +387,6 @@ from ..types import (
     NumberOfQuestionsItem,
     OfficesForPassResponse,
     OfficesResponse,
-    OrderBy,
     OrderMetadataItem,
     OrdersAndPositionsByProductSearchTextsResponse,
     OrdersItem,
@@ -444,7 +440,6 @@ from ..types import (
     SearchClustersStatisticsItem,
     SearchTextsByProductResponse,
     SeasonItem,
-    SelectedPeriod,
     SelfpurchasesItem,
     SellerBrandsItem,
     SellerInformationResponse,
@@ -452,11 +447,9 @@ from ..types import (
     SendMessageItem,
     SetPricesAndDiscountsResponse,
     SetSizePricesResponse,
-    Settings,
     SetWbClubDiscountsResponse,
     SizeDataItem,
     SizeGoodReq,
-    Sort,
     StatusHistoryForCrossborderOrdersItem,
     StickersForAssemblyOrdersWithDeliveryToPickupPointItem,
     StickersForCrossborderAssemblyOrdersItem,
@@ -904,7 +897,7 @@ class WbAPI:
 
     async def add_product_to_the_promotion(
         self,
-        data: DataUpload | None = None,
+        data: dict[str, Any] | None = None,
     ) -> list[AddProductToThePromotionResponse]:
         """
         Creates a product upload for the promotion. The upload status can be checked using
@@ -1223,7 +1216,7 @@ class WbAPI:
 
     async def create_an_invitation_for_a_new_user(
         self,
-        invite: Invite,
+        invite: dict[str, Any],
         access: list[AccessItem] | None = None,
     ) -> list[CreateAnInvitationForANewUserResponse]:
         """
@@ -2667,11 +2660,11 @@ class WbAPI:
 
     async def get_group_data(
         self,
-        current_period: SelectedPeriod,
+        current_period: dict[str, Any],
         stock_type: str,
         skip_deleted_nm: bool,
         availability_filters: list[str],
-        order_by: OrderBy,
+        order_by: dict[str, Any],
         offset: int,
         nm_ids: list[int] | None = None,
         subject_ids: list[int] | None = None,
@@ -2717,7 +2710,7 @@ class WbAPI:
 
     async def get_grouped_product_cards_statistics_per_days(
         self,
-        selected_period: SelectedPeriod,
+        selected_period: dict[str, Any],
         brand_names: list[str] | None = None,
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
@@ -2963,8 +2956,8 @@ class WbAPI:
     async def get_list_of_failed_product_cards_with_errors(
         self,
         locale: str | None = None,
-        cursor: Cursor | None = None,
-        order: Sort | None = None,
+        cursor: dict[str, Any] | None = None,
+        order: dict[str, Any] | None = None,
     ) -> list[ListOfFailedProductCardsWithErrorsItem]:
         """
         Returns the list of product cards
@@ -3147,12 +3140,12 @@ class WbAPI:
 
     async def get_main_page(
         self,
-        current_period: SelectedPeriod,
+        current_period: dict[str, Any],
         position_cluster: str,
-        order_by: OrderBy,
+        order_by: dict[str, Any],
         limit: int,
         offset: int,
-        past_period: SelectedPeriod | None = None,
+        past_period: dict[str, Any] | None = None,
         nm_ids: list[int] | None = None,
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
@@ -3430,7 +3423,7 @@ class WbAPI:
 
     async def get_orders_and_positions_by_product_search_texts(
         self,
-        period: SelectedPeriod,
+        period: dict[str, Any],
         nm_id: int,
         search_texts: list[str],
     ) -> list[OrdersAndPositionsByProductSearchTextsResponse]:
@@ -3522,12 +3515,12 @@ class WbAPI:
 
     async def get_pagination_by_groups(
         self,
-        current_period: SelectedPeriod,
-        order_by: OrderBy,
+        current_period: dict[str, Any],
+        order_by: dict[str, Any],
         position_cluster: str,
         limit: int,
         offset: int,
-        past_period: SelectedPeriod | None = None,
+        past_period: dict[str, Any] | None = None,
         nm_ids: list[int] | None = None,
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
@@ -3578,12 +3571,12 @@ class WbAPI:
 
     async def get_pagination_by_products_within_a_group(
         self,
-        current_period: SelectedPeriod,
-        order_by: OrderBy,
+        current_period: dict[str, Any],
+        order_by: dict[str, Any],
         position_cluster: str,
         limit: int,
         offset: int,
-        past_period: SelectedPeriod | None = None,
+        past_period: dict[str, Any] | None = None,
         subject_id: int | None = None,
         brand_name: str | None = None,
         tag_id: int | None = None,
@@ -3852,7 +3845,7 @@ class WbAPI:
     async def get_product_cards_in_trash_list(
         self,
         locale: str | None = None,
-        settings: Settings | None = None,
+        settings: dict[str, Any] | None = None,
     ) -> list[ProductCardsInTrashListItem]:
         """
         The method is available with the token of the Promotion category
@@ -3871,7 +3864,7 @@ class WbAPI:
     async def get_product_cards_list(
         self,
         locale: str | None = None,
-        settings: Settings | None = None,
+        settings: dict[str, Any] | None = None,
     ) -> list[ProductCardsListItem]:
         """
         The method is available with the token of the Promotion category
@@ -3889,7 +3882,7 @@ class WbAPI:
 
     async def get_product_cards_statistics_per_days(
         self,
-        selected_period: SelectedPeriod,
+        selected_period: dict[str, Any],
         nm_ids: list[int],
         skip_deleted_nm: bool | None = None,
         aggregation_level: str | None = "day",
@@ -3917,14 +3910,14 @@ class WbAPI:
 
     async def get_product_cards_statistics_per_period(
         self,
-        selected_period: SelectedPeriod,
-        past_period: SelectedPeriod | None = None,
+        selected_period: dict[str, Any],
+        past_period: dict[str, Any] | None = None,
         nm_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
         skip_deleted_nm: bool | None = None,
-        order_by: OrderBy | None = None,
+        order_by: dict[str, Any] | None = None,
         limit: int | None = 50,
         offset: int | None = 0,
     ) -> list[ProductCardsStatisticsPerPeriodItem]:
@@ -3981,10 +3974,10 @@ class WbAPI:
 
     async def get_product_data(
         self,
-        current_period: SelectedPeriod,
+        current_period: dict[str, Any],
         stock_type: str,
         skip_deleted_nm: bool,
-        order_by: OrderBy,
+        order_by: dict[str, Any],
         availability_filters: list[str],
         offset: int,
         nm_ids: list[int] | None = None,
@@ -4518,12 +4511,12 @@ class WbAPI:
 
     async def get_search_texts_by_product(
         self,
-        current_period: SelectedPeriod,
+        current_period: dict[str, Any],
         nm_ids: list[int],
         top_order_by: str,
-        order_by: OrderBy,
+        order_by: dict[str, Any],
         limit: Any,
-        past_period: SelectedPeriod | None = None,
+        past_period: dict[str, Any] | None = None,
         include_substituted_skus: bool | None = True,
         include_search_texts: bool | None = True,
     ) -> list[SearchTextsByProductResponse]:

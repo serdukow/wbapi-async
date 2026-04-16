@@ -1,7 +1,9 @@
+from typing import Any
+
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import ProductCardsListItem, RequestLimit, Settings
+from ...types import ProductCardsListItem, RequestLimit
 
 
 class GetProductCardsList(WbMethod):
@@ -20,4 +22,4 @@ class GetProductCardsList(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     locale: str | None = Field(None, alias="locale")
-    settings: Settings | None = Field(None, alias="settings")
+    settings: dict[str, Any] | None = Field(None, alias="settings")

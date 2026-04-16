@@ -16,11 +16,7 @@ class TestGetSearchTextsByProduct:
         )
 
         result = await api.get_search_texts_by_product(
-            current_period={"start": "2023-06-01", "end": "2024-03-01"},
-            nm_ids=[],
-            top_order_by="top_order_by",
-            order_by={"field": "openCard", "mode": "mode"},
-            limit=None,
+            current_period={}, nm_ids=[], top_order_by="top_order_by", order_by={}, limit=None
         )
 
         assert isinstance(result, list)
