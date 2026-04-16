@@ -64,10 +64,10 @@ nav:
       - Authentication: getting-started/authentication.md
       - Quick Start: getting-started/quick-start.md
   - API Reference:
-      - WbAPI Client: api/client.md
-      - Domains: api/domains.md
+      - WbAPI: api/client.md
+      - WB API Sections: api/domains.md
   - Advanced:
-      - Error Handling: advanced/error-handling.md
-      - Rate Limiting: advanced/rate-limiting.md
       - Pagination: advanced/pagination.md
+      - Rate Limiting: advanced/rate-limiting.md
+      - Error Handling: advanced/error-handling.md
   - Changelog: changelog.md
