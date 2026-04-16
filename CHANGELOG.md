@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3](https://github.com/serdukow/wbapi-async/compare/v0.2.2...v0.2.3) (2026-04-16)
+
+
+### Bug Fixes
+
+* **codegen:** fix nested type imports, circular imports, and test moc… ([638c88f](https://github.com/serdukow/wbapi-async/commit/638c88f3d3c3558908c974e7a9b7c0b4544e2b73))
+* **codegen:** fix nested type imports, circular imports, and test mock quality ([d677904](https://github.com/serdukow/wbapi-async/commit/d677904cd8c70b3661c9dd88a215f7729fcc5590))
+
 ## [0.2.1](https://github.com/serdukow/wbapi-async/compare/v0.2.0...v0.2.1) (2026-04-15)
 
 
