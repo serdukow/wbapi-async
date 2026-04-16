@@ -1,7 +1,9 @@
+from typing import Any
+
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import OrdersAndPositionsByProductSearchTextsResponse, RequestLimit, SelectedPeriod
+from ...types import OrdersAndPositionsByProductSearchTextsResponse, RequestLimit
 
 
 class GetOrdersAndPositionsByProductSearchTexts(WbMethod):
@@ -19,6 +21,6 @@ class GetOrdersAndPositionsByProductSearchTexts(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    period: SelectedPeriod = Field(alias="period")
+    period: dict[str, Any] = Field(alias="period")
     nm_id: int = Field(alias="nmId")
     search_texts: list[str] = Field(alias="searchTexts")

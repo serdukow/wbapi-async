@@ -1,7 +1,9 @@
+from typing import Any
+
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import Cursor, ListOfFailedProductCardsWithErrorsItem, RequestLimit, Sort
+from ...types import ListOfFailedProductCardsWithErrorsItem, RequestLimit
 
 
 class GetListOfFailedProductCardsWithErrors(WbMethod):
@@ -29,5 +31,5 @@ class GetListOfFailedProductCardsWithErrors(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     locale: str | None = Field(None, alias="locale")
-    cursor: Cursor | None = Field(None, alias="cursor")
-    order: Sort | None = Field(None, alias="order")
+    cursor: dict[str, Any] | None = Field(None, alias="cursor")
+    order: dict[str, Any] | None = Field(None, alias="order")

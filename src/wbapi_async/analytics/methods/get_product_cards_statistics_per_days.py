@@ -1,7 +1,9 @@
+from typing import Any
+
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import ProductCardsStatisticsPerDaysResponse, RequestLimit, SelectedPeriod
+from ...types import ProductCardsStatisticsPerDaysResponse, RequestLimit
 
 
 class GetProductCardsStatisticsPerDays(WbMethod):
@@ -19,7 +21,7 @@ class GetProductCardsStatisticsPerDays(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    selected_period: SelectedPeriod = Field(alias="selectedPeriod")
+    selected_period: dict[str, Any] = Field(alias="selectedPeriod")
     nm_ids: list[int] = Field(alias="nmIds")
     skip_deleted_nm: bool | None = Field(None, alias="skipDeletedNm")
     aggregation_level: str | None = Field("day", alias="aggregationLevel")

@@ -42,9 +42,7 @@ class TestGetProductCardsStatisticsPerDays:
             ]
         )
 
-        result = await api.get_product_cards_statistics_per_days(
-            selected_period={"start": "2023-06-01", "end": "2024-03-01"}, nm_ids=[]
-        )
+        result = await api.get_product_cards_statistics_per_days(selected_period={}, nm_ids=[])
 
         assert isinstance(result, list)
         assert len(result) == 1

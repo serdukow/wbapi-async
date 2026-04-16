@@ -8,12 +8,12 @@ from .types.history import History
 from .types.main_page_response import MainPageResponse
 from .types.metrics import Metrics
 from .types.offices_item import OfficesItem
-from .types.order_by import OrderBy
 from .types.orders_and_positions_by_product_search_texts_response import (
     OrdersAndPositionsByProductSearchTextsResponse,
 )
 from .types.pagination_by_groups_response import PaginationByGroupsResponse
 from .types.pagination_by_products_within_agroup_response import PaginationByProductsWithinAGroupResponse
+from .types.period import Period
 from .types.product import Product
 from .types.product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from .types.product_cards_statistics_per_period_item import ProductCardsStatisticsPerPeriodItem
@@ -22,7 +22,6 @@ from .types.regenerate_the_report_response import RegenerateTheReportResponse
 from .types.sale_rate import SaleRate
 from .types.search_texts_by_product_response import SearchTextsByProductResponse
 from .types.selected import Selected
-from .types.selected_period import SelectedPeriod
 from .types.size_data_item import SizeDataItem
 from .types.statistic import Statistic
 from .types.stocks import Stocks
@@ -46,10 +45,10 @@ __all__ = (
     "MainPageResponse",
     "Metrics",
     "OfficesItem",
-    "OrderBy",
     "OrdersAndPositionsByProductSearchTextsResponse",
     "PaginationByGroupsResponse",
     "PaginationByProductsWithinAGroupResponse",
+    "Period",
     "Product",
     "ProductCardsStatisticsPerDaysResponse",
     "ProductCardsStatisticsPerPeriodItem",
@@ -58,7 +57,6 @@ __all__ = (
     "SaleRate",
     "SearchTextsByProductResponse",
     "Selected",
-    "SelectedPeriod",
     "SizeDataItem",
     "Statistic",
     "Stocks",

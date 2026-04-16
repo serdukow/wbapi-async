@@ -8,12 +8,12 @@ from .history import History
 from .main_page_response import MainPageResponse
 from .metrics import Metrics
 from .offices_item import OfficesItem
-from .order_by import OrderBy
 from .orders_and_positions_by_product_search_texts_response import (
     OrdersAndPositionsByProductSearchTextsResponse,
 )
 from .pagination_by_groups_response import PaginationByGroupsResponse
 from .pagination_by_products_within_agroup_response import PaginationByProductsWithinAGroupResponse
+from .period import Period
 from .product import Product
 from .product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from .product_cards_statistics_per_period_item import ProductCardsStatisticsPerPeriodItem
@@ -22,7 +22,6 @@ from .regenerate_the_report_response import RegenerateTheReportResponse
 from .sale_rate import SaleRate
 from .search_texts_by_product_response import SearchTextsByProductResponse
 from .selected import Selected
-from .selected_period import SelectedPeriod
 from .size_data_item import SizeDataItem
 from .statistic import Statistic
 from .stocks import Stocks
@@ -46,10 +45,10 @@ __all__ = (
     "MainPageResponse",
     "Metrics",
     "OfficesItem",
-    "OrderBy",
     "OrdersAndPositionsByProductSearchTextsResponse",
     "PaginationByGroupsResponse",
     "PaginationByProductsWithinAGroupResponse",
+    "Period",
     "Product",
     "ProductCardsStatisticsPerDaysResponse",
     "ProductCardsStatisticsPerPeriodItem",
@@ -58,7 +57,6 @@ __all__ = (
     "SaleRate",
     "SearchTextsByProductResponse",
     "Selected",
-    "SelectedPeriod",
     "SizeDataItem",
     "Statistic",
     "Stocks",

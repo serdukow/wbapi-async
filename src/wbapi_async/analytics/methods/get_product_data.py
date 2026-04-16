@@ -1,7 +1,9 @@
+from typing import Any
+
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import OrderBy, ProductDataItem, RequestLimit, SelectedPeriod
+from ...types import ProductDataItem, RequestLimit
 
 
 class GetProductData(WbMethod):
@@ -26,10 +28,10 @@ class GetProductData(WbMethod):
     subject_id: int | None = Field(None, alias="subjectID")
     brand_name: str | None = Field(None, alias="brandName")
     tag_id: int | None = Field(None, alias="tagID")
-    current_period: SelectedPeriod = Field(alias="currentPeriod")
+    current_period: dict[str, Any] = Field(alias="currentPeriod")
     stock_type: str = Field(alias="stockType")
     skip_deleted_nm: bool = Field(alias="skipDeletedNm")
-    order_by: OrderBy = Field(alias="orderBy")
+    order_by: dict[str, Any] = Field(alias="orderBy")
     availability_filters: list[str] = Field(alias="availabilityFilters")
     limit: int | None = Field(100, alias="limit")
     offset: int = Field(alias="offset")

@@ -3,7 +3,7 @@ from typing import Any
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import OrderBy, RequestLimit, SearchTextsByProductResponse, SelectedPeriod
+from ...types import RequestLimit, SearchTextsByProductResponse
 
 
 class GetSearchTextsByProduct(WbMethod):
@@ -20,11 +20,11 @@ class GetSearchTextsByProduct(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    current_period: SelectedPeriod = Field(alias="currentPeriod")
-    past_period: SelectedPeriod | None = Field(None, alias="pastPeriod")
+    current_period: dict[str, Any] = Field(alias="currentPeriod")
+    past_period: dict[str, Any] | None = Field(None, alias="pastPeriod")
     nm_ids: list[int] = Field(alias="nmIds")
     top_order_by: str = Field(alias="topOrderBy")
     include_substituted_skus: bool | None = Field(True, alias="includeSubstitutedSKUs")
     include_search_texts: bool | None = Field(True, alias="includeSearchTexts")
-    order_by: OrderBy = Field(alias="orderBy")
+    order_by: dict[str, Any] = Field(alias="orderBy")
     limit: Any = Field(alias="limit")

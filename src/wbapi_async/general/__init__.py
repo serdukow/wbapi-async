@@ -4,7 +4,6 @@ from .types.connection_check_response import ConnectionCheckResponse
 from .types.create_an_invitation_for_anew_user_response import CreateAnInvitationForANewUserResponse
 from .types.delete_user_response import DeleteUserResponse
 from .types.getting_seller_portal_news_item import GettingSellerPortalNewsItem
-from .types.invite import Invite
 from .types.invitee_info import InviteeInfo
 from .types.seller_information_response import SellerInformationResponse
 from .types.types_item import TypesItem
@@ -19,7 +18,6 @@ __all__ = (
     "CreateAnInvitationForANewUserResponse",
     "DeleteUserResponse",
     "GettingSellerPortalNewsItem",
-    "Invite",
     "InviteeInfo",
     "SellerInformationResponse",
     "TypesItem",

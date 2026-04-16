@@ -1,7 +1,9 @@
+from typing import Any
+
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import AccessItem, CreateAnInvitationForANewUserResponse, Invite, RequestLimit
+from ...types import AccessItem, CreateAnInvitationForANewUserResponse, RequestLimit
 
 
 class CreateAnInvitationForANewUser(WbMethod):
@@ -19,4 +21,4 @@ class CreateAnInvitationForANewUser(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     access: list[AccessItem] | None = Field(None, alias="access")
-    invite: Invite = Field(alias="invite")
+    invite: dict[str, Any] = Field(alias="invite")

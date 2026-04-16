@@ -10,7 +10,6 @@ from .create_atag_response import CreateATagResponse
 from .create_product_cards_response import CreateProductCardsResponse
 from .create_product_cards_with_merge_response import CreateProductCardsWithMergeResponse
 from .create_warehouse_response import CreateWarehouseResponse
-from .cursor import Cursor
 from .data import Data
 from .data_2 import Data2
 from .data_item import DataItem
@@ -18,7 +17,6 @@ from .delete_inventory_response import DeleteInventoryResponse
 from .delete_the_tag_response import DeleteTheTagResponse
 from .delete_warehouse_response import DeleteWarehouseResponse
 from .dimensions import Dimensions
-from .filter_ import Filter
 from .gender_item import GenderItem
 from .generation_of_skus_item import GenerationOfSkusItem
 from .good import Good
@@ -43,11 +41,9 @@ from .season_item import SeasonItem
 from .set_prices_and_discounts_response import SetPricesAndDiscountsResponse
 from .set_size_prices_response import SetSizePricesResponse
 from .set_wb_club_discounts_response import SetWbClubDiscountsResponse
-from .settings import Settings
 from .size_good_req import SizeGoodReq
 from .sizes_item import SizesItem
 from .sizes_item_2 import SizesItem2
-from .sort import Sort
 from .stocks_item import StocksItem
 from .subject_characteristics_item import SubjectCharacteristicsItem
 from .subjects_list_item import SubjectsListItem
@@ -84,7 +80,6 @@ __all__ = (
     "CreateProductCardsResponse",
     "CreateProductCardsWithMergeResponse",
     "CreateWarehouseResponse",
-    "Cursor",
     "Data",
     "Data2",
     "DataItem",
@@ -92,7 +87,6 @@ __all__ = (
     "DeleteTheTagResponse",
     "DeleteWarehouseResponse",
     "Dimensions",
-    "Filter",
     "GenderItem",
     "GenerationOfSkusItem",
     "Good",
@@ -116,12 +110,10 @@ __all__ = (
     "SeasonItem",
     "SetPricesAndDiscountsResponse",
     "SetSizePricesResponse",
-    "Settings",
     "SetWbClubDiscountsResponse",
     "SizeGoodReq",
     "SizesItem",
     "SizesItem2",
-    "Sort",
     "StocksItem",
     "SubjectCharacteristicsItem",
     "SubjectsListItem",

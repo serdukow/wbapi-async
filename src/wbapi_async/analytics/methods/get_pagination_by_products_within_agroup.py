@@ -1,7 +1,9 @@
+from typing import Any
+
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import OrderBy, PaginationByProductsWithinAGroupResponse, RequestLimit, SelectedPeriod
+from ...types import PaginationByProductsWithinAGroupResponse, RequestLimit
 
 
 class GetPaginationByProductsWithinAGroup(WbMethod):
@@ -19,13 +21,13 @@ class GetPaginationByProductsWithinAGroup(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    current_period: SelectedPeriod = Field(alias="currentPeriod")
-    past_period: SelectedPeriod | None = Field(None, alias="pastPeriod")
+    current_period: dict[str, Any] = Field(alias="currentPeriod")
+    past_period: dict[str, Any] | None = Field(None, alias="pastPeriod")
     subject_id: int | None = Field(None, alias="subjectId")
     brand_name: str | None = Field(None, alias="brandName")
     tag_id: int | None = Field(None, alias="tagId")
     nm_ids: list[int] | None = Field(None, alias="nmIds")
-    order_by: OrderBy = Field(alias="orderBy")
+    order_by: dict[str, Any] = Field(alias="orderBy")
     position_cluster: str = Field(alias="positionCluster")
     include_substituted_skus: bool | None = Field(True, alias="includeSubstitutedSKUs")
     include_search_texts: bool | None = Field(True, alias="includeSearchTexts")
