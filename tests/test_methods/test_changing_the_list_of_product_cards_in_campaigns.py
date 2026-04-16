@@ -12,14 +12,14 @@ class TestChangingTheListOfProductCardsInCampaigns:
                 "nms": [
                     {
                         "advert_id": 1,
-                        "nms": {"add": None, "delete": []},
+                        "nms": {"add": [], "delete": []},
                     }
                 ]
             }
         )
 
         result = await api.changing_the_list_of_product_cards_in_campaigns(
-            nms=[{"advert_id": 1, "nms": {"add": None, "delete": []}}]
+            nms=[{"advert_id": 1, "nms": {"add": [], "delete": []}}]
         )
 
         assert isinstance(result, list)

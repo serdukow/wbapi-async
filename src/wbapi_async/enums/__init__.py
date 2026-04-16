@@ -33,6 +33,7 @@ from ..orders_fbw.enums.type__models_date_filter_request import TypeModelsDateFi
 from ..products.enums.cargo_type import CargoType
 from ..products.enums.delivery_type import DeliveryType
 from ..products.enums.locale import Locale
+from ..promotion.enums.app_type import AppType
 from ..promotion.enums.bid_type import BidType
 from ..promotion.enums.payment_type import PaymentType
 from ..promotion.enums.placement_types_item import PlacementTypesItem
@@ -82,6 +83,7 @@ __all__ = (
     "CargoType",
     "DeliveryType",
     "Locale",
+    "AppType",
     "BidType",
     "PaymentType",
     "PlacementTypesItem",

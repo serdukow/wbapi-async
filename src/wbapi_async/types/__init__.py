@@ -279,6 +279,7 @@ from ..products.types.create_product_cards_with_merge_response import CreateProd
 from ..products.types.create_warehouse_response import CreateWarehouseResponse
 from ..products.types.cursor import Cursor
 from ..products.types.data import Data
+from ..products.types.data_item import DataItem
 from ..products.types.delete_inventory_response import DeleteInventoryResponse
 from ..products.types.delete_the_tag_response import DeleteTheTagResponse
 from ..products.types.delete_warehouse_response import DeleteWarehouseResponse
@@ -347,8 +348,10 @@ from ..promotion.types.advert_n_ms_settings import AdvertNMsSettings
 from ..promotion.types.advert_settings import AdvertSettings
 from ..promotion.types.advert_subject import AdvertSubject
 from ..promotion.types.adverts import Adverts
+from ..promotion.types.apps_item import AppsItem
 from ..promotion.types.balance_item import BalanceItem
 from ..promotion.types.bids_item import BidsItem
+from ..promotion.types.booster_stats_item import BoosterStatsItem
 from ..promotion.types.campaign_budget_response import CampaignBudgetResponse
 from ..promotion.types.campaigns_information_item import CampaignsInformationItem
 from ..promotion.types.campaigns_lists_item import CampaignsListsItem
@@ -362,6 +365,7 @@ from ..promotion.types.changing_the_list_of_product_cards_in_campaigns_item impo
 )
 from ..promotion.types.create_campaign_response import CreateCampaignResponse
 from ..promotion.types.daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
+from ..promotion.types.days_item import DaysItem
 from ..promotion.types.delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from ..promotion.types.delete_campaign_response import DeleteCampaignResponse
 from ..promotion.types.information_about_media_campaign_item import InformationAboutMediaCampaignItem
@@ -503,6 +507,7 @@ __all__ = (
     "ApiOrdersErrorResponse",
     "ApiSgtiNs",
     "ApiUin",
+    "AppsItem",
     "AssemblyOrderMetadataItem",
     "AssemblyOrdersItem",
     "AssemblyOrdersMetadataItem",
@@ -517,6 +522,7 @@ __all__ = (
     "BaseType",
     "BidsItem",
     "BlockedProductCardsItem",
+    "BoosterStatsItem",
     "BoxTariffsItem",
     "BrandsItem",
     "BuyerInformationItem",
@@ -564,6 +570,8 @@ __all__ = (
     "CustomsDeclaration",
     "DailySearchClustersStatisticsItem",
     "Data",
+    "DataItem",
+    "DaysItem",
     "DeleteAssemblyOrderMetadataItem",
     "DeleteAssemblyOrderMetadataResponse",
     "DeleteAssemblyOrdersMetadataItem",

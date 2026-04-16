@@ -5,8 +5,10 @@ from .advert_n_ms_settings import AdvertNMsSettings
 from .advert_settings import AdvertSettings
 from .advert_subject import AdvertSubject
 from .adverts import Adverts
+from .apps_item import AppsItem
 from .balance_item import BalanceItem
 from .bids_item import BidsItem
+from .booster_stats_item import BoosterStatsItem
 from .campaign_budget_response import CampaignBudgetResponse
 from .campaigns_information_item import CampaignsInformationItem
 from .campaigns_lists_item import CampaignsListsItem
@@ -18,6 +20,7 @@ from .changing_placements_in_campaigns_with_custom_bid_response import (
 from .changing_the_list_of_product_cards_in_campaigns_item import ChangingTheListOfProductCardsInCampaignsItem
 from .create_campaign_response import CreateCampaignResponse
 from .daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
+from .days_item import DaysItem
 from .delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from .delete_campaign_response import DeleteCampaignResponse
 from .information_about_media_campaign_item import InformationAboutMediaCampaignItem
@@ -75,8 +78,10 @@ __all__ = (
     "Adverts",
     "AdvertSettings",
     "AdvertSubject",
+    "AppsItem",
     "BalanceItem",
     "BidsItem",
+    "BoosterStatsItem",
     "CampaignBudgetResponse",
     "CampaignsInformationItem",
     "CampaignsListsItem",
@@ -86,6 +91,7 @@ __all__ = (
     "ChangingTheListOfProductCardsInCampaignsItem",
     "CreateCampaignResponse",
     "DailySearchClustersStatisticsItem",
+    "DaysItem",
     "DeleteBidsFromSearchClustersResponse",
     "DeleteCampaignResponse",
     "InformationAboutMediaCampaignItem",

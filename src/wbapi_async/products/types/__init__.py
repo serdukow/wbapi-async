@@ -12,6 +12,7 @@ from .create_product_cards_with_merge_response import CreateProductCardsWithMerg
 from .create_warehouse_response import CreateWarehouseResponse
 from .cursor import Cursor
 from .data import Data
+from .data_item import DataItem
 from .delete_inventory_response import DeleteInventoryResponse
 from .delete_the_tag_response import DeleteTheTagResponse
 from .delete_warehouse_response import DeleteWarehouseResponse
@@ -84,6 +85,7 @@ __all__ = (
     "CreateWarehouseResponse",
     "Cursor",
     "Data",
+    "DataItem",
     "DeleteInventoryResponse",
     "DeleteTheTagResponse",
     "DeleteWarehouseResponse",

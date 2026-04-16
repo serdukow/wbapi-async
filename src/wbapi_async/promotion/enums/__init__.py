@@ -1,3 +1,4 @@
+from .app_type import AppType
 from .bid_type import BidType
 from .payment_type import PaymentType
 from .placement_types_item import PlacementTypesItem
@@ -7,6 +8,7 @@ from .type__2 import Type2
 
 
 __all__ = (
+    "AppType",
     "BidType",
     "PaymentType",
     "PlacementTypesItem",
