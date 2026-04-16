@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0](https://github.com/serdukow/wbapi-async/compare/v0.4.1...v0.5.0) (2026-04-16)
+
+
+### Features
+
+* **api:** add WbAPI async client with full HTTP method support ([4d0b59b](https://github.com/serdukow/wbapi-async/commit/4d0b59bc343ffd4a393cc50eebd066f1d3ba9bfd))
+* **type:** add ApiResponse wrapper for dict/list API responses ([707d5f6](https://github.com/serdukow/wbapi-async/commit/707d5f61ebf05caca135b43b7bd8359245f97d2c))
+* **wbapi:** add method dispatcher with rate limiting and pagination ([4de43fb](https://github.com/serdukow/wbapi-async/commit/4de43fb7ebac318c1d95200a74fd6096a04b32eb))
+
+
+### Documentation
+
+* add local logo asset and update README image reference ([cc5a279](https://github.com/serdukow/wbapi-async/commit/cc5a279bb0f94c92d2893ac96df120bc26314fe7))
+* rewrite AGENTS.md to reflect new pydantic-free architecture ([763f367](https://github.com/serdukow/wbapi-async/commit/763f367b963ac0aac939af7bd4d60d55d58316cf))
+* rewrite docs for generic HTTP API interface ([3bb75be](https://github.com/serdukow/wbapi-async/commit/3bb75be1eb7ba608a53f40ede36173f074f10284))
+* rewrite README with usage examples and updated features ([7ad9dc7](https://github.com/serdukow/wbapi-async/commit/7ad9dc7225f2753922c6a34da7ec1a0a5ce97ec5))
+
 ## [0.4.0](https://github.com/serdukow/wbapi-async/compare/v0.3.2...v0.4.0) (2026-04-16)
 
 
