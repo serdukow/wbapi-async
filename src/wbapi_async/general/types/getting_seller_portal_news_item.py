@@ -1,8 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from .types_item import TypesItem
 
 
 class GettingSellerPortalNewsItem(BaseType):
@@ -12,4 +11,4 @@ class GettingSellerPortalNewsItem(BaseType):
     date: str | None = Field(None)
     header: str | None = Field(None)
     id_: int | None = Field(None, alias="id")
-    types: list[dict[str, Any]] | None = Field(None)
+    types: list[TypesItem] | None = Field(None)

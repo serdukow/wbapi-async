@@ -11,10 +11,10 @@ class TestGetAssemblyOrderStatuses:
             {
                 "orders": [
                     {
-                        "errors": [],
-                        "orderId": 1,
-                        "supplierStatus": "supplierStatus",
-                        "wbStatus": "wbStatus",
+                        "errors": [{"code": 404, "detail": "NotFound"}],
+                        "orderId": 123456,
+                        "supplierStatus": "deliver",
+                        "wbStatus": "waiting",
                     }
                 ]
             }
@@ -25,6 +25,6 @@ class TestGetAssemblyOrderStatuses:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], AssemblyOrderStatusesItem)
-        assert result[0].errors == []
-        assert result[0].order_id == 1
-        assert result[0].supplier_status == "supplierStatus"
+        assert result[0].order_id == 123456
+        assert result[0].supplier_status == "deliver"
+        assert result[0].wb_status == "waiting"

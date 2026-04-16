@@ -10,7 +10,7 @@ class TestGetLimitsForTheProductCards:
         api.add_response(
             [
                 {
-                    "data": {},
+                    "data": {"freeLimits": 1, "paidLimits": 1},
                     "error": True,
                     "errorText": "errorText",
                     "additionalErrors": "additionalErrors",
@@ -23,6 +23,6 @@ class TestGetLimitsForTheProductCards:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], LimitsForTheProductCardsResponse)
-        assert result[0].data == {}
         assert result[0].error
         assert result[0].error_text == "errorText"
+        assert result[0].additional_errors == "additionalErrors"

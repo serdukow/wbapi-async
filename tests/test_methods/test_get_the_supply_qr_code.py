@@ -10,8 +10,8 @@ class TestGetTheSupplyQrCode:
         api.add_response(
             [
                 {
-                    "barcode": "barcode",
-                    "file": "file",
+                    "barcode": "WB-GI-12345678",
+                    "file": "U3dhZ2dlciByb2Nrcw==",
                 }
             ]
         )
@@ -21,5 +21,5 @@ class TestGetTheSupplyQrCode:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], TheSupplyQrCodeResponse)
-        assert result[0].barcode == "barcode"
-        assert result[0].file == "file"
+        assert result[0].barcode == "WB-GI-12345678"
+        assert result[0].file == "U3dhZ2dlciByb2Nrcw=="

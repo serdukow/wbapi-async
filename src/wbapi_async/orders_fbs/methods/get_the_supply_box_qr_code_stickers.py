@@ -1,8 +1,8 @@
 from pydantic import Field
 
-from ...enums import Type
 from ...methods.base import WbMethod
 from ...types import RequestLimit, TheSupplyBoxQrCodeStickersItem
+from ..enums.type_ import Type
 
 
 class GetTheSupplyBoxQrCodeStickers(WbMethod):

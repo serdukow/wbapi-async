@@ -11,7 +11,7 @@ class TestGetMediaCampaignsNumber:
             [
                 {
                     "all": 1,
-                    "adverts": {},
+                    "adverts": {"type": 1, "status": 1, "count": 1},
                 }
             ]
         )
@@ -22,4 +22,3 @@ class TestGetMediaCampaignsNumber:
         assert len(result) == 1
         assert isinstance(result[0], MediaCampaignsNumberResponse)
         assert result[0].all_ == 1
-        assert result[0].adverts == {}

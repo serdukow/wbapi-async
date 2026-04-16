@@ -1,7 +1,6 @@
-from typing import Any
-
 from pydantic import Field
 
+from ...orders_dbs.types.api_batch_error_response import ApiBatchErrorResponse
 from ...types.base import BaseType
 
 
@@ -10,4 +9,4 @@ class CancelTheAssemblyOrdersItem(BaseType):
 
     order_id: int = Field(alias="orderId")
     is_error: bool = Field(alias="isError")
-    errors: list[Any] | None = Field(None)
+    errors: list[ApiBatchErrorResponse] | None = Field(None)

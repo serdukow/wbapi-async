@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SetWbClubDiscountsResponse
+from ...types import ClubDiscReq, RequestLimit, SetWbClubDiscountsResponse
 
 
 class SetWbClubDiscounts(WbMethod):
@@ -20,4 +18,4 @@ class SetWbClubDiscounts(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    data: list[Any] = Field()
+    data: list[ClubDiscReq] = Field()

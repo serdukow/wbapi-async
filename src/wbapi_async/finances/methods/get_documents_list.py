@@ -1,8 +1,9 @@
 from pydantic import Field
 
-from ...enums import OrderDeductions, SortList
+from ...analytics.enums.mode import Mode
 from ...methods.base import WbMethod
 from ...types import DocumentsListItem, RequestLimit
+from ..enums.sort_list_ import SortList
 
 
 class GetDocumentsList(WbMethod):
@@ -24,7 +25,7 @@ class GetDocumentsList(WbMethod):
     begin_time: str | None = Field(None, alias="beginTime")
     end_time: str | None = Field(None, alias="endTime")
     sort: SortList | None = Field(SortList.DATE)
-    order: OrderDeductions | None = Field(OrderDeductions.DESC)
+    order: Mode | None = Field(Mode.DESC)
     category: str | None = Field(None)
     service_name: str | None = Field(None, alias="serviceName")
     limit: int | None = Field(50)

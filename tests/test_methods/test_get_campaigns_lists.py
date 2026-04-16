@@ -14,7 +14,7 @@ class TestGetCampaignsLists:
                         "type": 1,
                         "status": 1,
                         "count": 1,
-                        "advert_list": [],
+                        "advert_list": [{"advertId": 1, "changeTime": "changeTime"}],
                     }
                 ]
             }

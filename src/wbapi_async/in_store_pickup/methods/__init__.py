@@ -8,8 +8,8 @@ from .add_uin_unique_identification_numbers_to_the_assembly_orders import (
 )
 from .assign_a_data_matrix_code_to_the_assembly_order import AssignADataMatrixCodeToTheAssemblyOrder
 from .cancel_the_assembly_orders import CancelTheAssemblyOrders
-from .check_if_the_order_belongs_to_the_buyer import CheckIfTheOrderBelongsToTheBuyer
 from .get_assembly_order_metadata import GetAssemblyOrderMetadata
+from .get_check_if_the_order_belongs_to_the_buyer import GetCheckIfTheOrderBelongsToTheBuyer
 from .get_new_assembly_orders_list import GetNewAssemblyOrdersList
 from .get_retrieve_information_on_completed_assembly_orders import (
     GetRetrieveInformationOnCompletedAssemblyOrders,
@@ -27,8 +27,8 @@ __all__ = (
     "AddUinUniqueIdentificationNumbersToTheAssemblyOrders",
     "AssignADataMatrixCodeToTheAssemblyOrder",
     "CancelTheAssemblyOrders",
-    "CheckIfTheOrderBelongsToTheBuyer",
     "GetAssemblyOrderMetadata",
+    "GetCheckIfTheOrderBelongsToTheBuyer",
     "GetNewAssemblyOrdersList",
     "GetRetrieveInformationOnCompletedAssemblyOrders",
     "NotifyThatTheAssemblyOrderIsReadyForPickup",

@@ -13,10 +13,21 @@ class TestGetCampaignsInformation:
                     {
                         "bid_type": "bid_type",
                         "id": 1,
-                        "nm_settings": [],
-                        "settings": {},
-                        "status": 1,
-                        "timestamps": {},
+                        "nm_settings": [
+                            {"bids_kopecks": None, "subject": {"id": 1, "name": "name"}, "nm_id": 1}
+                        ],
+                        "settings": {
+                            "payment_type": "cpm",
+                            "name": "name",
+                            "placements": {"search": True, "recommendations": True},
+                        },
+                        "status": "-1",
+                        "timestamps": {
+                            "created": "created",
+                            "updated": "updated",
+                            "started": "started",
+                            "deleted": "deleted",
+                        },
                     }
                 ]
             }
@@ -29,4 +40,4 @@ class TestGetCampaignsInformation:
         assert isinstance(result[0], CampaignsInformationItem)
         assert result[0].bid_type == "bid_type"
         assert result[0].id_ == 1
-        assert result[0].nm_settings == []
+        assert result[0].status == "-1"

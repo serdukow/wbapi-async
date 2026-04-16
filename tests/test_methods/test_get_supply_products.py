@@ -34,3 +34,5 @@ class TestGetSupplyProducts:
         assert result[0].barcode == "barcode"
         assert result[0].vendor_code == "vendorCode"
         assert result[0].nm_id == 1
+        assert result[0].need_kiz
+        assert result[0].tnved == "tnved"

@@ -34,7 +34,7 @@ class TestGetInformationAboutMediaCampaign:
                         "subject_id": 1,
                         "subject_name": "subject_name",
                         "action_name": "action_name",
-                        "show_hours": [],
+                        "show_hours": [{"From": 1, "To": 1}],
                         "Erid": "Erid",
                     }
                 ]
@@ -49,3 +49,5 @@ class TestGetInformationAboutMediaCampaign:
         assert result[0].id_ == 1
         assert result[0].name == "name"
         assert result[0].status == 1
+        assert result[0].place == 1
+        assert result[0].budget == 1

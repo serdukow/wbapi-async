@@ -10,7 +10,7 @@ class TestCreateANewSupply:
         api.add_response(
             [
                 {
-                    "id": "id",
+                    "id": "WB-GI-1234567",
                 }
             ]
         )
@@ -20,4 +20,4 @@ class TestCreateANewSupply:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], CreateANewSupplyResponse)
-        assert result[0].id_ == "id"
+        assert result[0].id_ == "WB-GI-1234567"

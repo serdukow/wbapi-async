@@ -12,12 +12,12 @@ class TestGetDocumentsList:
                 "data": {
                     "documents": [
                         {
-                            "serviceName": "serviceName",
-                            "name": "name",
-                            "category": "category",
+                            "serviceName": "redeem-notification-44841941",
+                            "name": "redeem-notification",
+                            "category": "Уведомление о выкупе",
                             "extensions": [],
-                            "creationTime": "creationTime",
-                            "viewed": True,
+                            "creationTime": "2023-10-03T00:18:06.879Z",
+                            "viewed": False,
                         }
                     ]
                 }
@@ -29,6 +29,7 @@ class TestGetDocumentsList:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], DocumentsListItem)
-        assert result[0].service_name == "serviceName"
-        assert result[0].name == "name"
-        assert result[0].category == "category"
+        assert result[0].service_name == "redeem-notification-44841941"
+        assert result[0].name == "redeem-notification"
+        assert result[0].category == "Уведомление о выкупе"
+        assert result[0].creation_time == "2023-10-03T00:18:06.879Z"

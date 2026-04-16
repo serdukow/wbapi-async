@@ -12,11 +12,11 @@ class TestGetPromotionsList:
                 "data": {
                     "promotions": [
                         {
-                            "id": 1,
-                            "name": "name",
-                            "startDateTime": "startDateTime",
-                            "endDateTime": "endDateTime",
-                            "type": "type",
+                            "id": 123,
+                            "name": "скидки",
+                            "startDateTime": "2023-06-05T21:00:00Z",
+                            "endDateTime": "2023-06-05T21:00:00Z",
+                            "type": "regular",
                         }
                     ]
                 }
@@ -30,6 +30,8 @@ class TestGetPromotionsList:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], PromotionsListItem)
-        assert result[0].id_ == 1
-        assert result[0].name == "name"
-        assert result[0].start_date_time == "startDateTime"
+        assert result[0].id_ == 123
+        assert result[0].name == "скидки"
+        assert result[0].start_date_time == "2023-06-05T21:00:00Z"
+        assert result[0].end_date_time == "2023-06-05T21:00:00Z"
+        assert result[0].type_ == "regular"

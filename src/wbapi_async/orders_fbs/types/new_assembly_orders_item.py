@@ -1,20 +1,23 @@
-from typing import Any
-
 from pydantic import Field
 
+from ...products.enums.cargo_type import CargoType
 from ...types.base import BaseType
+from ..enums.cross_border_type import CrossBorderType
+from ..enums.delivery_type_2 import DeliveryType2
+from .address import Address
+from .options import Options
 
 
 class NewAssemblyOrdersItem(BaseType):
     """Get New Assembly Orders"""
 
-    address: dict[str, Any] | None = Field(None)
+    address: Address | None = Field(None)
     ddate: str | None = Field(None)
     seller_date: str | None = Field(None, alias="sellerDate")
     sale_price: int | None = Field(None, alias="salePrice")
     required_meta: list[str] | None = Field(None, alias="requiredMeta")
     optional_meta: list[str] | None = Field(None, alias="optionalMeta")
-    delivery_type: str | None = Field(None, alias="deliveryType")
+    delivery_type: DeliveryType2 | None = Field(None, alias="deliveryType")
     comment: str | None = Field(None)
     scan_price: float | None = Field(None, alias="scanPrice")
     order_uid: str | None = Field(None, alias="orderUid")
@@ -35,7 +38,7 @@ class NewAssemblyOrdersItem(BaseType):
     converted_final_price: int | None = Field(None, alias="convertedFinalPrice")
     currency_code: int | None = Field(None, alias="currencyCode")
     converted_currency_code: int | None = Field(None, alias="convertedCurrencyCode")
-    cargo_type: int | None = Field(None, alias="cargoType")
-    cross_border_type: int | None = Field(None, alias="crossBorderType")
+    cargo_type: CargoType | None = Field(None, alias="cargoType")
+    cross_border_type: CrossBorderType | None = Field(None, alias="crossBorderType")
     is_zero_order: bool | None = Field(None, alias="isZeroOrder")
-    options: dict[str, Any] | None = Field(None)
+    options: Options | None = Field(None)

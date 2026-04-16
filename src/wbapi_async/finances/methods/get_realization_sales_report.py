@@ -1,8 +1,8 @@
 from pydantic import Field
 
-from ...enums import Period
 from ...methods.base import WbMethod
 from ...types import RealizationSalesReportResponse, RequestLimit
+from ..enums.period import Period
 
 
 class GetRealizationSalesReport(WbMethod):

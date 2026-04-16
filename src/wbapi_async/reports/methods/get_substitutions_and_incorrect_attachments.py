@@ -1,8 +1,9 @@
 from pydantic import Field
 
-from ...enums import OrderDeductions, Sort
+from ...analytics.enums.mode import Mode
 from ...methods.base import WbMethod
 from ...types import RequestLimit, SubstitutionsAndIncorrectAttachmentsItem
+from ..enums.sort import Sort
 
 
 class GetSubstitutionsAndIncorrectAttachments(WbMethod):
@@ -25,6 +26,6 @@ class GetSubstitutionsAndIncorrectAttachments(WbMethod):
     date_from: str | None = Field(None, alias="dateFrom")
     date_to: str = Field(alias="dateTo")
     sort: Sort | None = Field(Sort.DTBONUS)
-    order: OrderDeductions | None = Field(OrderDeductions.DESC)
+    order: Mode | None = Field(Mode.DESC)
     limit: int = Field()
     offset: int | None = Field(0)

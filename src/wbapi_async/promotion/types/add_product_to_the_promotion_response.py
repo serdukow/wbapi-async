@@ -1,11 +1,10 @@
-from typing import Any
-
 from pydantic import Field
 
+from ...products.types.data import Data
 from ...types.base import BaseType
 
 
 class AddProductToThePromotionResponse(BaseType):
     """Add Product to the Promotion"""
 
-    data: dict[str, Any] | None = Field(None)
+    data: Data | None = Field(None)

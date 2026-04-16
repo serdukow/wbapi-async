@@ -3,6 +3,7 @@ from typing import Any
 from pydantic import Field
 
 from ...types.base import BaseType
+from ..enums.report_type import ReportType
 
 
 class RealizationSalesReportResponse(BaseType):
@@ -78,7 +79,7 @@ class RealizationSalesReportResponse(BaseType):
     assembly_id: int | None = Field(None)
     kiz: str | None = Field(None)
     srid: str | None = Field(None)
-    report_type: int | None = Field(None)
+    report_type: ReportType | None = Field(None)
     is_legal_entity: bool | None = Field(None)
     trbx_id: str | None = Field(None)
     installment_cofinancing_amount: float | None = Field(None)

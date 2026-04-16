@@ -10,14 +10,14 @@ class TestGetPasses:
         api.add_response(
             [
                 {
-                    "firstName": "firstName",
-                    "dateEnd": "dateEnd",
-                    "lastName": "lastName",
-                    "carModel": "carModel",
-                    "carNumber": "carNumber",
-                    "officeName": "officeName",
-                    "officeAddress": "officeAddress",
-                    "officeId": 1,
+                    "firstName": "Alex",
+                    "dateEnd": "2022-07-31 17:53:13+00:00",
+                    "lastName": "Petrov",
+                    "carModel": "Lamborghini",
+                    "carNumber": "A456BC123",
+                    "officeName": "Koledino",
+                    "officeAddress": "Kosmonavtov 10А",
+                    "officeId": 15,
                     "id": 1,
                 }
             ]
@@ -28,6 +28,8 @@ class TestGetPasses:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], PassesResponse)
-        assert result[0].first_name == "firstName"
-        assert result[0].date_end == "dateEnd"
-        assert result[0].last_name == "lastName"
+        assert result[0].first_name == "Alex"
+        assert result[0].date_end == "2022-07-31 17:53:13+00:00"
+        assert result[0].last_name == "Petrov"
+        assert result[0].car_model == "Lamborghini"
+        assert result[0].car_number == "A456BC123"

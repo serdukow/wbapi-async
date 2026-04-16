@@ -1,8 +1,8 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from ..enums.type__2 import Type2
+from .ranging_item import RangingItem
 
 
 class PromotionsDetailsItem(BaseType):
@@ -19,6 +19,6 @@ class PromotionsDetailsItem(BaseType):
     not_in_promo_action_leftovers: int | None = Field(None, alias="notInPromoActionLeftovers")
     not_in_promo_action_total: int | None = Field(None, alias="notInPromoActionTotal")
     participation_percentage: int | None = Field(None, alias="participationPercentage")
-    type_: str | None = Field(None, alias="type")
+    type_: Type2 | None = Field(None, alias="type")
     exception_products_count: int | None = Field(None, alias="exceptionProductsCount")
-    ranging: list[dict[str, Any]] | None = Field(None)
+    ranging: list[RangingItem] | None = Field(None)

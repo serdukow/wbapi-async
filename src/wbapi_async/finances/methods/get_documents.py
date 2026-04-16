@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import DocumentsResponse, RequestLimit
+from ...types import DocumentsResponse, ParamsItem, RequestLimit
 
 
 class GetDocuments(WbMethod):
@@ -20,4 +18,4 @@ class GetDocuments(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    params: list[dict[str, Any]] | None = Field(None)
+    params: list[ParamsItem] | None = Field(None)

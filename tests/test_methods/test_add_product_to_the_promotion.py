@@ -10,7 +10,7 @@ class TestAddProductToThePromotion:
         api.add_response(
             [
                 {
-                    "data": {},
+                    "data": {"freeLimits": 1, "paidLimits": 1},
                 }
             ]
         )
@@ -20,4 +20,3 @@ class TestAddProductToThePromotion:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], AddProductToThePromotionResponse)
-        assert result[0].data == {}

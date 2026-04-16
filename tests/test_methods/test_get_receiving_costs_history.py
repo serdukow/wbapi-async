@@ -30,3 +30,5 @@ class TestGetReceivingCostsHistory:
         assert result[0].upd_num == 1
         assert result[0].upd_time == "updTime"
         assert result[0].upd_sum == 1
+        assert result[0].advert_id == 1
+        assert result[0].camp_name == "campName"

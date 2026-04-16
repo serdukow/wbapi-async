@@ -11,19 +11,20 @@ class TestAddImeiToAssemblyOrders:
             {
                 "results": [
                     {
-                        "errors": [],
+                        "errors": [{"code": 404, "detail": "NotFound"}],
                         "isError": True,
-                        "orderId": 1,
+                        "orderId": 123456,
                     }
                 ]
             }
         )
 
-        result = await api.add_imei_to_assembly_orders(orders=[])
+        result = await api.add_imei_to_assembly_orders(
+            orders=[{"orderId": 123456, "imei": "654321741987258"}]
+        )
 
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], AddImeiToAssemblyOrdersItem)
-        assert result[0].errors == []
         assert result[0].is_error
-        assert result[0].order_id == 1
+        assert result[0].order_id == 123456

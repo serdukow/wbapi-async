@@ -10,18 +10,17 @@ class TestSetWbClubDiscounts:
         api.add_response(
             [
                 {
-                    "data": {},
-                    "error": True,
-                    "errorText": "errorText",
+                    "data": {"freeLimits": 1, "paidLimits": 1},
+                    "error": False,
+                    "errorText": "",
                 }
             ]
         )
 
-        result = await api.set_wb_club_discounts(data=[])
+        result = await api.set_wb_club_discounts(data=[{"nmID": 123, "clubDiscount": 5}])
 
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], SetWbClubDiscountsResponse)
-        assert result[0].data == {}
-        assert result[0].error
-        assert result[0].error_text == "errorText"
+        assert not result[0].error
+        assert result[0].error_text == ""

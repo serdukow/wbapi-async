@@ -1,7 +1,11 @@
+from typing import Any
+
+from pydantic import Field
+
 from ...types.base import BaseType
 
 
 class PinFeedbackResponse(BaseType):
     """Pin Feedback"""
 
-    pass
+    data: dict[str, Any] = Field()

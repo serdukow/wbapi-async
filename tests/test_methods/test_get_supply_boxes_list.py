@@ -11,7 +11,7 @@ class TestGetSupplyBoxesList:
             {
                 "trbxes": [
                     {
-                        "id": "id",
+                        "id": "WB-TRBX-1234567",
                     }
                 ]
             }
@@ -22,4 +22,4 @@ class TestGetSupplyBoxesList:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], SupplyBoxesListItem)
-        assert result[0].id_ == "id"
+        assert result[0].id_ == "WB-TRBX-1234567"

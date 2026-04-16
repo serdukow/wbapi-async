@@ -35,3 +35,5 @@ class TestGetSupplyTariffs:
         assert result[0].date == "date"
         assert result[0].coefficient == 1.0
         assert result[0].warehouse_id == 1
+        assert result[0].warehouse_name == "warehouseName"
+        assert result[0].allow_unload

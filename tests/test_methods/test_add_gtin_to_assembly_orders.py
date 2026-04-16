@@ -11,19 +11,18 @@ class TestAddGtinToAssemblyOrders:
             {
                 "results": [
                     {
-                        "errors": [],
+                        "errors": [{"code": 404, "detail": "NotFound"}],
                         "isError": True,
-                        "orderId": 1,
+                        "orderId": 123456,
                     }
                 ]
             }
         )
 
-        result = await api.add_gtin_to_assembly_orders(orders=[])
+        result = await api.add_gtin_to_assembly_orders(orders=[{"gtin": "1234567890123", "orderId": 123456}])
 
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], AddGtinToAssemblyOrdersItem)
-        assert result[0].errors == []
         assert result[0].is_error
-        assert result[0].order_id == 1
+        assert result[0].order_id == 123456

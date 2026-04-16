@@ -10,18 +10,17 @@ class TestSetPricesAndDiscounts:
         api.add_response(
             [
                 {
-                    "data": {},
-                    "error": True,
-                    "errorText": "errorText",
+                    "data": {"freeLimits": 1, "paidLimits": 1},
+                    "error": False,
+                    "errorText": "",
                 }
             ]
         )
 
-        result = await api.set_prices_and_discounts(data=[])
+        result = await api.set_prices_and_discounts(data=[{"nmID": 123, "price": 999, "discount": 30}])
 
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], SetPricesAndDiscountsResponse)
-        assert result[0].data == {}
-        assert result[0].error
-        assert result[0].error_text == "errorText"
+        assert not result[0].error
+        assert result[0].error_text == ""

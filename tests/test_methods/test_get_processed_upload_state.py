@@ -10,9 +10,16 @@ class TestGetProcessedUploadState:
         api.add_response(
             [
                 {
-                    "data": {},
-                    "error": True,
-                    "errorText": "errorText",
+                    "data": {
+                        "uploadID": 395643565,
+                        "status": 3,
+                        "uploadDate": "2022-08-21T22:00:13+02:00",
+                        "activationDate": "2022-08-21T22:00:13+02:00",
+                        "overAllGoodsNumber": 1,
+                        "successGoodsNumber": 1,
+                    },
+                    "error": False,
+                    "errorText": "",
                 }
             ]
         )
@@ -22,6 +29,5 @@ class TestGetProcessedUploadState:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], ProcessedUploadStateResponse)
-        assert result[0].data == {}
-        assert result[0].error
-        assert result[0].error_text == "errorText"
+        assert not result[0].error
+        assert result[0].error_text == ""

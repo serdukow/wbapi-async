@@ -31,3 +31,4 @@ class TestGetProductLabeling:
         assert result[0].amount == 1.0
         assert result[0].date == "date"
         assert result[0].income_id == 1
+        assert result[0].nm_id == 1

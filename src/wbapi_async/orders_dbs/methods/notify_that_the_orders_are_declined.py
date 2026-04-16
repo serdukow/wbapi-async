@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import NotifyThatTheOrdersAreDeclinedItem, RequestLimit
+from ...types import ApiOrderCodeRequest, NotifyThatTheOrdersAreDeclinedItem, RequestLimit
 
 
 class NotifyThatTheOrdersAreDeclined(WbMethod):
@@ -24,4 +22,4 @@ class NotifyThatTheOrdersAreDeclined(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    orders: list[Any] = Field()
+    orders: list[ApiOrderCodeRequest] = Field()

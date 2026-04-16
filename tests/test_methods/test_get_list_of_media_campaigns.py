@@ -29,3 +29,5 @@ class TestGetListOfMediaCampaigns:
         assert result[0].advert_id == 1
         assert result[0].name == "name"
         assert result[0].brand == "brand"
+        assert result[0].type_ == 1
+        assert result[0].status == 1

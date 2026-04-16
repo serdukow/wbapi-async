@@ -6,7 +6,9 @@ from .types.add_imei_to_the_assembly_orders_item import AddImeiToTheAssemblyOrde
 from .types.add_uin_unique_identification_numbers_to_the_assembly_orders_item import (
     AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem,
 )
-from .types.assembly_order_metadata_response import AssemblyOrderMetadataResponse
+from .types.api_meta_error_response import ApiMetaErrorResponse
+from .types.api_orders_error_response import ApiOrdersErrorResponse
+from .types.assembly_order_metadata_item import AssemblyOrderMetadataItem
 from .types.assign_a_data_matrix_code_to_the_assembly_order_response import (
     AssignADataMatrixCodeToTheAssemblyOrderResponse,
 )
@@ -34,7 +36,9 @@ __all__ = (
     "AddGtinToTheAssemblyOrdersItem",
     "AddImeiToTheAssemblyOrdersItem",
     "AddUinUniqueIdentificationNumbersToTheAssemblyOrdersItem",
-    "AssemblyOrderMetadataResponse",
+    "ApiMetaErrorResponse",
+    "ApiOrdersErrorResponse",
+    "AssemblyOrderMetadataItem",
     "AssignADataMatrixCodeToTheAssemblyOrderResponse",
     "CancelTheAssemblyOrdersItem",
     "CheckIfTheOrderBelongsToTheBuyerResponse",

@@ -1,0 +1,30 @@
+from enum import StrEnum
+
+
+class Field(StrEnum):
+    """Sort field:"""
+
+    OPENCARD = "openCard"
+    ADDTOCART = "addToCart"
+    ORDERCOUNT = "orderCount"
+    ORDERSUM = "orderSum"
+    BUYOUTCOUNT = "buyoutCount"
+    BUYOUTSUM = "buyoutSum"
+    CANCELCOUNT = "cancelCount"
+    CANCELSUM = "cancelSum"
+    AVGPRICE = "avgPrice"
+    STOCKMPQTY = "stockMpQty"
+    STOCKWBQTY = "stockWbQty"
+    SHAREORDERPERCENT = "shareOrderPercent"
+    ADDTOWISHLIST = "addToWishlist"
+    TIMETOREADY = "timeToReady"
+    LOCALIZATIONPERCENT = "localizationPercent"
+    WBCLUB_ORDERCOUNT = "wbClub.orderCount"
+    WBCLUB_ORDERSUM = "wbClub.orderSum"
+    WBCLUB_BUYOUTSUM = "wbClub.buyoutSum"
+    WBCLUB_CANCELSUM = "wbClub.cancelSum"
+    WBCLUB_BUYOUTCOUNT = "wbClub.buyoutCount"
+    WBCLUB_AVGPRICE = "wbClub.avgPrice"
+    WBCLUB_BUYOUTPERCENT = "wbClub.buyoutPercent"
+    WBCLUB_AVGORDERCOUNTPERDAY = "wbClub.avgOrderCountPerDay"
+    WBCLUB_CANCELCOUNT = "wbClub.cancelCount"

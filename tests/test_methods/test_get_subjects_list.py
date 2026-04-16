@@ -28,3 +28,4 @@ class TestGetSubjectsList:
         assert result[0].subject_id == 1
         assert result[0].parent_id == 1
         assert result[0].subject_name == "subjectName"
+        assert result[0].parent_name == "parentName"

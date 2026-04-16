@@ -11,7 +11,7 @@ class TestGetConnectionCheck:
             [
                 {
                     "TS": "TS",
-                    "Status": "Status",
+                    "Status": "OK",
                 }
             ]
         )
@@ -22,4 +22,4 @@ class TestGetConnectionCheck:
         assert len(result) == 1
         assert isinstance(result[0], ConnectionCheckResponse)
         assert result[0].ts == "TS"
-        assert result[0].status == "Status"
+        assert result[0].status == "OK"

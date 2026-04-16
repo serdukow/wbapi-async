@@ -1,15 +1,16 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from ..enums.role import Role
+from .access_item import AccessItem
+from .invitee_info import InviteeInfo
 
 
 class AListOfSellerActiveOrInvitedUsersItem(BaseType):
     """Get a List of Seller Active or Invited Users"""
 
     id_: int = Field(alias="id")
-    role: str = Field()
+    role: Role = Field()
     position: str = Field()
     phone: str = Field()
     email: str = Field()
@@ -19,5 +20,5 @@ class AListOfSellerActiveOrInvitedUsersItem(BaseType):
     patronymic: str = Field()
     goods_return: bool = Field(alias="goodsReturn")
     is_invitee: bool = Field(alias="isInvitee")
-    invitee_info: dict[str, Any] | None = Field(None, alias="inviteeInfo")
-    access: list[dict[str, Any]] = Field()
+    invitee_info: InviteeInfo | None = Field(None, alias="inviteeInfo")
+    access: list[AccessItem] = Field()

@@ -1,6 +1,8 @@
 from pydantic import Field
 
 from ...types.base import BaseType
+from ..enums.cargo_type_2 import CargoType2
+from ..enums.cross_border_type import CrossBorderType
 
 
 class ASuppliesListItem(BaseType):
@@ -13,6 +15,6 @@ class ASuppliesListItem(BaseType):
     closed_at: str | None = Field(None, alias="closedAt")
     scan_dt: str | None = Field(None, alias="scanDt")
     name: str | None = Field(None)
-    cargo_type: int | None = Field(None, alias="cargoType")
-    cross_border_type: int | None = Field(None, alias="crossBorderType")
+    cargo_type: CargoType2 | None = Field(None, alias="cargoType")
+    cross_border_type: CrossBorderType | None = Field(None, alias="crossBorderType")
     destination_office_id: int | None = Field(None, alias="destinationOfficeId")

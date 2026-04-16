@@ -1,7 +1,11 @@
+from typing import Any
+
+from pydantic import Field
+
 from ...types.base import BaseType
 
 
 class SearchTextsByProductResponse(BaseType):
     """Search Texts by Product"""
 
-    pass
+    data: dict[str, Any] = Field()

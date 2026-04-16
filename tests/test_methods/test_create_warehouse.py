@@ -10,7 +10,7 @@ class TestCreateWarehouse:
         api.add_response(
             [
                 {
-                    "id": 1,
+                    "id": 2,
                 }
             ]
         )
@@ -20,4 +20,4 @@ class TestCreateWarehouse:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], CreateWarehouseResponse)
-        assert result[0].id_ == 1
+        assert result[0].id_ == 2

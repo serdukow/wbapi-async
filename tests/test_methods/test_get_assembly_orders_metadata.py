@@ -12,7 +12,14 @@ class TestGetAssemblyOrdersMetadata:
                 "orders": [
                     {
                         "id": 1,
-                        "meta": {},
+                        "meta": {
+                            "imei": {"value": "123456789012345"},
+                            "uin": {"value": "123456789012345"},
+                            "gtin": {"value": "123456789012345"},
+                            "sgtin": {"value": []},
+                            "expiration": {"value": "12.09.2030"},
+                            "customsDeclaration": {"value": "10704010/010624/0000302"},
+                        },
                     }
                 ]
             }
@@ -24,4 +31,3 @@ class TestGetAssemblyOrdersMetadata:
         assert len(result) == 1
         assert isinstance(result[0], AssemblyOrdersMetadataItem)
         assert result[0].id_ == 1
-        assert result[0].meta == {}

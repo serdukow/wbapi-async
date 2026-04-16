@@ -12,9 +12,9 @@ class TestGetRecommendedBidsForItemsAndSearchClusters:
                 "normQueries": [
                     {
                         "normQuery": "normQuery",
-                        "reachMax": {},
-                        "reachMedium": {},
-                        "reachMin": {},
+                        "reachMax": {"bidKopecks": 1, "bidKopecksMin": 1},
+                        "reachMedium": {"bidKopecks": 1, "bidKopecksMin": 1},
+                        "reachMin": {"bidKopecks": 1, "bidKopecksMin": 1},
                     }
                 ]
             }
@@ -26,5 +26,3 @@ class TestGetRecommendedBidsForItemsAndSearchClusters:
         assert len(result) == 1
         assert isinstance(result[0], RecommendedBidsForItemsAndSearchClustersItem)
         assert result[0].norm_query == "normQuery"
-        assert result[0].reach_max == {}
-        assert result[0].reach_medium == {}

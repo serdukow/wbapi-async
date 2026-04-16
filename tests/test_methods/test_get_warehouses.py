@@ -10,12 +10,12 @@ class TestGetWarehouses:
         api.add_response(
             [
                 {
-                    "name": "name",
-                    "officeId": 1,
+                    "name": "Kosmonavtov 14",
+                    "officeId": 15,
                     "id": 1,
-                    "cargoType": 1,
-                    "deliveryType": 1,
-                    "isDeleting": True,
+                    "cargoType": "1",
+                    "deliveryType": "1",
+                    "isDeleting": False,
                     "isProcessing": True,
                 }
             ]
@@ -26,6 +26,8 @@ class TestGetWarehouses:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], WarehousesResponse)
-        assert result[0].name == "name"
-        assert result[0].office_id == 1
+        assert result[0].name == "Kosmonavtov 14"
+        assert result[0].office_id == 15
         assert result[0].id_ == 1
+        assert result[0].cargo_type == "1"
+        assert result[0].delivery_type == "1"

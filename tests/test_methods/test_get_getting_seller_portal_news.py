@@ -15,7 +15,7 @@ class TestGetGettingSellerPortalNews:
                         "date": "date",
                         "header": "header",
                         "id": 1,
-                        "types": [],
+                        "types": [{"id": 1, "name": "name"}],
                     }
                 ]
             }
@@ -29,3 +29,4 @@ class TestGetGettingSellerPortalNews:
         assert result[0].content == "content"
         assert result[0].date == "date"
         assert result[0].header == "header"
+        assert result[0].id_ == 1

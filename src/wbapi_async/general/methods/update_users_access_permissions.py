@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import RequestLimit, UpdateUsersAccessPermissionsResponse
+from ...types import RequestLimit, UpdateUsersAccessPermissionsResponse, UserAccess
 
 
 class UpdateUsersAccessPermissions(WbMethod):
@@ -21,4 +19,4 @@ class UpdateUsersAccessPermissions(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    users_accesses: list[Any] = Field(alias="usersAccesses")
+    users_accesses: list[UserAccess] = Field(alias="usersAccesses")

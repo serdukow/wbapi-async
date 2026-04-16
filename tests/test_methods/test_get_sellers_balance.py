@@ -10,9 +10,9 @@ class TestGetSellersBalance:
         api.add_response(
             [
                 {
-                    "currency": "currency",
-                    "current": 1.0,
-                    "for_withdraw": 1.0,
+                    "currency": "RUB",
+                    "current": 10196.21,
+                    "for_withdraw": 6395.8,
                 }
             ]
         )
@@ -22,6 +22,6 @@ class TestGetSellersBalance:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], SellersBalanceResponse)
-        assert result[0].currency == "currency"
-        assert result[0].current == 1.0
-        assert result[0].for_withdraw == 1.0
+        assert result[0].currency == "RUB"
+        assert result[0].current == 10196.21
+        assert result[0].for_withdraw == 6395.8

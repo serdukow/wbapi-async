@@ -11,19 +11,18 @@ class TestNotifyThatTheOrdersAreReceived:
             {
                 "results": [
                     {
-                        "errors": [],
+                        "errors": [{"code": 1, "detail": "detail"}],
                         "isError": True,
-                        "orderId": 1,
+                        "orderId": 123456,
                     }
                 ]
             }
         )
 
-        result = await api.notify_that_the_orders_are_received(orders=[])
+        result = await api.notify_that_the_orders_are_received(orders=[{"code": "741852", "orderId": 123456}])
 
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], NotifyThatTheOrdersAreReceivedItem)
-        assert result[0].errors == []
         assert result[0].is_error
-        assert result[0].order_id == 1
+        assert result[0].order_id == 123456

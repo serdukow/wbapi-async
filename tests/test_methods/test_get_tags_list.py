@@ -11,9 +11,9 @@ class TestGetTagsList:
             [
                 {
                     "data": None,
-                    "error": True,
-                    "errorText": "errorText",
-                    "additionalErrors": "additionalErrors",
+                    "error": False,
+                    "errorText": "",
+                    "additionalErrors": "",
                 }
             ]
         )
@@ -23,5 +23,6 @@ class TestGetTagsList:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], TagsListResponse)
-        assert result[0].error
-        assert result[0].error_text == "errorText"
+        assert not result[0].error
+        assert result[0].error_text == ""
+        assert result[0].additional_errors == ""

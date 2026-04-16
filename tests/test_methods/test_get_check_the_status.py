@@ -10,7 +10,7 @@ class TestGetCheckTheStatus:
         api.add_response(
             [
                 {
-                    "data": {},
+                    "data": {"id": "id", "status": "status"},
                 }
             ]
         )
@@ -20,4 +20,3 @@ class TestGetCheckTheStatus:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], CheckTheStatusResponse)
-        assert result[0].data == {}

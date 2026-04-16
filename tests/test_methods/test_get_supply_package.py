@@ -12,7 +12,7 @@ class TestGetSupplyPackage:
                 {
                     "packageCode": "packageCode",
                     "quantity": 1,
-                    "barcodes": [],
+                    "barcodes": [{"barcode": "barcode", "quantity": 1}],
                 }
             ]
         )
@@ -24,4 +24,3 @@ class TestGetSupplyPackage:
         assert isinstance(result[0], SupplyPackageResponse)
         assert result[0].package_code == "packageCode"
         assert result[0].quantity == 1
-        assert result[0].barcodes == []

@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import RequestLimit, SetSizePricesResponse
+from ...types import RequestLimit, SetSizePricesResponse, SizeGoodReq
 
 
 class SetSizePrices(WbMethod):
@@ -20,4 +18,4 @@ class SetSizePrices(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    data: list[Any] = Field()
+    data: list[SizeGoodReq] = Field()

@@ -11,8 +11,8 @@ class TestGetTheSupplyBoxQrCodeStickers:
             {
                 "stickers": [
                     {
-                        "barcode": "barcode",
-                        "file": "file",
+                        "barcode": "$WBMP:1:123:1234567",
+                        "file": "U3dhZ2dlciByb2Nrcw==",
                     }
                 ]
             }
@@ -25,5 +25,5 @@ class TestGetTheSupplyBoxQrCodeStickers:
         assert isinstance(result, list)
         assert len(result) == 1
         assert isinstance(result[0], TheSupplyBoxQrCodeStickersItem)
-        assert result[0].barcode == "barcode"
-        assert result[0].file == "file"
+        assert result[0].barcode == "$WBMP:1:123:1234567"
+        assert result[0].file == "U3dhZ2dlciByb2Nrcw=="

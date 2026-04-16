@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import AssemblyOrderMetadataResponse, RequestLimit
+from ...types import AssemblyOrderMetadataItem, RequestLimit
 
 
 class GetAssemblyOrderMetadata(WbMethod):
@@ -12,10 +12,11 @@ class GetAssemblyOrderMetadata(WbMethod):
     Source: https://dev.wildberries.ru/en/docs/openapi/in-store-pickup#tag/In-Store-Pickup-Metadata/paths/~1api~1v3~1click-collect~1orders~1%7BorderId%7D~1meta/get
     """
 
-    __return__ = AssemblyOrderMetadataResponse
+    __return__ = AssemblyOrderMetadataItem
     __api__ = "marketplace-api"
     __method__ = ""
     __method_template__ = "api/v3/click-collect/orders/{order_id}/meta"
+    __data_key__ = "meta.sgtin.value"
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 

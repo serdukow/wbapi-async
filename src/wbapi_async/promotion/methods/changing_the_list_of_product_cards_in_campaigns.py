@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import ChangingTheListOfProductCardsInCampaignsItem, RequestLimit
+from ...types import ChangingTheListOfProductCardsInCampaignsItem, NmsItem, RequestLimit
 
 
 class ChangingTheListOfProductCardsInCampaigns(WbMethod):
@@ -22,4 +20,4 @@ class ChangingTheListOfProductCardsInCampaigns(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    nms: list[dict[str, Any]] = Field()
+    nms: list[NmsItem] = Field()

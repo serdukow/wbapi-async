@@ -1,0 +1,28 @@
+import pytest
+
+from tests.mocked_api import MockedAPI
+from wbapi_async.types import PaginationByGroupsResponse
+
+
+@pytest.mark.unit
+class TestGetPaginationByGroups:
+    async def test_get_pagination_by_groups(self, api: MockedAPI) -> None:
+        api.add_response(
+            [
+                {
+                    "data": {},
+                }
+            ]
+        )
+
+        result = await api.get_pagination_by_groups(
+            current_period={"start": "2024-02-10", "end": "2024-02-10"},
+            order_by={"field": "openCard", "mode": "asc"},
+            position_cluster="all",
+            limit=1,
+            offset=1,
+        )
+
+        assert isinstance(result, list)
+        assert len(result) == 1
+        assert isinstance(result[0], PaginationByGroupsResponse)

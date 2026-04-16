@@ -1,9 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import AddImeiToTheAssemblyOrdersItem, RequestLimit
+from ...types import AddImeiToTheAssemblyOrdersItem, ApiImei, RequestLimit
 
 
 class AddImeiToTheAssemblyOrders(WbMethod):
@@ -26,4 +24,4 @@ class AddImeiToTheAssemblyOrders(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    orders: list[Any] = Field()
+    orders: list[ApiImei] = Field()

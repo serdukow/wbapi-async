@@ -1,8 +1,7 @@
-from typing import Any
-
 from pydantic import Field
 
 from ...types.base import BaseType
+from .metrics import Metrics
 
 
 class ProductDataItem(BaseType):
@@ -16,4 +15,4 @@ class ProductDataItem(BaseType):
     brand_name: str = Field(alias="brandName")
     main_photo: str = Field(alias="mainPhoto")
     has_sizes: bool = Field(alias="hasSizes")
-    metrics: Any = Field()
+    metrics: Metrics = Field()
