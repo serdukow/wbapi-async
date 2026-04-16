@@ -80,7 +80,7 @@ class TestGetRealizationSalesReport:
                     "assembly_id": 2816993144,
                     "kiz": "0102900000376311210G2CIS?ehge)S\x1d91002A\x1d92F9Qof4FDo/31Icm14kmtuVYQzLypxm3HWkC1vQ/+pVVjm1dNAth1laFMoAGn7yEMWlTjxIe7lQnJqZ7TRZhlHQ==",
                     "srid": "0f1c3999172603062979867564654dac5b702849",
-                    "report_type": "1",
+                    "report_type": 1,
                     "is_legal_entity": False,
                     "trbx_id": "WB-TRBX-1234567",
                     "installment_cofinancing_amount": 0,

@@ -37,7 +37,7 @@ class TestGetDailySearchClustersStatistics:
         )
 
         result = await api.get_daily_search_clusters_statistics(
-            from_="from_", to="to", items=[{"advert_id": 1, "nm_id": 1}]
+            from_="from_", to="to", items=[{"advertId": 1, "nmId": 1}]
         )
 
         assert isinstance(result, list)

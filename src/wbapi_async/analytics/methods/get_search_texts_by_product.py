@@ -3,7 +3,7 @@ from typing import Any
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import CurrentPeriod, OrderBy, PastPeriod, RequestLimit, SearchTextsByProductResponse
+from ...types import OrderBy, RequestLimit, SearchTextsByProductResponse, SelectedPeriod
 from ..enums.top_order_by import TopOrderBy
 
 
@@ -21,8 +21,8 @@ class GetSearchTextsByProduct(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    current_period: CurrentPeriod = Field(alias="currentPeriod")
-    past_period: PastPeriod | None = Field(None, alias="pastPeriod")
+    current_period: SelectedPeriod = Field(alias="currentPeriod")
+    past_period: SelectedPeriod | None = Field(None, alias="pastPeriod")
     nm_ids: list[int] = Field(alias="nmIds")
     top_order_by: TopOrderBy = Field(alias="topOrderBy")
     include_substituted_sk_us: bool | None = Field(True, alias="includeSubstitutedSKUs")

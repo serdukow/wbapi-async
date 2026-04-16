@@ -21,6 +21,7 @@ from .types.seller_brands_item import SellerBrandsItem
 from .types.substitutions_and_incorrect_attachments_item import SubstitutionsAndIncorrectAttachmentsItem
 from .types.warehouse_measurements_item import WarehouseMeasurementsItem
 from .types.warehouse_response import WarehouseResponse
+from .types.warehouses_item_2 import WarehousesItem2
 
 
 __all__ = (
@@ -46,5 +47,6 @@ __all__ = (
     "SubstitutionsAndIncorrectAttachmentsItem",
     "WarehouseMeasurementsItem",
     "WarehouseResponse",
+    "WarehousesItem2",
     "WarehouseType",
 )

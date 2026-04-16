@@ -1,8 +1,6 @@
-from ..analytics.types.avg_stock_turnover import AvgStockTurnover
 from ..analytics.types.comparison import Comparison
 from ..analytics.types.conversions import Conversions
 from ..analytics.types.create_the_report_response import CreateTheReportResponse
-from ..analytics.types.current_period import CurrentPeriod
 from ..analytics.types.float_graph_by_period_item import FloatGraphByPeriodItem
 from ..analytics.types.group_data_item import GroupDataItem
 from ..analytics.types.grouped_product_cards_statistics_per_days_item import (
@@ -11,7 +9,6 @@ from ..analytics.types.grouped_product_cards_statistics_per_days_item import (
 from ..analytics.types.history import History
 from ..analytics.types.main_page_response import MainPageResponse
 from ..analytics.types.metrics import Metrics
-from ..analytics.types.office_missing_time import OfficeMissingTime
 from ..analytics.types.offices_item import OfficesItem
 from ..analytics.types.order_by import OrderBy
 from ..analytics.types.orders_and_positions_by_product_search_texts_response import (
@@ -21,9 +18,6 @@ from ..analytics.types.pagination_by_groups_response import PaginationByGroupsRe
 from ..analytics.types.pagination_by_products_within_a_group_response import (
     PaginationByProductsWithinAGroupResponse,
 )
-from ..analytics.types.past import Past
-from ..analytics.types.past_period import PastPeriod
-from ..analytics.types.period import Period
 from ..analytics.types.product import Product
 from ..analytics.types.product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from ..analytics.types.product_cards_statistics_per_period_item import ProductCardsStatisticsPerPeriodItem
@@ -41,10 +35,8 @@ from ..analytics.types.tag import Tag
 from ..analytics.types.the_report_response import TheReportResponse
 from ..analytics.types.the_reports_list_item import TheReportsListItem
 from ..analytics.types.time_to_ready import TimeToReady
-from ..analytics.types.time_to_ready_dynamic import TimeToReadyDynamic
 from ..analytics.types.warehouse_data_item import WarehouseDataItem
 from ..analytics.types.wb_club import WbClub
-from ..analytics.types.wb_club_dynamic import WbClubDynamic
 from ..communications.types.answer import Answer
 from ..communications.types.answer_buyers_application_response import AnswerBuyersApplicationResponse
 from ..communications.types.buyers_return_applications_item import BuyersReturnApplicationsItem
@@ -84,6 +76,7 @@ from ..communications.types.unpin_feedback_response import UnpinFeedbackResponse
 from ..communications.types.unseen_feedbacks_and_questions_item import UnseenFeedbacksAndQuestionsItem
 from ..communications.types.video import Video
 from ..communications.types.working_with_questions_item import WorkingWithQuestionsItem
+from ..finances.types.data_4 import Data4
 from ..finances.types.document_response import DocumentResponse
 from ..finances.types.documents_categories_item import DocumentsCategoriesItem
 from ..finances.types.documents_list_item import DocumentsListItem
@@ -194,6 +187,7 @@ from ..orders_dbw.types.delete_order_metadata_response import DeleteOrderMetadat
 from ..orders_dbw.types.delivery_date_and_time_item import DeliveryDateAndTimeItem
 from ..orders_dbw.types.information_on_completed_orders_item import InformationOnCompletedOrdersItem
 from ..orders_dbw.types.new_orders_item import NewOrdersItem
+from ..orders_dbw.types.options_2 import Options2
 from ..orders_dbw.types.order_metadata_item import OrderMetadataItem
 from ..orders_dbw.types.orders_statuses_item import OrdersStatusesItem
 from ..orders_dbw.types.orders_stickers_item import OrdersStickersItem
@@ -225,13 +219,10 @@ from ..orders_fbs.types.assembly_orders_stickers_item import AssemblyOrdersStick
 from ..orders_fbs.types.cancel_the_assembly_order_response import CancelTheAssemblyOrderResponse
 from ..orders_fbs.types.create_a_new_supply_response import CreateANewSupplyResponse
 from ..orders_fbs.types.create_pass_response import CreatePassResponse
-from ..orders_fbs.types.customs_declaration import CustomsDeclaration
 from ..orders_fbs.types.delete_assembly_order_metadata_response import DeleteAssemblyOrderMetadataResponse
 from ..orders_fbs.types.delete_boxes_from_the_supply_response import DeleteBoxesFromTheSupplyResponse
 from ..orders_fbs.types.delete_the_pass_response import DeleteThePassResponse
 from ..orders_fbs.types.delete_the_supply_response import DeleteTheSupplyResponse
-from ..orders_fbs.types.expiration import Expiration
-from ..orders_fbs.types.gtin import Gtin
 from ..orders_fbs.types.imei import Imei
 from ..orders_fbs.types.meta import Meta
 from ..orders_fbs.types.move_the_supply_to_the_delivery_response import MoveTheSupplyToTheDeliveryResponse
@@ -240,7 +231,6 @@ from ..orders_fbs.types.offices_for_pass_response import OfficesForPassResponse
 from ..orders_fbs.types.options import Options
 from ..orders_fbs.types.orders_with_client_information_item import OrdersWithClientInformationItem
 from ..orders_fbs.types.passes_response import PassesResponse
-from ..orders_fbs.types.sgtin import Sgtin
 from ..orders_fbs.types.status_history_for_crossborder_orders_item import (
     StatusHistoryForCrossborderOrdersItem,
 )
@@ -253,7 +243,6 @@ from ..orders_fbs.types.supply_boxes_list_item import SupplyBoxesListItem
 from ..orders_fbs.types.supply_details_response import SupplyDetailsResponse
 from ..orders_fbs.types.the_supply_box_qr_code_stickers_item import TheSupplyBoxQrCodeStickersItem
 from ..orders_fbs.types.the_supply_qr_code_response import TheSupplyQrCodeResponse
-from ..orders_fbs.types.uin import Uin
 from ..orders_fbs.types.update_pass_response import UpdatePassResponse
 from ..orders_fbw.types.acceptance_options_item import AcceptanceOptionsItem
 from ..orders_fbw.types.models_date_filter_request import ModelsDateFilterRequest
@@ -279,6 +268,7 @@ from ..products.types.create_product_cards_with_merge_response import CreateProd
 from ..products.types.create_warehouse_response import CreateWarehouseResponse
 from ..products.types.cursor import Cursor
 from ..products.types.data import Data
+from ..products.types.data_2 import Data2
 from ..products.types.data_item import DataItem
 from ..products.types.delete_inventory_response import DeleteInventoryResponse
 from ..products.types.delete_the_tag_response import DeleteTheTagResponse
@@ -298,7 +288,6 @@ from ..products.types.merging_or_separating_of_product_cards_response import (
     MergingOrSeparatingOfProductCardsResponse,
 )
 from ..products.types.offices_response import OfficesResponse
-from ..products.types.order import Order
 from ..products.types.photos_item import PhotosItem
 from ..products.types.processed_upload_details_item import ProcessedUploadDetailsItem
 from ..products.types.processed_upload_state_response import ProcessedUploadStateResponse
@@ -317,6 +306,7 @@ from ..products.types.set_wb_club_discounts_response import SetWbClubDiscountsRe
 from ..products.types.settings import Settings
 from ..products.types.size_good_req import SizeGoodReq
 from ..products.types.sizes_item import SizesItem
+from ..products.types.sizes_item_2 import SizesItem2
 from ..products.types.sort import Sort
 from ..products.types.stocks_item import StocksItem
 from ..products.types.subject_characteristics_item import SubjectCharacteristicsItem
@@ -351,6 +341,7 @@ from ..promotion.types.adverts import Adverts
 from ..promotion.types.apps_item import AppsItem
 from ..promotion.types.balance_item import BalanceItem
 from ..promotion.types.bids_item import BidsItem
+from ..promotion.types.bids_item_2 import BidsItem2
 from ..promotion.types.booster_stats_item import BoosterStatsItem
 from ..promotion.types.campaign_budget_response import CampaignBudgetResponse
 from ..promotion.types.campaigns_information_item import CampaignsInformationItem
@@ -365,6 +356,8 @@ from ..promotion.types.changing_the_list_of_product_cards_in_campaigns_item impo
 )
 from ..promotion.types.create_campaign_response import CreateCampaignResponse
 from ..promotion.types.daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
+from ..promotion.types.data_3 import Data3
+from ..promotion.types.data_upload import DataUpload
 from ..promotion.types.days_item import DaysItem
 from ..promotion.types.delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from ..promotion.types.delete_campaign_response import DeleteCampaignResponse
@@ -382,7 +375,9 @@ from ..promotion.types.media_campaigns_number_response import MediaCampaignsNumb
 from ..promotion.types.minimum_bids_for_product_cards_item import MinimumBidsForProductCardsItem
 from ..promotion.types.nm_bids_item import NmBidsItem
 from ..promotion.types.nms import Nms
+from ..promotion.types.nms_2 import Nms2
 from ..promotion.types.nms_item import NmsItem
+from ..promotion.types.nms_item_2 import NmsItem2
 from ..promotion.types.pause_campaign_response import PauseCampaignResponse
 from ..promotion.types.placements import Placements
 from ..promotion.types.placements_item import PlacementsItem
@@ -445,6 +440,7 @@ from ..reports.types.substitutions_and_incorrect_attachments_item import (
 )
 from ..reports.types.warehouse_measurements_item import WarehouseMeasurementsItem
 from ..reports.types.warehouse_response import WarehouseResponse
+from ..reports.types.warehouses_item_2 import WarehousesItem2
 from ..tariffs.types.box_tariffs_item import BoxTariffsItem
 from ..tariffs.types.pallet_tariffs_item import PalletTariffsItem
 from ..tariffs.types.product_category_commission_response import ProductCategoryCommissionResponse
@@ -516,11 +512,11 @@ __all__ = (
     "AssemblyOrderStatusesItem",
     "AssignADataMatrixCodeToTheAssemblyOrderResponse",
     "ASuppliesListItem",
-    "AvgStockTurnover",
     "B2BBuyerInformationItem",
     "BalanceItem",
     "BaseType",
     "BidsItem",
+    "BidsItem2",
     "BlockedProductCardsItem",
     "BoosterStatsItem",
     "BoxTariffsItem",
@@ -565,12 +561,14 @@ __all__ = (
     "CreateTaskResponseData",
     "CreateTheReportResponse",
     "CreateWarehouseResponse",
-    "CurrentPeriod",
     "Cursor",
-    "CustomsDeclaration",
     "DailySearchClustersStatisticsItem",
     "Data",
+    "Data2",
+    "Data3",
+    "Data4",
     "DataItem",
+    "DataUpload",
     "DaysItem",
     "DeleteAssemblyOrderMetadataItem",
     "DeleteAssemblyOrderMetadataResponse",
@@ -595,7 +593,6 @@ __all__ = (
     "Error",
     "ErrorsItem",
     "EventAttachments",
-    "Expiration",
     "FeedbacksListItem",
     "File",
     "FileFromTheMessageResponse",
@@ -610,7 +607,6 @@ __all__ = (
     "GoodCard",
     "GroupDataItem",
     "GroupedProductCardsStatisticsPerDaysItem",
-    "Gtin",
     "HiddenFromTheCatalogItem",
     "History",
     "HscodesItem",
@@ -652,7 +648,9 @@ __all__ = (
     "NewOrdersListItem",
     "NmBidsItem",
     "Nms",
+    "Nms2",
     "NmsItem",
+    "NmsItem2",
     "NotifyThatTheAssemblyOrderIsReadyForPickupResponse",
     "NotifyThatTheAssemblyOrdersAreReadyForPickupItem",
     "NotifyThatTheBuyerHasDeclinedTheOrderResponse",
@@ -663,12 +661,11 @@ __all__ = (
     "NotifyThatTheOrdersWereReceivedByTheBuyersItem",
     "NumberOfFeedbacksItem",
     "NumberOfQuestionsItem",
-    "OfficeMissingTime",
     "OfficesForPassResponse",
     "OfficesItem",
     "OfficesResponse",
     "Options",
-    "Order",
+    "Options2",
     "OrderBy",
     "OrderMetadataItem",
     "OrdersAndPositionsByProductSearchTextsResponse",
@@ -683,10 +680,7 @@ __all__ = (
     "ParamsItem",
     "ParentCategoriesOfTheBrandItem",
     "PassesResponse",
-    "Past",
-    "PastPeriod",
     "PauseCampaignResponse",
-    "Period",
     "PhotoLinksItem",
     "PhotosItem",
     "PinFeedbackResponse",
@@ -752,11 +746,11 @@ __all__ = (
     "SettingAndDeletingMinusPhrasesResponse",
     "Settings",
     "SetWbClubDiscountsResponse",
-    "Sgtin",
     "ShowHoursItem",
     "SizeDataItem",
     "SizeGoodReq",
     "SizesItem",
+    "SizesItem2",
     "Sort",
     "Statistic",
     "StatusesItem",
@@ -792,7 +786,6 @@ __all__ = (
     "TheSupplyQrCodeResponse",
     "Timestamps",
     "TimeToReady",
-    "TimeToReadyDynamic",
     "TopupOfTheCampaignBudgetResponse",
     "TransferProductCardToTrashResponse",
     "TransferToAssemblyItem",
@@ -801,7 +794,6 @@ __all__ = (
     "TransferToDeliveryResponse",
     "TransitDirectionsResponse",
     "TypesItem",
-    "Uin",
     "UnansweredFeedbacksItem",
     "UnansweredQuestionsItem",
     "UnpinFeedbackResponse",
@@ -835,10 +827,10 @@ __all__ = (
     "WarehouseMeasurementsItem",
     "WarehouseResponse",
     "WarehousesItem",
+    "WarehousesItem2",
     "WarehousesListResponse",
     "WarehousesResponse",
     "WbClub",
-    "WbClubDynamic",
     "Wholesale",
     "WorkingWithQuestionsItem",
 )

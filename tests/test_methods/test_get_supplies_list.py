@@ -17,7 +17,7 @@ class TestGetSuppliesList:
                     "supplyDate": "supplyDate",
                     "factDate": "factDate",
                     "updatedDate": "updatedDate",
-                    "statusID": "1",
+                    "statusID": 1,
                     "boxTypeID": None,
                     "isBoxOnPallet": True,
                 }

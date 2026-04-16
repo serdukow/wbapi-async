@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...types.base import BaseType
-from .sizes_item import SizesItem
+from .sizes_item_2 import SizesItem2
 
 
 class ProductsWithPricesItem(BaseType):
@@ -9,7 +9,7 @@ class ProductsWithPricesItem(BaseType):
 
     nm_id: int | None = Field(None, alias="nmID")
     vendor_code: str | None = Field(None, alias="vendorCode")
-    sizes: list[SizesItem] | None = Field(None)
+    sizes: list[SizesItem2] | None = Field(None)
     currency_iso_code4217: str | None = Field(None, alias="currencyIsoCode4217")
     discount: int | None = Field(None)
     club_discount: int | None = Field(None, alias="clubDiscount")

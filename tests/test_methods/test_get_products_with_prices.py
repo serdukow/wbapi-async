@@ -14,7 +14,15 @@ class TestGetProductsWithPrices:
                         {
                             "nmID": 98486,
                             "vendorCode": "07326060",
-                            "sizes": [{"chrtID": 1, "techSize": "techSize", "wbSize": "wbSize", "skus": []}],
+                            "sizes": [
+                                {
+                                    "sizeID": 3123515574,
+                                    "price": 500,
+                                    "discountedPrice": 350,
+                                    "clubDiscountedPrice": 332.5,
+                                    "techSizeName": "42",
+                                }
+                            ],
                             "currencyIsoCode4217": "RUB",
                             "discount": 30,
                             "clubDiscount": 5,

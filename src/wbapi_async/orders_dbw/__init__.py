@@ -13,6 +13,7 @@ from .types.delete_order_metadata_response import DeleteOrderMetadataResponse
 from .types.delivery_date_and_time_item import DeliveryDateAndTimeItem
 from .types.information_on_completed_orders_item import InformationOnCompletedOrdersItem
 from .types.new_orders_item import NewOrdersItem
+from .types.options_2 import Options2
 from .types.order_metadata_item import OrderMetadataItem
 from .types.orders_statuses_item import OrdersStatusesItem
 from .types.orders_stickers_item import OrdersStickersItem
@@ -34,6 +35,7 @@ __all__ = (
     "DeliveryDateAndTimeItem",
     "InformationOnCompletedOrdersItem",
     "NewOrdersItem",
+    "Options2",
     "OrderMetadataItem",
     "OrdersStatusesItem",
     "OrdersStickersItem",

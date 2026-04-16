@@ -8,6 +8,7 @@ from .adverts import Adverts
 from .apps_item import AppsItem
 from .balance_item import BalanceItem
 from .bids_item import BidsItem
+from .bids_item_2 import BidsItem2
 from .booster_stats_item import BoosterStatsItem
 from .campaign_budget_response import CampaignBudgetResponse
 from .campaigns_information_item import CampaignsInformationItem
@@ -20,6 +21,8 @@ from .changing_placements_in_campaigns_with_custom_bid_response import (
 from .changing_the_list_of_product_cards_in_campaigns_item import ChangingTheListOfProductCardsInCampaignsItem
 from .create_campaign_response import CreateCampaignResponse
 from .daily_search_clusters_statistics_item import DailySearchClustersStatisticsItem
+from .data_3 import Data3
+from .data_upload import DataUpload
 from .days_item import DaysItem
 from .delete_bids_from_search_clusters_response import DeleteBidsFromSearchClustersResponse
 from .delete_campaign_response import DeleteCampaignResponse
@@ -37,7 +40,9 @@ from .media_campaigns_number_response import MediaCampaignsNumberResponse
 from .minimum_bids_for_product_cards_item import MinimumBidsForProductCardsItem
 from .nm_bids_item import NmBidsItem
 from .nms import Nms
+from .nms_2 import Nms2
 from .nms_item import NmsItem
+from .nms_item_2 import NmsItem2
 from .pause_campaign_response import PauseCampaignResponse
 from .placements import Placements
 from .placements_item import PlacementsItem
@@ -81,6 +86,7 @@ __all__ = (
     "AppsItem",
     "BalanceItem",
     "BidsItem",
+    "BidsItem2",
     "BoosterStatsItem",
     "CampaignBudgetResponse",
     "CampaignsInformationItem",
@@ -91,6 +97,8 @@ __all__ = (
     "ChangingTheListOfProductCardsInCampaignsItem",
     "CreateCampaignResponse",
     "DailySearchClustersStatisticsItem",
+    "Data3",
+    "DataUpload",
     "DaysItem",
     "DeleteBidsFromSearchClustersResponse",
     "DeleteCampaignResponse",
@@ -106,7 +114,9 @@ __all__ = (
     "MinimumBidsForProductCardsItem",
     "NmBidsItem",
     "Nms",
+    "Nms2",
     "NmsItem",
+    "NmsItem2",
     "PauseCampaignResponse",
     "Placements",
     "PlacementsItem",

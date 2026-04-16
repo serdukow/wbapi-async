@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import CurrentPeriod, OrderBy, ProductDataItem, RequestLimit
+from ...types import OrderBy, ProductDataItem, RequestLimit, SelectedPeriod
 from ..enums.availability_filters_item import AvailabilityFiltersItem
 from ..enums.stock_type import StockType
 
@@ -28,7 +28,7 @@ class GetProductData(WbMethod):
     subject_id: int | None = Field(None, alias="subjectID")
     brand_name: str | None = Field(None, alias="brandName")
     tag_id: int | None = Field(None, alias="tagID")
-    current_period: CurrentPeriod = Field(alias="currentPeriod")
+    current_period: SelectedPeriod = Field(alias="currentPeriod")
     stock_type: StockType = Field(alias="stockType")
     skip_deleted_nm: bool = Field(alias="skipDeletedNm")
     order_by: OrderBy = Field(alias="orderBy")

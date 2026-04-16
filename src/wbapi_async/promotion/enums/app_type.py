@@ -1,9 +1,9 @@
-from enum import StrEnum
+from enum import IntEnum
 
 
-class AppType(StrEnum):
+class AppType(IntEnum):
     """Platform type"""
 
-    V_1 = "1"
-    V_32 = "32"
-    V_64 = "64"
+    V_1 = 1
+    V_32 = 32
+    V_64 = 64

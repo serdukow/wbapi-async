@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import OrderBy, PastPeriod, ProductCardsStatisticsPerPeriodItem, RequestLimit, SelectedPeriod
+from ...types import OrderBy, ProductCardsStatisticsPerPeriodItem, RequestLimit, SelectedPeriod
 
 
 class GetProductCardsStatisticsPerPeriod(WbMethod):
@@ -22,7 +22,7 @@ class GetProductCardsStatisticsPerPeriod(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     selected_period: SelectedPeriod = Field(alias="selectedPeriod")
-    past_period: PastPeriod | None = Field(None, alias="pastPeriod")
+    past_period: SelectedPeriod | None = Field(None, alias="pastPeriod")
     nm_ids: list[int] | None = Field(None, alias="nmIds")
     brand_names: list[str] | None = Field(None, alias="brandNames")
     subject_ids: list[int] | None = Field(None, alias="subjectIds")

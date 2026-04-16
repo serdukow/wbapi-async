@@ -1,8 +1,8 @@
-from enum import StrEnum
+from enum import IntEnum
 
 
-class CrossBorderType(StrEnum):
+class CrossBorderType(IntEnum):
     """Assembly order type:"""
 
-    V_0 = "0"
-    V_1 = "1"
+    V_0 = 0
+    V_1 = 1

@@ -22,14 +22,30 @@ class TestGetCampaignsStatistics:
                         {
                             "apps": [
                                 {
-                                    "appType": "1",
+                                    "appType": 1,
                                     "atbs": 1,
                                     "canceled": 1,
                                     "clicks": 1,
                                     "cpc": 1.0,
                                     "cr": 1.0,
                                     "ctr": 1.0,
-                                    "nms": [{"advert_id": 1, "nms": {}}],
+                                    "nms": [
+                                        {
+                                            "atbs": 1,
+                                            "canceled": 1,
+                                            "clicks": 1,
+                                            "cpc": 1.0,
+                                            "cr": 1.0,
+                                            "ctr": 1.0,
+                                            "name": "name",
+                                            "nmId": 1,
+                                            "orders": 1,
+                                            "shks": 1,
+                                            "sum": 1.0,
+                                            "sum_price": 1.0,
+                                            "views": 1,
+                                        }
+                                    ],
                                     "orders": 1,
                                     "shks": 1,
                                     "sum": 1.0,

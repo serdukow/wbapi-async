@@ -16,8 +16,8 @@ class TestGetOffices:
                     "id": 15,
                     "longitude": 55.386871,
                     "latitude": 37.588898,
-                    "cargoType": "1",
-                    "deliveryType": "1",
+                    "cargoType": 1,
+                    "deliveryType": 1,
                     "federalDistrict": "Центральный",
                     "selected": True,
                 }

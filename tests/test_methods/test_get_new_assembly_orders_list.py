@@ -31,7 +31,7 @@ class TestGetNewAssemblyOrdersList:
                         "convertedFinalPrice": 1014,
                         "currencyCode": 643,
                         "convertedCurrencyCode": 643,
-                        "cargoType": "1",
+                        "cargoType": 1,
                         "isZeroOrder": True,
                     }
                 ]

@@ -10,7 +10,7 @@ class TestSetPricesAndDiscounts:
         api.add_response(
             [
                 {
-                    "data": {"freeLimits": 1, "paidLimits": 1},
+                    "data": {"id": 1, "alreadyExists": False},
                     "error": False,
                     "errorText": "",
                 }

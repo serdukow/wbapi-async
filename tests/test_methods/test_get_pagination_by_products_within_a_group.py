@@ -16,7 +16,7 @@ class TestGetPaginationByProductsWithinAGroup:
         )
 
         result = await api.get_pagination_by_products_within_a_group(
-            current_period={"start": "2024-02-10", "end": "2024-02-10"},
+            current_period={"start": "2023-06-01", "end": "2024-03-01"},
             order_by={"field": "openCard", "mode": "asc"},
             position_cluster="all",
             limit=1,

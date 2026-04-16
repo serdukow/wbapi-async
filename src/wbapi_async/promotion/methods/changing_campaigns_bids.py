@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import BidsItem, ChangingCampaignsBidsItem, RequestLimit
+from ...types import BidsItem2, ChangingCampaignsBidsItem, RequestLimit
 
 
 class ChangingCampaignsBids(WbMethod):
@@ -20,4 +20,4 @@ class ChangingCampaignsBids(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    bids: list[BidsItem] = Field()
+    bids: list[BidsItem2] = Field()

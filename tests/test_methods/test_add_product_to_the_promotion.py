@@ -10,7 +10,7 @@ class TestAddProductToThePromotion:
         api.add_response(
             [
                 {
-                    "data": {"freeLimits": 1, "paidLimits": 1},
+                    "data": {"alreadyExists": False, "uploadID": 11},
                 }
             ]
         )

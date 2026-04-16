@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from ...methods.base import WbMethod
-from ...types import CurrentPeriod, GroupDataItem, OrderBy, RequestLimit
+from ...types import GroupDataItem, OrderBy, RequestLimit, SelectedPeriod
 from ..enums.availability_filters_item import AvailabilityFiltersItem
 from ..enums.stock_type import StockType
 
@@ -27,7 +27,7 @@ class GetGroupData(WbMethod):
     subject_i_ds: list[int] | None = Field(None, alias="subjectIDs")
     brand_names: list[str] | None = Field(None, alias="brandNames")
     tag_i_ds: list[int] | None = Field(None, alias="tagIDs")
-    current_period: CurrentPeriod = Field(alias="currentPeriod")
+    current_period: SelectedPeriod = Field(alias="currentPeriod")
     stock_type: StockType = Field(alias="stockType")
     skip_deleted_nm: bool = Field(alias="skipDeletedNm")
     availability_filters: list[AvailabilityFiltersItem] = Field(alias="availabilityFilters")

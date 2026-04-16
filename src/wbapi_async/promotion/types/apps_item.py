@@ -2,7 +2,7 @@ from pydantic import Field
 
 from ...types.base import BaseType
 from ..enums.app_type import AppType
-from .nms_item import NmsItem
+from .nms_item_2 import NmsItem2
 
 
 class AppsItem(BaseType):
@@ -13,7 +13,7 @@ class AppsItem(BaseType):
     cpc: float = Field()
     cr: float = Field()
     ctr: float = Field()
-    nms: list[NmsItem] = Field()
+    nms: list[NmsItem2] = Field()
     orders: int = Field()
     shks: int = Field()
     sum_: float = Field(alias="sum")

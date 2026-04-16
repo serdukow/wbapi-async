@@ -1,9 +1,9 @@
 from pydantic import Field
 
 from ...orders_fbs.types.address import Address
-from ...orders_fbs.types.options import Options
 from ...products.enums.cargo_type import CargoType
 from ...types.base import BaseType
+from .options_2 import Options2
 
 
 class NewOrdersItem(BaseType):
@@ -13,7 +13,7 @@ class NewOrdersItem(BaseType):
     sale_price: int | None = Field(None, alias="salePrice")
     required_meta: list[str] | None = Field(None, alias="requiredMeta")
     comment: str | None = Field(None)
-    options: Options | None = Field(None)
+    options: Options2 | None = Field(None)
     order_uid: str | None = Field(None, alias="orderUid")
     group_id: str | None = Field(None, alias="groupId")
     article: str | None = Field(None)
