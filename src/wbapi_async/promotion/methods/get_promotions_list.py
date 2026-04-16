@@ -22,5 +22,5 @@ class GetPromotionsList(WbMethod):
     start_date_time: str = Field(alias="startDateTime")
     end_date_time: str = Field(alias="endDateTime")
     all_promo: bool = Field(False, alias="allPromo")
-    limit: int | None = Field(None)
-    offset: int | None = Field(None)
+    limit: int | None = Field(None, alias="limit")
+    offset: int | None = Field(None, alias="offset")

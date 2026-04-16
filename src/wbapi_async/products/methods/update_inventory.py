@@ -21,4 +21,4 @@ class UpdateInventory(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     warehouse_id: int = Field(alias="warehouseId", exclude=True)
-    stocks: list[StocksItem] = Field()
+    stocks: list[StocksItem] = Field(alias="stocks")

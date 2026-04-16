@@ -11,7 +11,7 @@ class TestGetMinimumBidsForProductCards:
             {
                 "bids": [
                     {
-                        "bids": [{"type": "combined", "value": 1}],
+                        "bids": [{"type": "type", "value": 1}],
                         "nm_id": 1,
                     }
                 ]
@@ -19,7 +19,7 @@ class TestGetMinimumBidsForProductCards:
         )
 
         result = await api.get_minimum_bids_for_product_cards(
-            advert_id=1, nm_ids=[], payment_type="cpm", placement_types=[]
+            advert_id=1, nm_ids=[], payment_type="payment_type", placement_types=[]
         )
 
         assert isinstance(result, list)

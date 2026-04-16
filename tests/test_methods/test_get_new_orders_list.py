@@ -26,7 +26,7 @@ class TestGetNewOrdersList:
                         "colorCode": "RAL 3017",
                         "rid": "f884001e44e511edb8780242ac120002",
                         "createdAt": "2022-05-04T07:56:29Z",
-                        "deliveryType": "dbs",
+                        "deliveryType": "deliveryType",
                         "skus": [],
                         "id": 13833711,
                         "warehouseId": 658434,

@@ -23,4 +23,4 @@ class AddUinUniqueIdentificationNumberToAssemblyOrders(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    orders: list[ApiUin] = Field()
+    orders: list[ApiUin] = Field(alias="orders")

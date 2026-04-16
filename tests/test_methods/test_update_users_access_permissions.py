@@ -9,7 +9,7 @@ class TestUpdateUsersAccessPermissions:
         api.add_response(None)
 
         result = await api.update_users_access_permissions(
-            users_accesses=[{"userId": 1, "access": [{"code": "balance", "disabled": True}]}]
+            users_accesses=[{"userId": 1, "access": [{"code": "code", "disabled": True}]}]
         )
 
         assert result is None

@@ -15,7 +15,7 @@ from ..analytics.types.orders_and_positions_by_product_search_texts_response imp
     OrdersAndPositionsByProductSearchTextsResponse,
 )
 from ..analytics.types.pagination_by_groups_response import PaginationByGroupsResponse
-from ..analytics.types.pagination_by_products_within_a_group_response import (
+from ..analytics.types.pagination_by_products_within_agroup_response import (
     PaginationByProductsWithinAGroupResponse,
 )
 from ..analytics.types.product import Product
@@ -89,7 +89,7 @@ from ..general.types.a_list_of_seller_active_or_invited_users_item import (
 )
 from ..general.types.access_item import AccessItem
 from ..general.types.connection_check_response import ConnectionCheckResponse
-from ..general.types.create_an_invitation_for_a_new_user_response import CreateAnInvitationForANewUserResponse
+from ..general.types.create_an_invitation_for_anew_user_response import CreateAnInvitationForANewUserResponse
 from ..general.types.delete_user_response import DeleteUserResponse
 from ..general.types.getting_seller_portal_news_item import GettingSellerPortalNewsItem
 from ..general.types.invite import Invite
@@ -109,7 +109,7 @@ from ..in_store_pickup.types.add_uin_unique_identification_numbers_to_the_assemb
 from ..in_store_pickup.types.api_meta_error_response import ApiMetaErrorResponse
 from ..in_store_pickup.types.api_orders_error_response import ApiOrdersErrorResponse
 from ..in_store_pickup.types.assembly_order_metadata_item import AssemblyOrderMetadataItem
-from ..in_store_pickup.types.assign_a_data_matrix_code_to_the_assembly_order_response import (
+from ..in_store_pickup.types.assign_adata_matrix_code_to_the_assembly_order_response import (
     AssignADataMatrixCodeToTheAssemblyOrderResponse,
 )
 from ..in_store_pickup.types.cancel_the_assembly_orders_item import CancelTheAssemblyOrdersItem
@@ -152,7 +152,7 @@ from ..orders_dbs.types.api_order_code_request import ApiOrderCodeRequest
 from ..orders_dbs.types.api_sgti_ns import ApiSgtiNs
 from ..orders_dbs.types.api_uin import ApiUin
 from ..orders_dbs.types.assembly_order_statuses_item import AssemblyOrderStatusesItem
-from ..orders_dbs.types.b2_b_buyer_information_item import B2BBuyerInformationItem
+from ..orders_dbs.types.b2_bbuyer_information_item import B2BBuyerInformationItem
 from ..orders_dbs.types.cancel_assembly_orders_item import CancelAssemblyOrdersItem
 from ..orders_dbs.types.delete_assembly_orders_metadata_item import DeleteAssemblyOrdersMetadataItem
 from ..orders_dbs.types.errors_item import ErrorsItem
@@ -217,7 +217,7 @@ from ..orders_fbs.types.assembly_orders_metadata_item import AssemblyOrdersMetad
 from ..orders_fbs.types.assembly_orders_statuses_item import AssemblyOrdersStatusesItem
 from ..orders_fbs.types.assembly_orders_stickers_item import AssemblyOrdersStickersItem
 from ..orders_fbs.types.cancel_the_assembly_order_response import CancelTheAssemblyOrderResponse
-from ..orders_fbs.types.create_a_new_supply_response import CreateANewSupplyResponse
+from ..orders_fbs.types.create_anew_supply_response import CreateANewSupplyResponse
 from ..orders_fbs.types.create_pass_response import CreatePassResponse
 from ..orders_fbs.types.delete_assembly_order_metadata_response import DeleteAssemblyOrderMetadataResponse
 from ..orders_fbs.types.delete_boxes_from_the_supply_response import DeleteBoxesFromTheSupplyResponse
@@ -262,7 +262,7 @@ from ..products.types.color_response import ColorResponse
 from ..products.types.contacts_item import ContactsItem
 from ..products.types.contacts_list_item import ContactsListItem
 from ..products.types.country_of_origin_response import CountryOfOriginResponse
-from ..products.types.create_a_tag_response import CreateATagResponse
+from ..products.types.create_atag_response import CreateATagResponse
 from ..products.types.create_product_cards_response import CreateProductCardsResponse
 from ..products.types.create_product_cards_with_merge_response import CreateProductCardsWithMergeResponse
 from ..products.types.create_warehouse_response import CreateWarehouseResponse
@@ -334,7 +334,7 @@ from ..promotion.types.active_and_inactive_search_cluster_lists_item import (
 )
 from ..promotion.types.add_product_to_the_promotion_response import AddProductToThePromotionResponse
 from ..promotion.types.advert_list_item import AdvertListItem
-from ..promotion.types.advert_n_ms_settings import AdvertNMsSettings
+from ..promotion.types.advert_nms_settings import AdvertNmsSettings
 from ..promotion.types.advert_settings import AdvertSettings
 from ..promotion.types.advert_subject import AdvertSubject
 from ..promotion.types.adverts import Adverts
@@ -486,7 +486,7 @@ __all__ = (
     "AddUinUniqueIdentificationNumberToTheAssemblyOrderResponse",
     "AddUinUniqueIdentificationNumberToTheOrderResponse",
     "AdvertListItem",
-    "AdvertNMsSettings",
+    "AdvertNmsSettings",
     "Adverts",
     "AdvertSettings",
     "AdvertSubject",

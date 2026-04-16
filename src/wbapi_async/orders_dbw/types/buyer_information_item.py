@@ -7,7 +7,7 @@ class BuyerInformationItem(BaseType):
     """Buyer Information"""
 
     replacement_phone: str | None = Field(None, alias="replacementPhone")
-    phone: str | None = Field(None)
+    phone: str | None = Field(None, alias="phone")
     first_name: str | None = Field(None, alias="firstName")
     full_name: str | None = Field(None, alias="fullName")
     additional_phones: list[str] | None = Field(None, alias="additionalPhones")

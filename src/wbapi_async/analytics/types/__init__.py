@@ -13,7 +13,7 @@ from .orders_and_positions_by_product_search_texts_response import (
     OrdersAndPositionsByProductSearchTextsResponse,
 )
 from .pagination_by_groups_response import PaginationByGroupsResponse
-from .pagination_by_products_within_a_group_response import PaginationByProductsWithinAGroupResponse
+from .pagination_by_products_within_agroup_response import PaginationByProductsWithinAGroupResponse
 from .product import Product
 from .product_cards_statistics_per_days_response import ProductCardsStatisticsPerDaysResponse
 from .product_cards_statistics_per_period_item import ProductCardsStatisticsPerPeriodItem

@@ -8,4 +8,4 @@ from ...types.base import BaseType
 class MainPageResponse(BaseType):
     """Main Page"""
 
-    data: dict[str, Any] = Field()
+    data: dict[str, Any] = Field(alias="data")

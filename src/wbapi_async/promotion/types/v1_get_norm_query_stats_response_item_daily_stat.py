@@ -5,5 +5,5 @@ from .v1_get_norm_query_stats_response_item_stat import V1GetNormQueryStatsRespo
 
 
 class V1GetNormQueryStatsResponseItemDailyStat(BaseType):
-    date: str = Field()
-    stat: V1GetNormQueryStatsResponseItemStat | None = Field(None)
+    date: str = Field(alias="date")
+    stat: V1GetNormQueryStatsResponseItemStat | None = Field(None, alias="stat")

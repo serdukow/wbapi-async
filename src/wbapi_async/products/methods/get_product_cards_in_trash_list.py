@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import ProductCardsInTrashListItem, RequestLimit, Settings
-from ..enums.locale import Locale
 
 
 class GetProductCardsInTrashList(WbMethod):
@@ -20,5 +19,5 @@ class GetProductCardsInTrashList(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    locale: Locale | None = Field(None)
-    settings: Settings | None = Field(None)
+    locale: str | None = Field(None, alias="locale")
+    settings: Settings | None = Field(None, alias="settings")

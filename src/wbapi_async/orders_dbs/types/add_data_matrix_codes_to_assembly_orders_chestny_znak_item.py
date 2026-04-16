@@ -7,6 +7,6 @@ from .api_batch_error_response import ApiBatchErrorResponse
 class AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem(BaseType):
     """Add Data Matrix Codes to Assembly Orders (Chestny ZNAK)"""
 
-    errors: list[ApiBatchErrorResponse] | None = Field(None)
+    errors: list[ApiBatchErrorResponse] | None = Field(None, alias="errors")
     is_error: bool | None = Field(None, alias="isError")
     order_id: int | None = Field(None, alias="orderId")

@@ -2,9 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import RequestLimit, StickersForAssemblyOrdersWithDeliveryToPickupPointItem
-from ..enums.height_stickers import HeightStickers
-from ..enums.type__stickers import TypeStickers
-from ..enums.width_stickers import WidthStickers
 
 
 class GetStickersForAssemblyOrdersWithDeliveryToPickupPoint(WbMethod):
@@ -22,7 +19,7 @@ class GetStickersForAssemblyOrdersWithDeliveryToPickupPoint(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    type_: TypeStickers = Field(alias="type")
-    width: WidthStickers = Field()
-    height: HeightStickers = Field()
-    orders: list[int] = Field()
+    type_: str = Field(alias="type")
+    width: int = Field(alias="width")
+    height: int = Field(alias="height")
+    orders: list[int] = Field(alias="orders")

@@ -19,8 +19,8 @@ class GetSubjectsList(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    locale: str | None = Field(None)
-    name: str | None = Field(None)
-    limit: int | None = Field(30)
-    offset: int | None = Field(0)
+    locale: str | None = Field(None, alias="locale")
+    name: str | None = Field(None, alias="name")
+    limit: int | None = Field(30, alias="limit")
+    offset: int | None = Field(0, alias="offset")
     parent_id: int | None = Field(None, alias="parentID")

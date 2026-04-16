@@ -1,35 +1,6 @@
 from typing import Any
 
 from ..client.session.base import BaseSession
-from ..enums import (
-    AggregationLevel,
-    AvailabilityFiltersItem,
-    BidType,
-    CountriesItem,
-    Height,
-    HeightStickers,
-    Locale,
-    Mode,
-    Order,
-    PaymentType,
-    Period,
-    PinOn,
-    PlacementTypesItem,
-    PlacementTypesItem2,
-    PositionCluster,
-    Sort,
-    SortBlocked,
-    SortList,
-    SortShadowed,
-    State,
-    StatusIDsItem,
-    StockType,
-    TopOrderBy,
-    Type,
-    TypeStickers,
-    Width,
-    WidthStickers,
-)
 from ..methods import (
     AddAssemblyOrdersToTheSupply,
     AddBoxesToTheSupply,
@@ -464,6 +435,7 @@ from ..types import (
     SetWbClubDiscountsResponse,
     SizeDataItem,
     SizeGoodReq,
+    Sort,
     StatusHistoryForCrossborderOrdersItem,
     StickersForAssemblyOrdersWithDeliveryToPickupPointItem,
     StickersForCrossborderAssemblyOrdersItem,
@@ -1247,9 +1219,9 @@ class WbAPI:
         self,
         name: str | None = None,
         nms: list[int] | None = None,
-        bid_type: BidType | None = BidType.MANUAL,
-        payment_type: PaymentType | None = PaymentType.CPM,
-        placement_types: list[PlacementTypesItem2] | None = ("search",),
+        bid_type: str | None = "manual",
+        payment_type: str | None = "cpm",
+        placement_types: list[str] | None = ("search",),
     ) -> list[CreateCampaignResponse]:
         """
         The method creates campaign: - with custom bid for promotion products in search and/or
@@ -1844,9 +1816,9 @@ class WbAPI:
 
     async def get_assembly_orders_stickers(
         self,
-        type_: Type,
-        width: Width,
-        height: Height,
+        type_: str,
+        width: int,
+        height: int,
         orders: list[int] | None = None,
     ) -> list[AssemblyOrdersStickersItem]:
         """
@@ -1901,8 +1873,8 @@ class WbAPI:
 
     async def get_blocked_product_cards(
         self,
-        sort: SortBlocked,
-        order: Mode,
+        sort: str,
+        order: str,
     ) -> list[BlockedProductCardsItem]:
         """
         Returns the list of [blocked product
@@ -2028,7 +2000,7 @@ class WbAPI:
         self,
         ids: str | None = None,
         statuses: str | None = None,
-        payment_type: PaymentType | None = None,
+        payment_type: str | None = None,
     ) -> list[CampaignsInformationItem]:
         """
         The method returns information about campaigns with standard or custom bid via statuses,
@@ -2366,8 +2338,8 @@ class WbAPI:
         locale: str | None = "en",
         begin_time: str | None = None,
         end_time: str | None = None,
-        sort: SortList | None = SortList.DATE,
-        order: Mode | None = Mode.DESC,
+        sort: str | None = "date",
+        order: str | None = "desc",
         category: str | None = None,
         service_name: str | None = None,
         limit: int | None = 50,
@@ -2412,7 +2384,7 @@ class WbAPI:
         take: int,
         skip: int,
         nm_id: int | None = None,
-        order: Order | None = None,
+        order: str | None = None,
         date_from: int | None = None,
         date_to: int | None = None,
     ) -> list[FeedbacksListItem]:
@@ -2526,15 +2498,15 @@ class WbAPI:
     async def get_group_data(
         self,
         current_period: SelectedPeriod,
-        stock_type: StockType,
+        stock_type: str,
         skip_deleted_nm: bool,
-        availability_filters: list[AvailabilityFiltersItem],
+        availability_filters: list[str],
         order_by: OrderBy,
         offset: int,
-        nm_i_ds: list[int] | None = None,
-        subject_i_ds: list[int] | None = None,
+        nm_ids: list[int] | None = None,
+        subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
-        tag_i_ds: list[int] | None = None,
+        tag_ids: list[int] | None = None,
         limit: int | None = 100,
     ) -> list[GroupDataItem]:
         """
@@ -2549,18 +2521,18 @@ class WbAPI:
         :param availability_filters: Item availability:
         :param order_by: Sorting parameters
         :param offset: From which element to start outputting data
-        :param nm_i_ds: List of WB article numbers for filtering
-        :param subject_i_ds: List of subject IDs for filtering
+        :param nm_ids: List of WB article numbers for filtering
+        :param subject_ids: List of subject IDs for filtering
         :param brand_names: List of brands for filtering
-        :param tag_i_ds: List of label IDs for filtering
+        :param tag_ids: List of label IDs for filtering
         :param limit: Number of groups in the response
         :return: list[GroupDataItem]
         """
         call = GetGroupData(
-            nm_i_ds=nm_i_ds,
-            subject_i_ds=subject_i_ds,
+            nm_ids=nm_ids,
+            subject_ids=subject_ids,
             brand_names=brand_names,
-            tag_i_ds=tag_i_ds,
+            tag_ids=tag_ids,
             current_period=current_period,
             stock_type=stock_type,
             skip_deleted_nm=skip_deleted_nm,
@@ -2580,7 +2552,7 @@ class WbAPI:
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
         skip_deleted_nm: bool | None = None,
-        aggregation_level: AggregationLevel | None = AggregationLevel.DAY,
+        aggregation_level: str | None = "day",
     ) -> list[GroupedProductCardsStatisticsPerDaysItem]:
         """
         The method returns statistics for product cards by day or by week. Product cards are
@@ -2609,8 +2581,8 @@ class WbAPI:
 
     async def get_hidden_from_the_catalog(
         self,
-        sort: SortShadowed,
-        order: Mode,
+        sort: str,
+        order: str,
     ) -> list[HiddenFromTheCatalogItem]:
         """
         Returns the list of products [hidden from the
@@ -2783,7 +2755,7 @@ class WbAPI:
         take: int,
         skip: int,
         nm_id: int | None = None,
-        order: Order | None = None,
+        order: str | None = None,
     ) -> list[ListOfArchivedFeedbacksItem]:
         """
         The method allows you to get a list of archived feedbacks. The feedback becomes archived
@@ -2884,8 +2856,8 @@ class WbAPI:
 
     async def get_list_of_pinned_and_unpinned_feedback(
         self,
-        state: State | None = None,
-        pin_on: PinOn | None = None,
+        state: str | None = None,
+        pin_on: str | None = None,
         imt_id: int | None = None,
         nm_id: int | None = None,
         feedback_id: int | None = None,
@@ -3006,7 +2978,7 @@ class WbAPI:
     async def get_main_page(
         self,
         current_period: SelectedPeriod,
-        position_cluster: PositionCluster,
+        position_cluster: str,
         order_by: OrderBy,
         limit: int,
         offset: int,
@@ -3015,7 +2987,7 @@ class WbAPI:
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
         tag_ids: list[int] | None = None,
-        include_substituted_sk_us: bool | None = True,
+        include_substituted_skus: bool | None = True,
         include_search_texts: bool | None = True,
     ) -> list[MainPageResponse]:
         """
@@ -3036,8 +3008,8 @@ class WbAPI:
         :param subject_ids: List of subject IDs for filtering
         :param brand_names: List of brands for filtering
         :param tag_ids: List of label IDs for filtering
-        :param include_substituted_sk_us: Show data for direct queries with [promo
-                                          items](https://seller.wildberries.ru/help-center/article/A-524)
+        :param include_substituted_skus: Show data for direct queries with [promo
+                                         items](https://seller.wildberries.ru/help-center/article/A-524)
         :param include_search_texts: Show data for search queries without promo items
         :return: list[MainPageResponse]
         """
@@ -3050,7 +3022,7 @@ class WbAPI:
             tag_ids=tag_ids,
             position_cluster=position_cluster,
             order_by=order_by,
-            include_substituted_sk_us=include_substituted_sk_us,
+            include_substituted_skus=include_substituted_skus,
             include_search_texts=include_search_texts,
             limit=limit,
             offset=offset,
@@ -3092,8 +3064,8 @@ class WbAPI:
         self,
         advert_id: int,
         nm_ids: list[int],
-        payment_type: PaymentType,
-        placement_types: list[PlacementTypesItem],
+        payment_type: str,
+        placement_types: list[str],
     ) -> list[MinimumBidsForProductCardsItem]:
         """
         Method allows minimum bids for product cards in kopecks depending on the payment type and
@@ -3335,9 +3307,9 @@ class WbAPI:
 
     async def get_orders_stickers(
         self,
-        type_: Type,
-        width: Width,
-        height: Height,
+        type_: str,
+        width: int,
+        height: int,
         orders: list[int] | None = None,
     ) -> list[OrdersStickersItem]:
         """
@@ -3382,7 +3354,7 @@ class WbAPI:
         self,
         current_period: SelectedPeriod,
         order_by: OrderBy,
-        position_cluster: PositionCluster,
+        position_cluster: str,
         limit: int,
         offset: int,
         past_period: SelectedPeriod | None = None,
@@ -3390,7 +3362,7 @@ class WbAPI:
         subject_ids: list[int] | None = None,
         brand_names: list[str] | None = None,
         tag_ids: list[int] | None = None,
-        include_substituted_sk_us: bool | None = True,
+        include_substituted_skus: bool | None = True,
         include_search_texts: bool | None = True,
     ) -> list[PaginationByGroupsResponse]:
         """
@@ -3411,8 +3383,8 @@ class WbAPI:
         :param subject_ids: List of subject IDs for filtering
         :param brand_names: List of brands for filtering
         :param tag_ids: List of label IDs for filtering
-        :param include_substituted_sk_us: Show data for direct queries with [promo
-                                          items](https://seller.wildberries.ru/help-center/article/A-524)
+        :param include_substituted_skus: Show data for direct queries with [promo
+                                         items](https://seller.wildberries.ru/help-center/article/A-524)
         :param include_search_texts: Show data for search queries without promo items
         :return: list[PaginationByGroupsResponse]
         """
@@ -3425,7 +3397,7 @@ class WbAPI:
             tag_ids=tag_ids,
             order_by=order_by,
             position_cluster=position_cluster,
-            include_substituted_sk_us=include_substituted_sk_us,
+            include_substituted_skus=include_substituted_skus,
             include_search_texts=include_search_texts,
             limit=limit,
             offset=offset,
@@ -3438,7 +3410,7 @@ class WbAPI:
         self,
         current_period: SelectedPeriod,
         order_by: OrderBy,
-        position_cluster: PositionCluster,
+        position_cluster: str,
         limit: int,
         offset: int,
         past_period: SelectedPeriod | None = None,
@@ -3446,7 +3418,7 @@ class WbAPI:
         brand_name: str | None = None,
         tag_id: int | None = None,
         nm_ids: list[int] | None = None,
-        include_substituted_sk_us: bool | None = True,
+        include_substituted_skus: bool | None = True,
         include_search_texts: bool | None = True,
     ) -> list[PaginationByProductsWithinAGroupResponse]:
         """
@@ -3467,8 +3439,8 @@ class WbAPI:
         :param brand_name: Product name
         :param tag_id: Label ID
         :param nm_ids: WB article numbers list
-        :param include_substituted_sk_us: Show data for direct queries with [promo
-                                          items](https://seller.wildberries.ru/help-center/article/A-524)
+        :param include_substituted_skus: Show data for direct queries with [promo
+                                         items](https://seller.wildberries.ru/help-center/article/A-524)
         :param include_search_texts: Show data for search queries without promo items
         :return: list[PaginationByProductsWithinAGroupResponse]
         """
@@ -3481,7 +3453,7 @@ class WbAPI:
             nm_ids=nm_ids,
             order_by=order_by,
             position_cluster=position_cluster,
-            include_substituted_sk_us=include_substituted_sk_us,
+            include_substituted_skus=include_substituted_skus,
             include_search_texts=include_search_texts,
             limit=limit,
             offset=offset,
@@ -3571,8 +3543,8 @@ class WbAPI:
 
     async def get_pinned_and_unpinned_feedback_number(
         self,
-        state: State | None = None,
-        pin_on: PinOn | None = None,
+        state: str | None = None,
+        pin_on: str | None = None,
         imt_id: int | None = None,
         nm_id: int | None = None,
         feedback_id: int | None = None,
@@ -3675,7 +3647,7 @@ class WbAPI:
 
     async def get_product_cards_in_trash_list(
         self,
-        locale: Locale | None = None,
+        locale: str | None = None,
         settings: Settings | None = None,
     ) -> list[ProductCardsInTrashListItem]:
         """
@@ -3716,7 +3688,7 @@ class WbAPI:
         selected_period: SelectedPeriod,
         nm_ids: list[int],
         skip_deleted_nm: bool | None = None,
-        aggregation_level: AggregationLevel | None = AggregationLevel.DAY,
+        aggregation_level: str | None = "day",
     ) -> list[ProductCardsStatisticsPerDaysResponse]:
         """
         The method returns statistics for product cards by day or by week. You can get data for a
@@ -3806,12 +3778,12 @@ class WbAPI:
     async def get_product_data(
         self,
         current_period: SelectedPeriod,
-        stock_type: StockType,
+        stock_type: str,
         skip_deleted_nm: bool,
         order_by: OrderBy,
-        availability_filters: list[AvailabilityFiltersItem],
+        availability_filters: list[str],
         offset: int,
-        nm_i_ds: list[int] | None = None,
+        nm_ids: list[int] | None = None,
         subject_id: int | None = None,
         brand_name: str | None = None,
         tag_id: int | None = None,
@@ -3830,7 +3802,7 @@ class WbAPI:
         :param order_by: Sorting parameters
         :param availability_filters: Item availability:
         :param offset: From which element to start outputting data
-        :param nm_i_ds: List of WB article numbers for filtering
+        :param nm_ids: List of WB article numbers for filtering
         :param subject_id: Subject ID
         :param brand_name: Brand
         :param tag_id: Tag ID
@@ -3838,7 +3810,7 @@ class WbAPI:
         :return: list[ProductDataItem]
         """
         call = GetProductData(
-            nm_i_ds=nm_i_ds,
+            nm_ids=nm_ids,
             subject_id=subject_id,
             brand_name=brand_name,
             tag_id=tag_id,
@@ -3996,17 +3968,17 @@ class WbAPI:
 
     async def get_promotions_details(
         self,
-        promotion_i_ds: list[int],
+        promotion_ids: list[int],
     ) -> list[PromotionsDetailsItem]:
         """
         Returns detailed information about the selected promotions
 
         Source: https://dev.wildberries.ru/en/docs/openapi/promotion#tag/Promotions-Calendar/paths/~1api~1v1~1calendar~1promotions~1details/get
 
-        :param promotion_i_ds: IDs of the promotions for which information should be returned
+        :param promotion_ids: IDs of the promotions for which information should be returned
         :return: list[PromotionsDetailsItem]
         """
-        call = GetPromotionsDetails(promotion_i_ds=promotion_i_ds)
+        call = GetPromotionsDetails(promotion_ids=promotion_ids)
         return await self(call)
 
     get_promotions_details.__wrapped_cls__ = GetPromotionsDetails
@@ -4090,7 +4062,7 @@ class WbAPI:
         date_to: str,
         limit: int | None = 100000,
         rrdid: int | None = 0,
-        period: Period | None = Period.WEEKLY,
+        period: str | None = "weekly",
     ) -> list[RealizationSalesReportResponse]:
         """
         Details for the [realization
@@ -4224,7 +4196,7 @@ class WbAPI:
         self,
         date_from: str,
         date_to: str,
-        countries: list[CountriesItem] | None = None,
+        countries: list[str] | None = None,
     ) -> list[ReportOnProductsWithMandatoryLabelingItem]:
         """
         Returns operations with labeled products
@@ -4344,11 +4316,11 @@ class WbAPI:
         self,
         current_period: SelectedPeriod,
         nm_ids: list[int],
-        top_order_by: TopOrderBy,
+        top_order_by: str,
         order_by: OrderBy,
         limit: Any,
         past_period: SelectedPeriod | None = None,
-        include_substituted_sk_us: bool | None = True,
+        include_substituted_skus: bool | None = True,
         include_search_texts: bool | None = True,
     ) -> list[SearchTextsByProductResponse]:
         """
@@ -4362,8 +4334,8 @@ class WbAPI:
         :param order_by: Sorting parameters
         :param past_period: Previous period for comparison. Number of days — less than or equal to
                             `currentPeriod`
-        :param include_substituted_sk_us: Show data for direct queries with [promo
-                                          items](https://seller.wildberries.ru/help-center/article/A-524)
+        :param include_substituted_skus: Show data for direct queries with [promo
+                                         items](https://seller.wildberries.ru/help-center/article/A-524)
         :param include_search_texts: Show data for search queries without promo items
         :return: list[SearchTextsByProductResponse]
         """
@@ -4372,7 +4344,7 @@ class WbAPI:
             past_period=past_period,
             nm_ids=nm_ids,
             top_order_by=top_order_by,
-            include_substituted_sk_us=include_substituted_sk_us,
+            include_substituted_skus=include_substituted_skus,
             include_search_texts=include_search_texts,
             order_by=order_by,
             limit=limit,
@@ -4509,9 +4481,9 @@ class WbAPI:
 
     async def get_stickers_for_assembly_orders_with_delivery_to_pickup_point(
         self,
-        type_: TypeStickers,
-        width: WidthStickers,
-        height: HeightStickers,
+        type_: str,
+        width: int,
+        height: int,
         orders: list[int],
     ) -> list[StickersForAssemblyOrdersWithDeliveryToPickupPointItem]:
         """
@@ -4646,8 +4618,8 @@ class WbAPI:
         date_to: str,
         limit: int,
         date_from: str | None = None,
-        sort: Sort | None = Sort.DTBONUS,
-        order: Mode | None = Mode.DESC,
+        sort: str | None = "dtBonus",
+        order: str | None = "desc",
         offset: int | None = 0,
     ) -> list[SubstitutionsAndIncorrectAttachmentsItem]:
         """
@@ -4684,7 +4656,7 @@ class WbAPI:
         limit: int | None = 1000,
         offset: int | None = 0,
         dates: list[ModelsDateFilterRequest] | None = None,
-        status_i_ds: list[StatusIDsItem] | None = None,
+        status_ids: list[int] | None = None,
     ) -> list[SuppliesListResponse]:
         """
         The method returns a list of supplies, the last 1000 supplies by default.
@@ -4694,10 +4666,10 @@ class WbAPI:
         :param limit: Number of objects in the response
         :param offset: From which element to start outputting data
         :param dates: Filter by dates
-        :param status_i_ds: Filter the supply by statuses. Possible values:
+        :param status_ids: Filter the supply by statuses. Possible values:
         :return: list[SuppliesListResponse]
         """
-        call = GetSuppliesList(limit=limit, offset=offset, dates=dates, status_i_ds=status_i_ds)
+        call = GetSuppliesList(limit=limit, offset=offset, dates=dates, status_ids=status_ids)
         return await self(call)
 
     get_supplies_list.__wrapped_cls__ = GetSuppliesList
@@ -4800,17 +4772,17 @@ class WbAPI:
 
     async def get_supply_tariffs(
         self,
-        warehouse_i_ds: str | None = None,
+        warehouse_ids: str | None = None,
     ) -> list[SupplyTariffsResponse]:
         """
         The method returns the supply tariffs for specific warehouses for the next 14 days.
 
         Source: https://dev.wildberries.ru/en/docs/openapi/tariffs#tag/Supply-Tariffs/paths/~1api~1tariffs~1v1~1acceptance~1coefficients/get
 
-        :param warehouse_i_ds: Warehouse IDs. By default, data for all warehouses is returned
+        :param warehouse_ids: Warehouse IDs. By default, data for all warehouses is returned
         :return: list[SupplyTariffsResponse]
         """
-        call = GetSupplyTariffs(warehouse_i_ds=warehouse_i_ds)
+        call = GetSupplyTariffs(warehouse_ids=warehouse_ids)
         return await self(call)
 
     get_supply_tariffs.__wrapped_cls__ = GetSupplyTariffs
@@ -4906,7 +4878,7 @@ class WbAPI:
     async def get_the_supply_box_qr_code_stickers(
         self,
         supply_id: str,
-        type_: Type,
+        type_: str,
         trbx_ids: list[str],
     ) -> list[TheSupplyBoxQrCodeStickersItem]:
         """
@@ -4928,7 +4900,7 @@ class WbAPI:
     async def get_the_supply_qr_code(
         self,
         supply_id: str,
-        type_: Type,
+        type_: str,
     ) -> list[TheSupplyQrCodeResponse]:
         """
         Returns the QR code in svg, zplv (vertical), zplh (horizontal), png. Available only after
@@ -5367,17 +5339,17 @@ class WbAPI:
 
     async def recover_product_card_from_trash(
         self,
-        nm_i_ds: list[int] | None = None,
+        nm_ids: list[int] | None = None,
     ) -> list[RecoverProductCardFromTrashResponse]:
         """
         Returns the product card from trash
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1recover/post
 
-        :param nm_i_ds: Wildberries articles
+        :param nm_ids: Wildberries articles
         :return: list[RecoverProductCardFromTrashResponse]
         """
-        call = RecoverProductCardFromTrash(nm_i_ds=nm_i_ds)
+        call = RecoverProductCardFromTrash(nm_ids=nm_ids)
         return await self(call)
 
     recover_product_card_from_trash.__wrapped_cls__ = RecoverProductCardFromTrash
@@ -5548,7 +5520,7 @@ class WbAPI:
     async def tag_management_in_the_product_card(
         self,
         nm_id: int | None = None,
-        tags_i_ds: list[int] | None = None,
+        tags_ids: list[int] | None = None,
     ) -> list[TagManagementInTheProductCardResponse]:
         """
         The method allows to add tags to the product card and remove tags from the product card.
@@ -5558,10 +5530,10 @@ class WbAPI:
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Tags/paths/~1content~1v2~1tag~1nomenclature~1link/post
 
         :param nm_id: WB article
-        :param tags_i_ds: An array of numeric tag IDs.
+        :param tags_ids: An array of numeric tag IDs.
         :return: list[TagManagementInTheProductCardResponse]
         """
-        call = TagManagementInTheProductCard(nm_id=nm_id, tags_i_ds=tags_i_ds)
+        call = TagManagementInTheProductCard(nm_id=nm_id, tags_ids=tags_ids)
         return await self(call)
 
     tag_management_in_the_product_card.__wrapped_cls__ = TagManagementInTheProductCard
@@ -5608,7 +5580,7 @@ class WbAPI:
 
     async def transfer_product_card_to_trash(
         self,
-        nm_i_ds: list[int] | None = None,
+        nm_ids: list[int] | None = None,
     ) -> list[TransferProductCardToTrashResponse]:
         """
         Transfers the product card to the trash. In doing so, the product card would not be
@@ -5616,10 +5588,10 @@ class WbAPI:
 
         Source: https://dev.wildberries.ru/en/docs/openapi/work-with-products#tag/Product-Cards/paths/~1content~1v2~1cards~1delete~1trash/post
 
-        :param nm_i_ds: Wildberries articles
+        :param nm_ids: Wildberries articles
         :return: list[TransferProductCardToTrashResponse]
         """
-        call = TransferProductCardToTrash(nm_i_ds=nm_i_ds)
+        call = TransferProductCardToTrash(nm_ids=nm_ids)
         return await self(call)
 
     transfer_product_card_to_trash.__wrapped_cls__ = TransferProductCardToTrash

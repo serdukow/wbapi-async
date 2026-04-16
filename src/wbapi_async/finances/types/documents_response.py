@@ -7,4 +7,4 @@ from .data_4 import Data4
 class DocumentsResponse(BaseType):
     """Get Documents"""
 
-    data: Data4 | None = Field(None)
+    data: Data4 | None = Field(None, alias="data")

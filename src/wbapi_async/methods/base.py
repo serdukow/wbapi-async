@@ -105,11 +105,11 @@ class WbMethod(BaseModel, ABC):
         if http_method == "GET":
             return await wb_api.session.get(url, params=params or None, limit=limit)
         elif http_method == "POST":
-            return await wb_api.session.post(url, json=params or None, limit=limit)
+            return await wb_api.session.post(url, json=params if params is not None else {}, limit=limit)
         elif http_method == "PUT":
-            return await wb_api.session.put(url, json=params or None, limit=limit)
+            return await wb_api.session.put(url, json=params if params is not None else {}, limit=limit)
         elif http_method == "PATCH":
-            return await wb_api.session.patch(url, json=params or None, limit=limit)
+            return await wb_api.session.patch(url, json=params if params is not None else {}, limit=limit)
         elif http_method == "DELETE":
             return await wb_api.session.delete(url, params=params or None, limit=limit)
         else:

@@ -18,4 +18,4 @@ class SetPricesAndDiscounts(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    data: list[Good] = Field()
+    data: list[Good] = Field(alias="data")

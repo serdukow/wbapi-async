@@ -17,8 +17,8 @@ class TestGetPaginationByGroups:
 
         result = await api.get_pagination_by_groups(
             current_period={"start": "2023-06-01", "end": "2024-03-01"},
-            order_by={"field": "openCard", "mode": "asc"},
-            position_cluster="all",
+            order_by={"field": "openCard", "mode": "mode"},
+            position_cluster="position_cluster",
             limit=1,
             offset=1,
         )

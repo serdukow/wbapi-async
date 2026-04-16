@@ -6,7 +6,7 @@ from .color_response import ColorResponse
 from .contacts_item import ContactsItem
 from .contacts_list_item import ContactsListItem
 from .country_of_origin_response import CountryOfOriginResponse
-from .create_a_tag_response import CreateATagResponse
+from .create_atag_response import CreateATagResponse
 from .create_product_cards_response import CreateProductCardsResponse
 from .create_product_cards_with_merge_response import CreateProductCardsWithMergeResponse
 from .create_warehouse_response import CreateWarehouseResponse

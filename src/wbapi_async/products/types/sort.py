@@ -6,4 +6,4 @@ from ...types.base import BaseType
 class Sort(BaseType):
     """Sort by"""
 
-    ascending: bool | None = Field(None)
+    ascending: bool | None = Field(None, alias="ascending")

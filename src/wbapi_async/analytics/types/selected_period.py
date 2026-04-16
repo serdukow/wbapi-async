@@ -4,5 +4,5 @@ from ...types.base import BaseType
 
 
 class SelectedPeriod(BaseType):
-    start: str = Field()
-    end: str = Field()
+    start: str = Field(alias="start")
+    end: str = Field(alias="end")

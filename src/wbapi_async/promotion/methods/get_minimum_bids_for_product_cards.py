@@ -2,8 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import MinimumBidsForProductCardsItem, RequestLimit
-from ..enums.payment_type import PaymentType
-from ..enums.placement_types_item import PlacementTypesItem
 
 
 class GetMinimumBidsForProductCards(WbMethod):
@@ -22,7 +20,7 @@ class GetMinimumBidsForProductCards(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    advert_id: int = Field()
-    nm_ids: list[int] = Field()
-    payment_type: PaymentType = Field()
-    placement_types: list[PlacementTypesItem] = Field()
+    advert_id: int = Field(alias="advert_id")
+    nm_ids: list[int] = Field(alias="nm_ids")
+    payment_type: str = Field(alias="payment_type")
+    placement_types: list[str] = Field(alias="placement_types")

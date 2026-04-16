@@ -5,5 +5,5 @@ from ...types.base import BaseType
 
 class Adverts(BaseType):
     type_: int | None = Field(None, alias="type")
-    status: int | None = Field(None)
-    count: int | None = Field(None)
+    status: int | None = Field(None, alias="status")
+    count: int | None = Field(None, alias="count")

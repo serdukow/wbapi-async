@@ -17,4 +17,4 @@ class GetSubjectsForCampaigns(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    payment_type: str | None = Field("cpm")
+    payment_type: str | None = Field("cpm", alias="payment_type")

@@ -10,4 +10,4 @@ class SizeDataItem(BaseType):
     region_name: str = Field(alias="regionName")
     office_id: int = Field(alias="officeID")
     office_name: str = Field(alias="officeName")
-    metrics: Metrics = Field()
+    metrics: Metrics = Field(alias="metrics")

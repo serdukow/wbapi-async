@@ -5,5 +5,5 @@ from .nms import Nms
 
 
 class NmsItem(BaseType):
-    advert_id: int = Field()
-    nms: Nms = Field()
+    advert_id: int = Field(alias="advert_id")
+    nms: Nms = Field(alias="nms")

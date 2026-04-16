@@ -5,5 +5,5 @@ from .placements import Placements
 
 
 class PlacementsItem(BaseType):
-    advert_id: int = Field()
-    placements: Placements = Field()
+    advert_id: int = Field(alias="advert_id")
+    placements: Placements = Field(alias="placements")

@@ -8,7 +8,7 @@ from .wb_club import WbClub
 
 
 class Selected(BaseType):
-    period: SelectedPeriod = Field()
+    period: SelectedPeriod = Field(alias="period")
     open_count: int = Field(alias="openCount")
     cart_count: int = Field(alias="cartCount")
     order_count: int = Field(alias="orderCount")
@@ -24,4 +24,4 @@ class Selected(BaseType):
     time_to_ready: TimeToReady = Field(alias="timeToReady")
     localization_percent: int = Field(alias="localizationPercent")
     wb_club: WbClub = Field(alias="wbClub")
-    conversions: Conversions = Field()
+    conversions: Conversions = Field(alias="conversions")

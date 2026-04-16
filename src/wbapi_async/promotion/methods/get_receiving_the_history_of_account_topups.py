@@ -18,4 +18,4 @@ class GetReceivingTheHistoryOfAccountTopups(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     from_: str | None = Field(None, alias="from")
-    to: str | None = Field(None)
+    to: str | None = Field(None, alias="to")

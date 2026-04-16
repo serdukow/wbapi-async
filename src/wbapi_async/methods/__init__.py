@@ -8,7 +8,7 @@ from ..analytics.methods.get_orders_and_positions_by_product_search_texts import
     GetOrdersAndPositionsByProductSearchTexts,
 )
 from ..analytics.methods.get_pagination_by_groups import GetPaginationByGroups
-from ..analytics.methods.get_pagination_by_products_within_a_group import GetPaginationByProductsWithinAGroup
+from ..analytics.methods.get_pagination_by_products_within_agroup import GetPaginationByProductsWithinAGroup
 from ..analytics.methods.get_product_cards_statistics_per_days import GetProductCardsStatisticsPerDays
 from ..analytics.methods.get_product_cards_statistics_per_period import GetProductCardsStatisticsPerPeriod
 from ..analytics.methods.get_product_data import GetProductData
@@ -53,11 +53,9 @@ from ..finances.methods.get_documents_categories import GetDocumentsCategories
 from ..finances.methods.get_documents_list import GetDocumentsList
 from ..finances.methods.get_realization_sales_report import GetRealizationSalesReport
 from ..finances.methods.get_sellers_balance import GetSellersBalance
-from ..general.methods.create_an_invitation_for_a_new_user import CreateAnInvitationForANewUser
+from ..general.methods.create_an_invitation_for_anew_user import CreateAnInvitationForANewUser
 from ..general.methods.delete_user import DeleteUser
-from ..general.methods.get_a_list_of_seller_active_or_invited_users import (
-    GetAListOfSellerActiveOrInvitedUsers,
-)
+from ..general.methods.get_alist_of_seller_active_or_invited_users import GetAListOfSellerActiveOrInvitedUsers
 from ..general.methods.get_connection_check import GetConnectionCheck
 from ..general.methods.get_getting_seller_portal_news import GetGettingSellerPortalNews
 from ..general.methods.get_seller_information import GetSellerInformation
@@ -70,7 +68,7 @@ from ..in_store_pickup.methods.add_imei_to_the_assembly_orders import AddImeiToT
 from ..in_store_pickup.methods.add_uin_unique_identification_numbers_to_the_assembly_orders import (
     AddUinUniqueIdentificationNumbersToTheAssemblyOrders,
 )
-from ..in_store_pickup.methods.assign_a_data_matrix_code_to_the_assembly_order import (
+from ..in_store_pickup.methods.assign_adata_matrix_code_to_the_assembly_order import (
     AssignADataMatrixCodeToTheAssemblyOrder,
 )
 from ..in_store_pickup.methods.cancel_the_assembly_orders import CancelTheAssemblyOrders
@@ -106,7 +104,7 @@ from ..orders_dbs.methods.add_uin_unique_identification_number_to_assembly_order
 from ..orders_dbs.methods.cancel_assembly_orders import CancelAssemblyOrders
 from ..orders_dbs.methods.delete_assembly_orders_metadata import DeleteAssemblyOrdersMetadata
 from ..orders_dbs.methods.get_assembly_order_statuses import GetAssemblyOrderStatuses
-from ..orders_dbs.methods.get_b2_b_buyer_information import GetB2BBuyerInformation
+from ..orders_dbs.methods.get_b2_bbuyer_information import GetB2BBuyerInformation
 from ..orders_dbs.methods.get_information_on_paid_delivery import GetInformationOnPaidDelivery
 from ..orders_dbs.methods.get_new_orders_list import GetNewOrdersList
 from ..orders_dbs.methods.get_stickers_for_assembly_orders_with_delivery_to_pickup_point import (
@@ -153,18 +151,18 @@ from ..orders_fbs.methods.add_uin_unique_identification_number_to_the_assembly_o
     AddUinUniqueIdentificationNumberToTheAssemblyOrder,
 )
 from ..orders_fbs.methods.cancel_the_assembly_order import CancelTheAssemblyOrder
-from ..orders_fbs.methods.create_a_new_supply import CreateANewSupply
+from ..orders_fbs.methods.create_anew_supply import CreateANewSupply
 from ..orders_fbs.methods.create_pass import CreatePass
 from ..orders_fbs.methods.delete_assembly_order_metadata import DeleteAssemblyOrderMetadata
 from ..orders_fbs.methods.delete_boxes_from_the_supply import DeleteBoxesFromTheSupply
 from ..orders_fbs.methods.delete_the_pass import DeleteThePass
 from ..orders_fbs.methods.delete_the_supply import DeleteTheSupply
-from ..orders_fbs.methods.get_a_supplies_list import GetASuppliesList
 from ..orders_fbs.methods.get_all_assembly_orders_for_reshipment import GetAllAssemblyOrdersForReshipment
 from ..orders_fbs.methods.get_assembly_orders import GetAssemblyOrders
 from ..orders_fbs.methods.get_assembly_orders_metadata import GetAssemblyOrdersMetadata
 from ..orders_fbs.methods.get_assembly_orders_statuses import GetAssemblyOrdersStatuses
 from ..orders_fbs.methods.get_assembly_orders_stickers import GetAssemblyOrdersStickers
+from ..orders_fbs.methods.get_asupplies_list import GetASuppliesList
 from ..orders_fbs.methods.get_new_assembly_orders import GetNewAssemblyOrders
 from ..orders_fbs.methods.get_offices_for_pass import GetOfficesForPass
 from ..orders_fbs.methods.get_orders_with_client_information import GetOrdersWithClientInformation
@@ -188,7 +186,7 @@ from ..orders_fbw.methods.get_supply_package import GetSupplyPackage
 from ..orders_fbw.methods.get_supply_products import GetSupplyProducts
 from ..orders_fbw.methods.get_transit_directions import GetTransitDirections
 from ..orders_fbw.methods.get_warehouses_list import GetWarehousesList
-from ..products.methods.create_a_tag import CreateATag
+from ..products.methods.create_atag import CreateATag
 from ..products.methods.create_product_cards import CreateProductCards
 from ..products.methods.create_product_cards_with_merge import CreateProductCardsWithMerge
 from ..products.methods.create_warehouse import CreateWarehouse

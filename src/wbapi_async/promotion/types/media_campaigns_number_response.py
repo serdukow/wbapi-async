@@ -8,4 +8,4 @@ class MediaCampaignsNumberResponse(BaseType):
     """Media Campaigns Number"""
 
     all_: int | None = Field(None, alias="all")
-    adverts: Adverts | None = Field(None)
+    adverts: Adverts | None = Field(None, alias="adverts")

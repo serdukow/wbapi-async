@@ -21,7 +21,7 @@ class TestGetOrdersStickers:
             }
         )
 
-        result = await api.get_orders_stickers(type_="svg", width=58, height=40)
+        result = await api.get_orders_stickers(type_="type_", width=1, height=1)
 
         assert isinstance(result, list)
         assert len(result) == 1

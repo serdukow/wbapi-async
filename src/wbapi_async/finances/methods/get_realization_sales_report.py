@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import RealizationSalesReportResponse, RequestLimit
-from ..enums.period import Period
 
 
 class GetRealizationSalesReport(WbMethod):
@@ -22,6 +21,6 @@ class GetRealizationSalesReport(WbMethod):
 
     date_from: str = Field(alias="dateFrom")
     date_to: str = Field(alias="dateTo")
-    limit: int | None = Field(100000)
-    rrdid: int | None = Field(0)
-    period: Period | None = Field(Period.WEEKLY)
+    limit: int | None = Field(100000, alias="limit")
+    rrdid: int | None = Field(0, alias="rrdid")
+    period: str | None = Field("weekly", alias="period")

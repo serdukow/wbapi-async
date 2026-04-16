@@ -20,7 +20,7 @@ class GetInformationOnCompletedOrders(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    limit: int = Field()
+    limit: int = Field(alias="limit")
     next_: int = Field(alias="next")
     date_from: int = Field(alias="dateFrom")
     date_to: int = Field(alias="dateTo")

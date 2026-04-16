@@ -29,5 +29,5 @@ class GetProductCardsStatisticsPerPeriod(WbMethod):
     tag_ids: list[int] | None = Field(None, alias="tagIds")
     skip_deleted_nm: bool | None = Field(None, alias="skipDeletedNm")
     order_by: OrderBy | None = Field(None, alias="orderBy")
-    limit: int | None = Field(50)
-    offset: int | None = Field(0)
+    limit: int | None = Field(50, alias="limit")
+    offset: int | None = Field(0, alias="offset")

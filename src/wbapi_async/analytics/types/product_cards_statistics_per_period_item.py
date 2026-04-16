@@ -8,5 +8,5 @@ from .statistic import Statistic
 class ProductCardsStatisticsPerPeriodItem(BaseType):
     """Product Cards Statistics per Period"""
 
-    product: Product = Field()
-    statistic: Statistic = Field()
+    product: Product = Field(alias="product")
+    statistic: Statistic = Field(alias="statistic")

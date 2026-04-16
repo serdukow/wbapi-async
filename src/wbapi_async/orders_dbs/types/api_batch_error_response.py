@@ -4,5 +4,5 @@ from ...types.base import BaseType
 
 
 class ApiBatchErrorResponse(BaseType):
-    code: int | None = Field(None)
-    detail: str | None = Field(None)
+    code: int | None = Field(None, alias="code")
+    detail: str | None = Field(None, alias="detail")

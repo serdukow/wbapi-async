@@ -6,7 +6,7 @@ from ...types.base import BaseType
 class Timestamps(BaseType):
     """Timestamps"""
 
-    created: str = Field()
-    updated: str = Field()
-    started: str | None = Field(None)
-    deleted: str = Field()
+    created: str = Field(alias="created")
+    updated: str = Field(alias="updated")
+    started: str | None = Field(None, alias="started")
+    deleted: str = Field(alias="deleted")

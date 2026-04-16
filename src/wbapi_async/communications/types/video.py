@@ -7,5 +7,5 @@ class Video(BaseType):
     """Video structure"""
 
     preview_image: str | None = Field(None, alias="previewImage")
-    link: str | None = Field(None)
+    link: str | None = Field(None, alias="link")
     duration_sec: int | None = Field(None, alias="durationSec")

@@ -2,8 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import PinnedAndUnpinnedFeedbackNumberResponse, RequestLimit
-from ..enums.pin_on import PinOn
-from ..enums.state import State
 
 
 class GetPinnedAndUnpinnedFeedbackNumber(WbMethod):
@@ -19,8 +17,8 @@ class GetPinnedAndUnpinnedFeedbackNumber(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    state: State | None = Field(None)
-    pin_on: PinOn | None = Field(None, alias="pinOn")
+    state: str | None = Field(None, alias="state")
+    pin_on: str | None = Field(None, alias="pinOn")
     imt_id: int | None = Field(None, alias="imtId")
     nm_id: int | None = Field(None, alias="nmId")
     feedback_id: int | None = Field(None, alias="feedbackId")

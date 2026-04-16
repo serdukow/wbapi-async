@@ -19,8 +19,8 @@ class GetBuyersReturnApplications(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    is_archive: bool = Field()
+    is_archive: bool = Field(alias="is_archive")
     id_: str | None = Field(None, alias="id")
-    limit: int | None = Field(50)
-    offset: int | None = Field(0)
-    nm_id: int | None = Field(None)
+    limit: int | None = Field(50, alias="limit")
+    offset: int | None = Field(0, alias="offset")
+    nm_id: int | None = Field(None, alias="nm_id")

@@ -8,5 +8,5 @@ class SupplyPackageResponse(BaseType):
     """Supply Package"""
 
     package_code: str | None = Field(None, alias="packageCode")
-    quantity: int | None = Field(None)
-    barcodes: list[ModelsGoodInBox] | None = Field(None)
+    quantity: int | None = Field(None, alias="quantity")
+    barcodes: list[ModelsGoodInBox] | None = Field(None, alias="barcodes")

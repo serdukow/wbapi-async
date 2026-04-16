@@ -17,11 +17,11 @@ class TestGetCampaignsInformation:
                             {"bids_kopecks": None, "subject": {"id": 1, "name": "name"}, "nm_id": 1}
                         ],
                         "settings": {
-                            "payment_type": "cpm",
+                            "payment_type": "payment_type",
                             "name": "name",
                             "placements": {"search": True, "recommendations": True},
                         },
-                        "status": -1,
+                        "status": 1,
                         "timestamps": {
                             "created": "created",
                             "updated": "updated",
@@ -40,4 +40,4 @@ class TestGetCampaignsInformation:
         assert isinstance(result[0], CampaignsInformationItem)
         assert result[0].bid_type == "bid_type"
         assert result[0].id_ == 1
-        assert result[0].status == -1
+        assert result[0].status == 1

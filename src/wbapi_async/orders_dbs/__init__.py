@@ -1,7 +1,3 @@
-from .enums.delivery_type_3 import DeliveryType3
-from .enums.height_stickers import HeightStickers
-from .enums.type__stickers import TypeStickers
-from .enums.width_stickers import WidthStickers
 from .types.add_custom_declaration_to_the_orders_response import AddCustomDeclarationToTheOrdersResponse
 from .types.add_data_matrix_codes_to_assembly_orders_chestny_znak_item import (
     AddDataMatrixCodesToAssemblyOrdersChestnyZnakItem,
@@ -19,7 +15,7 @@ from .types.api_order_code_request import ApiOrderCodeRequest
 from .types.api_sgti_ns import ApiSgtiNs
 from .types.api_uin import ApiUin
 from .types.assembly_order_statuses_item import AssemblyOrderStatusesItem
-from .types.b2_b_buyer_information_item import B2BBuyerInformationItem
+from .types.b2_bbuyer_information_item import B2BBuyerInformationItem
 from .types.cancel_assembly_orders_item import CancelAssemblyOrdersItem
 from .types.delete_assembly_orders_metadata_item import DeleteAssemblyOrdersMetadataItem
 from .types.errors_item import ErrorsItem
@@ -58,9 +54,7 @@ __all__ = (
     "B2BBuyerInformationItem",
     "CancelAssemblyOrdersItem",
     "DeleteAssemblyOrdersMetadataItem",
-    "DeliveryType3",
     "ErrorsItem",
-    "HeightStickers",
     "InformationOnPaidDeliveryResponse",
     "NewOrdersListItem",
     "NotifyThatTheBuyerHasDeclinedTheOrderResponse",
@@ -71,6 +65,4 @@ __all__ = (
     "StickersForAssemblyOrdersWithDeliveryToPickupPointItem",
     "TransferToAssemblyItem",
     "TransferToDeliveryItem",
-    "TypeStickers",
-    "WidthStickers",
 )

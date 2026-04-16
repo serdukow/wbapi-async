@@ -6,8 +6,8 @@ from ...types.base import BaseType
 class SupplyTariffsResponse(BaseType):
     """Supply Tariffs"""
 
-    date: str | None = Field(None)
-    coefficient: float | None = Field(None)
+    date: str | None = Field(None, alias="date")
+    coefficient: float | None = Field(None, alias="coefficient")
     warehouse_id: int | None = Field(None, alias="warehouseID")
     warehouse_name: str | None = Field(None, alias="warehouseName")
     allow_unload: bool | None = Field(None, alias="allowUnload")

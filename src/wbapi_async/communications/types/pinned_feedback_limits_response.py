@@ -8,4 +8,4 @@ from ...types.base import BaseType
 class PinnedFeedbackLimitsResponse(BaseType):
     """Pinned Feedback Limits"""
 
-    data: dict[str, Any] = Field()
+    data: dict[str, Any] = Field(alias="data")

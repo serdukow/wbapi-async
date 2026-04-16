@@ -7,5 +7,5 @@ class SubjectsForCampaignsResponse(BaseType):
     """Subjects for Campaigns"""
 
     id_: int | None = Field(None, alias="id")
-    name: str | None = Field(None)
-    count: int | None = Field(None)
+    name: str | None = Field(None, alias="name")
+    count: int | None = Field(None, alias="count")

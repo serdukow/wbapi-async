@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import ProductCardsStatisticsPerDaysResponse, RequestLimit, SelectedPeriod
-from ..enums.aggregation_level import AggregationLevel
 
 
 class GetProductCardsStatisticsPerDays(WbMethod):
@@ -23,4 +22,4 @@ class GetProductCardsStatisticsPerDays(WbMethod):
     selected_period: SelectedPeriod = Field(alias="selectedPeriod")
     nm_ids: list[int] = Field(alias="nmIds")
     skip_deleted_nm: bool | None = Field(None, alias="skipDeletedNm")
-    aggregation_level: AggregationLevel | None = Field(AggregationLevel.DAY, alias="aggregationLevel")
+    aggregation_level: str | None = Field("day", alias="aggregationLevel")

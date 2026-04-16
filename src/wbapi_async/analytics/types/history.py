@@ -4,7 +4,7 @@ from ...types.base import BaseType
 
 
 class History(BaseType):
-    date: str = Field()
+    date: str = Field(alias="date")
     open_count: int = Field(alias="openCount")
     cart_count: int = Field(alias="cartCount")
     order_count: int = Field(alias="orderCount")

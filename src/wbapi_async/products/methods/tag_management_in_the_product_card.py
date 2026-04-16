@@ -21,4 +21,4 @@ class TagManagementInTheProductCard(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     nm_id: int | None = Field(None, alias="nmID")
-    tags_i_ds: list[int] | None = Field(None, alias="tagsIDs")
+    tags_ids: list[int] | None = Field(None, alias="tagsIDs")

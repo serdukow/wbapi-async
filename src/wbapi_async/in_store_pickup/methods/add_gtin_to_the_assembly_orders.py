@@ -24,4 +24,4 @@ class AddGtinToTheAssemblyOrders(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    orders: list[ApiGtin] = Field()
+    orders: list[ApiGtin] = Field(alias="orders")

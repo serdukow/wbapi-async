@@ -9,18 +9,18 @@ from .add_uin_unique_identification_number_to_the_assembly_order import (
     AddUinUniqueIdentificationNumberToTheAssemblyOrder,
 )
 from .cancel_the_assembly_order import CancelTheAssemblyOrder
-from .create_a_new_supply import CreateANewSupply
+from .create_anew_supply import CreateANewSupply
 from .create_pass import CreatePass
 from .delete_assembly_order_metadata import DeleteAssemblyOrderMetadata
 from .delete_boxes_from_the_supply import DeleteBoxesFromTheSupply
 from .delete_the_pass import DeleteThePass
 from .delete_the_supply import DeleteTheSupply
-from .get_a_supplies_list import GetASuppliesList
 from .get_all_assembly_orders_for_reshipment import GetAllAssemblyOrdersForReshipment
 from .get_assembly_orders import GetAssemblyOrders
 from .get_assembly_orders_metadata import GetAssemblyOrdersMetadata
 from .get_assembly_orders_statuses import GetAssemblyOrdersStatuses
 from .get_assembly_orders_stickers import GetAssemblyOrdersStickers
+from .get_asupplies_list import GetASuppliesList
 from .get_new_assembly_orders import GetNewAssemblyOrders
 from .get_offices_for_pass import GetOfficesForPass
 from .get_orders_with_client_information import GetOrdersWithClientInformation

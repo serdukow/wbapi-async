@@ -2,7 +2,6 @@ from pydantic import Field
 
 from ...methods.base import WbMethod
 from ...types import FeedbacksListItem, RequestLimit
-from ..enums.order import Order
 
 
 class GetFeedbacksList(WbMethod):
@@ -23,8 +22,8 @@ class GetFeedbacksList(WbMethod):
 
     is_answered: bool = Field(alias="isAnswered")
     nm_id: int | None = Field(None, alias="nmId")
-    take: int = Field()
-    skip: int = Field()
-    order: Order | None = Field(None)
+    take: int = Field(alias="take")
+    skip: int = Field(alias="skip")
+    order: str | None = Field(None, alias="order")
     date_from: int | None = Field(None, alias="dateFrom")
     date_to: int | None = Field(None, alias="dateTo")

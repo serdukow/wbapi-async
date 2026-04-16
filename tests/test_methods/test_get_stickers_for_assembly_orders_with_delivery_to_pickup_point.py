@@ -24,7 +24,7 @@ class TestGetStickersForAssemblyOrdersWithDeliveryToPickupPoint:
         )
 
         result = await api.get_stickers_for_assembly_orders_with_delivery_to_pickup_point(
-            type_="pdf", width=58, height=40, orders=[]
+            type_="type_", width=1, height=1, orders=[]
         )
 
         assert isinstance(result, list)

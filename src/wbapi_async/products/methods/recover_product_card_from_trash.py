@@ -18,4 +18,4 @@ class RecoverProductCardFromTrash(WbMethod):
 
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
-    nm_i_ds: list[int] | None = Field(None, alias="nmIDs")
+    nm_ids: list[int] | None = Field(None, alias="nmIDs")

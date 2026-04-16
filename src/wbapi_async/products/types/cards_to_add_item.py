@@ -8,11 +8,11 @@ from .wholesale import Wholesale
 
 
 class CardsToAddItem(BaseType):
-    brand: str | None = Field(None)
+    brand: str | None = Field(None, alias="brand")
     vendor_code: str = Field(alias="vendorCode")
-    wholesale: Wholesale | None = Field(None)
-    title: str | None = Field(None)
-    description: str | None = Field(None)
-    dimensions: Dimensions | None = Field(None)
-    sizes: list[SizesItem] | None = Field(None)
-    characteristics: list[CharacteristicsItem] | None = Field(None)
+    wholesale: Wholesale | None = Field(None, alias="wholesale")
+    title: str | None = Field(None, alias="title")
+    description: str | None = Field(None, alias="description")
+    dimensions: Dimensions | None = Field(None, alias="dimensions")
+    sizes: list[SizesItem] | None = Field(None, alias="sizes")
+    characteristics: list[CharacteristicsItem] | None = Field(None, alias="characteristics")

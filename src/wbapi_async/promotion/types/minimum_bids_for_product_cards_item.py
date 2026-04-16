@@ -7,5 +7,5 @@ from .bids_item import BidsItem
 class MinimumBidsForProductCardsItem(BaseType):
     """Minimum Bids for Product Cards"""
 
-    bids: list[BidsItem] = Field()
-    nm_id: int = Field()
+    bids: list[BidsItem] = Field(alias="bids")
+    nm_id: int = Field(alias="nm_id")

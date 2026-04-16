@@ -8,8 +8,8 @@ class Filter(BaseType):
 
     with_photo: int | None = Field(None, alias="withPhoto")
     text_search: str | None = Field(None, alias="textSearch")
-    tag_i_ds: list[int] | None = Field(None, alias="tagIDs")
+    tag_ids: list[int] | None = Field(None, alias="tagIDs")
     allowed_categories_only: bool | None = Field(None, alias="allowedCategoriesOnly")
-    object_i_ds: list[int] | None = Field(None, alias="objectIDs")
-    brands: list[str] | None = Field(None)
+    object_ids: list[int] | None = Field(None, alias="objectIDs")
+    brands: list[str] | None = Field(None, alias="brands")
     imt_id: int | None = Field(None, alias="imtID")

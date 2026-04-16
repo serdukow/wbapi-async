@@ -9,5 +9,5 @@ class StickersForAssemblyOrdersWithDeliveryToPickupPointItem(BaseType):
     order_id: int = Field(alias="orderId")
     part_a: str = Field(alias="partA")
     part_b: str = Field(alias="partB")
-    barcode: str = Field()
-    file: str = Field()
+    barcode: str = Field(alias="barcode")
+    file: str = Field(alias="file")

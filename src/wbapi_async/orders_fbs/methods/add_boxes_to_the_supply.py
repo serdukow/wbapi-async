@@ -23,4 +23,4 @@ class AddBoxesToTheSupply(WbMethod):
     request_limit: RequestLimit = RequestLimit(period=60, limit=10, interval=600, burst=5)
 
     supply_id: str = Field(alias="supplyId", exclude=True)
-    amount: int = Field()
+    amount: int = Field(alias="amount")
