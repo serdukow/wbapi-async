@@ -3,6 +3,7 @@ from .error import Error
 from .models_date_filter_request import ModelsDateFilterRequest
 from .models_good_in_box import ModelsGoodInBox
 from .models_volume_tariff import ModelsVolumeTariff
+from .supplies_id_response import SuppliesIdResponse
 from .supplies_list_response import SuppliesListResponse
 from .supply_package_response import SupplyPackageResponse
 from .supply_products_response import SupplyProductsResponse
@@ -17,6 +18,7 @@ __all__ = (
     "ModelsDateFilterRequest",
     "ModelsGoodInBox",
     "ModelsVolumeTariff",
+    "SuppliesIdResponse",
     "SuppliesListResponse",
     "SupplyPackageResponse",
     "SupplyProductsResponse",
