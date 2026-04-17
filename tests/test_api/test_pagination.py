@@ -104,6 +104,29 @@ class TestPostPagination:
 
 
 @pytest.mark.unit
+class TestCustomPaginator:
+    async def test_auto_detects_deeply_nested_list(self, api: MockedAPI) -> None:
+        # list is inside data.products — requires recursive _extract_list
+        api.add_response({"data": {"products": [{"id": i} for i in range(3)], "currency": "RUB"}, "next": 0})
+        result = await api.get_all("/api/v3/supplies")
+        assert len(result) == 3
+        assert result[0].id == 0
+
+    async def test_custom_paginator_handles_nested(self, api: MockedAPI) -> None:
+        api.add_response({"data": {"products": [{"id": 1}, {"id": 2}], "cursor": "abc"}})
+        api.add_response({"data": {"products": [{"id": 3}], "cursor": None}})
+
+        def paginator(raw):
+            items = raw["data"]["products"]
+            cursor = raw["data"].get("cursor")
+            return items, {"cursor": cursor} if cursor else None
+
+        result = await api.get_all("/api/v3/supplies", paginator=paginator)
+        assert len(result) == 3
+        assert result[0]["id"] == 1
+
+
+@pytest.mark.unit
 class TestPaginationNotSupported:
     async def test_no_list_in_response_raises(self, api: MockedAPI) -> None:
         api.add_response({"status": "ok", "count": 3})
