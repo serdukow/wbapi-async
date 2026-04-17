@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.2](https://github.com/serdukow/wbapi-async/compare/v0.7.1...v0.7.2) (2026-04-17)
+
+
+### Documentation
+
+* reorganize README with Features section first and update quick start ([aad60e9](https://github.com/serdukow/wbapi-async/commit/aad60e9fbba9ee11aed25f252714d3695ede9c78))
+* simplify README and update pagination description ([cc5d854](https://github.com/serdukow/wbapi-async/commit/cc5d854f46a12431c21a42295e03ff8f08d887f2))
+
 ## [0.7.1](https://github.com/serdukow/wbapi-async/compare/v0.7.0...v0.7.1) (2026-04-17)
 
 
