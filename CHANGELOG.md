@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.4](https://github.com/serdukow/wbapi-async/compare/v0.7.3...v0.7.4) (2026-04-17)
+
+
+### Bug Fixes
+
+* pass validation for extra allowed hosts ([02bbd2e](https://github.com/serdukow/wbapi-async/commit/02bbd2e8cb3eab88c3109c21fbf38605af1eb7de))
+* pass validation for extra allowed hosts ([9195a23](https://github.com/serdukow/wbapi-async/commit/9195a232d34a2a1182886ce731f9105e54e354b8))
+
 ## [0.7.3](https://github.com/serdukow/wbapi-async/compare/v0.7.2...v0.7.3) (2026-04-17)
 
 
