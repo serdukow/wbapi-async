@@ -477,8 +477,30 @@ def _get_limiter(path: str) -> AsyncLimiter:
     return _limiters[key]
 
 
+_EXTRA_ALLOWED_HOSTS: frozenset[str] = frozenset(
+    {
+        "card.wb.ru",
+    }
+)
+
+
 def resolve_url(path: str) -> str:
-    """Resolve full URL for a spec path like /api/v3/supplies."""
+    """Resolve full URL for a spec path like /api/v3/supplies.
+
+    If a full URL is passed, it is returned as-is provided its host is a known
+    wildberries.ru domain or is listed in ``_EXTRA_ALLOWED_HOSTS``.
+    """
+    from urllib.parse import urlparse
+
+    from .exceptions import WbAPIError
+
+    if path.startswith("https://") or path.startswith("http://"):
+        host = urlparse(path).netloc
+        known_hosts = {urlparse(v).netloc for v in _PATH_TO_BASE.values()} | _EXTRA_ALLOWED_HOSTS
+        if host not in known_hosts:
+            raise WbAPIError(detail=f"Unknown host {host!r}.")
+        return path
+
     base = _PATH_TO_BASE.get(path)
     if base:
         return base + path
@@ -489,8 +511,6 @@ def resolve_url(path: str) -> str:
         candidate = "/".join(parts[:i])
         if candidate in _PATH_TO_BASE:
             return _PATH_TO_BASE[candidate] + path
-    from .exceptions import WbAPIError
-
     raise WbAPIError(detail=f"Unknown path {path!r}. Check available paths at https://dev.wildberries.ru")
 
 

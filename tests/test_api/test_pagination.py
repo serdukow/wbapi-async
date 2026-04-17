@@ -112,6 +112,25 @@ class TestCustomPaginator:
         assert len(result) == 3
         assert result[0].id == 0
 
+    async def test_paginator_cursor_from_last_item(self, api: MockedAPI) -> None:
+        # e.g. /api/v1/supplier/reportDetailByPeriod — returns list directly,
+        # next page starts from lastChangeDate of last item
+        page1 = [{"id": i, "lastChangeDate": f"2024-01-0{i+1}"} for i in range(3)]
+        page2 = [{"id": 10, "lastChangeDate": "2024-01-10"}]
+        api.add_response(page1)
+        api.add_response(page2)
+        api.add_response([])  # empty page signals end
+
+        def paginator(raw):
+            items = raw if isinstance(raw, list) else []
+            next_params = {"dateFrom": items[-1]["lastChangeDate"]} if items else None
+            return items, next_params
+
+        result = await api.get_all("/api/v3/supplies", paginator=paginator)
+        assert len(result) == 4
+        req2 = list(api.mocked_session.requests)[1]
+        assert req2.params is not None and req2.params["dateFrom"] == "2024-01-03"
+
     async def test_custom_paginator_handles_nested(self, api: MockedAPI) -> None:
         api.add_response({"data": {"products": [{"id": 1}, {"id": 2}], "cursor": "abc"}})
         api.add_response({"data": {"products": [{"id": 3}], "cursor": None}})
