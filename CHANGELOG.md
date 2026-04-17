@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.3](https://github.com/serdukow/wbapi-async/compare/v0.7.2...v0.7.3) (2026-04-17)
+
+
+### Bug Fixes
+
+* add retry timestamp to rate limit warning log ([d8bdc20](https://github.com/serdukow/wbapi-async/commit/d8bdc20ac76614e9e2192b1fce08fc1cd0196964))
+
+
+### Documentation
+
+* reduce README header image width from 1200 to 600 ([c8d01da](https://github.com/serdukow/wbapi-async/commit/c8d01dad84903d5a4f2d39989d1e42ca99fcbcae))
+* reduce README header image width from 1200 to 600 ([8457464](https://github.com/serdukow/wbapi-async/commit/84574647072d633c4476d8f48bb47c8db4a8a0ec))
+* update pagination docs and README feature descriptions ([3b95443](https://github.com/serdukow/wbapi-async/commit/3b95443498ab9102a1106b56534d2f360bdfc959))
+* update README logo to use external CDN image ([bccba19](https://github.com/serdukow/wbapi-async/commit/bccba19cec6efd0a4c3e239fa8e33984c901f212))
+
 ## [0.7.2](https://github.com/serdukow/wbapi-async/compare/v0.7.1...v0.7.2) (2026-04-17)
 
 
