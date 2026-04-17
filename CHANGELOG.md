@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.2](https://github.com/serdukow/wbapi-async/compare/v0.6.1...v0.6.2) (2026-04-17)
+
+
+### Bug Fixes
+
+* **resolve_url:** accept full URLs with host allowlist validation ([cd3ef9b](https://github.com/serdukow/wbapi-async/commit/cd3ef9be48f620a6f6b9945eb970c2412679776d))
+* **resolve_url:** accept full URLs with host allowlist validation ([faaadee](https://github.com/serdukow/wbapi-async/commit/faaadee77ee62e8ff1b92e742e2fac17cff65e12))
+
 ## [0.6.1](https://github.com/serdukow/wbapi-async/compare/v0.6.0...v0.6.1) (2026-04-17)
 
 
