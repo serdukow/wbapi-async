@@ -5,7 +5,6 @@ from typing import Any
 from .client.session.base import BaseSession
 from .method import MethodDispatcher
 from .type import ApiResponse, _wrap
-from .utils.token import validate_token
 
 
 class WbAPI:
@@ -38,7 +37,6 @@ class WbAPI:
         *,
         timeout: int = 60,
     ) -> None:
-        validate_token(token)
         self._token = token
         self.session = session or BaseSession(base="https://wildberries.ru", timeout=timeout)
         self._dispatcher = MethodDispatcher(self.session, token)
