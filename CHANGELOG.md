@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1](https://github.com/serdukow/wbapi-async/compare/v0.7.0...v0.7.1) (2026-04-17)
+
+
+### Bug Fixes
+
+* **pagination:** support cursor-in-body for POST endpoints ([c7f7cbc](https://github.com/serdukow/wbapi-async/commit/c7f7cbcc79352fcc523a37fe17d42bca359c84c9))
+* **pagination:** support cursor-in-body for POST endpoints ([f8cb905](https://github.com/serdukow/wbapi-async/commit/f8cb9052546061e24a701ccf5dc8e5fd1293fc96))
+
 ## [0.7.0](https://github.com/serdukow/wbapi-async/compare/v0.6.2...v0.7.0) (2026-04-17)
 
 
