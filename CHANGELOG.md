@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.1](https://github.com/serdukow/wbapi-async/compare/v0.6.0...v0.6.1) (2026-04-17)
+
+
+### Bug Fixes
+
+* support deeply nested list extraction in _extract_list ([49269a3](https://github.com/serdukow/wbapi-async/commit/49269a3f89d407ef190ae21bb0d22099771459ff))
+* support deeply nested list extraction in _extract_list ([7e5bc43](https://github.com/serdukow/wbapi-async/commit/7e5bc43c01e9f9c7b13d019029acbb535d8a6f2b))
+
 ## [0.6.0](https://github.com/serdukow/wbapi-async/compare/v0.5.1...v0.6.0) (2026-04-17)
 
 
