@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0](https://github.com/serdukow/wbapi-async/compare/v0.6.2...v0.7.0) (2026-04-17)
+
+
+### Features
+
+* add rrd_id and lastChangeDate cursor pagination support ([0330dd8](https://github.com/serdukow/wbapi-async/commit/0330dd88216abc68eb99360508ada593bd5ff23e))
+* add rrd_id and lastChangeDate cursor pagination support ([b21278d](https://github.com/serdukow/wbapi-async/commit/b21278d5244bcb0bdc433eb9f278b58b8bdfc0ef))
+
 ## [0.6.2](https://github.com/serdukow/wbapi-async/compare/v0.6.1...v0.6.2) (2026-04-17)
 
 
