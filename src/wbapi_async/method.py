@@ -543,9 +543,16 @@ class MethodDispatcher:
         *,
         params: dict[str, Any] | None = None,
         json: Any | None = None,
-        unofficial: bool = False,
+        no_auth: bool = False,
     ) -> Any:
-        if not unofficial:
+        from urllib.parse import urlparse
+
+        if not no_auth and path.startswith(("https://", "http://")):
+            no_auth = urlparse(path).netloc in _EXTRA_ALLOWED_HOSTS
+
+        if no_auth:
+            self._session.headers.authorization = None
+        else:
             self._session.headers.set_token(self._token)
         url = resolve_url(path)
         limiter = _get_limiter(path)
