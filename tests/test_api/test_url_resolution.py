@@ -26,3 +26,15 @@ class TestResolveUrl:
     def test_unknown_path_raises_wbapi_error(self) -> None:
         with pytest.raises(WbAPIError):
             resolve_url("/api/v99/nonexistent/endpoint")
+
+    def test_full_url_known_host_passes(self) -> None:
+        url = resolve_url("https://marketplace-api.wildberries.ru/api/v3/supplies")
+        assert url == "https://marketplace-api.wildberries.ru/api/v3/supplies"
+
+    def test_full_url_extra_allowed_host_passes(self) -> None:
+        url = resolve_url("https://card.wb.ru/cards/detail?nm=12345")
+        assert url == "https://card.wb.ru/cards/detail?nm=12345"
+
+    def test_full_url_unknown_host_raises(self) -> None:
+        with pytest.raises(WbAPIError):
+            resolve_url("https://evil.com/steal-token")
