@@ -2,10 +2,13 @@
 
 ## Auto-pagination
 
-`get_all()` fetches all pages automatically. Pagination style is detected from the first response:
+`get_all()` fetches all pages automatically. The pagination strategy is detected from the first response:
 
-- **cursor** — response has a `next` field with non-zero value
+- **cursor (`next`)** — response has a `next` field
 - **offset** — first page is full (1000 items)
+- **body cursor** — POST endpoint with a `cursor` field in the response body
+- **`rrd_id` cursor** — response items have an `rrd_id` field
+- **`lastChangeDate` cursor** — response items have a `lastChangeDate` field
 
 ```python
 async with WbAPI(token="...") as api:
@@ -15,9 +18,20 @@ async with WbAPI(token="...") as api:
 
 Raises `PaginationNotSupported` if the endpoint doesn't paginate.
 
+## POST endpoints
+
+For endpoints that paginate via POST body, pass `body=`:
+
+```python
+cards = await api.get_all(
+    "/content/v2/get/cards/list",
+    body={"settings": {"sort": {"ascending": False}}},
+)
+```
+
 ## Custom paginator
 
-For endpoints with non-standard pagination, pass a `paginator=` callable.
+For non-standard pagination, pass a `paginator=` callable.
 It receives the raw response and returns `(items, next_params | None)`:
 
 ```python
