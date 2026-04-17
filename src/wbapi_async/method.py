@@ -547,20 +547,28 @@ class MethodDispatcher:
         from .exceptions import PaginationNotSupported
 
         paginator = kwargs.pop("paginator", None)
+        body = kwargs.pop("body", None)
+        http_method = "POST" if body is not None else "GET"
+
+        def _do_request(extra: dict[str, Any] | None = None) -> Any:
+            if body is not None:
+                json = {**body, **(extra or {})}
+                return self.dispatch(http_method, path, params=kwargs or None, json=json)
+            params = {**kwargs, **(extra or {})} or None
+            return self.dispatch(http_method, path, params=params)
 
         if paginator is not None:
             result: list[Any] = []
-            params: dict[str, Any] = dict(kwargs)
+            next_params: dict[str, Any] = {}
             while True:
-                raw = await self.dispatch("GET", path, params=params or None)
+                raw = await _do_request(next_params)
                 items, next_params = paginator(raw)
                 result.extend(items)
                 if not next_params:
                     break
-                params = {**kwargs, **next_params}
             return result
 
-        raw = await self.dispatch("GET", path, params={**kwargs, "limit": _PAGE_SIZE})
+        raw = await _do_request({"limit": _PAGE_SIZE})
         page = _extract_list(raw)
 
         if page is None:
@@ -572,7 +580,7 @@ class MethodDispatcher:
         if isinstance(raw, dict) and "next" in raw:
             cursor = raw["next"]
             while cursor:
-                raw = await self.dispatch("GET", path, params={**kwargs, "limit": _PAGE_SIZE, "next": cursor})
+                raw = await _do_request({"limit": _PAGE_SIZE, "next": cursor})
                 page = _extract_list(raw)
                 if not page:
                     break
@@ -588,7 +596,7 @@ class MethodDispatcher:
 
         offset = _PAGE_SIZE
         while True:
-            raw = await self.dispatch("GET", path, params={**kwargs, "limit": _PAGE_SIZE, "offset": offset})
+            raw = await _do_request({"limit": _PAGE_SIZE, "offset": offset})
             page = _extract_list(raw)
             if not page:
                 break

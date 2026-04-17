@@ -75,6 +75,35 @@ class TestOffsetPagination:
 
 
 @pytest.mark.unit
+class TestPostPagination:
+    async def test_body_triggers_post(self, api: MockedAPI) -> None:
+        api.add_response({"cards": [{"nmID": 1}]})
+        await api.get_all("/content/v2/get/cards/list", body={"settings": {}})
+
+        assert api.mocked_session.requests[0].method == "POST"
+
+    async def test_body_sent_in_json(self, api: MockedAPI) -> None:
+        api.add_response({"cards": [{"nmID": 1}]})
+        await api.get_all("/content/v2/get/cards/list", body={"settings": {"ascending": False}})
+
+        req = api.get_last_request()
+        assert req.json == {"settings": {"ascending": False}, "limit": 1000}
+
+    async def test_two_pages_post(self, api: MockedAPI) -> None:
+        page1 = [{"nmID": i} for i in range(1000)]
+        page2 = [{"nmID": i} for i in range(5)]
+        api.add_response({"cards": page1})
+        api.add_response({"cards": page2})
+
+        result = await api.get_all("/content/v2/get/cards/list", body={"settings": {}})
+
+        assert len(result) == 1005
+        second = list(api.mocked_session.requests)[1]
+        assert second.method == "POST"
+        assert second.json is not None and second.json["offset"] == 1000
+
+
+@pytest.mark.unit
 class TestPaginationNotSupported:
     async def test_no_list_in_response_raises(self, api: MockedAPI) -> None:
         api.add_response({"status": "ok", "count": 3})

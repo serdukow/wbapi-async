@@ -60,10 +60,14 @@ class WbAPI:
 
     async def get_all(self, path: str, **kwargs: Any) -> list[ApiResponse]:
         """
-        Fetch all pages from a paginated GET endpoint.
+        Fetch all pages from a paginated endpoint. Pass ``body=`` to use POST.
+
         Example::
             supplies = await api.get_all("/api/v3/supplies")
-            orders = await api.get_all("/api/v3/orders/new")
+            cards = await api.get_all(
+                "/content/v2/get/cards/list",
+                body={"settings": {"sort": {"ascending": False}}},
+            )
         """
         return [ApiResponse(item) for item in await self._dispatcher.fetch_all(path, **kwargs)]
 
