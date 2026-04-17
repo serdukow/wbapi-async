@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://dev.wildberries.ru/"><img src="docs/assets/logo.svg" alt="WbAPI" width="200"></a>
+  <a href="https://dev.wildberries.ru/"><img src="https://dev.wildberries.ru/images/open-graph.png" alt="WbAPI" width="1200"></a>
 </p>
 
 <div align="center">
