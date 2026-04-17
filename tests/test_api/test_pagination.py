@@ -104,6 +104,35 @@ class TestPostPagination:
 
 
 @pytest.mark.unit
+class TestAutoDetectedCursors:
+    async def test_rrd_id_cursor(self, api: MockedAPI) -> None:
+        page1 = [{"id": i, "rrd_id": i + 1} for i in range(3)]
+        page2 = [{"id": 10, "rrd_id": 10}]
+        api.add_response({"items": page1})
+        api.add_response({"items": page2})
+        api.add_response({"items": []})
+
+        result = await api.get_all("/api/v3/supplies")
+
+        assert len(result) == 4
+        req2 = list(api.mocked_session.requests)[1]
+        assert req2.params is not None and req2.params["rrdid"] == 3
+
+    async def test_last_change_date_cursor(self, api: MockedAPI) -> None:
+        page1 = [{"id": i, "lastChangeDate": f"2024-01-0{i+1}"} for i in range(3)]
+        page2 = [{"id": 10, "lastChangeDate": "2024-01-10"}]
+        api.add_response({"items": page1})
+        api.add_response({"items": page2})
+        api.add_response({"items": []})
+
+        result = await api.get_all("/api/v3/supplies")
+
+        assert len(result) == 4
+        req2 = list(api.mocked_session.requests)[1]
+        assert req2.params is not None and req2.params["dateFrom"] == "2024-01-03"
+
+
+@pytest.mark.unit
 class TestCustomPaginator:
     async def test_auto_detects_deeply_nested_list(self, api: MockedAPI) -> None:
         # list is inside data.products — requires recursive _extract_list

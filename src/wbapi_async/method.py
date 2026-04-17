@@ -601,6 +601,22 @@ class MethodDispatcher:
 
         result: list[Any] = list(page)
 
+        # rrd_id cursor — detected by presence of rrd_id in last item
+        if page and isinstance(page[-1], dict) and "rrd_id" in page[-1]:
+            while page:
+                rrd_id = page[-1]["rrd_id"]
+                page = _extract_list(await _do_request({"rrdid": rrd_id})) or []
+                result.extend(page)
+            return result
+
+        # lastChangeDate cursor — detected by presence of lastChangeDate in last item
+        if page and isinstance(page[-1], dict) and "lastChangeDate" in page[-1]:
+            while page:
+                date_from = page[-1]["lastChangeDate"]
+                page = _extract_list(await _do_request({"dateFrom": date_from})) or []
+                result.extend(page)
+            return result
+
         # Cursor pagination
         if isinstance(raw, dict) and "next" in raw:
             cursor = raw["next"]
