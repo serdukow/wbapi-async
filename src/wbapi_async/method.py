@@ -575,9 +575,9 @@ class MethodDispatcher:
         body = kwargs.pop("body", None)
         http_method = "POST" if body is not None else "GET"
 
-        def _do_request(extra: dict[str, Any] | None = None) -> Any:
+        def _do_request(extra: dict[str, Any] | None = None, extra_body: dict[str, Any] | None = None) -> Any:
             if body is not None:
-                json = {**body, **(extra or {})}
+                json = {**body, **(extra or {}), **(extra_body or {})}
                 return self.dispatch(http_method, path, params=kwargs or None, json=json)
             params = {**kwargs, **(extra or {})} or None
             return self.dispatch(http_method, path, params=params)
@@ -615,6 +615,18 @@ class MethodDispatcher:
                 date_from = page[-1]["lastChangeDate"]
                 page = _extract_list(await _do_request({"dateFrom": date_from})) or []
                 result.extend(page)
+            return result
+
+        # cursor in response body — for POST endpoints like /content/v2/get/cards/list
+        if body is not None and isinstance(raw, dict) and "cursor" in raw:
+            cursor_val = raw["cursor"]
+            while cursor_val:
+                raw = await _do_request(extra_body={"cursor": cursor_val})
+                page = _extract_list(raw)
+                if not page:
+                    break
+                result.extend(page)
+                cursor_val = raw.get("cursor") if isinstance(raw, dict) else None
             return result
 
         # Cursor pagination

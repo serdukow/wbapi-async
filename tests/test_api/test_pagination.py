@@ -104,6 +104,27 @@ class TestPostPagination:
 
 
 @pytest.mark.unit
+class TestPostBodyCursorPagination:
+    async def test_cursor_in_body_response_continues(self, api: MockedAPI) -> None:
+        api.add_response({"cards": [{"nmID": i} for i in range(3)], "cursor": "abc"})
+        api.add_response({"cards": [{"nmID": 10}], "cursor": None})
+
+        result = await api.get_all("/content/v2/get/cards/list", body={"settings": {}})
+
+        assert len(result) == 4
+        req2 = list(api.mocked_session.requests)[1]
+        assert req2.json is not None and req2.json["cursor"] == "abc"
+
+    async def test_cursor_none_stops(self, api: MockedAPI) -> None:
+        api.add_response({"cards": [{"nmID": 1}], "cursor": None})
+
+        result = await api.get_all("/content/v2/get/cards/list", body={"settings": {}})
+
+        assert len(result) == 1
+        assert len(api.mocked_session.requests) == 1
+
+
+@pytest.mark.unit
 class TestAutoDetectedCursors:
     async def test_rrd_id_cursor(self, api: MockedAPI) -> None:
         page1 = [{"id": i, "rrd_id": i + 1} for i in range(3)]
