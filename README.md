@@ -16,20 +16,27 @@
 Lightweight async Python client for the [Wildberries Seller API](https://dev.wildberries.ru).
 Just pass the path from the docs and get data back.
 
+## Features
+
+- **Zero boilerplate** — WB API changes constantly; typed models break on every schema update. Instead, responses are plain attribute-accessible dicts — `result.fieldName` just works, no models to maintain
+- **Auto-pagination** — `get_all()` fetches all page. Auto-detect for all known strategies
+- **Rate limiting** — per-endpoint limits from the spec, powered by `aiolimiter`
+- **Auto-retry** — automatic retry on HTTP 429 with `X-Ratelimit-Retry` backoff
+- **Always up to date** — path registry is [auto-generated](https://github.com/serdukow/wbapi-codegen) from WB OpenAPI specs daily
+- **Fully async** — built on `httpx` + `asyncio`
+
 ## Install
 
 ```bash
 pip install wbapi-async
 ```
 
-## Usage
+## Quick start
 
 ```python
 from wbapi_async import WbAPI
 
 async with WbAPI(token="...") as api:
-    orders = await api.get("/api/v3/orders/new", limit=10, next=0)
-    print(f"orders: {orders.orders!r}")
 
     supplies = await api.get_all("/api/v3/supplies")
     print(f"supplies: {supplies!r}")
@@ -41,14 +48,4 @@ async with WbAPI(token="...") as api:
     await api.delete("/content/v2/tag/99")
 ```
 
-Paths are used exactly as they appear in the [wb api](https://dev.wildberries.ru) —
-no need to know which subdomain serves which endpoint, it's resolved automatically.
-
-## Features
-
-- **Zero boilerplate** — no type models, no method classes, just `api.get(path, **params)`
-- **Auto-pagination** — `get_all()` fetches all page. Auto-detect for all known strategies
-- **Rate limiting** — per-endpoint limits from the spec, powered by `aiolimiter`
-- **Auto-retry** — automatic retry on HTTP 429 with `X-Ratelimit-Retry` backoff
-- **Always up to date** — path registry is [auto-generated](https://github.com/serdukow/wbapi-codegen) from WB OpenAPI specs daily
-- **Fully async** — built on `httpx` + `asyncio`
+Just copy the path straight from the [WB API](https://dev.wildberries.ru) — the correct base URL and subdomain are resolved automatically.
