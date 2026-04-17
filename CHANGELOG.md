@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0](https://github.com/serdukow/wbapi-async/compare/v0.5.1...v0.6.0) (2026-04-17)
+
+
+### Features
+
+* add POST support to `get_all` via `body=` parameter ([ff151e6](https://github.com/serdukow/wbapi-async/commit/ff151e6ab74b81e940cfa53e2bd62e0f59b70ef6))
+* add POST support to `get_all` via `body=` parameter ([b7a3085](https://github.com/serdukow/wbapi-async/commit/b7a30851eaae0fc75bebcbe96c81e0516538e11a))
+
 ## [0.5.1](https://github.com/serdukow/wbapi-async/compare/v0.5.0...v0.5.1) (2026-04-16)
 
 
