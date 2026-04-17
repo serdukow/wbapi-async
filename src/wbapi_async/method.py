@@ -504,6 +504,11 @@ def _extract_list(raw: Any) -> list[Any] | None:
         for v in raw.values():
             if isinstance(v, list):
                 return v
+        for v in raw.values():
+            if isinstance(v, dict):
+                found = _extract_list(v)
+                if found is not None:
+                    return found
     return None
 
 
