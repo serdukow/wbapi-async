@@ -4,7 +4,7 @@
 
 <div align="center">
 
-### Lightweight async client for Wildberries Seller API
+#### Lightweight async client for Wildberries Seller API
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://img.shields.io/pypi/v/wild-api.svg)](https://pypi.org/project/wild-api/)
@@ -47,22 +47,8 @@ no need to know which subdomain serves which endpoint, it's resolved automatical
 ## Features
 
 - **Zero boilerplate** — no type models, no method classes, just `api.get(path, **params)`
-- **Auto-pagination** — `get_all()` fetches all page. Currently auto-detects cursor or offset style
+- **Auto-pagination** — `get_all()` fetches all page. Auto-detect for all known strategies
 - **Rate limiting** — per-endpoint limits from the spec, powered by `aiolimiter`
 - **Auto-retry** — automatic retry on HTTP 429 with `X-Ratelimit-Retry` backoff
 - **Always up to date** — path registry is [auto-generated](https://github.com/serdukow/wbapi-codegen) from WB OpenAPI specs daily
 - **Fully async** — built on `httpx` + `asyncio`
-
-## Custom pagination
-
-For endpoints with non-standard pagination, pass a `paginator=` callable.
-If you've figured out a pattern that works well — feel free to open a [PR](https://github.com/serdukow/wbapi-async/pulls):
-
-```python
-def my_paginator(response):
-    items = response.get("result", [])
-    cursor = response.get("cursor") or None
-    return items, {"cursor": cursor} if cursor else None
-
-all_items = await api.get_all("/api/v3/custom", paginator=my_paginator)
-```
