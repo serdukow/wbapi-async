@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime, timedelta
 import logging
 from typing import Any
 
@@ -10,6 +11,7 @@ from ...exceptions import WbAPIError
 from .headers import Headers
 
 
+log = logging.getLogger("wbapi.session")
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
 
@@ -57,9 +59,13 @@ class BaseSession:
 
         if response.status_code == 429:
             retry_after = int(response.headers.get("X-Ratelimit-Retry", "1"))
-            log = logging.getLogger("wbapi.session")
             if retry_after > 60:
-                log.warning("Rate limit exceeded. Retrying in %s seconds", retry_after)
+                retry_at = datetime.now() + timedelta(seconds=retry_after)
+                log.warning(
+                    "Rate limit exceeded. Retrying in %s seconds (at %s)",
+                    retry_after,
+                    retry_at,
+                )
             await asyncio.sleep(retry_after)
             return await self._request(method, url, params=params, json=json, limit=limit)
 
