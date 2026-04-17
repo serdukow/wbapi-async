@@ -87,7 +87,7 @@ class TestPostPagination:
         await api.get_all("/content/v2/get/cards/list", body={"settings": {"ascending": False}})
 
         req = api.get_last_request()
-        assert req.json == {"settings": {"ascending": False}, "limit": 1000}
+        assert req.json == {"settings": {"ascending": False}, "limit": 1000, "offset": 0}
 
     async def test_two_pages_post(self, api: MockedAPI) -> None:
         page1 = [{"nmID": i} for i in range(1000)]

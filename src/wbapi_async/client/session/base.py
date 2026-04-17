@@ -56,7 +56,10 @@ class BaseSession:
             raise
 
         if response.status_code == 429:
-            retry_after = int(response.headers.get("X-Ratelimit-Retry", 1))
+            retry_after = int(response.headers.get("X-Ratelimit-Retry", "1"))
+            log = logging.getLogger("wbapi.session")
+            if retry_after > 60:
+                log.warning("Rate limit exceeded. Retrying in %s seconds", retry_after)
             await asyncio.sleep(retry_after)
             return await self._request(method, url, params=params, json=json, limit=limit)
 
@@ -69,10 +72,14 @@ class BaseSession:
 
         if not response.content:
             return None
+
         try:
             return response.json()
-        except Exception:
-            return None
+        except Exception as e:
+            raise WbAPIError(
+                http_status=response.status_code,
+                detail=f"Failed to decode JSON response: {response.text[:200]!r}",
+            ) from e
 
     async def get(
         self,

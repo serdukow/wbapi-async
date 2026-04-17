@@ -1,86 +1,114 @@
-"""paginate() — fetch all pages from a paginated API method.
-
-Example::
-
-    from wbapi_async import WbAPI, paginate
-
-    async with WbAPI(token="...") as api:
-        products = await paginate(
-            api.get_products_with_prices, nm_id=123
-        )
-        orders = await paginate(
-            api.get_assembly_orders, date_from=1700000000
-        )
-"""
-
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
-
-from pydantic import TypeAdapter
-
-
-if TYPE_CHECKING:
-    from ..client.api import WbAPI
+from collections.abc import Callable
+from typing import Any
 
 
-async def paginate(method: Any, **kwargs: Any) -> list[Any]:
-    """Fetch all pages from a paginated API method and return a combined list.
+_Requester = Callable[..., Any]
 
-    Args:
-        method: A bound method from WbAPI (e.g. ``api.get_products_with_prices``).
-        **kwargs: Parameters to pass to the method (excluding pagination params).
 
-    Returns:
-        Combined list of all items from all pages.
+class PaginationStrategy:
+    """Base class for pagination strategies used by fetch_all."""
 
-    Raises:
-        TypeError: If the method does not support pagination.
+    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+        """Return True if this strategy applies to the given response."""
+        raise NotImplementedError
 
-    Example::
+    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+        """Continue fetching pages and append to result. Return final list."""
+        raise NotImplementedError
 
-        products = await paginate(
-            api.get_products_with_prices, nm_id=123
-        )
-    """
-    from ..methods.pagination import PAGINATION_STRATEGIES  # lazy — avoids circular import
 
-    # Resolve WbAPI instance and WbMethod class from the bound method
-    wb_api: WbAPI = method.__self__
-    method_cls = getattr(method, "__wrapped_cls__", None)
-    if method_cls is None:
-        raise TypeError(
-            f"{method.__name__!r} does not expose __wrapped_cls__. "
-            "Only auto-generated WbAPI methods support paginate()."
-        )
+class RrdIdCursorStrategy(PaginationStrategy):
+    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+        return bool(page and isinstance(page[-1], dict) and "rrd_id" in page[-1])
 
-    pagination_key: str | None = method_cls.__dict__.get("__pagination__")
-    if not isinstance(pagination_key, str):
-        raise TypeError(f"{method_cls.__name__} does not support pagination (__pagination__ is not set)")
+    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+        from ..method import _extract_list
 
-    strategy = PAGINATION_STRATEGIES[pagination_key]
-    pagination_params = strategy.first_params()
+        while page:
+            rrd_id = page[-1]["rrd_id"]
+            page = _extract_list(await request({"rrdid": rrd_id})) or []
+            result.extend(page)
+        return result
 
-    # Use model_construct to skip validation — pagination params are injected separately
-    instance = method_cls.model_construct(**kwargs)
-    return_type = method_cls.__return__
-    adapter: TypeAdapter[Any] = TypeAdapter(list[return_type])  # type: ignore[valid-type]
 
-    wb_api.session.headers.set_token(wb_api._token)
-    url = instance._get_url(wb_api)
-    request_limit = getattr(instance, "request_limit", None)
-    http_method = getattr(instance, "__http_method__", "GET").upper()
-    base_params = instance.model_dump(by_alias=True, exclude_none=True, exclude={"request_limit"})
-    result: list[Any] = []
+class LastChangeDateStrategy(PaginationStrategy):
+    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+        return bool(page and isinstance(page[-1], dict) and "lastChangeDate" in page[-1])
 
-    while True:
-        raw = await instance._dispatch(
-            wb_api, http_method, url, {**base_params, **pagination_params}, request_limit
-        )
-        page_raw = instance._extract(raw)
-        if not page_raw:
-            return result
-        result.extend(adapter.validate_python(page_raw))
-        pagination_params = strategy.next_params(pagination_params, raw, page_raw)
-        if pagination_params is None:
-            return result
+    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+        from ..method import _extract_list
+
+        while page:
+            date_from = page[-1]["lastChangeDate"]
+            page = _extract_list(await request({"dateFrom": date_from})) or []
+            result.extend(page)
+        return result
+
+
+class BodyCursorStrategy(PaginationStrategy):
+    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+        return body is not None and isinstance(raw, dict) and bool(raw.get("cursor"))
+
+    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+        from ..method import _extract_list
+
+        cursor_val = raw.get("cursor")
+        while cursor_val:
+            raw = await request(extra_body={"cursor": cursor_val})
+            page = _extract_list(raw)
+            if not page:
+                break
+            result.extend(page)
+            cursor_val = raw.get("cursor") if isinstance(raw, dict) else None
+        return result
+
+
+class NextCursorStrategy(PaginationStrategy):
+    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+        return isinstance(raw, dict) and "next" in raw
+
+    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+        from ..method import _PAGE_SIZE, _extract_list
+
+        cursor = raw["next"]
+        while cursor:
+            raw = await request({"limit": _PAGE_SIZE, "next": cursor})
+            page = _extract_list(raw)
+            if not page:
+                break
+            result.extend(page)
+            cursor = raw.get("next") if isinstance(raw, dict) else None
+        return result
+
+
+class OffsetStrategy(PaginationStrategy):
+    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+        from ..method import _PAGE_SIZE
+
+        return len(page) >= _PAGE_SIZE
+
+    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+        from ..method import _PAGE_SIZE, _extract_list
+
+        offset = _PAGE_SIZE
+        while True:
+            raw = await request({"limit": _PAGE_SIZE, "offset": offset})
+            page = _extract_list(raw)
+            if not page:
+                break
+            result.extend(page)
+            if len(page) < _PAGE_SIZE:
+                break
+            offset += _PAGE_SIZE
+        return result
+
+
+PAGINATION_STRATEGIES: list[PaginationStrategy] = [
+    RrdIdCursorStrategy(),
+    LastChangeDateStrategy(),
+    BodyCursorStrategy(),
+    NextCursorStrategy(),
+    OffsetStrategy(),
+]
