@@ -24,7 +24,7 @@ class RrdIdCursorStrategy(PaginationStrategy):
         return bool(page and isinstance(page[-1], dict) and "rrd_id" in page[-1])
 
     async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
-        from ..method import _extract_list
+        from .._method import _extract_list
 
         while page:
             rrd_id = page[-1]["rrd_id"]
@@ -38,7 +38,7 @@ class LastChangeDateStrategy(PaginationStrategy):
         return bool(page and isinstance(page[-1], dict) and "lastChangeDate" in page[-1])
 
     async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
-        from ..method import _extract_list
+        from .._method import _extract_list
 
         while page:
             date_from = page[-1]["lastChangeDate"]
@@ -52,7 +52,7 @@ class BodyCursorStrategy(PaginationStrategy):
         return body is not None and isinstance(raw, dict) and bool(raw.get("cursor"))
 
     async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
-        from ..method import _extract_list
+        from .._method import _extract_list
 
         cursor_val = raw.get("cursor")
         while cursor_val:
@@ -70,7 +70,7 @@ class NextCursorStrategy(PaginationStrategy):
         return isinstance(raw, dict) and "next" in raw
 
     async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
-        from ..method import _PAGE_SIZE, _extract_list
+        from .._method import _PAGE_SIZE, _extract_list
 
         cursor = raw["next"]
         while cursor:
@@ -85,12 +85,12 @@ class NextCursorStrategy(PaginationStrategy):
 
 class OffsetStrategy(PaginationStrategy):
     def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
-        from ..method import _PAGE_SIZE
+        from .._method import _PAGE_SIZE
 
         return len(page) >= _PAGE_SIZE
 
     async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
-        from ..method import _PAGE_SIZE, _extract_list
+        from .._method import _PAGE_SIZE, _extract_list
 
         offset = _PAGE_SIZE
         while True:
