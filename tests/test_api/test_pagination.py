@@ -87,20 +87,20 @@ class TestPostPagination:
         await api.get_all("/content/v2/get/cards/list", body={"settings": {"ascending": False}})
 
         req = api.get_last_request()
-        assert req.json == {"settings": {"ascending": False}, "limit": 1000, "offset": 0}
+        assert req.json == {"settings": {"ascending": False}, "limit": 100, "offset": 0}
 
     async def test_two_pages_post(self, api: MockedAPI) -> None:
-        page1 = [{"nmID": i} for i in range(1000)]
+        page1 = [{"nmID": i} for i in range(100)]
         page2 = [{"nmID": i} for i in range(5)]
         api.add_response({"cards": page1})
         api.add_response({"cards": page2})
 
         result = await api.get_all("/content/v2/get/cards/list", body={"settings": {}})
 
-        assert len(result) == 1005
+        assert len(result) == 105
         second = list(api.mocked_session.requests)[1]
         assert second.method == "POST"
-        assert second.json is not None and second.json["offset"] == 1000
+        assert second.json is not None and second.json["offset"] == 100
 
 
 @pytest.mark.unit

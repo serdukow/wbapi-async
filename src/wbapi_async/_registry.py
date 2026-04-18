@@ -453,3 +453,8 @@ _LIMITS: dict[str, tuple[int, int, int, int]] = {
 # fmt: on
 
 _PUBLIC: frozenset[str] = frozenset({"card.wb.ru"})
+
+_PAGE_SIZES: dict[str, int] = {
+    "/content/v2/get/cards/list": 100,
+    "/api/v1/documents/list": 50,
+}

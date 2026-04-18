@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Any
 
 from aiolimiter import AsyncLimiter
 
-from ._registry import _BASES, _LIMITS, _PUBLIC
+from ._registry import _BASES, _LIMITS, _PAGE_SIZES, _PUBLIC
 
 
 if TYPE_CHECKING:
@@ -16,10 +16,10 @@ _limiters: dict[tuple[int, int], AsyncLimiter] = {}
 
 
 def _get_limiter(path: str) -> AsyncLimiter:
-    period_ms, limit, interval_ms, burst = _LIMITS.get(path, _DEFAULT_LIMIT)
-    key = (interval_ms, burst)
+    period, limit, interval, burst = _LIMITS.get(path, _DEFAULT_LIMIT)
+    key = (interval, burst)
     if key not in _limiters:
-        _limiters[key] = AsyncLimiter(max_rate=burst, time_period=interval_ms / 1000)
+        _limiters[key] = AsyncLimiter(max_rate=burst, time_period=interval / 1000)
     return _limiters[key]
 
 
@@ -51,9 +51,6 @@ def resolve_url(path: str) -> str:
         if candidate in _BASES:
             return _BASES[candidate] + path
     raise WbAPIError(detail=f"Unknown path {path!r}. Check available paths at https://dev.wildberries.ru")
-
-
-_PAGE_SIZE = 1000
 
 
 def _extract_list(raw: Any) -> list[Any] | None:
@@ -141,7 +138,8 @@ class MethodDispatcher:
 
         from .utils.paginate import PAGINATION_STRATEGIES
 
-        first_extra: dict[str, Any] = {"limit": _PAGE_SIZE}
+        page_size = _PAGE_SIZES.get(path, 1000)
+        first_extra: dict[str, Any] = {"limit": page_size}
         if body is not None:
             first_extra["offset"] = 0
         raw = await _do_request(first_extra)
@@ -153,8 +151,8 @@ class MethodDispatcher:
         result: list[Any] = list(page)
 
         for strategy in PAGINATION_STRATEGIES:
-            if strategy.detect(raw, page, body):
-                return await strategy.paginate(result, page, raw, _do_request)
+            if strategy.detect(raw, page, body, page_size):
+                return await strategy.paginate(result, page, raw, _do_request, page_size)
 
         if not result:
             raise PaginationNotSupported(f"{path!r} returned empty first page — pagination not supported")

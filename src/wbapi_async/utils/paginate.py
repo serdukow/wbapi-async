@@ -10,20 +10,22 @@ _Requester = Callable[..., Any]
 class PaginationStrategy:
     """Base class for pagination strategies used by fetch_all."""
 
-    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
-        """Return True if this strategy applies to the given response."""
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
         raise NotImplementedError
 
-    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
-        """Continue fetching pages and append to result. Return final list."""
+    async def paginate(
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+    ) -> list[Any]:
         raise NotImplementedError
 
 
 class RrdIdCursorStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
         return bool(page and isinstance(page[-1], dict) and "rrd_id" in page[-1])
 
-    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+    async def paginate(
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+    ) -> list[Any]:
         from .._method import _extract_list
 
         while page:
@@ -34,10 +36,12 @@ class RrdIdCursorStrategy(PaginationStrategy):
 
 
 class LastChangeDateStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
         return bool(page and isinstance(page[-1], dict) and "lastChangeDate" in page[-1])
 
-    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+    async def paginate(
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+    ) -> list[Any]:
         from .._method import _extract_list
 
         while page:
@@ -48,10 +52,12 @@ class LastChangeDateStrategy(PaginationStrategy):
 
 
 class BodyCursorStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
         return body is not None and isinstance(raw, dict) and bool(raw.get("cursor"))
 
-    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
+    async def paginate(
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+    ) -> list[Any]:
         from .._method import _extract_list
 
         cursor_val = raw.get("cursor")
@@ -66,15 +72,17 @@ class BodyCursorStrategy(PaginationStrategy):
 
 
 class NextCursorStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
         return isinstance(raw, dict) and "next" in raw
 
-    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
-        from .._method import _PAGE_SIZE, _extract_list
+    async def paginate(
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+    ) -> list[Any]:
+        from .._method import _extract_list
 
         cursor = raw["next"]
         while cursor:
-            raw = await request({"limit": _PAGE_SIZE, "next": cursor})
+            raw = await request({"limit": page_size, "next": cursor})
             page = _extract_list(raw)
             if not page:
                 break
@@ -84,24 +92,24 @@ class NextCursorStrategy(PaginationStrategy):
 
 
 class OffsetStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any) -> bool:
-        from .._method import _PAGE_SIZE
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
+        return len(page) >= page_size
 
-        return len(page) >= _PAGE_SIZE
+    async def paginate(
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+    ) -> list[Any]:
+        from .._method import _extract_list
 
-    async def paginate(self, result: list[Any], page: list[Any], raw: Any, request: _Requester) -> list[Any]:
-        from .._method import _PAGE_SIZE, _extract_list
-
-        offset = _PAGE_SIZE
+        offset = page_size
         while True:
-            raw = await request({"limit": _PAGE_SIZE, "offset": offset})
+            raw = await request({"limit": page_size, "offset": offset})
             page = _extract_list(raw)
             if not page:
                 break
             result.extend(page)
-            if len(page) < _PAGE_SIZE:
+            if len(page) < page_size:
                 break
-            offset += _PAGE_SIZE
+            offset += page_size
         return result
 
 
