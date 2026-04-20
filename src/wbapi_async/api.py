@@ -34,8 +34,8 @@ class WbAPI:
             orders = await api.get(
                 "/api/v3/orders/new", limit=10, next=0
             )
-            news = await api.get(
-                "/api/communications/v2/news", fromID=0
+            meta = await api.get(
+                "/api/v3/orders/{orderId}/meta", orderId=123
             )
         """
         return _wrap(await self._dispatcher.dispatch("GET", path, params=kwargs or None))

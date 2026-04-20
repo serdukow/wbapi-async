@@ -82,7 +82,16 @@ class MethodDispatcher:
         json: Any | None = None,
         no_auth: bool = False,
     ) -> Any:
+        import re
         from urllib.parse import urlparse
+
+        placeholders = re.findall(r"\{(\w+)\}", path)
+        if placeholders and params:
+            params = dict(params)
+            for key in placeholders:
+                if key in params:
+                    path = path.replace(f"{{{key}}}", str(params.pop(key)))
+            params = params or None
 
         if not no_auth and path.startswith(("https://", "http://")):
             no_auth = urlparse(path).netloc in _PUBLIC
