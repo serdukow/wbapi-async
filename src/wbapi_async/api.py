@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from ._method import MethodDispatcher
 from .client.session.base import BaseSession
-from .method import MethodDispatcher
 from .type import ApiResponse, _wrap
 
 
@@ -11,23 +11,7 @@ class WbAPI:
     """
     Async client for the Wildberries Seller API.
 
-    Full API reference and available paths: https://dev.wildberries.ru/openapi/
-    Swagger specs (YAML): https://dev.wildberries.ru/api/swagger/yaml/en/
-
-    Swagger specs (YAML) — use these to look up paths, parameters, and response schemas:
-    - https://dev.wildberries.ru/api/swagger/yaml/en/01-general.yaml       — warehouses, ping
-    - https://dev.wildberries.ru/api/swagger/yaml/en/02-products.yaml      — cards, stocks, prices, tags
-    - https://dev.wildberries.ru/api/swagger/yaml/en/03-orders-fbs.yaml    — orders, supplies, shipments (FBS)
-    - https://dev.wildberries.ru/api/swagger/yaml/en/04-orders-dbw.yaml    — orders DBW
-    - https://dev.wildberries.ru/api/swagger/yaml/en/05-orders-dbs.yaml    — orders DBS
-    - https://dev.wildberries.ru/api/swagger/yaml/en/06-in-store-pickup.yaml — in-store pickup
-    - https://dev.wildberries.ru/api/swagger/yaml/en/07-orders-fbw.yaml    — orders FBW
-    - https://dev.wildberries.ru/api/swagger/yaml/en/08-promotion.yaml     — ad campaigns, budgets, bids
-    - https://dev.wildberries.ru/api/swagger/yaml/en/09-communications.yaml — questions, reviews, news
-    - https://dev.wildberries.ru/api/swagger/yaml/en/10-tariffs.yaml       — tariffs
-    - https://dev.wildberries.ru/api/swagger/yaml/en/11-analytics.yaml     — sales funnel, turnover, stocks
-    - https://dev.wildberries.ru/api/swagger/yaml/en/12-reports.yaml       — detailed sales report
-    - https://dev.wildberries.ru/api/swagger/yaml/en/13-finances.yaml      — payments, penalties
+    Source: https://dev.wildberries.ru/en/docs/openapi/api-information
     """
 
     def __init__(
@@ -50,8 +34,8 @@ class WbAPI:
             orders = await api.get(
                 "/api/v3/orders/new", limit=10, next=0
             )
-            news = await api.get(
-                "/api/communications/v2/news", fromID=0
+            meta = await api.get(
+                "/api/v3/orders/{orderId}/meta", orderId=123
             )
         """
         return _wrap(await self._dispatcher.dispatch("GET", path, params=kwargs or None))

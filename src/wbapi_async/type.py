@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import Any
 
 
@@ -17,7 +18,8 @@ class ApiResponse:
         try:
             val = self._data[name]
         except (KeyError, TypeError):
-            raise AttributeError(name) from None
+            available = list(self._data) if isinstance(self._data, dict) else type(self._data).__name__
+            raise AttributeError(f"{name!r} not found. Got: {available}") from None
         return _wrap(val)
 
     def __getitem__(self, key: str | int) -> Any:
@@ -38,4 +40,12 @@ class ApiResponse:
         return f"ApiResponse({self._data!r})"
 
     def unwrap(self) -> Any:
+        return self._data
+
+    def to_snake(self) -> dict[str, Any]:
+        def convert(key: str) -> str:
+            return re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", key).lower()
+
+        if isinstance(self._data, dict):
+            return {convert(k): v for k, v in self._data.items()}
         return self._data

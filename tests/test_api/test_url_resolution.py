@@ -1,7 +1,7 @@
 import pytest
 
 from wbapi_async.exceptions import WbAPIError
-from wbapi_async.method import resolve_url
+from wbapi_async._method import resolve_url
 
 
 @pytest.mark.unit
