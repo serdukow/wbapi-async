@@ -51,7 +51,7 @@ def resolve_url(path: str) -> str:
         if candidate in _BASES:
             return _BASES[candidate] + path
     raise WBAPIError(
-        detail=f"{path!r} may be deprecated or removed. See https://dev.wildberries.ru/en/docs/openapi/api-information"
+        detail=f"{path!r} may be deprecated or removed. See https://dev.wildberries.ru/release-notes"
     )
 
 
