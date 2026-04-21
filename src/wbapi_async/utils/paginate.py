@@ -10,21 +10,21 @@ _Requester = Callable[..., Any]
 class PaginationStrategy:
     """Base class for pagination strategies used by fetch_all."""
 
-    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
         raise NotImplementedError
 
     async def paginate(
-        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int, body: Any
     ) -> list[Any]:
         raise NotImplementedError
 
 
 class RrdIdCursorStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
         return bool(page and isinstance(page[-1], dict) and "rrd_id" in page[-1])
 
     async def paginate(
-        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int, body: Any
     ) -> list[Any]:
         from .._method import _extract_list
 
@@ -36,11 +36,11 @@ class RrdIdCursorStrategy(PaginationStrategy):
 
 
 class LastChangeDateStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
         return bool(page and isinstance(page[-1], dict) and "lastChangeDate" in page[-1])
 
     async def paginate(
-        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int, body: Any
     ) -> list[Any]:
         from .._method import _extract_list
 
@@ -52,11 +52,11 @@ class LastChangeDateStrategy(PaginationStrategy):
 
 
 class BodyCursorStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
         return body is not None and isinstance(raw, dict) and bool(raw.get("cursor"))
 
     async def paginate(
-        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int, body: Any
     ) -> list[Any]:
         from .._method import _extract_list
 
@@ -72,11 +72,11 @@ class BodyCursorStrategy(PaginationStrategy):
 
 
 class NextCursorStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
         return isinstance(raw, dict) and "next" in raw
 
     async def paginate(
-        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int, body: Any
     ) -> list[Any]:
         from .._method import _extract_list
 
@@ -92,11 +92,11 @@ class NextCursorStrategy(PaginationStrategy):
 
 
 class OffsetStrategy(PaginationStrategy):
-    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int) -> bool:
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
         return len(page) >= page_size
 
     async def paginate(
-        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int, body: Any
     ) -> list[Any]:
         from .._method import _extract_list
 
@@ -113,7 +113,40 @@ class OffsetStrategy(PaginationStrategy):
         return result
 
 
+class CardsListStrategy(PaginationStrategy):
+    path = "/content/v2/get/cards/list"
+
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
+        if path != self.path:
+            return False
+        cursor = raw.get("cursor", {}) if isinstance(raw, dict) else {}
+        return isinstance(cursor, dict) and "updatedAt" in cursor
+
+    async def paginate(
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int, body: Any
+    ) -> list[Any]:
+        cursor = raw.get("cursor", {}) if isinstance(raw, dict) else {}
+        while cursor.get("total", 0) >= page_size:
+            next_body = {
+                **body,
+                "settings": {
+                    **body.get("settings", {}),
+                    "cursor": {
+                        "limit": page_size,
+                        "updatedAt": cursor["updatedAt"],
+                        "nmID": cursor["nmID"],
+                    },
+                },
+            }
+            raw = await request(full_body=next_body)
+            page = raw.get("cards", []) if isinstance(raw, dict) else []
+            result.extend(page)
+            cursor = raw.get("cursor", {}) if isinstance(raw, dict) else {}
+        return result
+
+
 PAGINATION_STRATEGIES: list[PaginationStrategy] = [
+    CardsListStrategy(),
     RrdIdCursorStrategy(),
     LastChangeDateStrategy(),
     BodyCursorStrategy(),

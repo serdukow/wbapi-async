@@ -127,7 +127,13 @@ class MethodDispatcher:
         body = kwargs.pop("body", None)
         http_method = "POST" if body is not None else "GET"
 
-        def _do_request(extra: dict[str, Any] | None = None, extra_body: dict[str, Any] | None = None) -> Any:
+        def _do_request(
+            extra: dict[str, Any] | None = None,
+            extra_body: dict[str, Any] | None = None,
+            full_body: dict[str, Any] | None = None,
+        ) -> Any:
+            if full_body is not None:
+                return self.dispatch(http_method, path, params=kwargs or None, json=full_body)
             if body is not None:
                 json = {**body, **(extra or {}), **(extra_body or {})}
                 return self.dispatch(http_method, path, params=kwargs or None, json=json)
@@ -136,12 +142,16 @@ class MethodDispatcher:
 
         if paginator is not None:
             result: list[Any] = []
-            next_params: dict[str, Any] = {}
+            next_extra: dict[str, Any] = {}
             while True:
-                raw = await _do_request(next_params)
-                items, next_params = paginator(raw)
+                if body is not None:
+                    json = next_extra if next_extra else body
+                    raw = await self.dispatch(http_method, path, params=kwargs or None, json=json)
+                else:
+                    raw = await _do_request(next_extra or None)
+                items, next_extra = paginator(raw)
                 result.extend(items)
-                if not next_params:
+                if not next_extra:
                     break
             return result
 
@@ -160,8 +170,8 @@ class MethodDispatcher:
         result: list[Any] = list(page)
 
         for strategy in PAGINATION_STRATEGIES:
-            if strategy.detect(raw, page, body, page_size):
-                return await strategy.paginate(result, page, raw, _do_request, page_size)
+            if strategy.detect(raw, page, body, page_size, path):
+                return await strategy.paginate(result, page, raw, _do_request, page_size, body)
 
         if not result:
             raise PaginationNotSupported(f"{path!r} returned empty first page — pagination not supported")
