@@ -16,7 +16,7 @@
 ## Features
 
 - **Zero boilerplate** — responses are plain attribute-accessible dicts
-- **Auto-pagination** — `get_all()` fetches all pages. Auto-detects all known strategies; you can easily add your own via a custom paginator — [see docs](https://serdukow.github.io/wbapix/advanced/pagination/)
+- **Auto-pagination** — `get_all()` fetches all pages. Auto-detects all known strategies; you can easily add your own via a custom paginator — [see docs](https://github.com/serdukow/wbapi-async/blob/dev/docs/advanced/pagination.md)
 - **Rate limiting** — per-endpoint limits powered by `aiolimiter`
 - **Auto-retry** — automatic retry
 - **Always up to date** — path registry is auto-generated
