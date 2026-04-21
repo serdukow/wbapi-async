@@ -18,7 +18,8 @@ class ApiResponse:
         try:
             val = self._data[name]
         except (KeyError, TypeError):
-            raise AttributeError(name) from None
+            available = list(self._data) if isinstance(self._data, dict) else type(self._data).__name__
+            raise AttributeError(f"{name!r} not found. Got: {available}") from None
         return _wrap(val)
 
     def __getitem__(self, key: str | int) -> Any:
