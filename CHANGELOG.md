@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.5](https://github.com/serdukow/wbapi-async/compare/v0.7.4...v0.8.0) (2026-04-21)
+
+
+### Features
+
+* **paginate:** add CardsListStrategy for /content/v2/get/cards/list ([8619c6d](https://github.com/serdukow/wbapi-async/commit/8619c6dc2367c317f9ef839ab48fbf185e2c4286))
+* support path parameter substitution in dispatch ([42e0bec](https://github.com/serdukow/wbapi-async/commit/42e0becae68acfc8580b2bfde5529b0b3822b8f0))
+* support per-endpoint page size overrides via _PAGE_SIZES ([7b362b6](https://github.com/serdukow/wbapi-async/commit/7b362b6d085f1ed0695a2e68c65b65d8ab463396))
+* **type:** add to_snake() method to ApiResponse for camelCase conversion ([67a3bde](https://github.com/serdukow/wbapi-async/commit/67a3bde9ff5f00e814b6adf0b56c579885ccb810))
+
+
+### Bug Fixes
+
+* improve AttributeError message with available keys info ([6e1cc03](https://github.com/serdukow/wbapi-async/commit/6e1cc03b15febf3cc8b85173a508579472a18533))
+
 ## [0.7.4](https://github.com/serdukow/wbapi-async/compare/v0.7.3...v0.7.4) (2026-04-17)
 
 
