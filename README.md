@@ -7,9 +7,9 @@
 #### Fast, lightweight async client for the Wildberries Seller API
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![PyPI version](https://img.shields.io/pypi/v/wild-api.svg)](https://pypi.org/project/wild-api/)
-[![Downloads](https://img.shields.io/pypi/dm/wild-api.svg)](https://pypi.python.org/pypi/wild-api)
-[![Docs](https://img.shields.io/badge/docs-serdukow.github.io-blue.svg)](https://serdukow.github.io/wbapix/)
+[![PyPI version](https://img.shields.io/pypi/v/wbapi-async.svg)](https://pypi.org/project/wild-api/)
+[![Downloads](https://img.shields.io/pypi/dm/wbapi-async.svg)](https://pypi.python.org/pypi/wild-api)
+[![Docs](https://img.shields.io/badge/docs-serdukow.github.io-blue.svg)](https://serdukow.github.io/wbapi-async/)
 
 </div>
 
@@ -19,13 +19,13 @@
 - **Auto-pagination** — `get_all()` fetches all pages. Auto-detects all known strategies; you can easily add your own via a custom paginator — [see docs](https://github.com/serdukow/wbapi-async/blob/dev/docs/advanced/pagination.md)
 - **Rate limiting** — per-endpoint limits powered by `aiolimiter`
 - **Auto-retry** — automatic retry
-- **Always up to date** — path registry is auto-generated
+- **Always up to date** — path registry is updated every monday
 - **Fully async** — built on `httpx` + `asyncio`
 
 ## Install
 
 ```bash
-pip install wbapix
+pip install wbapi-async
 ```
 
 ## Quick start
