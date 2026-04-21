@@ -1,6 +1,4 @@
-<p align="center">
-  <a href="https://dev.wildberries.ru/"><img src="https://dev.wildberries.ru/images/open-graph.png" alt="WbAPI" width="600"></a>
-</p>
+![Logo](https://dev.wildberries.ru/images/open-graph.png)
 
 <div align="center">
 
@@ -10,6 +8,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/wbapi-async.svg)](https://pypi.org/project/wild-api/)
 [![Downloads](https://img.shields.io/pypi/dm/wbapi-async.svg)](https://pypi.python.org/pypi/wild-api)
 [![Docs](https://img.shields.io/badge/docs-serdukow.github.io-blue.svg)](https://serdukow.github.io/wbapi-async/)
+[![Python](https://img.shields.io/pypi/pyversions/wbapi-async.svg)](https://pypi.org/project/wbapi-async/)
 
 </div>
 
