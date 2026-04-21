@@ -2,7 +2,7 @@ import pytest
 from pytest_httpx import HTTPXMock
 
 from wbapi_async.client.session.base import BaseSession
-from wbapi_async.exceptions import WbAPIError
+from wbapi_async.exceptions import WBAPIError
 
 
 @pytest.mark.unit
@@ -13,7 +13,7 @@ class TestBaseSession:
             json={"error": True, "errorText": "Unauthorized"},
         )
 
-        with pytest.raises(WbAPIError) as exc_info:
+        with pytest.raises(WBAPIError) as exc_info:
             await session.get("https://common-api.wildberries.ru/ping")
 
         assert exc_info.value.http_status == 401
@@ -25,7 +25,7 @@ class TestBaseSession:
             json={"error": True, "errorText": "Internal Server Error"},
         )
 
-        with pytest.raises(WbAPIError) as exc_info:
+        with pytest.raises(WBAPIError) as exc_info:
             await session.get("https://common-api.wildberries.ru/ping")
 
         assert exc_info.value.http_status == 500

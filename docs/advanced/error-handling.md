@@ -1,15 +1,15 @@
 # Error Handling
 
-## WbAPIError
+## WBAPIError
 
 Raised when the API returns HTTP >= 400.
 
 ```python
-from wbapi_async import WbAPI, WbAPIError
+from wbapi_async import WbAPI, WBAPIError
 
 try:
     result = await api.get("/api/v3/orders/new")
-except WbAPIError as e:
+except WBAPIError as e:
     print(e.http_status)      # 401, 403, 429, 500, ...
     print(e.detail)           # raw dict from API response
     print(str(e))             # errorText or detail from response

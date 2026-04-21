@@ -20,13 +20,13 @@ async with WbAPI(token="...") as api:
 
 ```
 src/wbapi_async/
-├── __init__.py          # public exports: WbAPI, WbAPIError, TokenValidationError,
+├── __init__.py          # public exports: WbAPI, WBAPIError, TokenValidationError,
 │                        #   PaginationNotSupported, ApiResponse
 ├── api.py               # WbAPI class — get/post/put/patch/delete/get_all
 ├── type.py              # ApiResponse — dict-like wrapper with attribute access
 ├── _method.py           # MethodDispatcher — dispatch, fetch_all, resolve_url
 ├── _registry.py         # _BASES, _LIMITS, _PUBLIC (AUTO-GENERATED — do not edit fmt: off block)
-├── exceptions.py        # WbAPIError, TokenValidationError, PaginationNotSupported
+├── exceptions.py        # WBAPIError, TokenValidationError, PaginationNotSupported
 ├── utils/
 │   ├── token.py         # validate_token()
 │   ├── paginate.py      # pagination strategies
@@ -74,7 +74,7 @@ Everything except the `# fmt: off` block in `_registry.py`.
 
 - **URL resolution**: `resolve_url(path)` does prefix lookup in `_BASES`.
   Dynamic paths like `/api/v3/supplies/WB-123/orders` resolve via parent prefix.
-  Unknown path → `WbAPIError` with a link to `https://dev.wildberries.ru`.
+  Unknown path → `WBAPIError` with a link to `https://dev.wildberries.ru`.
 
 - **Rate limiting**: `_LIMITS` maps path → `(period_ms, limit, interval_ms, burst)`.
   `MethodDispatcher` builds `AsyncLimiter` instances shared globally by `(interval_ms, burst)`.

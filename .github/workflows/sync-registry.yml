@@ -1,4 +1,4 @@
-name: Codegen → PR
+name: Sync Registry
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  codegen:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
@@ -57,7 +57,7 @@ jobs:
           ruff check --fix --unsafe-fixes src/ tests/ || true
           ruff format src/ tests/
 
-          PATHS_COUNT=$(grep -c '": "https://' src/wbapi_async/method.py || true)
+          PATHS_COUNT=$(grep -c '": "https://' src/wbapi_async/_registry.py || true)
 
           BODY="Automated PR from [wbapi-codegen](https://github.com/serdukow/wbapi-codegen)."$'\n'
           BODY+="Updated registry: **${PATHS_COUNT} paths** from the latest Wildberries OpenAPI specs."
@@ -72,9 +72,9 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.WBAPI_PAT }}
-          branch: codegen/auto-update
-          commit-message: "chore: auto-update generated API code"
-          title: "chore: auto-update generated API code"
+          branch: codegen/sync-registry
+          commit-message: "chore: sync _registry.py with latest WB OpenAPI specs"
+          title: "chore: sync _registry.py with latest WB OpenAPI specs"
           body: ${{ steps.codegen.outputs.body }}
           labels: codegen
           delete-branch: true
