@@ -5,7 +5,7 @@
 Raised when the API returns HTTP >= 400.
 
 ```python
-from wbapi_async import WbAPI, WBAPIError
+from wbapi import WbAPI, WBAPIError
 
 try:
     result = await api.get("/api/v3/orders/new")
@@ -27,7 +27,7 @@ except WBAPIError as e:
 Raised on `WbAPI(token=...)` if the token is malformed or expired.
 
 ```python
-from wbapi_async import WbAPI, TokenValidationError
+from wbapi import WbAPI, TokenValidationError
 
 try:
     api = WbAPI(token="bad_token")
@@ -40,7 +40,7 @@ except TokenValidationError as e:
 Raised by `get_all()` if the endpoint doesn't appear to paginate.
 
 ```python
-from wbapi_async import WbAPI, PaginationNotSupported
+from wbapi import WbAPI, PaginationNotSupported
 
 try:
     result = await api.get_all("/api/v3/warehouses")

@@ -1,9 +1,9 @@
 from collections import deque
 from typing import Any
 
-from wbapi_async import WbAPI
-from wbapi_async.client.session.base import BaseSession
-from wbapi_async.exceptions import WBAPIError
+from wbapi import WbAPI
+from wbapi.client.session.base import BaseSession
+from wbapi.exceptions import WBAPIError
 
 
 class _CapturedRequest:

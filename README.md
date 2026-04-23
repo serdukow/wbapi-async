@@ -31,7 +31,7 @@ pip install wbapi-async
 
 ```python
 import asyncio
-from wbapi_async import WbAPI
+from wbapi import WbAPI
 
 async def main():
     async with WbAPI(token="YOUR_TOKEN") as api:

@@ -23,7 +23,7 @@ Limiters are shared globally — parallel calls to the same endpoint share one b
 
 ```python
 import asyncio
-from wbapi_async import WbAPI
+from wbapi import WbAPI
 
 async with WbAPI(token="...") as api:
     results = await asyncio.gather(

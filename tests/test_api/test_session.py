@@ -1,8 +1,8 @@
 import pytest
 from pytest_httpx import HTTPXMock
 
-from wbapi_async.client.session.base import BaseSession
-from wbapi_async.exceptions import WBAPIError
+from wbapi.client.session.base import BaseSession
+from wbapi.exceptions import WBAPIError
 
 
 @pytest.mark.unit

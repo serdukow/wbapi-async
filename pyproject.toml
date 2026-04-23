@@ -66,13 +66,13 @@ Issues = "https://github.com/serdukow/wbapi-async/issues"
 
 [tool.hatch.build.targets.sdist]
 only-include = [
-    "src/wbapi_async",
+    "src/wbapi",
     "README.md",
     "pyproject.toml"
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/wbapi_async"]
+packages = ["src/wbapi"]
 
 [tool.ruff]
 exclude = [
@@ -95,7 +95,7 @@ select = ["E", "F", "I", "UP", "C4", "B", "RUF100"]
 fixable = ["ALL"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["wbapi_async"]
+known-first-party = ["wbapi"]
 force-sort-within-sections = true
 order-by-type = true
 combine-as-imports = true
