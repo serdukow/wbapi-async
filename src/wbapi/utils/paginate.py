@@ -19,6 +19,24 @@ class PaginationStrategy:
         raise NotImplementedError
 
 
+class RrdIdBodyCursorStrategy(PaginationStrategy):
+    def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
+        return bool(body is not None and page and isinstance(page[-1], dict) and "rrdId" in page[-1])
+
+    async def paginate(
+        self, result: list[Any], page: list[Any], raw: Any, request: _Requester, page_size: int, body: Any
+    ) -> list[Any]:
+        from .._method import _extract_list
+
+        while len(page) >= page_size:
+            rrd_id = page[-1]["rrdId"]
+            page = _extract_list(await request(extra_body={"rrdId": rrd_id})) or []
+            if not page:
+                break
+            result.extend(page)
+        return result
+
+
 class RrdIdCursorStrategy(PaginationStrategy):
     def detect(self, raw: Any, page: list[Any], body: Any, page_size: int, path: str) -> bool:
         return bool(page and isinstance(page[-1], dict) and "rrd_id" in page[-1])
@@ -147,6 +165,7 @@ class CardsListStrategy(PaginationStrategy):
 
 PAGINATION_STRATEGIES: list[PaginationStrategy] = [
     CardsListStrategy(),
+    RrdIdBodyCursorStrategy(),
     RrdIdCursorStrategy(),
     LastChangeDateStrategy(),
     BodyCursorStrategy(),
