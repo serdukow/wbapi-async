@@ -1,7 +1,7 @@
 import pytest
 
-from wbapi_async.exceptions import WbAPIError
-from wbapi_async._method import resolve_url
+from wbapi.exceptions import WBAPIError
+from wbapi._method import resolve_url
 
 
 @pytest.mark.unit
@@ -24,7 +24,7 @@ class TestResolveUrl:
         assert url == "https://marketplace-api.wildberries.ru/api/v3/orders/13833711/cancel"
 
     def test_unknown_path_raises_wbapi_error(self) -> None:
-        with pytest.raises(WbAPIError):
+        with pytest.raises(WBAPIError):
             resolve_url("/api/v99/nonexistent/endpoint")
 
     def test_full_url_known_host_passes(self) -> None:
@@ -36,5 +36,5 @@ class TestResolveUrl:
         assert url == "https://card.wb.ru/cards/detail?nm=12345"
 
     def test_full_url_unknown_host_raises(self) -> None:
-        with pytest.raises(WbAPIError):
+        with pytest.raises(WBAPIError):
             resolve_url("https://evil.com/steal-token")

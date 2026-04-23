@@ -2,7 +2,7 @@
 
 ```python
 import asyncio
-from wbapi_async import WbAPI
+from wbapi import WbAPI
 
 async def main():
     async with WbAPI(token="your_token_here") as api:

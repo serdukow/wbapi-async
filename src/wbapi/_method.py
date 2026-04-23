@@ -31,13 +31,13 @@ def resolve_url(path: str) -> str:
     """
     from urllib.parse import urlparse
 
-    from .exceptions import WbAPIError
+    from .exceptions import WBAPIError
 
     if path.startswith("https://") or path.startswith("http://"):
         host = urlparse(path).netloc
         known_hosts = {urlparse(v).netloc for v in _BASES.values()} | _PUBLIC
         if host not in known_hosts:
-            raise WbAPIError(detail=f"Unknown host {host!r}.")
+            raise WBAPIError(detail=f"Unknown host {host!r}.")
         return path
 
     base = _BASES.get(path)
@@ -50,7 +50,9 @@ def resolve_url(path: str) -> str:
         candidate = "/".join(parts[:i])
         if candidate in _BASES:
             return _BASES[candidate] + path
-    raise WbAPIError(detail=f"Unknown path {path!r}. Check available paths at https://dev.wildberries.ru")
+    raise WBAPIError(
+        detail=f"{path!r} may be deprecated or removed. See https://dev.wildberries.ru/release-notes"
+    )
 
 
 def _extract_list(raw: Any) -> list[Any] | None:

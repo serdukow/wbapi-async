@@ -1,11 +1,11 @@
 from typing import Any
 
 
-class BaseWbAPIError(Exception):
+class BaseWBAPIError(Exception):
     pass
 
 
-class WbAPIError(BaseWbAPIError):
+class WBAPIError(BaseWBAPIError):
     def __init__(self, http_status: int = 0, **kwargs: Any) -> None:
         self.http_status = http_status
         self.detail: dict[str, Any] = kwargs
@@ -13,9 +13,9 @@ class WbAPIError(BaseWbAPIError):
         super().__init__(msg)
 
 
-class TokenValidationError(BaseWbAPIError):
+class TokenValidationError(BaseWBAPIError):
     pass
 
 
-class PaginationNotSupported(BaseWbAPIError):
+class PaginationNotSupported(BaseWBAPIError):
     pass

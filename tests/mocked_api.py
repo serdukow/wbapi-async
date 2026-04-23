@@ -1,9 +1,9 @@
 from collections import deque
 from typing import Any
 
-from wbapi_async import WbAPI
-from wbapi_async.client.session.base import BaseSession
-from wbapi_async.exceptions import WbAPIError
+from wbapi import WbAPI
+from wbapi.client.session.base import BaseSession
+from wbapi.exceptions import WBAPIError
 
 
 class _CapturedRequest:
@@ -42,7 +42,7 @@ class MockedSession(BaseSession):
 
         status, data = self._responses.popleft()
         if status >= 400:
-            raise WbAPIError(http_status=status, **(data or {}))
+            raise WBAPIError(http_status=status, **(data or {}))
         return data
 
 

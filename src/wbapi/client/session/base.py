@@ -7,7 +7,7 @@ from aiolimiter import AsyncLimiter
 import httpx
 from httpx import RequestError
 
-from ...exceptions import WbAPIError
+from ...exceptions import WBAPIError
 from .headers import Headers
 
 
@@ -74,7 +74,7 @@ class BaseSession:
                 detail = response.json() if response.content else {}
             except Exception:
                 detail = {"detail": response.text.strip() or None}
-            raise WbAPIError(http_status=response.status_code, **detail)
+            raise WBAPIError(http_status=response.status_code, **detail)
 
         if not response.content:
             return None
@@ -82,7 +82,7 @@ class BaseSession:
         try:
             return response.json()
         except Exception as e:
-            raise WbAPIError(
+            raise WBAPIError(
                 http_status=response.status_code,
                 detail=f"Failed to decode JSON response: {response.text[:200]!r}",
             ) from e

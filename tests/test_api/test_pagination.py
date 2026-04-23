@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from tests.mocked_api import MockedAPI
-from wbapi_async import PaginationNotSupported
+from wbapi import PaginationNotSupported
 
 
 @pytest.mark.unit

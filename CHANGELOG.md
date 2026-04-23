@@ -204,7 +204,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Flat re-exports for backward compatibility (`from wbapi_async.types import AnyType`)
 - `py.typed` marker for PEP 561 type checker support
 - `__version__` attribute via `importlib.metadata`
-- Public exports for `WbAPIError` and `TokenValidationError`
+- Public exports for `WBAPIError` and `TokenValidationError`
 - GitHub Actions lint workflow with ruff autofix on PRs
 - Pull request template
 - CHANGELOG.md and CONTRIBUTING.md
