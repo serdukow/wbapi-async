@@ -1,7 +1,7 @@
 import pytest
 
 from tests.mocked_api import MockedAPI
-from wbapi.client.session import BaseSession
+from wbapi._core import BaseSession
 
 
 @pytest.fixture
@@ -11,5 +11,4 @@ def api() -> MockedAPI:
 
 @pytest.fixture
 def session() -> BaseSession:
-    s = BaseSession(base="https://test.api", timeout=5)
-    return s
+    return BaseSession(base="https://test.api", timeout=5)

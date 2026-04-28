@@ -2,7 +2,7 @@ from collections import deque
 from typing import Any
 
 from wbapi import WbAPI
-from wbapi.client.session.base import BaseSession
+from wbapi._core import BaseSession
 from wbapi.exceptions import WBAPIError
 
 
