@@ -25,53 +25,39 @@ class WbAPI:
 
     async def get(self, path: str, *, paginate: bool = False, **kwargs: Any) -> Any:
         """
-        Send a GET request. kwargs become query parameters.
-
-        Pass ``paginate=True`` to fetch all pages automatically.
-        Pagination type is detected from the first response:
-        - ``next`` in response → token continuation (Marketplace, Supplies, Q&A)
-        - ``rrd_id`` in last item → rrdid token (Finance reports, GET)
-        - fallback → offset (Analytics, Promotions, Reports)
+        Send a GET request.
 
         Example::
 
-            warehouses = await api.get("/api/v3/warehouses")
+                await api.get("/api/v3/warehouses")
             orders = await api.get(
                 "/api/v3/orders/new", limit=10, next=0
             )
 
-            all_orders = await api.get(
-                "/api/v3/orders", paginate=True, dateFrom=1698045576
+                await api.get(
+                    "/api/v1/supplier/orders",
+                    dateFrom="2026-04-28",
+                    flag=1,
+                    paginate=True
             )
         """
         return await self._dispatcher.dispatch("GET", path, params=kwargs or None, paginate=paginate)
 
     async def post(self, path: str, *, body: Any = None, paginate: bool = False, **kwargs: Any) -> Any:
         """
-        Send a POST request. ``body`` is serialized as JSON. kwargs become query parameters.
-
-        Pass ``paginate=True`` to fetch all pages automatically.
-        Pagination type is detected from the first response:
-        - ``cursor.updatedAt`` in response → cursor pagination (Content, cards list)
-        - ``rrdId`` in last item → rrdid POST pagination (Finance sales-reports/detailed)
-        - fallback → offset
+        Send a POST request.
 
         Example::
 
             await api.post(
                 "/content/v2/get/cards/list",
-                body={"settings": {"sort": {"ascending": False}}},
-            )
-
-            all_cards = await api.post(
-                "/content/v2/get/cards/list",
-                body={"settings": {"filter": {"withPhoto": -1}}},
-                paginate=True,
-            )
-
-            all_sales = await api.post(
-                "/api/finance/v1/sales-reports/detailed",
-                body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31"},
+                body={
+                    "settings": {
+                        "sort": {"ascending": True},
+                        "filter": {"withPhoto": -1},
+                        "cursor": {"limit": 100},
+                    }
+                },
                 paginate=True,
             )
         """
@@ -81,7 +67,7 @@ class WbAPI:
 
     async def put(self, path: str, *, body: Any = None, **kwargs: Any) -> Any:
         """
-        Send a PUT request. ``body`` is serialized as JSON. kwargs become query parameters.
+        Send a PUT request.
 
         Example::
 
@@ -94,23 +80,22 @@ class WbAPI:
 
     async def patch(self, path: str, *, body: Any = None, **kwargs: Any) -> Any:
         """
-        Send a PATCH request. ``body`` is serialized as JSON. kwargs become query parameters.
+        Send a PATCH request.
 
         Example::
-
-            await api.patch("/api/v3/orders/13833711/cancel")
-            await api.patch("/content/v2/tag/99", body={"name": "sale"})
+            await api.patch(
+                "/api/v3/orders/{orderId}/cancel", orderId=13833711
+            )
         """
         return await self._dispatcher.dispatch("PATCH", path, json=body, params=kwargs or None)
 
     async def delete(self, path: str, **kwargs: Any) -> Any:
         """
-        Send a DELETE request. kwargs become query parameters.
+        Send a DELETE request.
 
         Example::
 
             await api.delete("/content/v2/tag/99")
-            await api.delete("/api/v1/user", deletedUserID="abc-123")
         """
         return await self._dispatcher.dispatch("DELETE", path, params=kwargs or None)
 
