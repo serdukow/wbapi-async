@@ -229,6 +229,88 @@ class TestCursorPagination:
 
 
 @pytest.mark.unit
+class TestRrdidPostPagination:
+    """Finance sales-reports/detailed — ``rrdId`` in last item, sent in POST body."""
+
+    async def test_two_pages_rrdid_forwarded_in_body(self, api: MockedAPI) -> None:
+        # Arrange
+        page1 = [{"rrdId": i + 1, "amount": i * 10} for i in range(100000)]
+        page2 = [{"rrdId": 100001, "amount": 999}]
+        api.add_response(page1)
+        api.add_response(page2)
+        api.add_response(None)
+
+        # Act
+        result = await api.post(
+            "/api/finance/v1/sales-reports/detailed",
+            body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31"},
+            paginate=True,
+        )
+
+        # Assert
+        assert len(result) == 100001
+        req2 = api.mocked_session.requests[1]
+        assert req2.json["rrdId"] == 100000
+        assert req2.json["dateFrom"] == "2024-01-01"
+        assert req2.json["dateTo"] == "2024-01-31"
+
+    async def test_empty_page_stops(self, api: MockedAPI) -> None:
+        # Arrange
+        page1 = [{"rrdId": 5, "amount": 100}]
+        api.add_response(page1)
+        api.add_response([])
+
+        # Act
+        result = await api.post(
+            "/api/finance/v1/sales-reports/detailed",
+            body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31"},
+            paginate=True,
+        )
+
+        # Assert
+        assert len(result) == 1
+        assert len(api.mocked_session.requests) == 2
+
+    async def test_none_response_stops(self, api: MockedAPI) -> None:
+        # Arrange
+        page1 = [{"rrdId": 5, "amount": 100}]
+        api.add_response(page1)
+        api.add_response(None)
+
+        # Act
+        result = await api.post(
+            "/api/finance/v1/sales-reports/detailed",
+            body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31"},
+            paginate=True,
+        )
+
+        # Assert
+        assert len(result) == 1
+        assert len(api.mocked_session.requests) == 2
+
+    async def test_original_body_preserved_across_pages(self, api: MockedAPI) -> None:
+        # Arrange
+        page1 = [{"rrdId": 10, "amount": 100}]
+        page2 = [{"rrdId": 20, "amount": 200}]
+        api.add_response(page1)
+        api.add_response(page2)
+        api.add_response([])
+
+        # Act
+        await api.post(
+            "/api/finance/v1/sales-reports/detailed",
+            body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31", "period": "weekly"},
+            paginate=True,
+        )
+
+        # Assert — original fields preserved, rrdId updated
+        req3 = api.mocked_session.requests[2]
+        assert req3.json["dateFrom"] == "2024-01-01"
+        assert req3.json["period"] == "weekly"
+        assert req3.json["rrdId"] == 20
+
+
+@pytest.mark.unit
 class TestPaginateFirstRequest:
     """Verify limit is always sent on the first request."""
 

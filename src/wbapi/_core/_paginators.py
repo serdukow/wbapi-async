@@ -55,10 +55,9 @@ async def rrdid_token(
     page_size: int,
 ) -> list[Any]:
     """
-    Finance report token pagination: last item in the page has ``rrd_id``,
-    which is passed as ``?rrdid=<value>`` in subsequent requests.
+    Finance report token pagination (GET): last item has ``rrd_id``,
+    passed as ``?rrdid=<value>`` in subsequent requests.
 
-    Used by: Finance (reportDetailByPeriod).
     Stop condition: page is empty (API returns 204 No Content → empty list).
     """
     result: list[Any] = list(page)
@@ -67,6 +66,32 @@ async def rrdid_token(
         if not rrd_id:
             break
         raw = await request(params={**params, "rrdid": rrd_id})
+        page = _extract_list(raw) or []
+        result.extend(page)
+    return result
+
+
+async def rrdid_post(
+    raw: Any,
+    page: list[Any],
+    request: _Requester,
+    body: dict[str, Any],
+    page_size: int,
+) -> list[Any]:
+    """
+    Finance report token pagination (POST body): last item has ``rrdId``,
+    passed as ``"rrdId"`` in the request body for subsequent requests.
+
+    Used by: Finance (/api/finance/v1/sales-reports/detailed).
+    Stop condition: page is empty (API returns 204 No Content → empty list).
+    """
+    result: list[Any] = list(page)
+    while page:
+        last = page[-1]
+        rrd_id = last.get("rrdId") if isinstance(last, dict) else None
+        if not rrd_id:
+            break
+        raw = await request(body={**body, "rrdId": rrd_id})
         page = _extract_list(raw) or []
         result.extend(page)
     return result
@@ -146,15 +171,19 @@ def detect_and_paginate(
     to the appropriate paginator coroutine.
 
     Detection order (first match wins):
-    1. CursorPaginator  — POST body with ``cursor.updatedAt`` in response
-    2. NextTokenPaginator — ``next`` key in response root
-    3. RrdIdTokenPaginator — last item in page has ``rrd_id``
-    4. OffsetPaginator  — page length == page_size (fallback)
+    1. CursorPaginator      — POST body with ``cursor.updatedAt`` in response
+    2. RrdIdPostPaginator   — POST body, last item has ``rrdId``
+    3. NextTokenPaginator   — ``next`` key in response root
+    4. RrdIdTokenPaginator  — last item in page has ``rrd_id`` (GET)
+    5. OffsetPaginator      — fallback
     """
     if body is not None and isinstance(raw, dict):
         cursor_obj = raw.get("cursor", {})
         if isinstance(cursor_obj, dict) and "updatedAt" in cursor_obj:
             return cursor(raw, page, request, body, page_size)
+
+    if body is not None and page and isinstance(page[-1], dict) and "rrdId" in page[-1]:
+        return rrdid_post(raw, page, request, body, page_size)
 
     if isinstance(raw, dict) and "next" in raw:
         return next_token(raw, page, request, params, page_size)
