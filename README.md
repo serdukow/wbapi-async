@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://dev.wildberries.ru"><img src="https://i.ibb.co/dwsMVbNC/logo.png" alt="wbapi"></a>
+  <a href="https://dev.wildberries.ru"><img src="https://i.postimg.cc/q7qHdnRF/svgviewer-output-2-1-3.png" alt="wbapi"></a>
 </p>
 
 <p align="center">
@@ -10,7 +10,7 @@
 <img src="https://img.shields.io/pypi/dm/wbapi-async.svg" alt="Downloads">
 </a>
 <a href="https://pypi.python.org/pypi/wbapi-async">
-<img src="https://img.shields.io/badge/status-stable-green.svg?logo=git&logoColor=green" alt="Status">
+<img src="https://img.shields.io/badge/status-stable-52C72D.svg?logo=git&logoColor=52C72D" alt="Status">
 </a>
 <a href="https://pypi.org/project/wbapi-async">
 <img src="https://img.shields.io/pypi/pyversions/wbapi-async.svg" alt="Python">
