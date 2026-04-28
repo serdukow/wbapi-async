@@ -16,13 +16,12 @@ class WbAPI:
     def __init__(
         self,
         token: str,
-        session: BaseSession | None = None,
         *,
         timeout: int = 60,
     ) -> None:
         self._token = token
-        self.session = session or BaseSession(base="https://wildberries.ru", timeout=timeout)
-        self._dispatcher = MethodDispatcher(self.session, token)
+        self._session = BaseSession(base="https://wildberries.ru", timeout=timeout)
+        self._dispatcher = MethodDispatcher(self._session, token)
 
     async def get(self, path: str, *, paginate: bool = False, **kwargs: Any) -> WBType:
         """
@@ -99,4 +98,4 @@ class WbAPI:
         return self
 
     async def __aexit__(self, *_: Any) -> None:
-        await self.session.close()
+        await self._session.close()
