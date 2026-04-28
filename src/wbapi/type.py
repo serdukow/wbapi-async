@@ -5,10 +5,10 @@ from typing import Any
 
 
 def _wrap(val: Any) -> Any:
-    return ApiResponse(val) if isinstance(val, (dict | list)) else val
+    return WBType(val) if isinstance(val, (dict | list)) else val
 
 
-class ApiResponse:
+class WBType:
     __slots__ = ("_data",)
 
     def __init__(self, data: Any) -> None:
@@ -37,7 +37,7 @@ class ApiResponse:
         return bool(self._data)
 
     def __repr__(self) -> str:
-        return f"ApiResponse({self._data!r})"
+        return f"WBType({self._data!r})"
 
     def unwrap(self) -> Any:
         return self._data

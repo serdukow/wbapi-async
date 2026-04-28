@@ -16,12 +16,12 @@ async def fetch_all(
     params: dict[str, Any] | None,
     body: dict[str, Any] | None,
 ) -> list[Any]:
-    init_params = {**(params or {}), "limit": page_size}
     if body is not None:
-        init_body = {**body}
-        raw = await request(params=init_params or None, body=init_body)
+        raw = await request(params=params or None, body=body)
+        page = _extract_list(raw) or []
+        return await detect_and_paginate(raw, page, request, {}, body, page_size)
     else:
+        init_params = {**(params or {}), "limit": page_size}
         raw = await request(params=init_params)
-
-    page = _extract_list(raw) or []
-    return await detect_and_paginate(raw, page, request, init_params, body, page_size)
+        page = _extract_list(raw) or []
+        return await detect_and_paginate(raw, page, request, init_params, None, page_size)

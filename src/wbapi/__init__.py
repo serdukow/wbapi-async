@@ -1,8 +1,8 @@
 from importlib.metadata import version
 
-from ._core.type import ApiResponse
 from ._main import WbAPI
 from .exceptions import TokenValidationError, WBAPIError
+from .type import WBType
 
 
 __version__ = version("wbapi-async")
@@ -11,6 +11,6 @@ __all__ = (
     "WbAPI",
     "WBAPIError",
     "TokenValidationError",
-    "ApiResponse",
+    "WBType",
     "__version__",
 )

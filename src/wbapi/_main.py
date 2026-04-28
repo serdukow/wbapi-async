@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from ._core import BaseSession, MethodDispatcher
+from .type import WBType
 
 
 class WbAPI:
@@ -15,63 +16,43 @@ class WbAPI:
     def __init__(
         self,
         token: str,
-        session: BaseSession | None = None,
         *,
         timeout: int = 60,
     ) -> None:
         self._token = token
-        self.session = session or BaseSession(base="https://wildberries.ru", timeout=timeout)
-        self._dispatcher = MethodDispatcher(self.session, token)
+        self._session = BaseSession(base="https://wildberries.ru", timeout=timeout)
+        self._dispatcher = MethodDispatcher(self._session, token)
 
-    async def get(self, path: str, *, paginate: bool = False, **kwargs: Any) -> Any:
+    async def get(self, path: str, *, paginate: bool = False, **kwargs: Any) -> WBType:
         """
-        Send a GET request. kwargs become query parameters.
-
-        Pass ``paginate=True`` to fetch all pages automatically.
-        Pagination type is detected from the first response:
-        - ``next`` in response → token continuation (Marketplace, Supplies, Q&A)
-        - ``rrd_id`` in last item → rrdid token (Finance reports, GET)
-        - fallback → offset (Analytics, Promotions, Reports)
+        Send a GET request.
 
         Example::
 
-            warehouses = await api.get("/api/v3/warehouses")
-            orders = await api.get(
-                "/api/v3/orders/new", limit=10, next=0
-            )
-
-            all_orders = await api.get(
-                "/api/v3/orders", paginate=True, dateFrom=1698045576
+            await api.get(
+                "/api/v1/supplier/orders",
+                dateFrom="2026-04-28",
+                flag=1,
+                paginate=True,
             )
         """
         return await self._dispatcher.dispatch("GET", path, params=kwargs or None, paginate=paginate)
 
-    async def post(self, path: str, *, body: Any = None, paginate: bool = False, **kwargs: Any) -> Any:
+    async def post(self, path: str, *, body: Any = None, paginate: bool = False, **kwargs: Any) -> WBType:
         """
-        Send a POST request. ``body`` is serialized as JSON. kwargs become query parameters.
-
-        Pass ``paginate=True`` to fetch all pages automatically.
-        Pagination type is detected from the first response:
-        - ``cursor.updatedAt`` in response → cursor pagination (Content, cards list)
-        - ``rrdId`` in last item → rrdid POST pagination (Finance sales-reports/detailed)
-        - fallback → offset
+        Send a POST request.
 
         Example::
 
             await api.post(
                 "/content/v2/get/cards/list",
-                body={"settings": {"sort": {"ascending": False}}},
-            )
-
-            all_cards = await api.post(
-                "/content/v2/get/cards/list",
-                body={"settings": {"filter": {"withPhoto": -1}}},
-                paginate=True,
-            )
-
-            all_sales = await api.post(
-                "/api/finance/v1/sales-reports/detailed",
-                body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31"},
+                body={
+                    "settings": {
+                        "sort": {"ascending": True},
+                        "filter": {"withPhoto": -1},
+                        "cursor": {"limit": 100},
+                    }
+                },
                 paginate=True,
             )
         """
@@ -79,9 +60,9 @@ class WbAPI:
             "POST", path, json=body, params=kwargs or None, paginate=paginate
         )
 
-    async def put(self, path: str, *, body: Any = None, **kwargs: Any) -> Any:
+    async def put(self, path: str, *, body: Any = None, **kwargs: Any) -> WBType:
         """
-        Send a PUT request. ``body`` is serialized as JSON. kwargs become query parameters.
+        Send a PUT request.
 
         Example::
 
@@ -92,25 +73,24 @@ class WbAPI:
         """
         return await self._dispatcher.dispatch("PUT", path, json=body, params=kwargs or None)
 
-    async def patch(self, path: str, *, body: Any = None, **kwargs: Any) -> Any:
+    async def patch(self, path: str, *, body: Any = None, **kwargs: Any) -> WBType:
         """
-        Send a PATCH request. ``body`` is serialized as JSON. kwargs become query parameters.
+        Send a PATCH request.
 
         Example::
-
-            await api.patch("/api/v3/orders/13833711/cancel")
-            await api.patch("/content/v2/tag/99", body={"name": "sale"})
+            await api.patch(
+                "/api/v3/orders/{orderId}/cancel", orderId=13833711
+            )
         """
         return await self._dispatcher.dispatch("PATCH", path, json=body, params=kwargs or None)
 
-    async def delete(self, path: str, **kwargs: Any) -> Any:
+    async def delete(self, path: str, **kwargs: Any) -> WBType:
         """
-        Send a DELETE request. kwargs become query parameters.
+        Send a DELETE request.
 
         Example::
 
             await api.delete("/content/v2/tag/99")
-            await api.delete("/api/v1/user", deletedUserID="abc-123")
         """
         return await self._dispatcher.dispatch("DELETE", path, params=kwargs or None)
 
@@ -118,4 +98,4 @@ class WbAPI:
         return self
 
     async def __aexit__(self, *_: Any) -> None:
-        await self.session.close()
+        await self._session.close()

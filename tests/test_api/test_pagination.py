@@ -233,12 +233,11 @@ class TestRrdidPostPagination:
     """Finance sales-reports/detailed — ``rrdId`` in last item, sent in POST body."""
 
     async def test_two_pages_rrdid_forwarded_in_body(self, api: MockedAPI) -> None:
-        # Arrange
+        # Arrange — page1 is full (100000), page2 is partial → stops after page2
         page1 = [{"rrdId": i + 1, "amount": i * 10} for i in range(100000)]
         page2 = [{"rrdId": 100001, "amount": 999}]
         api.add_response(page1)
         api.add_response(page2)
-        api.add_response(None)
 
         # Act
         result = await api.post(
@@ -254,47 +253,30 @@ class TestRrdidPostPagination:
         assert req2.json["dateFrom"] == "2024-01-01"
         assert req2.json["dateTo"] == "2024-01-31"
 
-    async def test_empty_page_stops(self, api: MockedAPI) -> None:
-        # Arrange
-        page1 = [{"rrdId": 5, "amount": 100}]
+    async def test_partial_first_page_stops_immediately(self, api: MockedAPI) -> None:
+        # Arrange — fewer records than limit → single request, no pagination
+        page1 = [{"rrdId": i + 1, "amount": i * 10} for i in range(7340)]
         api.add_response(page1)
-        api.add_response([])
 
         # Act
         result = await api.post(
             "/api/finance/v1/sales-reports/detailed",
-            body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31"},
+            body={"dateFrom": "2024-01-01", "dateTo": "2024-01-01"},
             paginate=True,
         )
 
         # Assert
-        assert len(result) == 1
-        assert len(api.mocked_session.requests) == 2
-
-    async def test_none_response_stops(self, api: MockedAPI) -> None:
-        # Arrange
-        page1 = [{"rrdId": 5, "amount": 100}]
-        api.add_response(page1)
-        api.add_response(None)
-
-        # Act
-        result = await api.post(
-            "/api/finance/v1/sales-reports/detailed",
-            body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31"},
-            paginate=True,
-        )
-
-        # Assert
-        assert len(result) == 1
-        assert len(api.mocked_session.requests) == 2
+        assert len(result) == 7340
+        assert len(api.mocked_session.requests) == 1
 
     async def test_original_body_preserved_across_pages(self, api: MockedAPI) -> None:
-        # Arrange
-        page1 = [{"rrdId": 10, "amount": 100}]
-        page2 = [{"rrdId": 20, "amount": 200}]
+        # Arrange — two full pages, then partial
+        page1 = [{"rrdId": i + 1, "amount": i} for i in range(100000)]
+        page2 = [{"rrdId": 100000 + i + 1, "amount": i} for i in range(100000)]
+        page3 = [{"rrdId": 200001, "amount": 0}]
         api.add_response(page1)
         api.add_response(page2)
-        api.add_response([])
+        api.add_response(page3)
 
         # Act
         await api.post(
@@ -303,11 +285,13 @@ class TestRrdidPostPagination:
             paginate=True,
         )
 
-        # Assert — original fields preserved, rrdId updated
+        # Assert — original fields preserved, rrdId updated each page
+        req2 = api.mocked_session.requests[1]
+        assert req2.json["dateFrom"] == "2024-01-01"
+        assert req2.json["period"] == "weekly"
+        assert req2.json["rrdId"] == 100000
         req3 = api.mocked_session.requests[2]
-        assert req3.json["dateFrom"] == "2024-01-01"
-        assert req3.json["period"] == "weekly"
-        assert req3.json["rrdId"] == 20
+        assert req3.json["rrdId"] == 200000
 
 
 @pytest.mark.unit
@@ -319,10 +303,10 @@ class TestPaginateFirstRequest:
         await api.get("/api/v3/orders", paginate=True)
         assert api.mocked_session.requests[0].params["limit"] == 1000
 
-    async def test_post_sends_limit_on_first_request(self, api: MockedAPI) -> None:
+    async def test_post_preserves_body_on_first_request(self, api: MockedAPI) -> None:
         api.add_response({"cards": [{"nmID": 1}], "cursor": {"updatedAt": "x", "nmID": 1, "total": 1}})
-        await api.post("/content/v2/get/cards/list", body={"settings": {}}, paginate=True)
-        assert api.mocked_session.requests[0].params["limit"] == 100
+        await api.post("/content/v2/get/cards/list", body={"settings": {"cursor": {"limit": 100}}}, paginate=True)
+        assert api.mocked_session.requests[0].json == {"settings": {"cursor": {"limit": 100}}}
 
     async def test_deeply_nested_list_extracted(self, api: MockedAPI) -> None:
         api.add_response({"data": {"products": [{"id": i} for i in range(3)], "currency": "RUB"}, "next": 0})

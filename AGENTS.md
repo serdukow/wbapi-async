@@ -1,6 +1,6 @@
 # wbapi
 
-Async Python client for the Wildberries Seller API. Pydantic-free — responses are plain `ApiResponse` objects with attribute access. No type models, no method classes. Just HTTP verbs + path.
+Async Python client for the Wildberries Seller API. Pydantic-free — responses are plain `WBType` objects with attribute access. No type models, no method classes. Just HTTP verbs + path.
 
 ```python
 async with WbAPI(token="...") as api:
@@ -15,7 +15,7 @@ async with WbAPI(token="...") as api:
 | File                     | Role                                                                                   |
 | ------------------------ | -------------------------------------------------------------------------------------- |
 | `api.py`                 | `WbAPI` — get/post/put/patch/delete/get_all                                            |
-| `type.py`                | `ApiResponse` — recursive dict wrapper, `.field`, `.unwrap()`, `.to_snake()`           |
+| `type.py`                | `WBType` — recursive dict wrapper, `.field`, `.unwrap()`, `.to_snake()`                |
 | `_method.py`             | `MethodDispatcher` — dispatch, fetch_all, resolve_url                                  |
 | `_registry.py`           | `_BASES`, `_LIMITS`, `_PUBLIC` — **`# fmt: off` block is auto-generated, do not edit** |
 | `client/session/base.py` | httpx, rate limiting, 429 retry                                                        |

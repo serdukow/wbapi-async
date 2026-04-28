@@ -86,7 +86,7 @@ class BaseSession:
             if retry_after > 60:
                 retry_at = datetime.now() + timedelta(seconds=retry_after)
                 log.warning(
-                    "Rate limit exceeded. Retrying in %s seconds (at %s)",
+                    "Too Many Requests. Retrying in %s seconds (at %s)",
                     retry_after,
                     retry_at,
                 )

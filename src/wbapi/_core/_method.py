@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from ..type import WBType, _wrap
 from ._registry import _PAGE_SIZES, _PUBLIC
 from ._session import BaseSession
 from .limiter import _get_limiter
 from .paginate import fetch_all
 from .parse_url import parse_url
-from .type import ApiResponse, _wrap
 
 
 class MethodDispatcher:
@@ -55,7 +55,7 @@ class MethodDispatcher:
                 limiter = _get_limiter(path)
                 return await self._session._request(http_method, url, params=params, json=body, limit=limiter)
 
-            return [ApiResponse(item) for item in await fetch_all(_request, path, page_size, params, json)]
+            return [WBType(item) for item in await fetch_all(_request, path, page_size, params, json)]
 
         url = parse_url(path)
         limiter = _get_limiter(path)
