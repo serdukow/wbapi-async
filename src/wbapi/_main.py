@@ -30,7 +30,7 @@ class WbAPI:
         Pass ``paginate=True`` to fetch all pages automatically.
         Pagination type is detected from the first response:
         - ``next`` in response → token continuation (Marketplace, Supplies, Q&A)
-        - ``rrd_id`` in last item → rrdid token (Finance reports)
+        - ``rrd_id`` in last item → rrdid token (Finance reports, GET)
         - fallback → offset (Analytics, Promotions, Reports)
 
         Example::
@@ -43,12 +43,6 @@ class WbAPI:
             all_orders = await api.get(
                 "/api/v3/orders", paginate=True, dateFrom=1698045576
             )
-            all_sales = await api.get(
-                "/api/finance/v1/sales-reports/detailed",
-                paginate=True,
-                dateFrom="2024-01-01",
-                dateTo="2024-01-31",
-            )
         """
         return await self._dispatcher.dispatch("GET", path, params=kwargs or None, paginate=paginate)
 
@@ -59,6 +53,7 @@ class WbAPI:
         Pass ``paginate=True`` to fetch all pages automatically.
         Pagination type is detected from the first response:
         - ``cursor.updatedAt`` in response → cursor pagination (Content, cards list)
+        - ``rrdId`` in last item → rrdid POST pagination (Finance sales-reports/detailed)
         - fallback → offset
 
         Example::
@@ -71,6 +66,12 @@ class WbAPI:
             all_cards = await api.post(
                 "/content/v2/get/cards/list",
                 body={"settings": {"filter": {"withPhoto": -1}}},
+                paginate=True,
+            )
+
+            all_sales = await api.post(
+                "/api/finance/v1/sales-reports/detailed",
+                body={"dateFrom": "2024-01-01", "dateTo": "2024-01-31"},
                 paginate=True,
             )
         """
