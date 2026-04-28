@@ -20,7 +20,7 @@ class TestPageSizes:
         req = api.mocked_session.requests[0]
         assert req.params is not None and req.params["limit"] == 1000
 
-    async def test_cards_list_uses_100(self, api: MockedAPI) -> None:
+    async def test_cards_list_body_preserved(self, api: MockedAPI) -> None:
         # Arrange
         api.add_response({
             "cards": [{"nmID": 1}],
@@ -28,11 +28,12 @@ class TestPageSizes:
         })
 
         # Act
-        await api.post("/content/v2/get/cards/list", body={"settings": {}}, paginate=True)
+        await api.post("/content/v2/get/cards/list", body={"settings": {"cursor": {"limit": 100}}}, paginate=True)
 
-        # Assert
+        # Assert — body passed as-is, no limit injected into params
         req = api.mocked_session.requests[0]
-        assert req.params is not None and req.params["limit"] == 100
+        assert req.params is None
+        assert req.json == {"settings": {"cursor": {"limit": 100}}}
 
     async def test_documents_list_uses_50(self, api: MockedAPI) -> None:
         # Arrange
