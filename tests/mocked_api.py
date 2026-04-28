@@ -53,8 +53,11 @@ class MockedAPI(WbAPI):
         ".eyJpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsInNpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMSIsImFjYyI6MiwidCI6dHJ1ZSwicyI6MCwiZXhwIjoyMDg5MjY0MDc3fQ"
         ".fakesignature",
     ) -> None:
+        from wbapi._core import MethodDispatcher
+        super().__init__(token=token)
         self.mocked_session = MockedSession()
-        super().__init__(token=token, session=self.mocked_session)
+        self._session = self.mocked_session
+        self._dispatcher = MethodDispatcher(self.mocked_session, token)
 
     def add_response(self, data: Any, status: int = 200) -> None:
         self.mocked_session.add_response(data, status)

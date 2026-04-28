@@ -459,4 +459,5 @@ _PUBLIC: frozenset[str] = frozenset({"card.wb.ru"})
 _PAGE_SIZES: dict[str, int] = {
     "/content/v2/get/cards/list": 100,
     "/api/v1/documents/list": 50,
+    "/api/finance/v1/sales-reports/detailed": 100000,
 }

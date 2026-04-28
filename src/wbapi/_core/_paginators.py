@@ -86,7 +86,7 @@ async def rrdid_post(
     Stop condition: page is empty (API returns 204 No Content → empty list).
     """
     result: list[Any] = list(page)
-    while page:
+    while len(page) >= page_size:
         last = page[-1]
         rrd_id = last.get("rrdId") if isinstance(last, dict) else None
         if not rrd_id:
