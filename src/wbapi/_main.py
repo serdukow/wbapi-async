@@ -30,16 +30,11 @@ class WbAPI:
 
         Example::
 
-                await api.get("/api/v3/warehouses")
-            orders = await api.get(
-                "/api/v3/orders/new", limit=10, next=0
-            )
-
-                await api.get(
-                    "/api/v1/supplier/orders",
-                    dateFrom="2026-04-28",
-                    flag=1,
-                    paginate=True
+            await api.get(
+                "/api/v1/supplier/orders",
+                dateFrom="2026-04-28",
+                flag=1,
+                paginate=True,
             )
         """
         return await self._dispatcher.dispatch("GET", path, params=kwargs or None, paginate=paginate)
