@@ -1,31 +1,53 @@
-![Logo](https://dev.wildberries.ru/images/open-graph.png)
+<p align="center">
+  <a href="https://dev.wildberries.ru"><img src="https://i.ibb.co/dwsMVbNC/logo.png" alt="wbapi"></a>
+</p>
 
-<div align="center">
+<p align="center">
+<a href="https://img.shields.io/pypi/v/wbapi-async.svg">
+<img src="https://img.shields.io/pypi/v/wbapi-async.svg" alt="Version">
+</a>
+<a href="https://pypi.python.org/pypi/wbapi-async">
+<img src="https://img.shields.io/pypi/dm/wbapi-async.svg" alt="Downloads">
+</a>
+<a href="https://pypi.python.org/pypi/wbapi-async">
+<img src="https://img.shields.io/badge/status-stable-green.svg?logo=git&logoColor=green" alt="Status">
+</a>
+<a href="https://pypi.org/project/wbapi-async">
+<img src="https://img.shields.io/pypi/pyversions/wbapi-async.svg" alt="Python">
+</a>
+</p>
 
-#### Fast, lightweight async client for the Wildberries Seller API
+---
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![PyPI version](https://img.shields.io/pypi/v/wbapi-async.svg)](https://pypi.org/project/wild-api/)
-[![Downloads](https://img.shields.io/pypi/dm/wbapi-async.svg)](https://pypi.python.org/pypi/wild-api)
-[![Docs](https://img.shields.io/badge/docs-serdukow.github.io-blue.svg)](https://serdukow.github.io/wbapi-async/)
-[![Python](https://img.shields.io/pypi/pyversions/wbapi-async.svg)](https://pypi.org/project/wbapi-async/)
+**Documentation**: [https://dev.wildberries.ru](https://dev.wildberries.ru)
 
-</div>
+**Source Code**: [https://github.com/serdukow/wbapi-async](https://github.com/serdukow/wbapi-async)
 
-## Features
+---
 
-- **Zero boilerplate** — responses are plain attribute-accessible dicts
-- **Auto-pagination** — `get_all()` fetches all pages. Auto-detects all known strategies; you can easily add your own via a custom paginator — [see docs](https://github.com/serdukow/wbapi-async/blob/dev/docs/advanced/pagination.md)
-- **Rate limiting** — per-endpoint limits powered by `aiolimiter`
-- **Auto-retry** — automatic retry
-- **Always up to date** — path registry is updated every monday
-- **Fully async** — built on `httpx` + `asyncio`
+**wbapi** is a lightweight async client for the Wildberries Seller API, built on top of [httpx](https://www.python-httpx.org/).
 
-## Install
+It handles pagination, rate limiting, and base URL resolution automatically — so you can focus on your business logic instead of HTTP boilerplate.
+
+## Requirements
+
+Python 3.10+
+
+wbapi stands on the shoulders of giants:
+
+- [httpx](https://www.python-httpx.org/) for async HTTP.
+- [aiolimiter](https://github.com/mjpieters/aiolimiter) for rate limiting.
+
+## Installation
 
 ```bash
 pip install wbapi-async
 ```
+
+## How to use
+
+1. Register in the Wildberries seller [personal account](https://seller.wildberries.ru/) if you haven't already.
+2. Go to store settings and [create an API token](https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Authorization/How-to-create-a-personal-access-base-or-test-token).
 
 ## Quick start
 
@@ -34,17 +56,31 @@ import asyncio
 from wbapi import WbAPI
 
 async def main():
-    async with WbAPI(token="YOUR_TOKEN") as api:
-        body = {
-            "settings": {
-                "sort": {"ascending": True},
-                "cursor": {"limit": 100},
-                "filter": {"withPhoto": -1},
-            }
-        }
+    async with WbAPI(token="your_api_token") as api:
+        # Simple request
+        warehouses = await api.get("/api/v3/warehouses")
 
-        cards = await api.get_all("/content/v2/get/cards/list", body=body)
-        print(f"cards: {cards!r}")
+        # Auto-paginated — fetches all pages automatically
+        all_cards = await api.post(
+            "/content/v2/get/cards/list",
+            body={
+                "settings": {
+                    "sort": {"ascending": True},
+                    "cursor": {"limit": 100},
+                    "filter": {"withPhoto": -1},
+                }
+            },
+            paginate=True,
+        )
+        print(all_cards)
 
 asyncio.run(main())
 ```
+
+Pass `paginate=True` to any `get` or `post` call and the library fetches all pages automatically. Pagination strategy (cursor, token, or offset) is detected from the first response.
+
+Base URL resolution and per-endpoint rate limiting are handled transparently.
+
+## License
+
+This project is licensed under the terms of the [MIT license](https://github.com/serdukow/wbapi-async/blob/main/LICENSE).
