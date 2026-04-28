@@ -1,7 +1,7 @@
 import pytest
 from pytest_httpx import HTTPXMock
 
-from wbapi.client.session.base import BaseSession
+from wbapi._core import BaseSession
 from wbapi.exceptions import WBAPIError
 
 

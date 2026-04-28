@@ -1,6 +1,6 @@
 import pytest
 
-from wbapi.type import ApiResponse
+from wbapi import ApiResponse
 
 
 @pytest.mark.unit

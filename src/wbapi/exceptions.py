@@ -15,7 +15,3 @@ class WBAPIError(BaseWBAPIError):
 
 class TokenValidationError(BaseWBAPIError):
     pass
-
-
-class PaginationNotSupported(BaseWBAPIError):
-    pass

@@ -1,7 +1,7 @@
 import pytest
 
 from wbapi.exceptions import WBAPIError
-from wbapi._method import resolve_url
+from wbapi._core.parse_url import parse_url as resolve_url
 
 
 @pytest.mark.unit
