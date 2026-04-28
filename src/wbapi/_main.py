@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from ._core import BaseSession, MethodDispatcher
+from .type import ApiResponse
 
 
 class WbAPI:
@@ -23,7 +24,7 @@ class WbAPI:
         self.session = session or BaseSession(base="https://wildberries.ru", timeout=timeout)
         self._dispatcher = MethodDispatcher(self.session, token)
 
-    async def get(self, path: str, *, paginate: bool = False, **kwargs: Any) -> Any:
+    async def get(self, path: str, *, paginate: bool = False, **kwargs: Any) -> ApiResponse:
         """
         Send a GET request.
 
@@ -43,7 +44,9 @@ class WbAPI:
         """
         return await self._dispatcher.dispatch("GET", path, params=kwargs or None, paginate=paginate)
 
-    async def post(self, path: str, *, body: Any = None, paginate: bool = False, **kwargs: Any) -> Any:
+    async def post(
+        self, path: str, *, body: Any = None, paginate: bool = False, **kwargs: Any
+    ) -> ApiResponse:
         """
         Send a POST request.
 
@@ -65,7 +68,7 @@ class WbAPI:
             "POST", path, json=body, params=kwargs or None, paginate=paginate
         )
 
-    async def put(self, path: str, *, body: Any = None, **kwargs: Any) -> Any:
+    async def put(self, path: str, *, body: Any = None, **kwargs: Any) -> ApiResponse:
         """
         Send a PUT request.
 
@@ -78,7 +81,7 @@ class WbAPI:
         """
         return await self._dispatcher.dispatch("PUT", path, json=body, params=kwargs or None)
 
-    async def patch(self, path: str, *, body: Any = None, **kwargs: Any) -> Any:
+    async def patch(self, path: str, *, body: Any = None, **kwargs: Any) -> ApiResponse:
         """
         Send a PATCH request.
 
@@ -89,7 +92,7 @@ class WbAPI:
         """
         return await self._dispatcher.dispatch("PATCH", path, json=body, params=kwargs or None)
 
-    async def delete(self, path: str, **kwargs: Any) -> Any:
+    async def delete(self, path: str, **kwargs: Any) -> ApiResponse:
         """
         Send a DELETE request.
 

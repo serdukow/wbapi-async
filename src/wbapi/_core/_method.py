@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from ..type import ApiResponse, _wrap
 from ._registry import _PAGE_SIZES, _PUBLIC
 from ._session import BaseSession
 from .limiter import _get_limiter
 from .paginate import fetch_all
 from .parse_url import parse_url
-from .type import ApiResponse, _wrap
 
 
 class MethodDispatcher:
