@@ -27,16 +27,7 @@
 
 **wbapi** is a lightweight async client for the Wildberries Seller API, built on top of [httpx](https://www.python-httpx.org/).
 
-It handles pagination, rate limiting, and base URL resolution automatically — so you can focus on your business logic instead of HTTP boilerplate.
-
-## Requirements
-
-Python 3.10+
-
-wbapi stands on the shoulders of giants:
-
-- [httpx](https://www.python-httpx.org/) for async HTTP.
-- [aiolimiter](https://github.com/mjpieters/aiolimiter) for rate limiting.
+It handles pagination, rate limiting — so you can focus on your business logic instead of HTTP boilerplate.
 
 ## Installation
 
@@ -57,11 +48,7 @@ from wbapi import WbAPI
 
 async def main():
     async with WbAPI(token="your_api_token") as api:
-        # Simple request
-        warehouses = await api.get("/api/v3/warehouses")
-
-        # Auto-paginated — fetches all pages automatically
-        all_cards = await api.post(
+        my_cards = await api.post(
             "/content/v2/get/cards/list",
             body={
                 "settings": {
@@ -72,14 +59,10 @@ async def main():
             },
             paginate=True,
         )
-        print(all_cards)
+        print(my_cards[0].nmID)
 
 asyncio.run(main())
 ```
-
-Pass `paginate=True` to any `get` or `post` call and the library fetches all pages automatically. Pagination strategy (cursor, token, or offset) is detected from the first response.
-
-Base URL resolution and per-endpoint rate limiting are handled transparently.
 
 ## License
 
