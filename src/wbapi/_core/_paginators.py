@@ -120,6 +120,30 @@ async def offset(
     return result
 
 
+async def offset_body(
+    raw: Any,
+    page: list[Any],
+    request: _Requester,
+    body: dict[str, Any],
+    page_size: int,
+) -> list[Any]:
+    """
+    Offset pagination via POST body: increments ``offset`` inside the request
+    body by ``limit`` each request.
+
+    Used by: Analytics v2 POST endpoints (e.g. /api/v2/stocks-report/products/products).
+    Stop condition: returned page is smaller than ``limit``.
+    """
+    result: list[Any] = list(page)
+    current_offset = page_size
+    while len(page) >= page_size:
+        raw = await request(body={**body, "limit": page_size, "offset": current_offset})
+        page = _extract_list(raw) or []
+        result.extend(page)
+        current_offset += page_size
+    return result
+
+
 async def cursor(
     raw: Any,
     page: list[Any],
@@ -171,11 +195,12 @@ def detect_and_paginate(
     to the appropriate paginator coroutine.
 
     Detection order (first match wins):
-    1. CursorPaginator      — POST body with ``cursor.updatedAt`` in response
-    2. RrdIdPostPaginator   — POST body, last item has ``rrdId``
-    3. NextTokenPaginator   — ``next`` key in response root
-    4. RrdIdTokenPaginator  — last item in page has ``rrd_id`` (GET)
-    5. OffsetPaginator      — fallback
+    1. CursorPaginator        — POST body with ``cursor.updatedAt`` in response
+    2. RrdIdPostPaginator     — POST body, last item has ``rrdId``
+    3. NextTokenPaginator     — ``next`` key in response root
+    4. RrdIdTokenPaginator    — last item in page has ``rrd_id`` (GET)
+    5. OffsetBodyPaginator    — POST body, no cursor/rrdId match → offset in body
+    6. OffsetPaginator        — fallback (GET offset via query params)
     """
     if body is not None and isinstance(raw, dict):
         cursor_obj = raw.get("cursor", {})
@@ -190,5 +215,8 @@ def detect_and_paginate(
 
     if page and isinstance(page[-1], dict) and "rrd_id" in page[-1]:
         return rrdid_token(raw, page, request, params, page_size)
+
+    if body is not None:
+        return offset_body(raw, page, request, body, page_size)
 
     return offset(raw, page, request, params, page_size)
