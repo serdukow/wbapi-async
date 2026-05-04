@@ -33,7 +33,9 @@ class TestPageSizes:
         # Assert — body passed as-is, no limit injected into params
         req = api.mocked_session.requests[0]
         assert req.params is None
-        assert req.json == {"settings": {"cursor": {"limit": 100}}}
+        assert req.json["settings"] == {"cursor": {"limit": 100}}
+        assert "limit" in req.json
+        assert req.json["offset"] == 0
 
     async def test_documents_list_uses_50(self, api: MockedAPI) -> None:
         # Arrange

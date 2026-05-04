@@ -17,9 +17,10 @@ async def fetch_all(
     body: dict[str, Any] | None,
 ) -> list[Any]:
     if body is not None:
-        raw = await request(params=params or None, body=body)
+        init_body = {**body, "limit": page_size, "offset": 0}
+        raw = await request(params=params or None, body=init_body)
         page = _extract_list(raw) or []
-        return await detect_and_paginate(raw, page, request, {}, body, page_size)
+        return await detect_and_paginate(raw, page, request, {}, init_body, page_size)
     else:
         init_params = {**(params or {}), "limit": page_size}
         raw = await request(params=init_params)

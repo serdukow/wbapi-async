@@ -295,6 +295,94 @@ class TestRrdidPostPagination:
 
 
 @pytest.mark.unit
+class TestOffsetBodyPagination:
+    """POST endpoints with offset/limit in request body (e.g. /api/v2/stocks-report/products/products)."""
+
+    async def test_partial_first_page_stops_immediately(self, api: MockedAPI) -> None:
+        # Arrange
+        api.add_response({"data": [{"nmID": i} for i in range(5)]})
+
+        # Act
+        result = await api.post(
+            "/api/v2/stocks-report/products/products",
+            body={"currentPeriod": {"start": "2026-04-01", "end": "2026-04-30"}},
+            paginate=True,
+        )
+
+        # Assert
+        assert len(result) == 5
+        assert len(api.mocked_session.requests) == 1
+
+    async def test_full_page_then_partial_stops(self, api: MockedAPI) -> None:
+        # Arrange
+        api.add_response({"data": [{"nmID": i} for i in range(1000)]})
+        api.add_response({"data": [{"nmID": i} for i in range(42)]})
+
+        # Act
+        result = await api.post(
+            "/api/v2/stocks-report/products/products",
+            body={"currentPeriod": {"start": "2026-04-01", "end": "2026-04-30"}},
+            paginate=True,
+        )
+
+        # Assert
+        assert len(result) == 1042
+        req2 = api.mocked_session.requests[1]
+        assert req2.json["offset"] == 1000
+        assert req2.json["limit"] == 1000
+
+    async def test_offset_increments_correctly(self, api: MockedAPI) -> None:
+        # Arrange
+        full_page = [{"nmID": i} for i in range(1000)]
+        api.add_response({"data": full_page})
+        api.add_response({"data": full_page})
+        api.add_response({"data": [{"nmID": 0}]})
+
+        # Act
+        result = await api.post(
+            "/api/v2/stocks-report/products/products",
+            body={"currentPeriod": {"start": "2026-04-01", "end": "2026-04-30"}},
+            paginate=True,
+        )
+
+        # Assert
+        assert len(result) == 2001
+        assert api.mocked_session.requests[1].json["offset"] == 1000
+        assert api.mocked_session.requests[2].json["offset"] == 2000
+
+    async def test_original_body_preserved_across_pages(self, api: MockedAPI) -> None:
+        # Arrange
+        api.add_response({"data": [{"nmID": i} for i in range(1000)]})
+        api.add_response({"data": [{"nmID": i} for i in range(1)]})
+
+        # Act
+        await api.post(
+            "/api/v2/stocks-report/products/products",
+            body={"currentPeriod": {"start": "2026-04-01", "end": "2026-04-30"}, "stockType": ""},
+            paginate=True,
+        )
+
+        # Assert
+        req2 = api.mocked_session.requests[1]
+        assert req2.json["currentPeriod"] == {"start": "2026-04-01", "end": "2026-04-30"}
+        assert req2.json["stockType"] == ""
+
+    async def test_empty_first_page_returns_empty(self, api: MockedAPI) -> None:
+        # Arrange
+        api.add_response({"data": []})
+
+        # Act
+        result = await api.post(
+            "/api/v2/stocks-report/products/products",
+            body={"currentPeriod": {"start": "2026-04-01", "end": "2026-04-30"}},
+            paginate=True,
+        )
+
+        # Assert
+        assert result == []
+
+
+@pytest.mark.unit
 class TestPaginateFirstRequest:
     """Verify limit is always sent on the first request."""
 
@@ -306,7 +394,11 @@ class TestPaginateFirstRequest:
     async def test_post_preserves_body_on_first_request(self, api: MockedAPI) -> None:
         api.add_response({"cards": [{"nmID": 1}], "cursor": {"updatedAt": "x", "nmID": 1, "total": 1}})
         await api.post("/content/v2/get/cards/list", body={"settings": {"cursor": {"limit": 100}}}, paginate=True)
-        assert api.mocked_session.requests[0].json == {"settings": {"cursor": {"limit": 100}}}
+        req = api.mocked_session.requests[0].json
+        assert req["settings"] == {"cursor": {"limit": 100}}
+        assert "limit" in req
+        assert req["offset"] == 0
+        assert req["offset"] == 0
 
     async def test_deeply_nested_list_extracted(self, api: MockedAPI) -> None:
         api.add_response({"data": {"products": [{"id": i} for i in range(3)], "currency": "RUB"}, "next": 0})
