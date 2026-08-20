@@ -1,66 +1,75 @@
 from collections import deque
 from typing import Any
 
-from wbapi import WbAPI
-from wbapi._core import BaseSession
-from wbapi.exceptions import WBAPIError
+import httpx
+
+from wbapi import WBApi
 
 
-class _CapturedRequest:
-    def __init__(self, method: str, url: str, params: dict | None, json: Any | None) -> None:
-        self.method = method
-        self.url = url
-        self.params = params
-        self.json = json
+TOKEN = "test-token-abcd"
 
 
-class MockedSession(BaseSession):
+class MockedTransport:
     def __init__(self) -> None:
-        super().__init__(base="https://test.api.com", timeout=0)
-        self.requests: deque[_CapturedRequest] = deque()
-        self._responses: deque[tuple[int, Any]] = deque()
+        self.requests: deque[httpx.Request] = deque()
+        self.responses: deque[httpx.Response] = deque()
+        self._handler: Any = None
 
-    def add_response(self, data: Any, status: int = 200) -> None:
-        self._responses.append((status, data))
+    def add_response(self, data: Any = None, status: int = 200, **headers: str) -> None:
+        self.responses.append(httpx.Response(status, json=data, headers=headers or None))
 
-    def get_last_request(self) -> _CapturedRequest:
+    def add_raw_response(self, response: httpx.Response) -> None:
+        self.responses.append(response)
+
+    def set_handler(self, handler: Any) -> None:
+        self._handler = handler
+
+    def get_last_request(self) -> httpx.Request:
         return self.requests[-1]
 
-    async def _request(
-        self,
-        method: str,
-        url: str,
-        *,
-        params: dict[str, Any] | None = None,
-        json: Any | None = None,
-        limit: Any = None,
-    ) -> Any:
-        self.requests.append(_CapturedRequest(method, url, params, json))
+    @property
+    def request_count(self) -> int:
+        return len(self.requests)
 
-        if not self._responses:
-            raise RuntimeError("No response provided")
+    def __call__(self, request: httpx.Request) -> httpx.Response:
+        request.read()
+        self.requests.append(request)
 
-        status, data = self._responses.popleft()
-        if status >= 400:
-            raise WBAPIError(http_status=status, **(data or {}))
-        return data
+        if self._handler is not None:
+            return self._handler(request)
+        if not self.responses:
+            raise RuntimeError(f"No response provided for {request.method} {request.url}")
+        return self.responses.popleft()
 
 
-class MockedAPI(WbAPI):
-    def __init__(
-        self,
-        token: str = "eyJhbGciOiJFUzI1NiIsImtpZCI6InRlc3QiLCJ0eXAiOiJKV1QifQ"
-        ".eyJpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsInNpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMSIsImFjYyI6MiwidCI6dHJ1ZSwicyI6MCwiZXhwIjoyMDg5MjY0MDc3fQ"
-        ".fakesignature",
-    ) -> None:
-        from wbapi._core import MethodDispatcher
-        super().__init__(token=token)
-        self.mocked_session = MockedSession()
-        self._session = self.mocked_session
-        self._dispatcher = MethodDispatcher(self.mocked_session, token)
+class MockedAPI(WBApi):
+    def __init__(self, token: str = TOKEN, **kwargs: Any) -> None:
+        self.mocked_transport = MockedTransport()
+        kwargs.setdefault("max_retries", 0)
+        kwargs.setdefault("retry_backoff", 0.001)
+        kwargs.setdefault("max_retry_wait", 0.01)
+        super().__init__(
+            token=token,
+            transport=httpx.MockTransport(self.mocked_transport),
+            **kwargs,
+        )
 
-    def add_response(self, data: Any, status: int = 200) -> None:
-        self.mocked_session.add_response(data, status)
+    def add_response(self, data: Any = None, status: int = 200, **headers: str) -> None:
+        self.mocked_transport.add_response(data, status, **headers)
 
-    def get_last_request(self) -> _CapturedRequest:
-        return self.mocked_session.get_last_request()
+    def add_raw_response(self, response: httpx.Response) -> None:
+        self.mocked_transport.add_raw_response(response)
+
+    def set_handler(self, handler: Any) -> None:
+        self.mocked_transport.set_handler(handler)
+
+    def get_last_request(self) -> httpx.Request:
+        return self.mocked_transport.get_last_request()
+
+    @property
+    def requests(self) -> deque[httpx.Request]:
+        return self.mocked_transport.requests
+
+    @property
+    def request_count(self) -> int:
+        return self.mocked_transport.request_count
