@@ -2,7 +2,7 @@
 
 <h1>wbapi</h1>
 
-<p>Асинхронная библиотека для работы с API Wildberries Seller</p>
+<p>Асинхронный клиент Wildberries Seller API</p>
 
 [![PyPI version](https://img.shields.io/pypi/v/wbapi-async.svg)](https://pypi.org/project/wbapi-async/)
 [![Downloads](https://img.shields.io/pypi/dm/wbapi-async.svg)](https://pypi.python.org/pypi/wbapi-async)
@@ -13,6 +13,10 @@
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://pypi.org/project/wbapi-async/)
 
 </div>
+
+308 методов и 687 моделей, сгенерированных из официальных спецификаций
+Wildberries. Автодополнение в редакторе, повторы при сбоях, лимиты запросов и
+постраничный обход из коробки.
 
 ## Установка
 
@@ -33,89 +37,79 @@ from wbapi import WBApi
 
 async def main() -> None:
     async with WBApi(token=os.environ["WB_TOKEN"]) as api:
-        orders = await api.get("/api/v3/orders/new", params={"limit": 10})
-        print(orders.orders[0].id)
+        orders = await api.orders_fbs.orders_new()
+        for order in orders.orders:
+            print(order.id, order.nm_id, order.sale_price)
 
 
 asyncio.run(main())
 ```
 
-Домен подставляется автоматически: `/api/v3/orders/new` уходит на
-`marketplace-api.wildberries.ru`, `/content/v2/get/cards/list` — на
-`content-api.wildberries.ru`.
-
-## Запросы
+## Разделы
 
 ```python
-# GET с query-параметрами
-await api.get("/api/v1/supplier/orders", params={"dateFrom": "2026-04-28", "flag": 1})
-
-# POST с телом
-await api.post("/adv/v0/rename", body={"advertId": 123, "name": "Новая кампания"})
-
-# Идентификаторы в пути — обычная f-строка
-await api.patch(f"/api/v3/orders/{order_id}/cancel")
-
-await api.put(
-    f"/api/v3/stocks/{warehouse_id}",
-    body={"stocks": [{"sku": "WB007", "amount": 10}]},
-)
-
-await api.delete(f"/content/v2/tag/{tag_id}")
+await api.general.seller_info()
+await api.items.content_v2_cards_limits()
+await api.orders_fbs.orders_new()
+await api.promotion.adv_v1_promotion_count()
+await api.finances.account_balance()
 ```
+
+| Раздел | Что внутри |
+| --- | --- |
+| `general` | Общее: подключение, продавец, пользователи |
+| `items` | Работа с товарами: карточки, категории, медиа |
+| `orders_fbs` | Заказы FBS: задания, поставки, пропуска |
+| `orders_dbs` | Заказы DBS |
+| `orders_dbw` | Заказы DBW |
+| `orders_fbw` | Поставки FBW |
+| `in_store_pickup` | Самовывоз |
+| `promotion` | Маркетинг и продвижение |
+| `communications` | Отзывы, вопросы, чат с покупателями |
+| `analytics` | Аналитика и данные |
+| `reports` | Отчёты |
+| `finances` | Документы и бухгалтерия |
+| `rates` | Тарифы |
+| `wbd` | Wildberries Цифровой |
 
 ## Ответы
 
-Ответ — обычный `dict` или `list`, к которому добавлен доступ через точку.
-Никакой конверсии не нужно: он сериализуется, распаковывается и проходит
-проверки типов как есть.
-
 ```python
-response = await api.get("/api/v3/orders/new")
+response = await api.orders_fbs.orders_new()
 
-response.orders[0].id                    # доступ через точку, на любую глубину
-response["orders"]
-response.get("total", 0)
+order = response.orders[0]
+order.nm_id
+order.sale_price
+order.created_at
 
-json.dumps(response) 
-isinstance(response.orders, list)        # True
-sorted(response.orders, key=lambda o: o.id)
+order.to_dict()
+order.to_dict(by_alias=True)
+order.to_json()
 ```
 
-## Пагинация
-
-`paginate()` возвращает асинхронный итератор и сам определяет схему
-постраничного обхода по первому ответу — offset, курсор, `next`-токен
-или `rrdid`.
+## Постраничный обход
 
 ```python
-# по одной записи, память не растёт
-async for order in api.paginate("/api/v3/orders"):
+# одна страница
+page = await api.orders_fbs.orders(limit=1000, next_=0)
+
+# все страницы списком
+rows = await api.orders_fbs.orders(limit=1000, next_=0, auto_paginate=True)
+
+# по одной записи — память не растёт с размером выборки
+async for order in api.orders_fbs.iter_orders(limit=1000, next_=0):
     await save(order)
-
-# всё сразу
-supplies = [s async for s in api.paginate("/api/v3/supplies")]
-
-# POST-эндпоинты — тот же метод, отличается наличием body
-cards = [
-    c
-    async for c in api.paginate(
-        "/content/v2/get/cards/list",
-        body={"settings": {"filter": {"withPhoto": -1}}},
-    )
-]
 ```
 
-## Лимиты и повторные запросы
+## Повторы и лимиты
 
-Лимиты берутся из таблицы эндпоинтов для каждого пути. Запросы к 429, 5xx и
-сетевым сбоям повторяются автоматически — с экспоненциальной задержкой и
-джиттером, с учётом заголовка `X-Ratelimit-Retry`.
+Запросы к 429, 5xx и сетевым сбоям повторяются автоматически — с
+экспоненциальной задержкой, джиттером и учётом заголовка `X-Ratelimit-Retry`.
 
 ```python
 api = WBApi(
     token=...,
-    timeout=60,           # или httpx.Timeout(connect=5, read=60)
+    timeout=60,            # или httpx.Timeout(connect=5, read=60)
     max_retries=3,
     retry_backoff=0.5,
     max_retry_wait=60,
@@ -123,14 +117,16 @@ api = WBApi(
 )
 ```
 
-## Новые эндпоинты
+## Песочница
 
-Таблица эндпоинтов обновляется автоматически из OpenAPI-спецификаций
-Wildberries. Если нужный путь ещё не попал в релиз, передайте полный URL:
+Нужен токен с опцией «Тестовый контур» — данные там случайные.
 
 ```python
-await api.get("https://content-api.wildberries.ru/content/v3/new-endpoint")
+async with WBApi(token=..., sandbox=True) as api:
+    supply = await api.orders_fbs.supplies_create(name="test")
 ```
+
+Если у метода песочницы нет, запрос не уйдёт — клиент сообщит об этом.
 
 ## Лицензия
 

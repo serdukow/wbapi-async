@@ -55,22 +55,27 @@ Break these and something fails in production, not in CI:
   without conversion. `WBObject` is only a marker base — too empty to use as a
   return type.
 
-## Editing the endpoint table
+## Regenerating the client
 
-`endpoints.py` holds a generated block between `# --- BEGIN GENERATED ---` and
-`# --- END GENERATED ---`. Do not hand-edit it; regenerate instead:
+`resources/` is generated from the specs in `specs/`. Never edit it by hand —
+change the generator instead:
 
 ```console
-uv run python scripts/generate_endpoints.py           # rewrite
-uv run python scripts/generate_endpoints.py --check   # CI freshness check
+uv run python scripts/update_specs.py        # refresh specs/ from Wildberries
+uv run python scripts/codegen.py           # regenerate every section
+uv run python scripts/codegen.py items     # regenerate one section
 ```
 
-The generator refuses to write when no spec could be fetched, and keeps paths
-that vanished from the spec (marked deprecated) so live endpoints keep working.
-A weekly workflow opens a PR when the table changes.
+`update_specs.py` tries the official URLs first and falls back to a public mirror,
+because dev.wildberries.ru answers automated requests with HTTP 498. It refuses
+to overwrite when nothing could be fetched.
 
-Everything outside the generated block — `PUBLIC_HOSTS`, `PAGE_SIZES`, the
-lookup functions — is safe to edit by hand.
+`codegen.py` derives method names from the summary rather than the HTTP verb —
+Wildberries often uses POST for reads — and reads rate limits out of the
+markdown tables in each endpoint's description.
+
+`scripts/smoke_check.py` runs read-only calls against the live API; it needs
+`WB_TOKEN` in the environment.
 
 ## Adding a pagination scheme
 

@@ -2,123 +2,89 @@
 
 ## 1.0.0rc1
 
-Изменились имена, способ передачи параметров и работа с
-пагинацией. Сетевой слой переписан: клиент повторяет запросы при 429, 5xx и
-обрывах связи, корректно разбирает любые ответы Wildberries и не теряет токен
-при параллельных запросах.
+Библиотека переписана: вместо обёртки над HTTP-глаголами — 308 типизированных
+методов, сгенерированных из официальных OpenAPI-спецификаций Wildberries.
 
 Устанавливается как `wbapi-async`, импортируется как `wbapi`.
 Требуется Python 3.10 или новее.
 
+### Что нового
+
+- **308 методов в 14 разделах**
+- **687 моделей ответов** на msgspec
+- **Постраничный обход** шести вариантов — курсор, токен, отступ, идентификатор строки
+  отчёта — определяется по спецификации, а не задаётся вручную.
+- **Лимиты запросов из спецификаций**, с учётом категории токена.
+- **Разбор токена**
+- **Повторы** при 429, 5xx и обрывах связи — с экспоненциальной задержкой и
+  джиттером.
+- **Песочница**: `WBApi(token=..., sandbox=True)` для методов, у которых она есть.
+- Иерархия исключений и разбор `application/problem+json`: `code`, `origin`,
+  `request_id` доступны как поля.
+
 ### Миграция
 
-#### Клиент и параметры
+#### Вызов метода
 
 ```python
 # было
-from wbapi import WbAPI
-
-async with WbAPI(token=token) as api:
-    orders = await api.get("/api/v3/orders/new", limit=10, next=0)
+orders = await api.get("/api/v3/orders/new", limit=10)
 
 # стало
-from wbapi import WBApi
-
-async with WBApi(token=token) as api:
-    orders = await api.get("/api/v3/orders/new", params={"limit": 10, "next": 0})
+orders = await api.orders_fbs.orders_new()
 ```
 
-Идентификаторы в пути подставляются f-строкой:
+Раздел и метод подсказывает редактор; путь, домен и лимит берутся из
+спецификации.
+
+#### Ответы
 
 ```python
 # было
-await api.patch("/api/v3/orders/{orderId}/cancel", orderId=13833711)
+order.nmID
+{**order.unwrap()}
 
 # стало
-await api.patch(f"/api/v3/orders/{order_id}/cancel")
+order.nm_id
+{**order.to_dict()}
 ```
 
-#### Пагинация
+```python
+order.to_dict(by_alias=True)   # nmId, salePrice, createdAt
+```
 
-`paginate=True` возвращал весь список сразу. Теперь `paginate()` — асинхронный
-итератор: записи приходят по одной, вся выгрузка не держится в памяти.
+#### Постраничный обход
 
 ```python
 # было
 orders = await api.get("/api/v3/orders", paginate=True)
-for order in orders:
+
+# стало — все страницы списком
+orders = await api.orders_fbs.orders(limit=1000, next_=0, auto_paginate=True)
+
+# стало — по одной записи
+async for order in api.orders_fbs.iter_orders(limit=1000, next_=0):
     await save(order)
-
-# стало
-async for order in api.paginate("/api/v3/orders"):
-    await save(order)
-
-# если нужен список целиком
-orders = [o async for o in api.paginate("/api/v3/orders")]
-```
-
-POST-эндпоинты — тот же метод, достаточно передать `body`:
-
-```python
-# было
-cards = await api.post(
-    "/content/v2/get/cards/list",
-    body={"settings": {"filter": {"withPhoto": -1}}},
-    paginate=True,
-)
-
-# стало
-cards = [
-    c
-    async for c in api.paginate(
-        "/content/v2/get/cards/list",
-        body={"settings": {"filter": {"withPhoto": -1}}},
-    )
-]
-```
-
-#### Ответы
-
-Ответ — обычный `dict` или `list` с доступом через точку. Разворачивать нечего,
-`unwrap()` удалён.
-
-```python
-# было
-data = order.unwrap()
-
-# стало
-data = order
-```
-
-Заодно заработало без конверсии:
-
-```python
-json.dumps(response)
-isinstance(response.orders, list)
-sorted(response.orders, key=lambda o: o.id)
 ```
 
 #### Ошибки
-
-Исключения переехали в `wbapi.exceptions` и делятся по типу — конкретную
-ошибку можно поймать вместо сравнения кода.
 
 ```python
 # было
 from wbapi import WBAPIError
 
-except WBAPIError as e:
-    print(e.http_status, e.detail)
+except WBAPIError as error:
+    print(error.http_status, error.detail)
 
 # стало
 from wbapi.exceptions import WBAPIError, WBAuthError, WBRateLimitError
 
 except WBAuthError:
-    ...                       # 401 — токен не подошёл
-except WBRateLimitError as e:
-    print(e.retry_after)      # 429 — лимит запросов
-except WBAPIError as e:
-    print(e.status_code, e.payload)
+    ...                            # 401
+except WBRateLimitError as error:
+    print(error.retry_after)       # 429
+except WBAPIError as error:
+    print(error.status_code, error.payload)
 ```
 
 ### Таблица переименований
@@ -126,23 +92,21 @@ except WBAPIError as e:
 | Было | Стало |
 | --- | --- |
 | `WbAPI` | `WBApi` |
-| `WBType` | `WBDict` / `WBList` |
-| `api.get(path, limit=10)` | `api.get(path, params={"limit": 10})` |
-| `api.get(path, paginate=True)` | `api.paginate(path)` |
-| `response.unwrap()` | не нужен — это уже `dict` / `list` |
-| `response.to_snake()` | удалён |
+| `api.get("/api/v3/orders/new")` | `api.orders_fbs.orders_new()` |
+| `api.get(path, paginate=True)` | `api.<раздел>.<метод>(auto_paginate=True)` |
+| `WBType` | модели раздела в `wbapi.resources.<раздел>.models` |
+| `response.unwrap()` | `response.to_dict()` |
+| `response.to_snake()` | не нужен — поля уже в snake_case |
 | `from wbapi import WBAPIError` | `from wbapi.exceptions import WBAPIError` |
 | `error.http_status` | `error.status_code` |
 | `error.detail` | `error.payload` |
-| `TokenValidationError` | `WBConfigurationError` |
-| `BaseWBAPIError` | `WBError` |
 
 ### Исправлено
 
-- Клиент падал с `TypeError`, если Wildberries возвращал ошибку списком или
-  текстом вместо объекта.
+- Клиент падал, если Wildberries возвращал ошибку списком или текстом вместо
+  объекта.
+- При параллельных запросах токен мог не уйти с запросом.
 - Ответ 429 приводил к бесконечным повторам.
 - Эндпоинты с идентификатором в пути использовали чужой лимит запросов.
-- Пагинация останавливалась на первой странице, если в ответе был пустой
-  список `errors`, и могла зациклиться при повторяющемся курсоре.
+- Постраничный обход мог зациклиться на повторяющемся курсоре.
 - Не было повторов при 5xx и обрывах связи.
