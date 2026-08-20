@@ -1,11 +1,3 @@
-"""Exception hierarchy for the Wildberries Seller API client.
-
-All exceptions derive from :class:`WBError`. Transport-level failures
-(:class:`WBTimeoutError`, :class:`WBConnectionError`) and HTTP-level failures
-(:class:`WBAPIError` and subclasses) are distinguishable, so callers can retry
-or fail fast per category.
-"""
-
 from __future__ import annotations
 
 from typing import Any
@@ -24,29 +16,39 @@ __all__ = (
     "WBTimeoutError",
     "WBConnectionError",
     "WBConfigurationError",
+    "WBDecodeError",
 )
 
 _MAX_MESSAGE_LEN = 500
 
 
 class WBError(Exception):
-    """Root of every exception raised by this library."""
+    """Общий предок всех исключений библиотеки."""
 
 
 class WBConfigurationError(WBError, ValueError):
-    """Client was configured incorrectly (bad token, unknown path, bad argument)."""
+    """Клиент вызван неправильно."""
+
+
+class WBDecodeError(WBError):
+    """Ответ не совпал с описанием в спецификации."""
+
+    def __init__(self, message: str, *, path: str, payload: object) -> None:
+        self.path = path
+        self.payload = payload
+        super().__init__(message)
 
 
 class WBTransportError(WBError):
-    """Request never produced an HTTP response."""
+    """Запрос не дошёл до ответа."""
 
 
 class WBTimeoutError(WBTransportError, TimeoutError):
-    """Request timed out."""
+    """Таймаут запроса."""
 
 
 class WBConnectionError(WBTransportError, ConnectionError):
-    """Connection could not be established."""
+    """Соединение не установлено."""
 
 
 def _as_text(value: Any) -> str | None:
@@ -58,17 +60,11 @@ def _as_text(value: Any) -> str | None:
 
 
 def _extract_message(payload: Any) -> str | None:
-    """Pull a human-readable message out of an arbitrary WB error payload.
-
-    WB is inconsistent: some endpoints return ``{"errorText": ...}``, some
-    ``{"detail": ...}``, some a bare list of strings, some plain text.
-    """
     if isinstance(payload, str):
         return payload.strip() or None
 
     if isinstance(payload, dict):
-        # RFC 7807 problem details: WB pairs a short `title` with a longer
-        # `detail`; showing both is more useful than either alone.
+        # RFC 7807: the short title and the longer detail read better together.
         title = payload.get("title")
         detail = payload.get("detail")
         if isinstance(title, str) and isinstance(detail, str):
@@ -97,23 +93,7 @@ def _extract_message(payload: Any) -> str | None:
 
 
 class WBAPIError(WBError):
-    """The API returned an HTTP error response.
-
-    Wildberries returns ``application/problem+json`` (RFC 7807) on most
-    endpoints, so ``code``, ``origin`` and ``request_id`` are lifted out of the
-    body when present — quote them verbatim in a support ticket.
-
-    Attributes:
-        status_code: HTTP status code, or ``0`` when unknown.
-        payload: Decoded response body. Any JSON shape — dict, list, str — or
-            ``None`` when the body was empty or undecodable.
-        code: Wildberries' internal error code, when the body carries one.
-        origin: The internal Wildberries service that produced the error.
-        request_id: Request identifier, from the body or the ``X-Request-Id``
-            header.
-        method: HTTP method of the failed request.
-        path: Request path or URL, when known.
-    """
+    """Ошибка от API. Поля problem+json доступны как атрибуты."""
 
     __slots__ = ("status_code", "payload", "code", "origin", "request_id", "method", "path")
 
@@ -168,23 +148,23 @@ class WBAPIError(WBError):
 
 
 class WBAuthError(WBAPIError):
-    """401 — token is missing, malformed, or expired."""
+    """401."""
 
 
 class WBForbiddenError(WBAPIError):
-    """403 — token lacks the scope required for this endpoint."""
+    """403."""
 
 
 class WBNotFoundError(WBAPIError):
-    """404 — resource does not exist."""
+    """404."""
 
 
 class WBValidationError(WBAPIError):
-    """400 / 409 / 422 — request rejected as invalid."""
+    """400, 409, 422."""
 
 
 class WBRateLimitError(WBAPIError):
-    """429 — rate limit exceeded and retries were exhausted."""
+    """429."""
 
     __slots__ = ("retry_after",)
 
@@ -194,7 +174,7 @@ class WBRateLimitError(WBAPIError):
 
 
 class WBServerError(WBAPIError):
-    """5xx — Wildberries-side failure."""
+    """5xx."""
 
 
 _STATUS_MAP: dict[int, type[WBAPIError]] = {
@@ -209,7 +189,6 @@ _STATUS_MAP: dict[int, type[WBAPIError]] = {
 
 
 def error_for_status(status_code: int) -> type[WBAPIError]:
-    """Map an HTTP status code to the most specific exception class."""
     mapped = _STATUS_MAP.get(status_code)
     if mapped is not None:
         return mapped

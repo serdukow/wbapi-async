@@ -9,13 +9,13 @@ from weakref import WeakKeyDictionary
 from aiolimiter import AsyncLimiter
 import httpx
 
-from .endpoints import PUBLIC_HOSTS, rate_limit_for
-from .exceptions import (
+from ..exceptions import (
     WBConnectionError,
     WBRateLimitError,
     WBTimeoutError,
     error_for_status,
 )
+from ..utils.token import mask_token
 
 
 __all__ = ("Session",)
@@ -27,34 +27,28 @@ DEFAULT_MAX_RETRIES = 3
 DEFAULT_RETRY_BACKOFF = 0.5
 DEFAULT_MAX_RETRY_WAIT = 60.0
 
+DEFAULT_RATE_LIMIT = (1000, 5)
+
 _RETRY_STATUSES = frozenset({429, 500, 502, 503, 504})
 _RETRY_AFTER_HEADERS = ("X-Ratelimit-Retry", "Retry-After")
 _ERROR_PREVIEW = 200
 
-# Limiters are shared per event loop: Wildberries throttles per account, so
-# concurrent clients must contend for one budget — but an AsyncLimiter is bound
-# to the loop that created it. Keying weakly on the loop lets both the limiters
-# and their entry disappear once that loop is collected.
+# Limiters are shared per event loop: the quota is per account, but an
+# AsyncLimiter belongs to the loop that created it. A weak key lets both
+# the limiters and their entry go when that loop is collected.
 _limiters: WeakKeyDictionary[asyncio.AbstractEventLoop, dict[tuple[int, int], AsyncLimiter]] = (
     WeakKeyDictionary()
 )
 
 
-def mask(token: str) -> str:
-    if not token:
-        return "<empty>"
-    return f"…{token[-4:]}" if len(token) > 4 else "…"
-
-
-def _limiter_for(path: str) -> AsyncLimiter:
-    """Return the limiter governing ``path`` on the running event loop."""
+def _limiter_for(path: str, rate: tuple[int, int] | None = None) -> AsyncLimiter:
     loop = asyncio.get_running_loop()
     per_loop = _limiters.get(loop)
     if per_loop is None:
         per_loop = {}
         _limiters[loop] = per_loop
 
-    rate = rate_limit_for(path)
+    rate = rate or DEFAULT_RATE_LIMIT
     limiter = per_loop.get(rate)
     if limiter is None:
         interval_ms, burst = rate
@@ -78,12 +72,8 @@ def _retry_after(response: httpx.Response, cap: float) -> float | None:
 
 
 class Session:
-    """Owns the httpx client and applies the retry and rate-limit policy.
-
-    The token is installed once as a client-level header rather than being
-    swapped per request, so concurrent calls cannot race over credentials.
-    """
-
+    # The token is installed once as a client header: swapping it per request
+    # would let concurrent calls overwrite each other's credentials.
     __slots__ = (
         "_token",
         "_client",
@@ -104,7 +94,7 @@ class Session:
         user_agent: str | None = None,
         transport: httpx.AsyncBaseTransport | None = None,
     ) -> None:
-        from . import __version__
+        from .. import __version__
 
         self._token = token
         self.max_retries = max(0, max_retries)
@@ -125,7 +115,11 @@ class Session:
         )
 
     def __repr__(self) -> str:
-        return f"Session(token={mask(self._token)}, max_retries={self.max_retries})"
+        return f"Session(token={mask_token(self._token)}, max_retries={self.max_retries})"
+
+    @property
+    def masked_token(self) -> str:
+        return mask_token(self._token)
 
     @property
     def is_closed(self) -> bool:
@@ -135,7 +129,6 @@ class Session:
         await self._client.aclose()
 
     def _backoff(self, attempt: int, hint: float | None) -> float:
-        """Exponential backoff with full jitter; a server hint takes priority."""
         if hint is not None:
             return hint
         window = min(self.retry_backoff * (2**attempt), self.max_retry_wait)
@@ -147,37 +140,18 @@ class Session:
         url: str,
         *,
         limit_key: str,
+        rate_limit: tuple[int, int] | None = None,
         params: dict[str, Any] | None = None,
         json: Any = None,
     ) -> Any:
-        """Perform one logical request, retrying transient failures.
+        limiter = _limiter_for(limit_key, rate_limit)
 
-        Args:
-            method: HTTP verb.
-            url: Absolute URL to call.
-            limit_key: Spec path used to look up the rate limit — the template
-                form (``/api/v3/orders/{orderId}``), not the substituted one.
-            params: Query parameters.
-            json: JSON request body.
-
-        Returns:
-            The decoded JSON body, or ``None`` for an empty response.
-
-        Raises:
-            WBTimeoutError: Request timed out and retries were exhausted.
-            WBConnectionError: Connection failed and retries were exhausted.
-            WBAPIError: Server returned 4xx/5xx; the subclass reflects the status.
-        """
-        limiter = _limiter_for(limit_key)
-        headers = {"Authorization": ""} if httpx.URL(url).host in PUBLIC_HOSTS else None
         last_error: Exception | None = None
 
         for attempt in range(self.max_retries + 1):
             async with limiter:
                 try:
-                    response = await self._client.request(
-                        method, url, params=params, json=json, headers=headers
-                    )
+                    response = await self._client.request(method, url, params=params, json=json)
                 except httpx.TimeoutException as exc:
                     last_error = WBTimeoutError(f"{method} {url} timed out: {exc}")
                 except httpx.TransportError as exc:
@@ -218,7 +192,6 @@ class Session:
         raise last_error
 
     def _handle(self, response: httpx.Response, method: str, url: str) -> Any:
-        """Decode a final response, or raise the matching exception."""
         request_id = response.headers.get("X-Request-Id")
 
         if response.status_code >= 400:
