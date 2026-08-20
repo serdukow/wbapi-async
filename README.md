@@ -1,69 +1,137 @@
-<p align="center">
-  <a href="https://dev.wildberries.ru"><img src="https://i.postimg.cc/q7qHdnRF/svgviewer-output-2-1-3.png" alt="wbapi"></a>
-</p>
+<div align="center">
 
-<p align="center">
-<a href="https://img.shields.io/pypi/v/wbapi-async.svg">
-<img src="https://img.shields.io/pypi/v/wbapi-async.svg" alt="Version">
-</a>
-<a href="https://pypi.python.org/pypi/wbapi-async">
-<img src="https://img.shields.io/pypi/dm/wbapi-async.svg" alt="Downloads">
-</a>
-<a href="https://pypi.python.org/pypi/wbapi-async">
-<img src="https://img.shields.io/badge/status-stable-52C72D.svg?logo=git&logoColor=52C72D" alt="Status">
-</a>
-<a href="https://pypi.org/project/wbapi-async">
-<img src="https://img.shields.io/pypi/pyversions/wbapi-async.svg" alt="Python">
-</a>
-</p>
+<h1>wbapi</h1>
 
----
+<p>Асинхронная библиотека для работы с API Wildberries Seller</p>
 
-**Documentation**: [https://dev.wildberries.ru](https://dev.wildberries.ru)
+[![PyPI version](https://img.shields.io/pypi/v/wbapi-async.svg)](https://pypi.org/project/wbapi-async/)
+[![Downloads](https://img.shields.io/pypi/dm/wbapi-async.svg)](https://pypi.python.org/pypi/wbapi-async)
+[![Tests](https://github.com/serdukow/wb-api/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/serdukow/wb-api/actions/workflows/tests.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/serdukow/cf37fee32eccac65721c605a306aa138/raw/wb-api-coverage.json)](https://github.com/serdukow/wb-api/actions/workflows/tests.yml)
+[![Checked with mypy](https://img.shields.io/badge/mypy-checked-2A6DB2.svg)](https://mypy-lang.org/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://pypi.org/project/wbapi-async/)
 
-**Source Code**: [https://github.com/serdukow/wbapi-async](https://github.com/serdukow/wbapi-async)
+</div>
 
----
+## Установка
 
-**wbapi** is a lightweight async client for the Wildberries Seller API, built on top of [httpx](https://www.python-httpx.org/).
+Требуется Python 3.10+.
 
-It handles pagination, rate limiting — so you can focus on your business logic instead of HTTP boilerplate.
-
-## Installation
-
-```bash
+```console
 pip install wbapi-async
 ```
 
-## How to use
-
-1. Register in the Wildberries seller [personal account](https://seller.wildberries.ru/) if you haven't already.
-2. Go to store settings and [create an API token](https://dev.wildberries.ru/en/docs/openapi/api-information#tag/Authorization/How-to-create-a-personal-access-base-or-test-token).
-
-## Quick start
+## Быстрый старт
 
 ```python
 import asyncio
-from wbapi import WbAPI
+import os
 
-async def main():
-    async with WbAPI(token="your_api_token") as api:
-        my_cards = await api.post(
-            "/content/v2/get/cards/list",
-            body={
-                "settings": {
-                    "sort": {"ascending": True},
-                    "cursor": {"limit": 100},
-                    "filter": {"withPhoto": -1},
-                }
-            },
-            paginate=True,
-        )
-        print(my_cards[0].nmID)
+from wbapi import WBApi
+
+
+async def main() -> None:
+    async with WBApi(token=os.environ["WB_TOKEN"]) as api:
+        orders = await api.get("/api/v3/orders/new", params={"limit": 10})
+        print(orders.orders[0].id)
+
 
 asyncio.run(main())
 ```
 
-## License
+Домен подставляется автоматически: `/api/v3/orders/new` уходит на
+`marketplace-api.wildberries.ru`, `/content/v2/get/cards/list` — на
+`content-api.wildberries.ru`.
 
-This project is licensed under the terms of the [MIT license](https://github.com/serdukow/wbapi-async/blob/main/LICENSE).
+## Запросы
+
+```python
+# GET с query-параметрами
+await api.get("/api/v1/supplier/orders", params={"dateFrom": "2026-04-28", "flag": 1})
+
+# POST с телом
+await api.post("/adv/v0/rename", body={"advertId": 123, "name": "Новая кампания"})
+
+# Идентификаторы в пути — обычная f-строка
+await api.patch(f"/api/v3/orders/{order_id}/cancel")
+
+await api.put(
+    f"/api/v3/stocks/{warehouse_id}",
+    body={"stocks": [{"sku": "WB007", "amount": 10}]},
+)
+
+await api.delete(f"/content/v2/tag/{tag_id}")
+```
+
+## Ответы
+
+Ответ — обычный `dict` или `list`, к которому добавлен доступ через точку.
+Никакой конверсии не нужно: он сериализуется, распаковывается и проходит
+проверки типов как есть.
+
+```python
+response = await api.get("/api/v3/orders/new")
+
+response.orders[0].id                    # доступ через точку, на любую глубину
+response["orders"]
+response.get("total", 0)
+
+json.dumps(response) 
+isinstance(response.orders, list)        # True
+sorted(response.orders, key=lambda o: o.id)
+```
+
+## Пагинация
+
+`paginate()` возвращает асинхронный итератор и сам определяет схему
+постраничного обхода по первому ответу — offset, курсор, `next`-токен
+или `rrdid`.
+
+```python
+# по одной записи, память не растёт
+async for order in api.paginate("/api/v3/orders"):
+    await save(order)
+
+# всё сразу
+supplies = [s async for s in api.paginate("/api/v3/supplies")]
+
+# POST-эндпоинты — тот же метод, отличается наличием body
+cards = [
+    c
+    async for c in api.paginate(
+        "/content/v2/get/cards/list",
+        body={"settings": {"filter": {"withPhoto": -1}}},
+    )
+]
+```
+
+## Лимиты и повторные запросы
+
+Лимиты берутся из таблицы эндпоинтов для каждого пути. Запросы к 429, 5xx и
+сетевым сбоям повторяются автоматически — с экспоненциальной задержкой и
+джиттером, с учётом заголовка `X-Ratelimit-Retry`.
+
+```python
+api = WBApi(
+    token=...,
+    timeout=60,           # или httpx.Timeout(connect=5, read=60)
+    max_retries=3,
+    retry_backoff=0.5,
+    max_retry_wait=60,
+    user_agent="myapp/1.0",
+)
+```
+
+## Новые эндпоинты
+
+Таблица эндпоинтов обновляется автоматически из OpenAPI-спецификаций
+Wildberries. Если нужный путь ещё не попал в релиз, передайте полный URL:
+
+```python
+await api.get("https://content-api.wildberries.ru/content/v3/new-endpoint")
+```
+
+## Лицензия
+
+[MIT](LICENSE)
