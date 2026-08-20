@@ -1,16 +1,11 @@
-from importlib.metadata import version
+from importlib.metadata import PackageNotFoundError, version
 
-from ._main import WbAPI
-from .exceptions import TokenValidationError, WBAPIError
-from .type import WBType
+from .client import WBApi
 
 
-__version__ = version("wbapi-async")
+try:
+    __version__ = version("wbapi-async")
+except PackageNotFoundError:
+    __version__ = "0.0.0.dev0"
 
-__all__ = (
-    "WbAPI",
-    "WBAPIError",
-    "TokenValidationError",
-    "WBType",
-    "__version__",
-)
+__all__ = ("WBApi", "__version__")

@@ -100,3 +100,7 @@ pyrightconfig.json
 internal/
 TODO.md
 .serena
+
+# Coverage badge payload
+coverage.json
+generate.log

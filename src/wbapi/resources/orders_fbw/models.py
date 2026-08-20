@@ -1,0 +1,249 @@
+from __future__ import annotations
+
+from typing import Any
+
+from msgspec import field as _field
+
+from ...client.model import WBModel
+
+
+class ModelsBox(WBModel):
+    barcodes: list[ModelsGoodInBox] | None = _field(default=None)
+    """Список упакованных товаров"""
+    package_code: str | None = _field(default=None, name="packageCode")
+    """Штрих-код упаковки"""
+    quantity: int | None = _field(default=None)
+    """Суммарное количество товара в упаковке, шт"""
+
+
+class ModelsDateFilterRequest(WBModel):
+    from_: str | None = _field(default=None, name="from")
+    """Дата начала периода"""
+    till: str | None = _field(default=None)
+    """Дата окончания периода"""
+    type: str | None = _field(default=None)
+    """Тип дат:   - `factDate` — дата фактической отгрузки поставки   - `createDate` — дата
+    создания поставки   - `supplyDate` — плановая дата отгрузки поставки …
+    """
+
+
+class ModelsGood(WBModel):
+    barcode: str | None = _field(default=None)
+    """Баркод из карточки товара"""
+    quantity: int | None = _field(default=None)
+    """Суммарное количество товаров, планируемых для поставки.   **Максимум 999999**"""
+
+
+class ModelsGoodInBox(WBModel):
+    barcode: str | None = _field(default=None)
+    """Баркод"""
+    quantity: int | None = _field(default=None)
+    """Количество, шт"""
+
+
+class ModelsGoodInSupply(WBModel):
+    accepted_quantity: int | None = _field(default=None, name="acceptedQuantity")
+    """Принято, шт"""
+    barcode: str | None = _field(default=None)
+    """Баркод товара"""
+    color: str | None = _field(default=None)
+    """Цвет товара"""
+    need_kiz: bool | None = _field(default=None, name="needKiz")
+    """Нужен ли код маркировки Честного знака для этого товара:   - `false` — не нужен   - `true` —
+    нужен
+    """
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    quantity: int | None = _field(default=None)
+    """Указано в поставке/заказе, шт"""
+    ready_for_sale_quantity: int | None = _field(default=None, name="readyForSaleQuantity")
+    """Поступило в продажу, шт"""
+    supplier_box_amount: int | None = _field(default=None, name="supplierBoxAmount")
+    """Указано в упаковке, шт"""
+    tech_size: str | None = _field(default=None, name="techSize")
+    """Размер товара, указанный продавцом"""
+    tnved: str | None = _field(default=None)
+    """Код ТНВЭД.  Если `"needKiz":true`, а `"tnved":null`, нужно заполнить характеристику товара
+    **ТН ВЭД** в личном кабинете или по API
+    """
+    unloading_quantity: int | None = _field(default=None, name="unloadingQuantity")
+    """Количество товара на раскладке, шт"""
+    vendor_code: str | None = _field(default=None, name="vendorCode")
+    """Артикул продавца"""
+
+
+class ModelsOptionsResultModel(WBModel):
+    request_id: str | None = _field(default=None, name="requestId")
+    """ID запроса при наличии ошибок"""
+    result: list[ModelsOptionsResultModelResultItem] | None = _field(default=None)
+
+
+class ModelsOptionsResultModelResultItem(WBModel):
+    barcode: str | None = _field(default=None)
+    """Баркод из карточки товара"""
+    error: ModelsOptionsResultModelResultItemError | None = _field(default=None)
+    """Данные ошибки. При наличии"""
+    is_error: bool | None = _field(default=None, name="isError")
+    """Наличие ошибки:   - `true` — ошибка есть   - Поля нет — ошибка отсутствует"""
+    warehouses: list[ModelsOptionsResultModelResultItemWarehousesItem] | None = _field(default=None)
+    """Список складов. При наличии ошибки будет `null`"""
+
+
+class ModelsOptionsResultModelResultItemError(WBModel):
+    """Данные ошибки. При наличии"""
+
+    detail: Any | None = _field(default=None)
+    """Описание ошибки"""
+    title: Any | None = _field(default=None)
+    """ID ошибки"""
+
+
+class ModelsOptionsResultModelResultItemWarehousesItem(WBModel):
+    can_box: Any | None = _field(default=None, name="canBox")
+    """Тип упаковки **Короб**:   - `true` — доступен   - `false` — недоступен"""
+    can_monopallet: Any | None = _field(default=None, name="canMonopallet")
+    """Тип упаковки **Монопаллета**:   - `true` — доступен   - `false` — недоступен"""
+    can_supersafe: Any | None = _field(default=None, name="canSupersafe")
+    """Тип упаковки **Суперсейф**:   - `true` — доступен   - `false` — недоступен"""
+    is_box_on_pallet: Any | None = _field(default=None, name="isBoxOnPallet")
+    """Тип поставки **Поштучная палета**:   - `true` — доступен   - `false` — недоступен"""
+    warehouse_id: Any | None = _field(default=None, name="warehouseID")
+    """ID склада. По нему можно получить информацию о складе"""
+
+
+class ModelsSuppliesFiltersRequest(WBModel):
+    dates: list[ModelsDateFilterRequest] | None = _field(default=None)
+    """Фильтр по датам"""
+    status_ids: list[int] | None = _field(default=None, name="statusIDs")
+    """Фильтр поставок по статусам. Возможные значения:   - `1` — Не запланировано   - `2` —
+    Запланировано   - `3` — Отгрузка разрешена   - `4` — Идёт приёмка …
+    """
+
+
+class ModelsSupply(WBModel):
+    box_type_id: Any | None = _field(default=None, name="boxTypeID")
+    """ID типа поставки:   - `0` — Без коробов (виртуальная поставка)   - `1` и `2` — Короба   -
+    `5` — Монопаллеты   - `6` — Суперсейф
+    """
+    create_date: str | None = _field(default=None, name="createDate")
+    """Дата и время создания поставки"""
+    fact_date: str | None = _field(default=None, name="factDate")
+    """Дата фактической отгрузки поставки"""
+    is_box_on_pallet: bool | None = _field(default=None, name="isBoxOnPallet")
+    """Тип поставки — **Поштучная палета**:   - `true` — да   - `false` — нет    Поле возвращается
+    только при `"boxTypeID": 2`
+    """
+    phone: str | None = _field(default=None)
+    """Телефон пользователя, создавшего поставку"""
+    preorder_id: int | None = _field(default=None, name="preorderID")
+    """ID заказа (незапланированная поставка). Для всех виртуальных поставок будет `0`"""
+    status_id: int | None = _field(default=None, name="statusID")
+    """ID статуса поставки:   - `1` — Не запланировано   - `2` — Запланировано   - `3` — Отгрузка
+    разрешена   - `4` — Идёт приёмка   - `5` — Принято …
+    """
+    supply_date: str | None = _field(default=None, name="supplyDate")
+    """Плановая дата отгрузки поставки"""
+    supply_id: int | None = _field(default=None, name="supplyID")
+    """ID поставки. Если `null`, это заказ, тогда используйте значение поля `preorderID`"""
+    updated_date: str | None = _field(default=None, name="updatedDate")
+    """Дата изменения поставки"""
+
+
+class ModelsSupplyDetails(WBModel):
+    acceptance_cost: float | None = _field(default=None, name="acceptanceCost")
+    """Предварительная стоимость приёмки, ₽"""
+    accepted_quantity: int | None = _field(default=None, name="acceptedQuantity")
+    """Принято, шт"""
+    actual_warehouse_id: int | None = _field(default=None, name="actualWarehouseID")
+    """ID склада, на который поставка была привезена"""
+    actual_warehouse_name: str | None = _field(default=None, name="actualWarehouseName")
+    """Название склада, на который поставка привезена"""
+    box_type_id: int | None = _field(default=None, name="boxTypeID")
+    """ID типа поставки:   - `0` — Без коробов (виртуальная поставка)   - `1` и `2` — Короба   -
+    `5` — Монопаллеты   - `6` — Суперсейф
+    """
+    create_date: str | None = _field(default=None, name="createDate")
+    """Дата и время создания поставки"""
+    delivery_coef: str | None = _field(default=None, name="deliveryCoef")
+    """Коэффициент логистики"""
+    depersonalized_quantity: int | None = _field(default=None, name="depersonalizedQuantity")
+    """Количество обезличенного товара, шт"""
+    fact_date: str | None = _field(default=None, name="factDate")
+    """Дата фактической отгрузки поставки"""
+    is_box_on_pallet: bool | None = _field(default=None, name="isBoxOnPallet")
+    """Тип поставки — **Поштучная палета**:   - `true` — да   - `false` — нет    Поле возвращается
+    только при `"boxTypeID": 2`
+    """
+    paid_acceptance_coefficient: float | None = _field(default=None, name="paidAcceptanceCoefficient")
+    """Коэффициент приёмки"""
+    phone: str | None = _field(default=None)
+    """Телефон пользователя, создавшего поставку"""
+    quantity: int | None = _field(default=None)
+    """Добавлено в поставку/заказ, шт"""
+    ready_for_sale_quantity: int | None = _field(default=None, name="readyForSaleQuantity")
+    """Поступило в продажу, шт"""
+    reject_reason: str | None = _field(default=None, name="rejectReason")
+    """Причина, по которой поставка не может быть принята"""
+    status_id: int | None = _field(default=None, name="statusID")
+    """ID статуса поставки:   - `1` — Не запланировано   - `2` — Запланировано   - `3` — Отгрузка
+    разрешена   - `4` — Идёт приёмка   - `5` — Принято …
+    """
+    storage_coef: str | None = _field(default=None, name="storageCoef")
+    """Коэффициент хранения"""
+    supplier_assign_name: str | None = _field(default=None, name="supplierAssignName")
+    """Краткое название продавца"""
+    supply_date: str | None = _field(default=None, name="supplyDate")
+    """Плановая дата отгрузки поставки"""
+    transit_warehouse_id: int | None = _field(default=None, name="transitWarehouseID")
+    """ID транзитного склада"""
+    transit_warehouse_name: str | None = _field(default=None, name="transitWarehouseName")
+    """Название транзитного склада"""
+    unloading_quantity: int | None = _field(default=None, name="unloadingQuantity")
+    """Количество товара, находящегося на раскладке, шт"""
+    updated_date: str | None = _field(default=None, name="updatedDate")
+    """Дата изменения поставки"""
+    virtual_type_id: int | None = _field(default=None, name="virtualTypeID")
+    """ID типа виртуальной поставки. Отображается только для поставок с `"boxTypeID":0`.   - `0` —
+    Перенос остатков   - `1` — Обезличка   - `4` — QR-поставка …
+    """
+    warehouse_id: int | None = _field(default=None, name="warehouseID")
+    """ID склада, на который планируется поставка"""
+    warehouse_name: str | None = _field(default=None, name="warehouseName")
+    """Название склада, на который планируется поставка"""
+
+
+class ModelsTransitTariff(WBModel):
+    active_from: str | None = _field(default=None, name="activeFrom")
+    """С какого числа доступно транзитное направление"""
+    box_tariff: list[ModelsVolumeTariff] | None = _field(default=None, name="boxTariff")
+    """Тариф за транзит коробов. Если `null`, транзит для коробов недоступен"""
+    destination_warehouse_name: str | None = _field(default=None, name="destinationWarehouseName")
+    """Склад назначения"""
+    pallet_tariff: int | None = _field(default=None, name="palletTariff")
+    """Тариф за паллету, ₽"""
+    transit_warehouse_name: str | None = _field(default=None, name="transitWarehouseName")
+    """Транзитный склад"""
+
+
+class ModelsVolumeTariff(WBModel):
+    from_: int | None = _field(default=None, name="from")
+    """Объём поставки от, литры"""
+    to: int | None = _field(default=None)
+    """Объём поставки до, литры"""
+    value: float | None = _field(default=None)
+    """Тариф, ₽ за литр"""
+
+
+class ModelsWarehousesResultItems(WBModel):
+    id: int | None = _field(default=None, name="ID")
+    """ID склада"""
+    address: str | None = _field(default=None)
+    """Адрес склада"""
+    is_active: bool | None = _field(default=None, name="isActive")
+    """Доступен ли в качестве склада назначения: - `true` — да - `false` — нет"""
+    is_transit_active: bool | None = _field(default=None, name="isTransitActive")
+    """Доступен ли в качестве транзитного склада: - `true` — да - `false` — нет"""
+    name: str | None = _field(default=None)
+    """Название склада"""
+    work_time: str | None = _field(default=None, name="workTime")
+    """Режим работы склада"""
