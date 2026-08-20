@@ -29,7 +29,10 @@ jobs:
           venv/bin/pip install dist/*.whl
           venv/bin/python - <<EOF
           from importlib.metadata import version
-          print(version("wbapi_async"))
+          import wbapi
+          print("dist:", version("wbapi-async"))
+          print("import:", wbapi.__version__)
+          assert version("wbapi-async") == wbapi.__version__
           EOF
 
       - uses: actions/upload-artifact@v4

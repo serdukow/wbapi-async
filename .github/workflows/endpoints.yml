@@ -1,0 +1,79 @@
+name: Update endpoints
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Regenerate endpoint table
+        id: generate
+        run: |
+          uv run python scripts/generate_endpoints.py | tee generate.log
+          if git diff --quiet -- src/wbapi/endpoints.py; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify the library still works
+        if: steps.generate.outputs.changed == 'true'
+        run: uv run pytest -q
+
+      - name: Summarise the change
+        if: steps.generate.outputs.changed == 'true'
+        id: summary
+        run: |
+          added=$(grep -oP '\+ \d+ new' generate.log | grep -oP '\d+' || echo 0)
+          gone=$(grep -oP '~ \d+ no longer' generate.log | grep -oP '\d+' || echo 0)
+          echo "added=$added" >> "$GITHUB_OUTPUT"
+          {
+            echo "body<<EOF"
+            echo "Regenerated from the [Wildberries OpenAPI specs](https://dev.wildberries.ru/api/swagger/yaml/en/)."
+            echo
+            echo "- **$added** new endpoint(s)"
+            echo "- **$gone** no longer in the spec (kept and marked deprecated, so existing code keeps working)"
+            echo
+            echo '```'
+            cat generate.log
+            echo '```'
+            echo
+            echo "The test suite passed against the regenerated table."
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open pull request
+        if: steps.generate.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/update-endpoints
+          delete-branch: true
+          title: "feat: add ${{ steps.summary.outputs.added }} endpoint(s) from the Wildberries spec"
+          body: ${{ steps.summary.outputs.body }}
+          commit-message: "feat: update endpoint table from the Wildberries OpenAPI spec"
+          labels: endpoints
+          add-paths: src/wbapi/endpoints.py
