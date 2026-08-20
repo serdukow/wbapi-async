@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.0](https://github.com/serdukow/wbapi-async/compare/v0.10.0...v1.0.0) (2026-08-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* api.get("/api/v3/orders/new") becomes api.orders_fbs.orders_new(); WbAPI becomes WBApi; WBType is replaced by the generated models; response.unwrap() becomes response.to_dict(); exceptions moved to wbapi.exceptions.
+* WbAPI is now WBApi and WBType is now WBDict/WBList. Query parameters move from **kwargs to params={...}; path ids are interpolated by the caller. Pagination is the async iterator paginate() instead of paginate=True. Exceptions live in wbapi.exceptions and the root package no longer re-exports them. unwrap() and to_snake() are gone: responses subclass dict and list, so no conversion is needed.
+
+### Features
+
+* generate a typed client from the OpenAPI specs ([348e18e](https://github.com/serdukow/wbapi-async/commit/348e18eff3be5a0cda4e97c678be387e3a7228e4))
+* rewrite the client for 1.0 ([e569f35](https://github.com/serdukow/wbapi-async/commit/e569f35acee370484717055029a8fbcf16de71e0))
+
+
+### Documentation
+
+* describe the generated client ([483ba8c](https://github.com/serdukow/wbapi-async/commit/483ba8c905aebca023eb7865bf30fa6928e46f9e))
+* rewrite README, CHANGELOG and AGENTS for 1.0 ([041e040](https://github.com/serdukow/wbapi-async/commit/041e040fdd37c7c6791cd81c6e2b9b87f9bcfed9))
+
 ## 1.0.0rc1
 
 Библиотека переписана: вместо обёртки над HTTP-глаголами — 308 типизированных
