@@ -1,135 +1,176 @@
-"""Verb dispatch, path templating, auth handling and lifecycle."""
-
 from __future__ import annotations
-
-import asyncio
 
 import httpx
 import pytest
 
-from tests.mocked_api import TOKEN, MockedAPI
+from tests.conftest import ALL_SCOPES, Recorder, make_token
 from wbapi import WBApi
-from wbapi.exceptions import WBConfigurationError
+from wbapi.exceptions import WBAuthError, WBConfigurationError
+from wbapi.utils import Scope, TokenKind
 
 
-async def test_get_sends_query_params(api: MockedAPI) -> None:
-    api.add_response({"orders": []})
-    await api.get("/api/v3/orders/new", params={"limit": 10, "next": 0})
-    assert dict(api.get_last_request().url.params) == {"limit": "10", "next": "0"}
+SECTIONS = (
+    "general",
+    "items",
+    "orders_fbs",
+    "orders_dbw",
+    "orders_dbs",
+    "in_store_pickup",
+    "orders_fbw",
+    "promotion",
+    "communications",
+    "rates",
+    "analytics",
+    "reports",
+    "finances",
+    "wbd",
+)
 
 
-async def test_get_returns_wrapped_response(api: MockedAPI) -> None:
-    api.add_response({"orders": [{"id": 7}]})
-    response = await api.get("/api/v3/orders/new")
-    assert response.orders[0].id == 7
+@pytest.mark.parametrize("section", SECTIONS)
+def test_every_section_is_available(api: WBApi, section: str) -> None:
+    assert hasattr(api, section)
 
 
-async def test_post_sends_json_body(api: MockedAPI) -> None:
-    api.add_response({"ok": True})
-    await api.post("/adv/v0/rename", body={"advertId": 1, "name": "x"})
-    request = api.get_last_request()
-    assert request.method == "POST"
-    assert b'"advertId"' in request.content
-
-
-@pytest.mark.parametrize("verb", ["put", "patch", "delete"])
-async def test_other_verbs_dispatch(api: MockedAPI, verb: str) -> None:
-    api.add_response({"ok": True})
-    await getattr(api, verb)("/api/v3/warehouses")
-    assert api.get_last_request().method == verb.upper()
-
-
-async def test_interpolated_path_is_sent_verbatim(api: MockedAPI) -> None:
-    api.add_response({"ok": True})
-    await api.patch("/api/v3/orders/13833711/cancel")
-    assert api.get_last_request().url.path == "/api/v3/orders/13833711/cancel"
-
-
-async def test_interpolated_path_keeps_its_own_rate_limit() -> None:
-    """A concrete id must resolve back to its template, not its parent."""
-    from wbapi.endpoints import rate_limit_for
-
-    assert rate_limit_for("/api/v3/orders/13833711/cancel") == rate_limit_for(
-        "/api/v3/orders/{orderId}/cancel"
-    )
-
-
-async def test_interpolated_path_resolves_host(api: MockedAPI) -> None:
-    api.add_response({"ok": True})
-    await api.get("/api/v3/supplies/WB-GI-123/orders")
-    assert api.get_last_request().url.host == "marketplace-api.wildberries.ru"
-
-
-async def test_params_are_query_only(api: MockedAPI) -> None:
-    api.add_response({"ok": True})
-    await api.get("/api/v3/supplies/WB-1", params={"limit": 5})
-    request = api.get_last_request()
-    assert request.url.path == "/api/v3/supplies/WB-1"
-    assert dict(request.url.params) == {"limit": "5"}
-
-
-async def test_token_sent_on_private_hosts(api: MockedAPI) -> None:
-    api.add_response({"ok": True})
-    await api.get("/api/v3/warehouses")
-    assert api.get_last_request().headers["authorization"] == TOKEN
-
-
-async def test_token_withheld_from_public_hosts(api: MockedAPI) -> None:
-    api.add_response({"ok": True})
-    await api.get("https://card.wb.ru/cards/detail")
-    assert not api.get_last_request().headers.get("authorization")
-
-
-async def test_concurrent_public_and_private_do_not_race(api: MockedAPI) -> None:
-    """Regression: shared header state leaked or dropped tokens under gather."""
-    api.set_handler(lambda request: httpx.Response(200, json={"ok": True}))
-
-    await asyncio.gather(
-        *(
-            api.get("https://card.wb.ru/cards/detail") if index % 2 == 0 else api.get("/api/v3/warehouses")
-            for index in range(40)
-        )
-    )
-
-    for request in api.requests:
-        auth = request.headers.get("authorization", "")
-        if request.url.host == "card.wb.ru":
-            assert not auth, "token leaked to a public host"
-        else:
-            assert auth == TOKEN, "private request lost its token"
-
-
-async def test_user_agent_identifies_library(api: MockedAPI) -> None:
-    api.add_response({"ok": True})
-    await api.get("/api/v3/warehouses")
-    assert api.get_last_request().headers["user-agent"].startswith("wbapi/")
-
-
-async def test_custom_user_agent() -> None:
-    api = MockedAPI(user_agent="app/2")
-    api.add_response({})
-    await api.get("/api/v3/warehouses")
-    assert api.get_last_request().headers["user-agent"] == "app/2"
+def test_token_is_decoded_on_init(api: WBApi) -> None:
+    assert api.token.kind is not None
+    assert api.token.seller_id == "seller-1"
 
 
 @pytest.mark.parametrize("token", ["", "   ", None, 123])
 def test_invalid_token_rejected(token: object) -> None:
-    with pytest.raises(WBConfigurationError, match="token"):
+    with pytest.raises(WBConfigurationError, match="токен"):
         WBApi(token=token)  # type: ignore[arg-type]
 
 
-def test_repr_masks_token() -> None:
-    api = WBApi(token="super-secret-value")
-    assert "super-secret" not in repr(api)
-    assert "alue" in repr(api)
+def test_repr_hides_token() -> None:
+    api = WBApi(token=make_token(scopes=ALL_SCOPES))
+    assert "eyJ" not in repr(api)
 
 
-async def test_context_manager_closes_pool() -> None:
-    async with MockedAPI() as api:
+async def test_request_goes_to_the_endpoint_host(api: WBApi, recorder: Recorder) -> None:
+    recorder.add({"orders": []})
+    await api.orders_fbs.orders_new()
+    assert recorder.last.url.host == "marketplace-api.wildberries.ru"
+
+
+async def test_token_is_sent(api: WBApi, recorder: Recorder) -> None:
+    recorder.add({"orders": []})
+    await api.orders_fbs.orders_new()
+    assert recorder.last.headers["authorization"].startswith("eyJ")
+
+
+async def test_path_parameters_are_substituted(api: WBApi, recorder: Recorder) -> None:
+    recorder.add(None, 204)
+    await api.orders_fbs.orders_order_id_cancel(order_id=13833711)
+    assert recorder.last.url.path == "/api/v3/orders/13833711/cancel"
+
+
+async def test_query_parameters_use_api_names(api: WBApi, recorder: Recorder) -> None:
+    recorder.add({"orders": [], "next": 0})
+    await api.orders_fbs.orders(limit=10, next_=77)
+    assert dict(recorder.last.url.params) == {"limit": "10", "next": "77"}
+
+
+async def test_empty_parameters_are_skipped(api: WBApi, recorder: Recorder) -> None:
+    recorder.add({"orders": [], "next": 0})
+    await api.orders_fbs.orders(limit=10, next_=0, date_from=None)
+    assert "dateFrom" not in recorder.last.url.params
+
+
+async def test_body_fields_use_api_names(api: WBApi, recorder: Recorder) -> None:
+    recorder.add({"stickers": []})
+    await api.orders_fbs.supplies_supply_id_trbx_stickers(
+        supply_id="WB-GI-1", trbx_ids=["WB-TRBX-1"], type_="svg"
+    )
+    assert recorder.body() == {"trbxIds": ["WB-TRBX-1"]}
+    assert recorder.last.url.params["type"] == "svg"
+
+
+@pytest.mark.parametrize("unsafe", ["../../admin", "a/b", "a?b", "a#b", "a b"])
+async def test_unsafe_path_value_is_rejected(api: WBApi, recorder: Recorder, unsafe: str) -> None:
+    """A value must not retarget the request to another endpoint."""
+    with pytest.raises(ValueError, match="Недопустимое значение"):
+        await api.orders_fbs.supplies_supply_id(supply_id=unsafe)
+    assert recorder.count == 0
+
+
+async def test_scope_is_checked_before_request(recorder: Recorder) -> None:
+    token = make_token(scopes=1 << Scope.CONTENT)
+    async with WBApi(token=token, transport=httpx.MockTransport(recorder), max_retries=0) as api:
+        with pytest.raises(WBAuthError, match="MARKETPLACE"):
+            await api.orders_fbs.orders_new()
+    assert recorder.count == 0
+
+
+async def test_scope_check_passes_when_allowed(recorder: Recorder) -> None:
+    token = make_token(scopes=1 << Scope.MARKETPLACE)
+    recorder.add({"orders": []})
+    async with WBApi(token=token, transport=httpx.MockTransport(recorder), max_retries=0) as api:
+        await api.orders_fbs.orders_new()
+    assert recorder.count == 1
+
+
+async def test_token_without_mask_is_not_blocked(recorder: Recorder) -> None:
+    recorder.add({"orders": []})
+    async with WBApi(token=make_token(), transport=httpx.MockTransport(recorder), max_retries=0) as api:
+        await api.orders_fbs.orders_new()
+    assert recorder.count == 1
+
+
+async def test_sandbox_switches_the_host(recorder: Recorder) -> None:
+    recorder.add({"orders": []})
+    async with WBApi(
+        token=make_token(acc=2, scopes=ALL_SCOPES),
+        transport=httpx.MockTransport(recorder),
+        max_retries=0,
+        sandbox=True,
+    ) as api:
+        await api.orders_fbs.orders_new()
+    assert recorder.last.url.host == "marketplace-api-sandbox.wildberries.ru"
+
+
+async def test_sandbox_refuses_when_unavailable(recorder: Recorder) -> None:
+    async with WBApi(
+        token=make_token(acc=2, scopes=ALL_SCOPES),
+        transport=httpx.MockTransport(recorder),
+        max_retries=0,
+        sandbox=True,
+    ) as api:
+        with pytest.raises(WBConfigurationError, match="песочниц"):
+            await api.finances.account_balance()
+    assert recorder.count == 0
+
+
+async def test_context_manager_closes_the_pool(recorder: Recorder) -> None:
+    async with WBApi(token=make_token(scopes=ALL_SCOPES), transport=httpx.MockTransport(recorder)) as api:
         assert not api.is_closed
     assert api.is_closed
 
 
-async def test_empty_body_returns_none(api: MockedAPI) -> None:
-    api.add_raw_response(httpx.Response(204))
-    assert await api.delete("/content/v2/tag/{id}", params={"id": 1}) is None
+async def test_empty_response_becomes_none(api: WBApi, recorder: Recorder) -> None:
+    recorder.add_raw(httpx.Response(204))
+    assert await api.orders_fbs.orders_order_id_cancel(order_id=1) is None
+
+
+async def test_sandbox_requires_a_test_token() -> None:
+    """The sandbox only accepts a test-contour token."""
+    with pytest.raises(WBConfigurationError, match="Тестовому контуру"):
+        WBApi(token=make_token(acc=3), sandbox=True)
+
+
+async def test_sandbox_accepts_a_test_token() -> None:
+    api = WBApi(token=make_token(acc=2), sandbox=True)
+    assert api.sandbox
+    assert api.token.kind is TokenKind.TEST
+
+
+async def test_test_token_is_refused_in_production() -> None:
+    """A test token returns nothing meaningful against production."""
+    with pytest.raises(WBConfigurationError, match="только в тестовом"):
+        WBApi(token=make_token(acc=2))
+
+
+async def test_unknown_token_kind_is_not_blocked() -> None:
+    api = WBApi(token="not-a-jwt", sandbox=True)
+    assert api.sandbox

@@ -1,200 +1,231 @@
-"""Pagination: strategy detection, traversal, and loop safety."""
-
 from __future__ import annotations
-
-import json as jsonlib
-from typing import Any
 
 import httpx
 import pytest
 
-from tests.mocked_api import MockedAPI
-from wbapi import WBObject
-from wbapi.pagination import extract_items
+from tests.conftest import Recorder
+from wbapi import WBApi
+from wbapi.client import method as method_module
 
 
-@pytest.mark.parametrize(
-    ("raw", "expected"),
-    [
-        ([1, 2], [1, 2]),
-        ({"data": [1]}, [1]),
-        ({"orders": [1]}, [1]),
-        ({"nested": {"cards": [1]}}, [1]),
-        ({}, []),
-        ({"count": 3}, []),
-        ("string", []),
-        (None, []),
-    ],
-)
-def test_extract_items_finds_the_payload(raw: Any, expected: list[Any]) -> None:
-    assert extract_items(raw) == expected
+async def test_single_page_by_default(api: WBApi, recorder: Recorder) -> None:
+    recorder.add({"orders": [{"id": i} for i in range(10)], "next": 555})
+    page = await api.orders_fbs.orders(limit=10, next_=0)
+    assert len(page.orders) == 10
+    assert recorder.count == 1
 
 
-def test_extract_items_skips_diagnostic_lists() -> None:
-    """Regression: an empty ``errors`` list used to be mistaken for the payload."""
-    assert extract_items({"errors": [], "data": [{"id": 1}]}) == [{"id": 1}]
+async def test_auto_paginate_collects_every_page(api: WBApi, recorder: Recorder) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        cursor = request.url.params.get("next")
+        if cursor in (None, "0"):
+            return httpx.Response(200, json={"orders": [{"id": i} for i in range(1000)], "next": 111})
+        if cursor == "111":
+            return httpx.Response(200, json={"orders": [{"id": 1001}], "next": 222})
+        return httpx.Response(200, json={"orders": [], "next": 0})
+
+    recorder.handle(handler)
+    rows = await api.orders_fbs.orders(limit=1000, next_=0, auto_paginate=True)
+    assert len(rows) == 1001
 
 
-def test_extract_items_prefers_known_payload_keys() -> None:
-    assert extract_items({"warnings": ["w"], "cards": [{"id": 1}]}) == [{"id": 1}]
+async def test_iterator_yields_the_same_rows(api: WBApi, recorder: Recorder) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        cursor = request.url.params.get("next")
+        if cursor in (None, "0"):
+            return httpx.Response(200, json={"orders": [{"id": 1}, {"id": 2}], "next": 9})
+        return httpx.Response(200, json={"orders": [], "next": 0})
+
+    recorder.handle(handler)
+    rows = [row async for row in api.orders_fbs.iter_orders(limit=2, next_=0)]
+    assert [row.id for row in rows] == [1, 2]
 
 
-async def test_offset_pagination_walks_pages(api: MockedAPI) -> None:
+async def test_next_token_is_sent_back(api: WBApi, recorder: Recorder) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        cursor = request.url.params.get("next")
+        if cursor in (None, "0"):
+            return httpx.Response(200, json={"orders": [{"id": 1}], "next": 42})
+        return httpx.Response(200, json={"orders": [], "next": 0})
+
+    recorder.handle(handler)
+    await api.orders_fbs.orders(limit=1, next_=0, auto_paginate=True)
+    assert recorder.requests[1].url.params["next"] == "42"
+
+
+async def test_repeated_cursor_stops_the_walk(api: WBApi, recorder: Recorder) -> None:
+    """A server repeating the cursor must not loop the walk."""
+    recorder.handle(lambda request: httpx.Response(200, json={"orders": [{"id": 1}], "next": 7}))
+    rows = await api.orders_fbs.orders(limit=1, next_=0, auto_paginate=True)
+    assert len(rows) == 2
+    assert recorder.count == 2
+
+
+async def test_empty_page_stops_the_walk(api: WBApi, recorder: Recorder) -> None:
+    recorder.handle(lambda request: httpx.Response(200, json={"orders": [], "next": 5}))
+    rows = await api.orders_fbs.orders(limit=10, next_=0, auto_paginate=True)
+    assert rows == []
+    assert recorder.count == 1
+
+
+async def test_skip_take_advances_by_take(api: WBApi, recorder: Recorder) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        skip = int(request.url.params.get("skip", 0))
+        rows = [] if skip else [{"id": "f1"}, {"id": "f2"}]
+        return httpx.Response(200, json={"data": {"feedbacks": rows}})
+
+    recorder.handle(handler)
+    rows = [row async for row in api.communications.iter_feedbacks(is_answered=False, take=2, skip=0)]
+    assert len(rows) == 2
+    assert recorder.requests[1].url.params["skip"] == "2"
+
+
+async def test_offset_query_advances_by_limit(api: WBApi, recorder: Recorder) -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         offset = int(request.url.params.get("offset", 0))
-        if offset == 0:
-            return httpx.Response(200, json={"supplies": [{"id": i} for i in range(1000)]})
-        return httpx.Response(200, json={"supplies": [{"id": 9999}]})
+        rows = [] if offset else [{"id": 1}, {"id": 2}]
+        return httpx.Response(200, json={"data": rows})
 
-    api.set_handler(handler)
-    items = [item async for item in api.paginate("/api/v3/supplies")]
-    assert len(items) == 1001
-    assert items[-1].id == 9999
-
-
-async def test_offset_stops_on_short_page(api: MockedAPI) -> None:
-    api.add_response({"supplies": [{"id": 1}]})
-    items = [item async for item in api.paginate("/api/v3/supplies")]
-    assert len(items) == 1
-    assert api.request_count == 1
+    recorder.handle(handler)
+    rows = [row async for row in api.items.iter_content_v2_object_all(limit=2)]
+    assert len(rows) == 2
+    assert recorder.requests[1].url.params["offset"] == "2"
 
 
-async def test_next_token_pagination(api: MockedAPI) -> None:
-    def handler(request: httpx.Request) -> httpx.Response:
-        if request.url.params.get("next") is None:
-            return httpx.Response(200, json={"orders": [{"id": 1}], "next": "abc"})
-        return httpx.Response(200, json={"orders": [{"id": 2}], "next": 0})
-
-    api.set_handler(handler)
-    items = [item async for item in api.paginate("/api/v3/orders")]
-    assert [item.id for item in items] == [1, 2]
-
-
-async def test_next_token_stops_on_repeated_cursor(api: MockedAPI) -> None:
-    """A server echoing the same cursor must not spin forever."""
-    api.set_handler(lambda request: httpx.Response(200, json={"orders": [{"id": 1}], "next": "same"}))
-    items = [item async for item in api.paginate("/api/v3/orders")]
-    assert len(items) == 2
-    assert api.request_count == 2
+async def test_runaway_walk_is_aborted(api: WBApi, recorder: Recorder) -> None:
+    """A server that never signals the end is stopped by MAX_PAGES."""
+    original = method_module.MAX_PAGES
+    method_module.MAX_PAGES = 3
+    try:
+        counter = iter(range(10_000))
+        recorder.handle(
+            lambda request: httpx.Response(200, json={"orders": [{"id": 1}], "next": next(counter) + 1})
+        )
+        with pytest.raises(RuntimeError, match="превысил"):
+            await api.orders_fbs.orders(limit=1, next_=0, auto_paginate=True)
+    finally:
+        method_module.MAX_PAGES = original
 
 
-async def test_cursor_pagination_for_cards(api: MockedAPI) -> None:
-    def handler(request: httpx.Request) -> httpx.Response:
-        if '"updatedAt"' in request.content.decode():
-            return httpx.Response(200, json={"cards": [{"nmID": 2}], "cursor": {"total": 1}})
-        return httpx.Response(
+async def test_rows_are_typed(api: WBApi, recorder: Recorder) -> None:
+    recorder.add({"orders": [{"id": 1, "nmId": 55}], "next": 0})
+    rows = await api.orders_fbs.orders(limit=1, next_=0, auto_paginate=True)
+    assert rows[0].nm_id == 55
+
+
+async def test_nested_rows_are_found(api: WBApi, recorder: Recorder) -> None:
+    """Rows nested under data.feedbacks must still be found."""
+    recorder.handle(
+        lambda request: httpx.Response(
             200,
             json={
-                "cards": [{"nmID": 1}] * 100,
-                "cursor": {"total": 100, "updatedAt": "2026-01-01", "nmID": 1},
+                "data": {
+                    "feedbacks": [] if request.url.params.get("skip") not in (None, "0") else [{"id": "f1"}]
+                }
             },
         )
-
-    api.set_handler(handler)
-    items = [
-        item async for item in api.paginate("/content/v2/get/cards/list", body={"settings": {"filter": {}}})
-    ]
-    assert len(items) == 101
+    )
+    rows = [row async for row in api.communications.iter_feedbacks(is_answered=False, take=1, skip=0)]
+    assert len(rows) == 1
 
 
-async def test_cursor_preserves_caller_settings(api: MockedAPI) -> None:
+async def test_offset_body_advances_in_the_payload(api: WBApi, recorder: Recorder) -> None:
+    """Reports carry offset in the body rather than the query string."""
+    import json
+
+    from wbapi.client.method import WBMethod
+
+    class Report(WBMethod[list]):
+        __path__ = "/api/v2/stocks-report/products/products"
+        __http_method__ = "POST"
+        __returns__ = list
+        __host__ = "https://seller-analytics-api.wildberries.ru"
+        __paginate__ = "offset_body"
+        __body_fields__ = {"limit": "limit"}
+
+        limit: int = 2
+
     def handler(request: httpx.Request) -> httpx.Response:
-        body = request.content.decode()
-        if '"updatedAt"' in body:
-            assert '"withPhoto"' in body, "caller filter was dropped on page 2"
+        body = json.loads(request.content or b"{}")
+        rows = [] if body.get("offset") else [{"nmID": 1}, {"nmID": 2}]
+        return httpx.Response(200, json=rows)
+
+    recorder.handle(handler)
+    rows = [row async for row in Report(limit=2).stream(api)]
+    assert len(rows) == 2
+    assert recorder.body(1)["offset"] == 2
+    assert recorder.body(1)["limit"] == 2
+
+
+async def test_cursor_carries_updated_at_and_nm_id(api: WBApi, recorder: Recorder) -> None:
+    """Content v2 continues from the cursor returned in the response."""
+    import json
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.content or b"{}")
+        cursor = body.get("settings", {}).get("cursor", {})
+        if cursor.get("updatedAt"):
             return httpx.Response(200, json={"cards": [], "cursor": {"total": 0}})
         return httpx.Response(
             200,
             json={
                 "cards": [{"nmID": 1}] * 100,
-                "cursor": {"total": 100, "updatedAt": "t", "nmID": 1},
+                "cursor": {"total": 100, "updatedAt": "2026-08-20", "nmID": 99},
             },
         )
 
-    api.set_handler(handler)
-    [
-        item
-        async for item in api.paginate(
-            "/content/v2/get/cards/list",
-            body={"settings": {"filter": {"withPhoto": -1}}},
+    recorder.handle(handler)
+    rows = [row async for row in api.items.iter_content_v2_get_cards_list()]
+    assert len(rows) == 100
+    second = recorder.body(1)["settings"]["cursor"]
+    assert second["updatedAt"] == "2026-08-20"
+    assert second["nmID"] == 99
+
+
+async def test_cursor_stops_without_continuation(api: WBApi, recorder: Recorder) -> None:
+    recorder.handle(
+        lambda request: httpx.Response(200, json={"cards": [{"nmID": 1}] * 5, "cursor": {"total": 99}})
+    )
+    rows = [row async for row in api.items.iter_content_v2_get_cards_list()]
+    assert len(rows) == 5
+    assert recorder.count == 1
+
+
+async def test_rrdid_continues_from_the_last_row(api: WBApi, recorder: Recorder) -> None:
+    """A finance report continues from the last row's rrdId."""
+    import json
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.content or b"{}")
+        if body.get("rrdId"):
+            return httpx.Response(200, json=[])
+        return httpx.Response(200, json=[{"rrdId": 77, "quantity": 1}])
+
+    recorder.handle(handler)
+    rows = [
+        row
+        async for row in api.finances.iter_finance_v1_acquiring_detailed_create(
+            date_from="2026-08-01", date_to="2026-08-20"
         )
     ]
-    assert api.request_count == 2
+    assert len(rows) == 1
+    assert recorder.body(1)["rrdId"] == 77
 
 
-async def test_rrdid_pagination_via_query(api: MockedAPI) -> None:
-    def handler(request: httpx.Request) -> httpx.Response:
-        if request.url.params.get("rrdid") is None:
-            return httpx.Response(200, json=[{"rrd_id": 5, "v": "a"}])
-        return httpx.Response(200, json=[])
-
-    api.set_handler(handler)
-    items = [item async for item in api.paginate("/api/v5/supplier/reportDetailByPeriod")]
-    assert [item.v for item in items] == ["a"]
-
-
-async def test_body_offset_pagination(api: MockedAPI) -> None:
-    def handler(request: httpx.Request) -> httpx.Response:
-        offset = jsonlib.loads(request.content)["offset"]
-        if offset == 0:
-            return httpx.Response(200, json={"data": [{"i": n} for n in range(1000)]})
-        return httpx.Response(200, json={"data": []})
-
-    api.set_handler(handler)
-    items = [
-        item async for item in api.paginate("/api/v2/stocks-report/products/products", body={"filter": {}})
+async def test_paginate_and_stream_agree(api: WBApi, recorder: Recorder) -> None:
+    pages = [
+        {"orders": [{"id": 1}, {"id": 2}], "next": 5},
+        {"orders": [{"id": 3}], "next": 0},
     ]
-    assert len(items) == 1000
 
-
-async def test_items_are_wrapped(api: MockedAPI) -> None:
-    api.add_response({"supplies": [{"id": 1}]})
-    items = [item async for item in api.paginate("/api/v3/supplies")]
-    assert isinstance(items[0], WBObject)
-
-
-async def test_empty_result_yields_nothing(api: MockedAPI) -> None:
-    api.add_response({"supplies": []})
-    assert [item async for item in api.paginate("/api/v3/supplies")] == []
-
-
-async def test_page_size_override_is_sent(api: MockedAPI) -> None:
-    api.add_response({"supplies": []})
-    [item async for item in api.paginate("/api/v3/supplies", page_size=7)]
-    assert api.get_last_request().url.params["limit"] == "7"
-
-
-async def test_endpoint_page_size_is_used(api: MockedAPI) -> None:
-    api.add_response({"cards": [], "cursor": {"total": 0}})
-    [item async for item in api.paginate("/content/v2/get/cards/list", body={})]
-    assert jsonlib.loads(api.get_last_request().content)["limit"] == 100
-
-
-async def test_query_params_survive_pagination(api: MockedAPI) -> None:
     def handler(request: httpx.Request) -> httpx.Response:
-        assert request.url.params.get("dateFrom") == "2026-01-01"
-        return httpx.Response(200, json={"supplies": []})
+        index = 0 if request.url.params.get("next") in (None, "0") else 1
+        return httpx.Response(200, json=pages[index])
 
-    api.set_handler(handler)
-    [item async for item in api.paginate("/api/v3/supplies", params={"dateFrom": "2026-01-01"})]
-    assert api.request_count == 1
+    recorder.handle(handler)
+    collected = await api.orders_fbs.orders(limit=2, next_=0, auto_paginate=True)
 
+    recorder.requests.clear()
+    streamed = [row async for row in api.orders_fbs.iter_orders(limit=2, next_=0)]
 
-async def test_interpolated_path_in_paginate(api: MockedAPI) -> None:
-    api.add_response({"trbxes": []})
-    [item async for item in api.paginate("/api/v3/supplies/WB-1/trbx")]
-    assert api.get_last_request().url.path == "/api/v3/supplies/WB-1/trbx"
-
-
-async def test_runaway_pagination_is_stopped(api: MockedAPI) -> None:
-    """A server that never signals the end must not loop indefinitely."""
-    from wbapi import pagination
-
-    original = pagination.MAX_PAGES
-    pagination.MAX_PAGES = 5
-    try:
-        api.set_handler(lambda request: httpx.Response(200, json={"supplies": [{"id": 1}] * 1000}))
-        with pytest.raises(RuntimeError, match="exceeded"):
-            [item async for item in api.paginate("/api/v3/supplies")]
-    finally:
-        pagination.MAX_PAGES = original
+    assert [row.id for row in collected] == [row.id for row in streamed] == [1, 2, 3]

@@ -1,5 +1,3 @@
-"""The endpoint generator: spec parsing, merge behaviour and rendering."""
-
 from __future__ import annotations
 
 import importlib.util
@@ -10,114 +8,166 @@ from typing import Any
 import pytest
 
 
-def _load_generator() -> Any:
-    path = Path(__file__).resolve().parent.parent / "scripts" / "generate_endpoints.py"
-    spec = importlib.util.spec_from_file_location("generate_endpoints", path)
+def load_generator() -> Any:
+    path = Path(__file__).resolve().parent.parent / "scripts" / "codegen.py"
+    spec = importlib.util.spec_from_file_location("codegen", path)
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
-    sys.modules["generate_endpoints"] = module
+    sys.modules["codegen"] = module
     spec.loader.exec_module(module)
     return module
 
 
-gen = _load_generator()
-
-MARKETPLACE = "https://marketplace-api.wildberries.ru"
-CONTENT = "https://content-api.wildberries.ru"
+gen = load_generator()
 
 
-def _spec(host: str, paths: dict[str, Any]) -> dict[str, Any]:
-    return {"servers": [{"url": host}], "paths": paths}
+@pytest.mark.parametrize(
+    ("summary", "verb", "expected"),
+    [
+        ("Получить список поставок", "GET", ""),
+        ("Создать поставку", "POST", "create"),
+        ("Обновить остатки", "PUT", "update"),
+        ("Удалить поставку", "DELETE", "delete"),
+        ("Отменить сборочное задание", "PATCH", "cancel"),
+        ("Получить стикеры", "POST", ""),
+        ("Закрепить IMEI", "PUT", "update"),
+    ],
+)
+def test_action_comes_from_the_summary(summary: str, verb: str, expected: str) -> None:
+    """The action comes from the summary: Wildberries often uses POST for reads."""
+    assert gen.action_for(summary, verb) == expected
 
 
-def test_collect_reads_paths_and_host() -> None:
-    found = gen._collect([_spec(MARKETPLACE, {"/api/v3/supplies": {"get": {}}})])
-    assert found["/api/v3/supplies"].host == MARKETPLACE
+@pytest.mark.parametrize(
+    ("summary", "verb", "expected"),
+    [
+        ("Непонятное описание", "GET", ""),
+        ("Непонятное описание", "POST", "create"),
+        ("Непонятное описание", "DELETE", "delete"),
+    ],
+)
+def test_action_falls_back_to_the_verb(summary: str, verb: str, expected: str) -> None:
+    assert gen.action_for(summary, verb) == expected
 
 
-def test_collect_uses_default_rate_limit() -> None:
-    found = gen._collect([_spec(MARKETPLACE, {"/api/v3/x": {"get": {}}})])
-    endpoint = found["/api/v3/x"]
-    assert endpoint.interval_ms == gen.DEFAULT_INTERVAL_MS
-    assert endpoint.burst == gen.DEFAULT_BURST
+@pytest.mark.parametrize(
+    ("base", "action", "expected"),
+    [
+        ("supplies", "create", "supplies_create"),
+        ("supplies", "", "supplies"),
+        ("orders_cancel", "cancel", "orders_cancel"),
+        ("delete", "delete", "delete"),
+    ],
+)
+def test_action_is_not_duplicated(base: str, action: str, expected: str) -> None:
+    assert gen.compose_name(base, action) == expected
 
 
-def test_collect_reads_rate_limit_extensions() -> None:
-    spec = _spec(
-        MARKETPLACE,
-        {"/api/v3/x": {"get": {"x-rate-limit-burst": 20, "x-rate-limit-interval": 200}}},
-    )
-    endpoint = gen._collect([spec])["/api/v3/x"]
-    assert (endpoint.interval_ms, endpoint.burst) == (200, 20)
+@pytest.mark.parametrize(
+    ("source", "expected"),
+    [
+        ("nmID", "nm_id"),
+        ("updatedAt", "updated_at"),
+        ("already_snake", "already_snake"),
+        ("class", "class_"),
+    ],
+)
+def test_snake_case(source: str, expected: str) -> None:
+    assert gen.snake(source) == expected
 
 
-def test_collect_skips_specs_without_servers() -> None:
-    assert gen._collect([{"paths": {"/api/v3/x": {"get": {}}}}]) == {}
+@pytest.mark.parametrize("name", ["type", "filter", "next", "id"])
+def test_argument_names_avoid_builtins(name: str) -> None:
+    assert gen.arg(name).endswith("_")
 
 
-def test_collect_skips_non_path_keys() -> None:
-    found = gen._collect([_spec(MARKETPLACE, {"not-a-path": {"get": {}}})])
-    assert found == {}
+def test_rate_limits_from_a_simple_table() -> None:
+    description = """
+| Период | Лимит | Интервал | Всплеск |
+| --- | --- | --- | --- |
+| 1 мин | 300 запросов | 200 мс | 20 запросов |
+"""
+    assert gen.parse_rate_limits(description) == {"all": (200, 20)}
 
 
-def test_render_groups_by_host() -> None:
-    endpoints = {
-        "/api/v3/a": gen.Endpoint("/api/v3/a", MARKETPLACE, 200, 20),
-        "/content/v2/b": gen.Endpoint("/content/v2/b", CONTENT, 600, 5),
-    }
-    block = gen._render(endpoints, deprecated=set())
-    assert f'"{MARKETPLACE}": {{' in block
-    assert f'"{CONTENT}": {{' in block
-    assert '"/api/v3/a": (200, 20),' in block
+def test_rate_limits_per_token_kind() -> None:
+    description = """
+| Тип | Период | Лимит | Интервал | Всплеск |
+| --- | --- | --- | --- | --- |
+| Персональный | 1 мин | 100 запросов | 600 мс | 5 запросов |
+| Базовый | 1 ч | 2 запроса | 30 мин | 1 запрос |
+"""
+    limits = gen.parse_rate_limits(description)
+    assert limits["personal"] == (600, 5)
+    assert limits["basic"] == (1_800_000, 1)
 
 
-def test_render_marks_deprecated() -> None:
-    endpoints = {"/api/v3/gone": gen.Endpoint("/api/v3/gone", MARKETPLACE, 200, 20)}
-    block = gen._render(endpoints, deprecated={"/api/v3/gone"})
-    assert "# deprecated" in block
+def test_rate_limits_absent() -> None:
+    assert gen.parse_rate_limits("Описание без таблицы") == {}
 
 
-def test_render_output_is_valid_python() -> None:
-    endpoints = {"/api/v3/a": gen.Endpoint("/api/v3/a", MARKETPLACE, 200, 20)}
-    block = gen._render(endpoints, deprecated=set())
-    namespace: dict[str, Any] = {}
-    exec(compile(block, "<generated>", "exec"), namespace)
-    assert namespace["ENDPOINTS"][MARKETPLACE]["/api/v3/a"] == (200, 20)
+@pytest.mark.parametrize(
+    ("query", "body", "response", "path", "expected"),
+    [
+        ({"next"}, set(), set(), "/api/v3/orders", "next"),
+        (set(), set(), {"next"}, "/api/v3/orders", "next"),
+        (set(), {"cursor"}, set(), "/content/v2/cards", "cursor"),
+        (set(), {"rrdId"}, set(), "/api/finance/v1/x", "rrdid"),
+        ({"skip", "take"}, set(), set(), "/api/v1/feedbacks", "skip_take"),
+        ({"offset"}, set(), set(), "/api/v1/users", "offset_query"),
+        (set(), {"offset"}, set(), "/api/v2/report", "offset_body"),
+        ({"next"}, set(), set(), "/api/v1/feedbacks/count", None),
+        (set(), set(), set(), "/api/v3/orders", None),
+    ],
+)
+def test_pagination_detection(
+    query: set[str], body: set[str], response: set[str], path: str, expected: str | None
+) -> None:
+    assert gen.detect_pagination(query, body, response, path) == expected
 
 
-def test_parse_existing_round_trips_render() -> None:
-    endpoints = {
-        "/api/v3/a": gen.Endpoint("/api/v3/a", MARKETPLACE, 200, 20),
-        "/content/v2/b": gen.Endpoint("/content/v2/b", CONTENT, 600, 5),
-    }
-    parsed = gen._parse_existing(gen._render(endpoints, deprecated=set()))
-    assert parsed == endpoints
+def test_docstring_quotes_are_made_safe() -> None:
+    assert not gen.safe_doc('время доставки "с"').endswith('"')
+    assert '"""' not in gen.safe_doc('text """ inside')
 
 
-def test_parse_existing_reads_the_shipped_table() -> None:
-    """The real endpoints.py must stay parseable, or removals would be lost."""
-    parsed = gen._parse_existing(gen.TARGET.read_text())
-    assert len(parsed) > 200
-    assert all(path.startswith("/") for path in parsed)
+def test_scope_mapping_covers_known_categories() -> None:
+    from wbapi.utils import Scope
+
+    for category, scope_name in gen._SCOPE_BY_CATEGORY.items():
+        assert hasattr(Scope, scope_name), category
 
 
-def test_removed_paths_are_preserved_as_deprecated() -> None:
-    """A path vanishing from the spec must keep working for existing callers."""
-    existing = {"/api/v3/old": gen.Endpoint("/api/v3/old", MARKETPLACE, 200, 20)}
-    found = {"/api/v3/new": gen.Endpoint("/api/v3/new", MARKETPLACE, 200, 20)}
-
-    deprecated = set(existing) - set(found)
-    merged = {**{p: existing[p] for p in deprecated}, **found}
-
-    assert "/api/v3/old" in merged
-    block = gen._render(merged, deprecated)
-    assert "/api/v3/old" in block and "# deprecated" in block
+def test_every_spec_has_a_section() -> None:
+    """Every spec must map to a client section."""
+    specs = {path.name for path in (gen.ROOT / "specs").glob("*.yaml")}
+    known = set(gen.SECTIONS)
+    unmapped = specs - known
+    assert unmapped <= {"05-orders-dbs.yaml"}, unmapped
 
 
-def test_servers_ignores_non_https() -> None:
-    assert gen._servers({"servers": [{"url": "http://insecure.example"}]}) == []
+def test_generation_is_reproducible(tmp_path: Path) -> None:
+    """Regenerating the same section twice produces identical output."""
+    import yaml
+
+    spec_file = gen.ROOT / "specs" / "07-orders-fbw.yaml"
+    spec = yaml.safe_load(spec_file.read_text())
+
+    first = gen.Generator(spec, "orders_fbw")
+    first.collect()
+    second = gen.Generator(spec, "orders_fbw")
+    second.collect()
+
+    assert first.render_methods() == second.render_methods()
+    assert first.render_types() == second.render_types()
 
 
-@pytest.mark.parametrize("spec", [{}, {"servers": []}, {"servers": [{}]}])
-def test_servers_handles_malformed_input(spec: dict[str, Any]) -> None:
-    assert gen._servers(spec) == []
+def test_name_clashes_are_resolved() -> None:
+    """Colliding names are disambiguated by the HTTP verb."""
+    import yaml
+
+    spec = yaml.safe_load((gen.ROOT / "specs" / "02-items.yaml").read_text())
+    generator = gen.Generator(spec, "items")
+    generator.collect()
+    names = [method["name"] for method in generator.methods]
+    assert len(names) == len(set(names))
