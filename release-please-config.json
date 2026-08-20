@@ -4,8 +4,9 @@
       "release-type": "python",
       "package-name": "wbapi-async",
       "changelog-path": "CHANGELOG.md",
-      "bump-minor-pre-major": true,
-      "extra-files": ["pyproject.toml"]
+      "extra-files": [
+        "pyproject.toml"
+      ]
     }
   }
 }
