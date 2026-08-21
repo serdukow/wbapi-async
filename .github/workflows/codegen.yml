@@ -7,14 +7,14 @@ on:
       - ".github/workflows/codegen.yml"
       - "scripts/codegen.py"
       - "specs/**"
-      - "src/wbapi/resources/**"
+      - "src/wbapi/**"
 
   pull_request:
     paths:
       - ".github/workflows/codegen.yml"
       - "scripts/codegen.py"
       - "specs/**"
-      - "src/wbapi/resources/**"
+      - "src/wbapi/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -37,14 +37,20 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras
 
+      - name: Test the generator
+        run: uv run pytest tests/test_codegen.py -q
+
       - name: Regenerate
         run: uv run python scripts/codegen.py
 
       - name: Fail if the client is stale
         run: |
-          if ! git diff --quiet -- src/wbapi/resources; then
-            echo "::error::src/wbapi/resources is out of date. Run: uv run python scripts/codegen.py"
-            git diff --stat -- src/wbapi/resources
+          if ! git diff --quiet -- src/wbapi; then
+            echo "::error::src/wbapi is out of date. Run: uv run python scripts/codegen.py"
+            git diff --stat -- src/wbapi
             exit 1
           fi
           echo "Generated client is up to date."
+
+      - name: Test the regenerated client
+        run: uv run pytest -q
