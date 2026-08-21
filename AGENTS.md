@@ -11,7 +11,7 @@ This file defines how coding agents should contribute to `wbapi`.
 - Keep diffs focused; avoid unrelated refactors/reformatting.
 
 API documentation: https://dev.wildberries.ru/en/docs/openapi/api-information
-OpenAPI specs: https://dev.wildberries.ru/api/swagger/yaml/en/ (`01-general.yaml` … `13-finances.yaml`)
+OpenAPI specs: https://dev.wildberries.ru/api/swagger/yaml/ru/ (`01-general.yaml` … `14-wbd.yaml`)
 
 ## Codebase Navigation
 
@@ -26,14 +26,28 @@ Prefer Serena's symbol tools over `Read`/`Grep` for source code exploration. Onl
 
 ## Module map
 
-| File            | Role                                                                  |
-| --------------- | --------------------------------------------------------------------- |
-| `client.py`     | `WBApi` — get/post/put/patch/delete/paginate                           |
-| `session.py`    | httpx transport, retries, rate limiting, error mapping                 |
-| `pagination.py` | `Paginator` — async iterator plus the per-scheme strategies            |
-| `endpoints.py`  | endpoint table and URL resolution                                      |
-| `exceptions.py` | `WBError` hierarchy                                                    |
-| `types.py`      | `WBDict` / `WBList` — dict and list subclasses with attribute access    |
+Hand-written:
+
+| File                | Role                                                      |
+| ------------------- | --------------------------------------------------------- |
+| `client/api.py`     | `WBApi` — holds the session and the section facades       |
+| `client/session.py` | httpx transport, retries, rate limiting, error mapping    |
+| `client/method.py`  | `WBMethod` — `emit`/`stream`/`paginate` and the six walks |
+| `client/model.py`   | `WBModel` — `to_dict`/`to_json`/`from_dict` over msgspec  |
+| `exceptions.py`     | `WBError` hierarchy                                       |
+| `utils/token.py`    | JWT decoding: category, scopes, expiry                    |
+| `__init__.py`       | `WBApi`, `__version__`, and the `SECTIONS` registry       |
+
+Generated, one package per section, listed in `SECTIONS`:
+
+| File                    | Role                                          |
+| ----------------------- | --------------------------------------------- |
+| `<section>/methods.py`  | one `WBMethod` subclass per endpoint          |
+| `<section>/models.py`   | the `WBModel` structs those methods return    |
+| `<section>/__init__.py` | the facade `WBApi` exposes as `api.<section>` |
+
+The section packages sit beside the hand-written ones, so a directory listing
+no longer tells them apart — `SECTIONS` is what does.
 
 ## Invariants
 
@@ -42,23 +56,25 @@ Break these and something fails in production, not in CI:
 - **The token is a client-level header**, set once in `Session.__init__`. Never
   assign it per request — concurrent calls would race and leak the token to
   public hosts.
-- **Rate limits are looked up by path template.** A concrete path like
-  `/api/v3/orders/123/cancel` must go through `_match_template` so it keeps its
-  own quota instead of inheriting its parent's.
+- **Rate limits ride on the method class.** Each `WBMethod` carries its own
+  `__rate_limits__` read from the spec, keyed by token category. Never look a
+  limit up by URL — a concrete path would inherit its parent's quota.
 - **Limiters are keyed weakly by event loop.** An `AsyncLimiter` bound to a dead
   loop misbehaves; never make the cache a plain global dict.
 - **Error payloads are not always dicts.** WB returns RFC 7807 objects, bare
   lists, and plain text. Never index or splat a payload without checking.
 - **Every pagination strategy must terminate** — bounded by `MAX_PAGES` and by
   detecting a repeated cursor.
-- **Responses subclass `dict`/`list`**, so `json.dumps` and `{**record}` work
-  without conversion. `WBObject` is only a marker base — too empty to use as a
-  return type.
+- **Responses are `WBModel` structs**, not dicts. Use `to_dict()` for a plain
+  mapping and `to_dict(by_alias=True)` for the original Wildberries field names.
+- **Every pagination walk lives on `WBMethod`.** Six of them (`_walk_next`,
+  `_walk_cursor`, `_walk_rrdid`, `_walk_skip_take`, `_walk_offset_query`,
+  `_walk_offset_body`); the spec decides which one a method gets.
 
 ## Regenerating the client
 
-`resources/` is generated from the specs in `specs/`. Never edit it by hand —
-change the generator instead:
+The section packages are generated from the specs in `specs/`. Never edit them
+by hand — change the generator instead:
 
 ```console
 uv run python scripts/update_specs.py        # refresh specs/ from Wildberries
@@ -66,22 +82,25 @@ uv run python scripts/codegen.py           # regenerate every section
 uv run python scripts/codegen.py items     # regenerate one section
 ```
 
-`update_specs.py` tries the official URLs first and falls back to a public mirror,
-because dev.wildberries.ru answers automated requests with HTTP 498. It refuses
-to overwrite when nothing could be fetched.
+`update_specs.py` drives a headless browser, because dev.wildberries.ru answers
+plain requests with HTTP 498. It refuses to overwrite when nothing could be
+fetched.
 
-`codegen.py` derives method names from the summary rather than the HTTP verb —
-Wildberries often uses POST for reads — and reads rate limits out of the
-markdown tables in each endpoint's description.
+`codegen.py` names a method after the leading verb of its summary rather than
+the HTTP verb — Wildberries often uses POST for reads — and reads rate limits
+out of the markdown tables in each endpoint's description. Two tables hold the
+cases the specs get wrong: `SPEC_FIXES` for schemas that disagree with the live
+response, `NAME_FIXES` for paths that carry less meaning than the endpoint.
 
 `scripts/smoke_check.py` runs read-only calls against the live API; it needs
 `WB_TOKEN` in the environment.
 
 ## Adding a pagination scheme
 
-- Add the strategy as a `_by_*` method on `Paginator`
-- Register it in `_detect`, ordered so a more specific shape wins
-- Bound the loop and stop on a repeated cursor
+- Add the walk as a `_walk_*` method on `WBMethod` in `client/method.py`
+- Teach `detect_pagination` in `scripts/codegen.py` to recognise its shape,
+  ordered so a more specific one wins
+- Bound the loop by `MAX_PAGES` and stop on a repeated cursor
 - Cover it in `tests/test_pagination.py` with a handler that serves two pages
 
 ## Checks
