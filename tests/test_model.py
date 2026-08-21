@@ -6,7 +6,7 @@ import msgspec
 import pytest
 
 from wbapi.client.model import WBModel
-from wbapi.resources.orders_fbs.models import OrderNew, OrdersNewResponse
+from wbapi.orders_fbs.models import GetOrdersNewResponse, OrderNew
 
 
 @pytest.fixture
@@ -53,7 +53,7 @@ def test_unpacking_into_a_row(order: OrderNew) -> None:
 
 
 def test_nested_structures_become_plain() -> None:
-    response = msgspec.convert({"orders": [{"id": 1, "nmId": 55}]}, OrdersNewResponse, strict=False)
+    response = msgspec.convert({"orders": [{"id": 1, "nmId": 55}]}, GetOrdersNewResponse, strict=False)
     data = response.to_dict()
     assert type(data["orders"][0]) is dict
     assert data["orders"][0]["nm_id"] == 55

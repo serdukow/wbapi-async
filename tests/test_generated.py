@@ -1,38 +1,36 @@
 from __future__ import annotations
 
 import importlib
-import pkgutil
 import re
 
 import msgspec
 import pytest
 
-from wbapi import WBApi
+from wbapi import SECTIONS, WBApi
 from wbapi.client.method import WBMethod
 from wbapi.client.model import WBModel
-import wbapi.resources as resources
 from wbapi.utils import Scope
 
 
 def all_methods() -> list[tuple[str, str, type[WBMethod]]]:
     found = []
-    for module in pkgutil.iter_modules(resources.__path__):
-        methods = importlib.import_module(f"wbapi.resources.{module.name}.methods")
+    for section in SECTIONS:
+        methods = importlib.import_module(f"wbapi.{section}.methods")
         for name in dir(methods):
             cls = getattr(methods, name)
             if isinstance(cls, type) and issubclass(cls, WBMethod) and cls is not WBMethod:
-                found.append((module.name, name, cls))
+                found.append((section, name, cls))
     return found
 
 
 def all_models() -> list[tuple[str, str, type[WBModel]]]:
     found = []
-    for module in pkgutil.iter_modules(resources.__path__):
-        models = importlib.import_module(f"wbapi.resources.{module.name}.models")
+    for section in SECTIONS:
+        models = importlib.import_module(f"wbapi.{section}.models")
         for name in dir(models):
             cls = getattr(models, name)
             if isinstance(cls, type) and issubclass(cls, WBModel) and cls is not WBModel:
-                found.append((module.name, name, cls))
+                found.append((section, name, cls))
     return found
 
 
@@ -41,9 +39,9 @@ MODELS = all_models()
 
 
 def test_client_exposes_every_section() -> None:
-    sections = {module.name for module in pkgutil.iter_modules(resources.__path__)}
+    names = set(SECTIONS)
     api = WBApi(token="t")
-    missing = {name for name in sections if not hasattr(api, name)}
+    missing = {name for name in names if not hasattr(api, name)}
     assert not missing
 
 
@@ -118,10 +116,10 @@ def test_models_convert_to_dict() -> None:
 
 
 def test_model_round_trip() -> None:
-    from wbapi.resources.orders_fbs.models import OrdersNewResponse
+    from wbapi.orders_fbs.models import GetOrdersNewResponse
 
     source = {"orders": [{"id": 1, "nmId": 55, "salePrice": 100}]}
-    parsed = msgspec.convert(source, OrdersNewResponse, strict=False)
+    parsed = msgspec.convert(source, GetOrdersNewResponse, strict=False)
     assert parsed.to_dict(by_alias=True)["orders"][0]["nmId"] == 55
     assert parsed.orders[0].nm_id == 55
 

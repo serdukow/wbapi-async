@@ -50,39 +50,37 @@ def test_repr_hides_token() -> None:
 
 async def test_request_goes_to_the_endpoint_host(api: WBApi, recorder: Recorder) -> None:
     recorder.add({"orders": []})
-    await api.orders_fbs.orders_new()
+    await api.orders_fbs.get_orders_new()
     assert recorder.last.url.host == "marketplace-api.wildberries.ru"
 
 
 async def test_token_is_sent(api: WBApi, recorder: Recorder) -> None:
     recorder.add({"orders": []})
-    await api.orders_fbs.orders_new()
+    await api.orders_fbs.get_orders_new()
     assert recorder.last.headers["authorization"].startswith("eyJ")
 
 
 async def test_path_parameters_are_substituted(api: WBApi, recorder: Recorder) -> None:
     recorder.add(None, 204)
-    await api.orders_fbs.orders_order_id_cancel(order_id=13833711)
+    await api.orders_fbs.cancel_order(order_id=13833711)
     assert recorder.last.url.path == "/api/v3/orders/13833711/cancel"
 
 
 async def test_query_parameters_use_api_names(api: WBApi, recorder: Recorder) -> None:
     recorder.add({"orders": [], "next": 0})
-    await api.orders_fbs.orders(limit=10, next_=77)
+    await api.orders_fbs.get_orders(limit=10, next_=77)
     assert dict(recorder.last.url.params) == {"limit": "10", "next": "77"}
 
 
 async def test_empty_parameters_are_skipped(api: WBApi, recorder: Recorder) -> None:
     recorder.add({"orders": [], "next": 0})
-    await api.orders_fbs.orders(limit=10, next_=0, date_from=None)
+    await api.orders_fbs.get_orders(limit=10, next_=0, date_from=None)
     assert "dateFrom" not in recorder.last.url.params
 
 
 async def test_body_fields_use_api_names(api: WBApi, recorder: Recorder) -> None:
     recorder.add({"stickers": []})
-    await api.orders_fbs.supplies_supply_id_trbx_stickers(
-        supply_id="WB-GI-1", trbx_ids=["WB-TRBX-1"], type_="svg"
-    )
+    await api.orders_fbs.get_supplies_trbx_stickers(supply_id="WB-GI-1", trbx_ids=["WB-TRBX-1"], type_="svg")
     assert recorder.body() == {"trbxIds": ["WB-TRBX-1"]}
     assert recorder.last.url.params["type"] == "svg"
 
@@ -91,15 +89,15 @@ async def test_body_fields_use_api_names(api: WBApi, recorder: Recorder) -> None
 async def test_unsafe_path_value_is_rejected(api: WBApi, recorder: Recorder, unsafe: str) -> None:
     """A value must not retarget the request to another endpoint."""
     with pytest.raises(ValueError, match="Недопустимое значение"):
-        await api.orders_fbs.supplies_supply_id(supply_id=unsafe)
+        await api.orders_fbs.get_supplies_by_id(supply_id=unsafe)
     assert recorder.count == 0
 
 
 async def test_scope_is_checked_before_request(recorder: Recorder) -> None:
     token = make_token(scopes=1 << Scope.CONTENT)
     async with WBApi(token=token, transport=httpx.MockTransport(recorder), max_retries=0) as api:
-        with pytest.raises(WBAuthError, match="MARKETPLACE"):
-            await api.orders_fbs.orders_new()
+        with pytest.raises(WBAuthError, match="Категория токена"):
+            await api.orders_fbs.get_orders_new()
     assert recorder.count == 0
 
 
@@ -107,14 +105,14 @@ async def test_scope_check_passes_when_allowed(recorder: Recorder) -> None:
     token = make_token(scopes=1 << Scope.MARKETPLACE)
     recorder.add({"orders": []})
     async with WBApi(token=token, transport=httpx.MockTransport(recorder), max_retries=0) as api:
-        await api.orders_fbs.orders_new()
+        await api.orders_fbs.get_orders_new()
     assert recorder.count == 1
 
 
 async def test_token_without_mask_is_not_blocked(recorder: Recorder) -> None:
     recorder.add({"orders": []})
     async with WBApi(token=make_token(), transport=httpx.MockTransport(recorder), max_retries=0) as api:
-        await api.orders_fbs.orders_new()
+        await api.orders_fbs.get_orders_new()
     assert recorder.count == 1
 
 
@@ -126,7 +124,7 @@ async def test_sandbox_switches_the_host(recorder: Recorder) -> None:
         max_retries=0,
         sandbox=True,
     ) as api:
-        await api.orders_fbs.orders_new()
+        await api.orders_fbs.get_orders_new()
     assert recorder.last.url.host == "marketplace-api-sandbox.wildberries.ru"
 
 
@@ -138,24 +136,24 @@ async def test_sandbox_refuses_when_unavailable(recorder: Recorder) -> None:
         sandbox=True,
     ) as api:
         with pytest.raises(WBConfigurationError, match="песочниц"):
-            await api.finances.account_balance()
+            await api.finances.get_account_balance()
     assert recorder.count == 0
 
 
 async def test_context_manager_closes_the_pool(recorder: Recorder) -> None:
     async with WBApi(token=make_token(scopes=ALL_SCOPES), transport=httpx.MockTransport(recorder)) as api:
-        assert not api.is_closed
-    assert api.is_closed
+        assert not api._session._client.is_closed
+    assert api._session._client.is_closed
 
 
 async def test_empty_response_becomes_none(api: WBApi, recorder: Recorder) -> None:
     recorder.add_raw(httpx.Response(204))
-    assert await api.orders_fbs.orders_order_id_cancel(order_id=1) is None
+    assert await api.orders_fbs.cancel_order(order_id=1) is None
 
 
 async def test_sandbox_requires_a_test_token() -> None:
     """The sandbox only accepts a test-contour token."""
-    with pytest.raises(WBConfigurationError, match="Тестовому контуру"):
+    with pytest.raises(WBConfigurationError, match="Необходим токен с опцией Тестовый контур"):
         WBApi(token=make_token(acc=3), sandbox=True)
 
 
@@ -167,7 +165,7 @@ async def test_sandbox_accepts_a_test_token() -> None:
 
 async def test_test_token_is_refused_in_production() -> None:
     """A test token returns nothing meaningful against production."""
-    with pytest.raises(WBConfigurationError, match="только в тестовом"):
+    with pytest.raises(WBConfigurationError, match="Передан токен с опцией Тестовый контур"):
         WBApi(token=make_token(acc=2))
 
 

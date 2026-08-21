@@ -10,7 +10,7 @@ from wbapi.client import method as method_module
 
 async def test_single_page_by_default(api: WBApi, recorder: Recorder) -> None:
     recorder.add({"orders": [{"id": i} for i in range(10)], "next": 555})
-    page = await api.orders_fbs.orders(limit=10, next_=0)
+    page = await api.orders_fbs.get_orders(limit=10, next_=0)
     assert len(page.orders) == 10
     assert recorder.count == 1
 
@@ -25,7 +25,7 @@ async def test_auto_paginate_collects_every_page(api: WBApi, recorder: Recorder)
         return httpx.Response(200, json={"orders": [], "next": 0})
 
     recorder.handle(handler)
-    rows = await api.orders_fbs.orders(limit=1000, next_=0, auto_paginate=True)
+    rows = await api.orders_fbs.get_orders(limit=1000, next_=0, auto_paginate=True)
     assert len(rows) == 1001
 
 
@@ -37,7 +37,7 @@ async def test_iterator_yields_the_same_rows(api: WBApi, recorder: Recorder) -> 
         return httpx.Response(200, json={"orders": [], "next": 0})
 
     recorder.handle(handler)
-    rows = [row async for row in api.orders_fbs.iter_orders(limit=2, next_=0)]
+    rows = [row async for row in api.orders_fbs.iter_get_orders(limit=2, next_=0)]
     assert [row.id for row in rows] == [1, 2]
 
 
@@ -49,21 +49,21 @@ async def test_next_token_is_sent_back(api: WBApi, recorder: Recorder) -> None:
         return httpx.Response(200, json={"orders": [], "next": 0})
 
     recorder.handle(handler)
-    await api.orders_fbs.orders(limit=1, next_=0, auto_paginate=True)
+    await api.orders_fbs.get_orders(limit=1, next_=0, auto_paginate=True)
     assert recorder.requests[1].url.params["next"] == "42"
 
 
 async def test_repeated_cursor_stops_the_walk(api: WBApi, recorder: Recorder) -> None:
     """A server repeating the cursor must not loop the walk."""
     recorder.handle(lambda request: httpx.Response(200, json={"orders": [{"id": 1}], "next": 7}))
-    rows = await api.orders_fbs.orders(limit=1, next_=0, auto_paginate=True)
+    rows = await api.orders_fbs.get_orders(limit=1, next_=0, auto_paginate=True)
     assert len(rows) == 2
     assert recorder.count == 2
 
 
 async def test_empty_page_stops_the_walk(api: WBApi, recorder: Recorder) -> None:
     recorder.handle(lambda request: httpx.Response(200, json={"orders": [], "next": 5}))
-    rows = await api.orders_fbs.orders(limit=10, next_=0, auto_paginate=True)
+    rows = await api.orders_fbs.get_orders(limit=10, next_=0, auto_paginate=True)
     assert rows == []
     assert recorder.count == 1
 
@@ -75,7 +75,7 @@ async def test_skip_take_advances_by_take(api: WBApi, recorder: Recorder) -> Non
         return httpx.Response(200, json={"data": {"feedbacks": rows}})
 
     recorder.handle(handler)
-    rows = [row async for row in api.communications.iter_feedbacks(is_answered=False, take=2, skip=0)]
+    rows = [row async for row in api.communications.iter_get_feedbacks(is_answered=False, take=2, skip=0)]
     assert len(rows) == 2
     assert recorder.requests[1].url.params["skip"] == "2"
 
@@ -87,7 +87,7 @@ async def test_offset_query_advances_by_limit(api: WBApi, recorder: Recorder) ->
         return httpx.Response(200, json={"data": rows})
 
     recorder.handle(handler)
-    rows = [row async for row in api.items.iter_content_v2_object_all(limit=2)]
+    rows = [row async for row in api.items.iter_get_content_object_all(limit=2)]
     assert len(rows) == 2
     assert recorder.requests[1].url.params["offset"] == "2"
 
@@ -102,14 +102,14 @@ async def test_runaway_walk_is_aborted(api: WBApi, recorder: Recorder) -> None:
             lambda request: httpx.Response(200, json={"orders": [{"id": 1}], "next": next(counter) + 1})
         )
         with pytest.raises(RuntimeError, match="превысил"):
-            await api.orders_fbs.orders(limit=1, next_=0, auto_paginate=True)
+            await api.orders_fbs.get_orders(limit=1, next_=0, auto_paginate=True)
     finally:
         method_module.MAX_PAGES = original
 
 
 async def test_rows_are_typed(api: WBApi, recorder: Recorder) -> None:
     recorder.add({"orders": [{"id": 1, "nmId": 55}], "next": 0})
-    rows = await api.orders_fbs.orders(limit=1, next_=0, auto_paginate=True)
+    rows = await api.orders_fbs.get_orders(limit=1, next_=0, auto_paginate=True)
     assert rows[0].nm_id == 55
 
 
@@ -125,7 +125,7 @@ async def test_nested_rows_are_found(api: WBApi, recorder: Recorder) -> None:
             },
         )
     )
-    rows = [row async for row in api.communications.iter_feedbacks(is_answered=False, take=1, skip=0)]
+    rows = [row async for row in api.communications.iter_get_feedbacks(is_answered=False, take=1, skip=0)]
     assert len(rows) == 1
 
 
@@ -175,7 +175,7 @@ async def test_cursor_carries_updated_at_and_nm_id(api: WBApi, recorder: Recorde
         )
 
     recorder.handle(handler)
-    rows = [row async for row in api.items.iter_content_v2_get_cards_list()]
+    rows = [row async for row in api.items.iter_get_content_cards_list()]
     assert len(rows) == 100
     second = recorder.body(1)["settings"]["cursor"]
     assert second["updatedAt"] == "2026-08-20"
@@ -186,7 +186,7 @@ async def test_cursor_stops_without_continuation(api: WBApi, recorder: Recorder)
     recorder.handle(
         lambda request: httpx.Response(200, json={"cards": [{"nmID": 1}] * 5, "cursor": {"total": 99}})
     )
-    rows = [row async for row in api.items.iter_content_v2_get_cards_list()]
+    rows = [row async for row in api.items.iter_get_content_cards_list()]
     assert len(rows) == 5
     assert recorder.count == 1
 
@@ -204,7 +204,7 @@ async def test_rrdid_continues_from_the_last_row(api: WBApi, recorder: Recorder)
     recorder.handle(handler)
     rows = [
         row
-        async for row in api.finances.iter_finance_v1_acquiring_detailed_create(
+        async for row in api.finances.iter_get_acquiring_detailed(
             date_from="2026-08-01", date_to="2026-08-20"
         )
     ]
@@ -223,9 +223,9 @@ async def test_paginate_and_stream_agree(api: WBApi, recorder: Recorder) -> None
         return httpx.Response(200, json=pages[index])
 
     recorder.handle(handler)
-    collected = await api.orders_fbs.orders(limit=2, next_=0, auto_paginate=True)
+    collected = await api.orders_fbs.get_orders(limit=2, next_=0, auto_paginate=True)
 
     recorder.requests.clear()
-    streamed = [row async for row in api.orders_fbs.iter_orders(limit=2, next_=0)]
+    streamed = [row async for row in api.orders_fbs.iter_get_orders(limit=2, next_=0)]
 
     assert [row.id for row in collected] == [row.id for row in streamed] == [1, 2, 3]
