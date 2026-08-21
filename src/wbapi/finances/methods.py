@@ -1,0 +1,376 @@
+from __future__ import annotations
+
+from ..client.method import WBMethod
+from ..utils.token import Scope
+from .models import (
+    AcquiringReportListRes,
+    AcquiringReportsDetailedRes,
+    GetAccountBalanceResponse,
+    GetCategories,
+    GetDoc,
+    GetDocs,
+    GetDocumentsDownloadAllParamsItem,
+    GetList,
+    SalesReportListRes,
+    SalesReportsDetailedRes,
+)
+
+
+class GetAccountBalance(WBMethod[GetAccountBalanceResponse]):
+    """Получить баланс продавца
+
+    GET /api/v1/account/balance
+    """
+
+    __path__ = "/api/v1/account/balance"
+    __http_method__ = "GET"
+    __returns__ = GetAccountBalanceResponse
+    __scope__ = Scope.FINANCE
+    __host__ = "https://finance-api.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (60000, 1),
+        "service": (60000, 1),
+        "basic_secret": (60000, 1),
+        "basic": (86400000, 1),
+    }
+
+
+class GetAcquiringDetailed(WBMethod[list[AcquiringReportsDetailedRes]]):
+    """Детализации к отчётам об издержках на приём платежей за период
+
+    POST /api/finance/v1/acquiring/detailed
+    """
+
+    __path__ = "/api/finance/v1/acquiring/detailed"
+    __http_method__ = "POST"
+    __returns__ = list[AcquiringReportsDetailedRes]
+    __scope__ = Scope.FINANCE
+    __host__ = "https://finance-api.wildberries.ru"
+    __rate_limits__ = {"all": (60000, 1)}
+    __paginate__ = "rrdid"
+    __body_fields__ = {
+        "date_from": "dateFrom",
+        "date_to": "dateTo",
+        "limit": "limit",
+        "rrd_id": "rrdId",
+        "fields": "fields",
+    }
+
+    date_from: str
+    """Начальная дата отчёта.Можно передать дату или дату со временем. Время можно указывать с
+    точностью до секунд или миллисекунд.Дата передаётся в формате RFC3339, в …
+    """
+    date_to: str
+    """Конечная дата отчёта.Дата в формате RFC3339. Можно передать дату или дату со временем. Время
+    можно указывать с точностью до секунд или миллисекунд.Время передаё …
+    """
+    fields: list[str] | None = None
+    """Список полей, которые вернутся в ответе. Если параметр не указан, возвращаются все поля
+    """
+    limit: int | None = None
+    """Количество строк в ответе"""
+    rrd_id: int | None = None
+    """ID строки ответа. Необходим для получения отчёта частями.Начинайте загрузку отчёта с
+    `"rrdid":0`. В последующих запросах передавайте значение `rrdId` из последн …
+    """
+
+
+class GetAcquiringDetailedById(WBMethod[list[AcquiringReportsDetailedRes]]):
+    """Детализации к отчётам об издержках на приём платежей по ID отчётов
+
+    POST /api/finance/v1/acquiring/detailed/{reportId}
+    """
+
+    __path__ = "/api/finance/v1/acquiring/detailed/{reportId}"
+    __http_method__ = "POST"
+    __returns__ = list[AcquiringReportsDetailedRes]
+    __path_params__ = ("reportId",)
+    __scope__ = Scope.FINANCE
+    __host__ = "https://finance-api.wildberries.ru"
+    __rate_limits__ = {"all": (60000, 1)}
+    __paginate__ = "rrdid"
+    __body_fields__ = {"limit": "limit", "rrd_id": "rrdId", "fields": "fields"}
+
+    report_id: str | int
+    """ID отчёта"""
+    fields: list[str] | None = None
+    """Список полей, которые вернутся в ответе. Если параметр не указан, возвращаются все поля
+    """
+    limit: int | None = None
+    """Количество строк в ответе"""
+    rrd_id: int | None = None
+    """ID строки ответа. Необходим для получения отчёта частями.Начинайте загрузку отчёта с
+    `"rrdid":0`. В последующих запросах передавайте значение `rrdId` из последн …
+    """
+
+
+class GetAcquiringList(WBMethod[list[AcquiringReportListRes]]):
+    """Список отчётов об издержках на приём платежей
+
+    POST /api/finance/v1/acquiring/list
+    """
+
+    __path__ = "/api/finance/v1/acquiring/list"
+    __http_method__ = "POST"
+    __returns__ = list[AcquiringReportListRes]
+    __scope__ = Scope.FINANCE
+    __host__ = "https://finance-api.wildberries.ru"
+    __rate_limits__ = {"all": (60000, 1)}
+    __paginate__ = "offset_body"
+    __body_fields__ = {"date_from": "dateFrom", "date_to": "dateTo", "limit": "limit", "offset": "offset"}
+
+    date_from: str
+    """Начальная дата отчёта.Можно передать дату или дату со временем. Время можно указывать с
+    точностью до секунд или миллисекунд.Дата передаётся в формате RFC3339, в …
+    """
+    date_to: str
+    """Конечная дата отчёта.Дата в формате RFC3339. Можно передать дату или дату со временем. Время
+    можно указывать с точностью до секунд или миллисекунд.Время передаё …
+    """
+    limit: int | None = None
+    """Количество отчётов в ответе"""
+    offset: int | None = None
+    """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
+
+
+class GetDocumentsCategories(WBMethod[GetCategories]):
+    """Категории документов
+
+    GET /api/v1/documents/categories
+    """
+
+    __path__ = "/api/v1/documents/categories"
+    __http_method__ = "GET"
+    __returns__ = GetCategories
+    __query_params__ = {"locale": "locale"}
+    __scope__ = Scope.DOCUMENTS
+    __host__ = "https://documents-api.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (10000, 5),
+        "service": (10000, 5),
+        "basic_secret": (10000, 5),
+        "basic": (86400000, 1),
+    }
+    __items__ = "data"
+
+    locale: str | None = None
+    """Язык поля `title`:   - `ru` — русский   - `en` — английский   - `zh` — китайский"""
+
+
+class GetDocumentsDownload(WBMethod[GetDoc]):
+    """Получить документ
+
+    GET /api/v1/documents/download
+    """
+
+    __path__ = "/api/v1/documents/download"
+    __http_method__ = "GET"
+    __returns__ = GetDoc
+    __query_params__ = {"service_name": "serviceName", "extension": "extension"}
+    __scope__ = Scope.DOCUMENTS
+    __host__ = "https://documents-api.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (10000, 5),
+        "service": (10000, 5),
+        "basic_secret": (10000, 5),
+        "basic": (86400000, 1),
+    }
+    __items__ = "data"
+
+    extension: str
+    """Формат документа"""
+    service_name: str
+    """Уникальный ID документа"""
+
+
+class GetDocumentsDownloadAll(WBMethod[GetDocs]):
+    """Получить документы
+
+    POST /api/v1/documents/download/all
+    """
+
+    __path__ = "/api/v1/documents/download/all"
+    __http_method__ = "POST"
+    __returns__ = GetDocs
+    __scope__ = Scope.DOCUMENTS
+    __host__ = "https://documents-api.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (300000, 5),
+        "service": (300000, 5),
+        "basic_secret": (300000, 5),
+        "basic": (86400000, 1),
+    }
+    __items__ = "data"
+    __body_fields__ = {"params": "params"}
+
+    params: list[GetDocumentsDownloadAllParamsItem] | None = None
+
+
+class GetDocumentsList(WBMethod[GetList]):
+    """Список документов
+
+    GET /api/v1/documents/list
+    """
+
+    __path__ = "/api/v1/documents/list"
+    __http_method__ = "GET"
+    __returns__ = GetList
+    __query_params__ = {
+        "locale": "locale",
+        "begin_time": "beginTime",
+        "end_time": "endTime",
+        "sort": "sort",
+        "order": "order",
+        "category": "category",
+        "service_name": "serviceName",
+        "limit": "limit",
+        "offset": "offset",
+    }
+    __scope__ = Scope.DOCUMENTS
+    __host__ = "https://documents-api.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (10000, 5),
+        "service": (10000, 5),
+        "basic_secret": (10000, 5),
+        "basic": (86400000, 1),
+    }
+    __paginate__ = "offset_query"
+    __items__ = "data"
+
+    begin_time: str | None = None
+    """Начало периода. Только вместе с `endTime`"""
+    category: str | None = None
+    """ID категории документов из поля `name`"""
+    end_time: str | None = None
+    """Конец периода. Только вместе с `beginTime`"""
+    limit: int | None = None
+    """Максимальное количество строк ответа"""
+    locale: str | None = None
+    """Язык поля `category`:   - `ru` — русский   - `en` — английский   - `zh` — китайский"""
+    offset: int | None = None
+    """После какой строки выдавать данные"""
+    order: str | None = None
+    """Сортировка:   - `desc` — по убыванию   - `asc` — по возрастанию  Только вместе с `sort`
+    """
+    service_name: str | None = None
+    """Уникальный ID документа"""
+    sort: str | None = None
+    """Сортировка:   - `date` — по дате создания документа   - `category` — по категории (только
+    при `locale=ru`)  Только вместе с `order`
+    """
+
+
+class GetSalesReportsDetailed(WBMethod[list[SalesReportsDetailedRes]]):
+    """Детализации к отчётам реализации за период
+
+    POST /api/finance/v1/sales-reports/detailed
+    """
+
+    __path__ = "/api/finance/v1/sales-reports/detailed"
+    __http_method__ = "POST"
+    __returns__ = list[SalesReportsDetailedRes]
+    __scope__ = Scope.FINANCE
+    __host__ = "https://finance-api.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (60000, 1),
+        "service": (60000, 1),
+        "basic_secret": (60000, 1),
+        "basic": (43200000, 1),
+    }
+    __paginate__ = "rrdid"
+    __body_fields__ = {
+        "date_from": "dateFrom",
+        "date_to": "dateTo",
+        "limit": "limit",
+        "rrd_id": "rrdId",
+        "period": "period",
+        "fields": "fields",
+    }
+
+    date_from: str
+    """Начальная дата отчёта.Можно передать дату или дату со временем. Время можно указывать с
+    точностью до секунд или миллисекунд.Дата передаётся в формате RFC3339, в …
+    """
+    date_to: str
+    """Конечная дата отчёта.Дата в формате RFC3339. Можно передать дату или дату со временем. Время
+    можно указывать с точностью до секунд или миллисекунд.Время передаё …
+    """
+    fields: list[str] | None = None
+    """Список полей, которые вернутся в ответе. Если параметр не указан, возвращаются все поля
+    """
+    limit: int | None = None
+    """Количество строк в ответе"""
+    period: str | None = None
+    """Периодичность отчётов:   - `weekly` — еженедельные   - `daily` — ежедневные"""
+    rrd_id: int | None = None
+    """ID строки ответа. Необходим для получения отчёта частями.Начинайте загрузку отчёта с
+    `"rrdid":0`. В последующих запросах передавайте значение `rrdId` из последн …
+    """
+
+
+class GetSalesReportsDetailedById(WBMethod[list[SalesReportsDetailedRes]]):
+    """Детализации к отчётам реализации по ID отчётов
+
+    POST /api/finance/v1/sales-reports/detailed/{reportId}
+    """
+
+    __path__ = "/api/finance/v1/sales-reports/detailed/{reportId}"
+    __http_method__ = "POST"
+    __returns__ = list[SalesReportsDetailedRes]
+    __path_params__ = ("reportId",)
+    __scope__ = Scope.FINANCE
+    __host__ = "https://finance-api.wildberries.ru"
+    __rate_limits__ = {"all": (60000, 1)}
+    __paginate__ = "rrdid"
+    __body_fields__ = {"limit": "limit", "rrd_id": "rrdId", "fields": "fields"}
+
+    report_id: str | int
+    """ID отчёта.Для ежедневных отчётов вместо стандартной десериализации рекомендуем использовать
+    нестандартные библиотеки с поддержкой BigInt
+    """
+    fields: list[str] | None = None
+    """Список полей, которые вернутся в ответе. Если параметр не указан, возвращаются все поля
+    """
+    limit: int | None = None
+    """Количество строк в ответе"""
+    rrd_id: int | None = None
+    """ID строки ответа. Необходим для получения отчёта частями.Начинайте загрузку отчёта с
+    `"rrdid":0`. В последующих запросах передавайте значение `rrdId` из последн …
+    """
+
+
+class GetSalesReportsList(WBMethod[list[SalesReportListRes]]):
+    """Список отчётов реализации
+
+    POST /api/finance/v1/sales-reports/list
+    """
+
+    __path__ = "/api/finance/v1/sales-reports/list"
+    __http_method__ = "POST"
+    __returns__ = list[SalesReportListRes]
+    __scope__ = Scope.FINANCE
+    __host__ = "https://finance-api.wildberries.ru"
+    __rate_limits__ = {"all": (60000, 1)}
+    __paginate__ = "offset_body"
+    __body_fields__ = {
+        "date_from": "dateFrom",
+        "date_to": "dateTo",
+        "limit": "limit",
+        "offset": "offset",
+        "period": "period",
+    }
+
+    date_from: str
+    """Начальная дата отчёта.Можно передать дату или дату со временем. Время можно указывать с
+    точностью до секунд или миллисекунд.Дата передаётся в формате RFC3339, в …
+    """
+    date_to: str
+    """Конечная дата отчёта.Дата в формате RFC3339. Можно передать дату или дату со временем. Время
+    можно указывать с точностью до секунд или миллисекунд.Время передаё …
+    """
+    limit: int | None = None
+    """Количество отчётов в ответе"""
+    offset: int | None = None
+    """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
+    period: str | None = None
+    """Периодичность отчётов:   - `weekly` — еженедельные   - `daily` — ежедневные"""

@@ -80,7 +80,6 @@ class Session:
         "max_retries",
         "retry_backoff",
         "max_retry_wait",
-        "user_agent",
     )
 
     def __init__(
@@ -91,7 +90,6 @@ class Session:
         max_retries: int = DEFAULT_MAX_RETRIES,
         retry_backoff: float = DEFAULT_RETRY_BACKOFF,
         max_retry_wait: float = DEFAULT_MAX_RETRY_WAIT,
-        user_agent: str | None = None,
         transport: httpx.AsyncBaseTransport | None = None,
     ) -> None:
         from .. import __version__
@@ -100,7 +98,6 @@ class Session:
         self.max_retries = max(0, max_retries)
         self.retry_backoff = retry_backoff
         self.max_retry_wait = max_retry_wait
-        self.user_agent = user_agent or f"wbapi/{__version__}"
 
         self._client = httpx.AsyncClient(
             timeout=timeout,
@@ -108,7 +105,7 @@ class Session:
             headers={
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "User-Agent": self.user_agent,
+                "User-Agent": f"wbapi/{__version__}",
                 "Authorization": token,
             },
             limits=httpx.Limits(max_connections=100, max_keepalive_connections=20),
@@ -120,10 +117,6 @@ class Session:
     @property
     def masked_token(self) -> str:
         return mask_token(self._token)
-
-    @property
-    def is_closed(self) -> bool:
-        return self._client.is_closed
 
     async def close(self) -> None:
         await self._client.aclose()

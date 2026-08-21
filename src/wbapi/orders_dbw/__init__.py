@@ -1,0 +1,195 @@
+from __future__ import annotations
+
+from collections.abc import AsyncIterator
+from typing import TYPE_CHECKING, Any
+
+from .methods import (
+    CancelDbwOrder,
+    DeleteOrdersMeta,
+    GetDbwOrders,
+    GetOrdersClient,
+    GetOrdersCourier,
+    GetOrdersDeliveryDate,
+    GetOrdersMetaDetails,
+    GetOrdersNew,
+    GetOrdersStatus,
+    GetOrdersStickers,
+    SetOrdersMetaGtin,
+    SetOrdersMetaImei,
+    SetOrdersMetaSgtin,
+    SetOrdersMetaUin,
+    UpdateOrdersConfirm,
+    UpdateOrdersStatusDeliver,
+)
+from .models import (
+    ApiMetaDeleteResponses,
+    ApiOrdersMetaDetailsResponse,
+    ApiSGTINs,
+    ApiStatusSetResponses,
+    ClientInfoResp,
+    DeliveryDatesInfoResp,
+    GetDbwOrdersResponse,
+    GetOrdersNewResponse,
+    GetOrdersStatusResponse,
+    GetOrdersStickersResponse,
+    OrderCourierInfoResp,
+)
+
+
+if TYPE_CHECKING:
+    from ..client import WBApi
+
+
+class OrdersDbw:
+    """Заказы DBW.
+
+    С помощью методов Заказы DBW (Доставка курьером WB) вы можете:
+      - получать информацию о сборочных заданиях, управлять статусами и отменять сборочные задания
+      - получать, добавлять, редактировать и удалять метаданные сборочных заданий
+
+      Узнать, как использовать методы в бизнес-кейсах, можно в инструкции по работе с заказами DBW
+    """
+
+    __slots__ = ("_api",)
+
+    def __init__(self, api: WBApi) -> None:
+        self._api = api
+
+    async def cancel_dbw_order(self, *, order_id: str | int) -> None:
+        """Отменить сборочное задание
+
+        :param order_id: ID сборочного задания
+        """
+        await CancelDbwOrder(order_id=order_id).emit(self._api)
+
+    async def delete_orders_meta(self, *, key: str, orders_ids: list[int]) -> ApiMetaDeleteResponses:
+        """Удалить идентификаторы маркировки сборочных заданий
+
+        :param key: Название идентификатора маркировки для удаления. Передаётся только одно значение
+        :param orders_ids: Список ID сборочных заданий
+        """
+        return await DeleteOrdersMeta(key=key, orders_ids=orders_ids).emit(self._api)
+
+    async def get_dbw_orders(
+        self, *, date_from: int, date_to: int, limit: int, next_: int, auto_paginate: bool = False
+    ) -> GetDbwOrdersResponse | list[Any]:
+        """Получить информацию о завершенных сборочных заданиях
+
+        :param date_from: Дата начала периода в формате Unix timestamp
+        :param date_to: Дата конца периода в формате Unix timestamp
+        :param limit: Параметр пагинации. Устанавливает предельное количество возвращаемых данных
+        :param next_: Параметр пагинации. Устанавливает значение, с которого надо получить следующий пакет
+            данных. Для получения полного списка данных должен быть равен `0` в первом …
+        :param auto_paginate: автоматически собрать все страницы выборки
+        """
+        call = GetDbwOrders(date_from=date_from, date_to=date_to, limit=limit, next_=next_)
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
+
+    async def iter_get_dbw_orders(
+        self, *, date_from: int, date_to: int, limit: int, next_: int
+    ) -> AsyncIterator[Any]:
+        """Получить информацию о завершенных сборочных заданиях — постранично, по одной записи.
+
+        :param date_from: Дата начала периода в формате Unix timestamp
+        :param date_to: Дата конца периода в формате Unix timestamp
+        :param limit: Параметр пагинации. Устанавливает предельное количество возвращаемых данных
+        :param next_: Параметр пагинации. Устанавливает значение, с которого надо получить следующий пакет
+            данных. Для получения полного списка данных должен быть равен `0` в первом …
+        """
+        async for item in GetDbwOrders(date_from=date_from, date_to=date_to, limit=limit, next_=next_).stream(
+            self._api
+        ):
+            yield item
+
+    async def get_orders_client(self, *, orders: list[int] | None = None) -> ClientInfoResp:
+        """Информация о покупателе
+
+        :param orders: Список ID сборочных заданий
+        """
+        return await GetOrdersClient(orders=orders).emit(self._api)
+
+    async def get_orders_courier(self, *, orders: list[int] | None = None) -> OrderCourierInfoResp:
+        """Информация о курьере
+
+        :param orders: Список ID сборочных заданий
+        """
+        return await GetOrdersCourier(orders=orders).emit(self._api)
+
+    async def get_orders_delivery_date(self, *, orders: list[int] | None = None) -> DeliveryDatesInfoResp:
+        """Получить дату и время доставки
+
+        :param orders: Список ID сборочных заданий
+        """
+        return await GetOrdersDeliveryDate(orders=orders).emit(self._api)
+
+    async def get_orders_meta_details(self, *, orders_ids: list[int]) -> ApiOrdersMetaDetailsResponse:
+        """Получить идентификаторы маркировки сборочных заданий
+
+        :param orders_ids: Список ID сборочных заданий
+        """
+        return await GetOrdersMetaDetails(orders_ids=orders_ids).emit(self._api)
+
+    async def get_orders_new(self) -> GetOrdersNewResponse:
+        """Получить список новых сборочных заданий"""
+        return await GetOrdersNew().emit(self._api)
+
+    async def get_orders_status(self, *, orders: list[int]) -> GetOrdersStatusResponse:
+        """Получить статусы сборочных заданий
+
+        :param orders: Список ID сборочных заданий
+        """
+        return await GetOrdersStatus(orders=orders).emit(self._api)
+
+    async def get_orders_stickers(
+        self, *, height: int, type_: str, width: int, orders: list[int] | None = None
+    ) -> GetOrdersStickersResponse:
+        """Получить стикеры сборочных заданий
+
+        :param height: Высота стикера
+        :param type_: Тип стикера
+        :param width: Ширина стикера
+        :param orders: Список ID сборочных заданий
+        """
+        return await GetOrdersStickers(height=height, type_=type_, width=width, orders=orders).emit(self._api)
+
+    async def set_orders_meta_gtin(self, *, gtin: str, order_id: str | int) -> None:
+        """Закрепить GTIN за сборочным заданием
+
+        :param gtin: GTIN
+        :param order_id: ID сборочного задания
+        """
+        await SetOrdersMetaGtin(gtin=gtin, order_id=order_id).emit(self._api)
+
+    async def set_orders_meta_imei(self, *, imei: str, order_id: str | int) -> None:
+        """Закрепить IMEI за сборочным заданием
+
+        :param imei: IMEI
+        :param order_id: ID сборочного задания
+        """
+        await SetOrdersMetaImei(imei=imei, order_id=order_id).emit(self._api)
+
+    async def set_orders_meta_sgtin(self, *, orders: list[ApiSGTINs]) -> ApiStatusSetResponses:
+        """Закрепить коды маркировки Честного знака за сборочными заданиями"""
+        return await SetOrdersMetaSgtin(orders=orders).emit(self._api)
+
+    async def set_orders_meta_uin(self, *, order_id: str | int, uin: str) -> None:
+        """Закрепить УИН за сборочным заданием
+
+        :param order_id: ID сборочного задания
+        :param uin: УИН
+        """
+        await SetOrdersMetaUin(order_id=order_id, uin=uin).emit(self._api)
+
+    async def update_orders_confirm(self, *, order_id: str | int) -> None:
+        """Перевести на сборку
+
+        :param order_id: ID сборочного задания
+        """
+        await UpdateOrdersConfirm(order_id=order_id).emit(self._api)
+
+    async def update_orders_status_deliver(self, *, orders_ids: list[int]) -> ApiStatusSetResponses:
+        """Перевести сборочные задания в доставку
+
+        :param orders_ids: Список ID сборочных заданий
+        """
+        return await UpdateOrdersStatusDeliver(orders_ids=orders_ids).emit(self._api)

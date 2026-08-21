@@ -1,0 +1,481 @@
+from __future__ import annotations
+
+from typing import Any
+
+from msgspec import field as _field
+
+from ..client.model import WBModel
+
+
+class CatalogNode(WBModel):
+    children: list[CatalogNode] | None = _field(default=None)
+    """Список дочерних узлов"""
+    id: int | None = _field(default=None)
+    """ID узла.  Если `is_section` = `true`, то `id` является ID категории (`section`).  Если
+    `is_section` = `false`, то `id` является ID подкатегории (`is_path`).
+    """
+    img: str | None = _field(default=None)
+    """URI адрес иконки категории"""
+    is_section: bool | None = _field(default=None)
+    """Признак, является ли узел категорией (`section`)"""
+    name: str | None = _field(default=None)
+    """Название узла"""
+    node_order: int | None = _field(default=None)
+    """Порядок элементов подкатегорий, которые находятся на одном уровне"""
+    parent_id: int | None = _field(default=None)
+    """Указывает на ID родителя подкатегории"""
+    path: list[int] | None = _field(default=None)
+    """Список `id` (ID узла). Путь до элемента каталога."""
+    section_id: int | None = _field(default=None)
+    """ID категории (`section`). Если `is_section` = `false`, то `section_id` указывает на
+    родительскую категорию.
+    """
+    total: int | None = _field(default=None)
+    """Общее количество предложений в этой категории. Поле заполняется только у категорий
+    (`section`).
+    """
+
+
+class ChunkPart(WBModel):
+    index: int | None = _field(default=None)
+    """Индекс фрейма (фрагмента)"""
+    size: int | None = _field(default=None)
+    """Размер фрейма (фрагмента) в байтах"""
+
+
+class Content(WBModel):
+    author_id: int | None = _field(default=None)
+    """ID автора"""
+    category_id: int | None = _field(default=None)
+    """ID категории контента: - `1` — Видеоконтент - `2` — Аудиоконтент - `4` — Документ"""
+    content_type: str | None = _field(default=None)
+    """Тип файла: - Видеоконтент:     - `video/mp4` - Аудиоконтент:     - `audio/mpeg` - Документ:
+    - `application/pdf`     - `application/epub+zip` …
+    """
+    created: str | None = _field(default=None)
+    """Дата создания, UTC+3 (Москва)"""
+    description: str | None = _field(default=None)
+    """Описание контента"""
+    files: list[ContentFilesItem] | None = _field(default=None)
+    """Список с информацией о дополнительных файлах"""
+    id: int | None = _field(default=None)
+    """ID контента"""
+    meta: Any | None = _field(default=None)
+    """Хранит в себе метаданные контента: - `bisac` —  ISBN (Международный стандартный книжный
+    номер) - `voice` — Актер озвучивающий аудиоконтент …
+    """
+    playlist: str | None = _field(default=None)
+    """URI адрес на плейлист контента.  Если контент является аудио или видео контентом, то файл
+    декодируется в плейлист
+    """
+    status: int | None = _field(default=None)
+    """Статус контента: - `0` — Создан - `1` — Загружено на сервер - `2` — Опубликован - `3` —
+    Ошибка в обработке или публикации - `4` — Обрабатывается …
+    """
+    title: str | None = _field(default=None)
+    """Название контента"""
+    updated: str | None = _field(default=None)
+    """Дата обновления, UTC+3 (Москва)"""
+    uri: str | None = _field(default=None)
+    """URI адрес контента"""
+
+
+class ContentFilesItem(WBModel):
+    content_type: str | None = _field(default=None, name="contentType")
+    """Тип контента"""
+    size: int | None = _field(default=None)
+    """Размер файла"""
+    uri: str | None = _field(default=None)
+    """URI адрес на файл"""
+
+
+class ContentList(WBModel):
+    items: list[Content] | None = _field(default=None)
+    """Список контента"""
+    total: int | None = _field(default=None)
+
+
+class ContentMeta(WBModel):
+    """Метаданные. Дополнительная информация о контенте"""
+
+    author: str | None = _field(default=None)
+    """Автор контента"""
+    bisac: str | None = _field(default=None)
+    """ISBN (Международный стандартный книжный номер) - Каждый ISBN уникален - Состоит из 13
+    символов, начиная с префикса **978** или **979**
+    """
+    duration: str | None = _field(default=None)
+    """Продолжительность контента"""
+    original_name: str | None = _field(default=None)
+    """Оригинальное название контента"""
+    pages: int | None = _field(default=None)
+    """Количество страниц в книге (файле)"""
+    rating: str | None = _field(default=None)
+    """Возрастное ограничение"""
+    source_file_name: str | None = _field(default=None)
+    """Имя исходного файла"""
+    thumbnail: list[str] | None = _field(default=None)
+    """URI адреса обложки контента"""
+    translator: str | None = _field(default=None)
+    """Переводчик"""
+    voice: str | None = _field(default=None)
+    """Актер озвучивающий аудиоконтент"""
+
+
+class DeleteContentBody(WBModel):
+    content_id: int | None = _field(default=None)
+    """ID контента"""
+
+
+class GetFullCatalogResponse(WBModel):
+    items: list[CatalogNode] | None = _field(default=None)
+    """Дерево с категориям и их подкатегориями"""
+    total: int | None = _field(default=None)
+
+
+class IllustrationResponse(WBModel):
+    """Ответ содержит список URI адресов для контента, необходимый для метода [Инициализировать"""
+
+    uris: list[str] | None = _field(default=None)
+    """Список URI адресов обложки разного разрешения"""
+    user_id: int | None = _field(default=None, name="userId")
+    """ID пользователя"""
+
+
+class KeyRedeemedResponse(WBModel):
+    buyed_at: str | None = _field(default=None)
+    """Дата покупки ключа"""
+    created_at: str | None = _field(default=None)
+    """Дата создания ключа"""
+    id: int | None = _field(default=None)
+    """ID ключа"""
+    offer_id: int | None = _field(default=None)
+    """ID предложения"""
+    offer_price: int | None = _field(default=None)
+    """Цена предложения"""
+    offer_title: str | None = _field(default=None)
+    """Название предложения"""
+    value: str | None = _field(default=None)
+    """Ключ"""
+
+
+class KeyResponse(WBModel):
+    buyed_at: str | None = _field(default=None)
+    """Дата и время покупки ключа"""
+    created_at: str | None = _field(default=None)
+    """Дата и время создания ключа"""
+    deleted_at: str | None = _field(default=None)
+    """Дата и время удаления ключа"""
+    id: int | None = _field(default=None)
+    """ID ключа"""
+    value: str | None = _field(default=None)
+    """Значение ключа"""
+
+
+class KeysCountResponse(WBModel):
+    available: int | None = _field(default=None)
+    """Количество свободных ключей"""
+    deleted: int | None = _field(default=None)
+    """Количество удаленных ключей"""
+    reserved: int | None = _field(default=None)
+    """Количество зарезервированных ключей"""
+    total: int | None = _field(default=None)
+    """Общее количество ключей"""
+
+
+class KeysDeleteResponse(WBModel):
+    statuses: list[KeysDeleteResponseStatusesItem] | None = _field(default=None)
+    """Статусы удаления ключей"""
+
+
+class KeysDeleteResponseStatusesItem(WBModel):
+    code: str | None = _field(default=None)
+    """HTTP статус-код для каждой операции над ключом"""
+    id: int | None = _field(default=None)
+    """ID ключа"""
+    message: str | None = _field(default=None)
+    """Описание к статусу удаления"""
+    status: bool | None = _field(default=None)
+    """Флаг статуса удаления (`true` - успешно удален, `false` - ошибка)"""
+
+
+class KeysLoadRequest(WBModel):
+    """Список ключей и ID предложения"""
+
+    keys: list[str] | None = _field(default=None)
+    """Список ключей.  **Ограничения:** - Максимальное количество ключей — **1000** - Максимальная
+    длина ключа — **200 символов**
+    """
+    offer_id: int | None = _field(default=None)
+    """ID предложения"""
+
+
+class KeysRedeemedResponseList(WBModel):
+    items: list[KeyRedeemedResponse] | None = _field(default=None)
+    """Список проданных ключей"""
+    total: int | None = _field(default=None)
+
+
+class KeysResponseList(WBModel):
+    items: list[KeyResponse] | None = _field(default=None)
+    """Список ключей"""
+    total: int | None = _field(default=None)
+    """Общее количество ключей"""
+
+
+class OfferContent(WBModel):
+    category_id: int | None = _field(default=None)
+    """ID категории контента: - `1` — Видеоконтент - `2` — Аудиоконтент - `4` — Документ"""
+    content: int | None = _field(default=None)
+    """ID контента"""
+    description: str | None = _field(default=None)
+    """Описание контента"""
+    files: list[OfferContentFilesItem] | None = _field(default=None)
+    """Список с информацией о дополнительных файлах"""
+    meta: str | None = _field(default=None)
+    """Хранит в себе метаданные контента: - `bisac` —  ISBN (Международный стандартный книжный
+    номер) - `voice` — Актер озвучивающий аудиоконтент …
+    """
+    playlist: str | None = _field(default=None)
+    """URI адрес на плейлист контента.  Если контент является аудио или видео контентом, то файл
+    декодируется в плейлист
+    """
+    title: str | None = _field(default=None)
+    """Название контента"""
+
+
+class OfferContentFilesItem(WBModel):
+    content_type: Any | None = _field(default=None, name="contentType")
+    """Тип контента"""
+    size: Any | None = _field(default=None)
+    """Размер файла"""
+    uri: Any | None = _field(default=None)
+    """URI адрес файла"""
+
+
+class OfferCreateContent(WBModel):
+    category_id: int | None = _field(default=None)
+    """ID категории контента: - `1` — Видео - `2` — Аудиоконтент - `4` — Документ"""
+    content: int | None = _field(default=None)
+    """ID контента"""
+
+
+class OfferCreateRequest(WBModel):
+    """Новое предложение"""
+
+    age_rating: str | None = _field(default=None)
+    """Возрастное ограничение. Это система, которая используется для определения, подходит ли ваше
+    предложение для определенной возрастной группы.
+    """
+    catalog_path: list[int] | None = _field(default=None)
+    """Массив ID подкатегорий, в котором находится предложение. …"""
+    content: list[OfferCreateContent] | None = _field(default=None)
+    """Список контента"""
+    description: str | None = _field(default=None)
+    """Описание предложения. Это текст, который описывает ваше предложение и помогает людям понять,
+    что именно представляет из себя продаваемый вами товар и чем он мож …
+    """
+    discount_price: int | None = _field(default=None)
+    """Цена с учетом скидки, ₽"""
+    gallery: list[str] | None = _field(default=None)
+    """Список URL-адресов дополнительных изображений, а так же видео превью. **Можно передать до 8
+    медиафайлов.** …
+    """
+    keys: list[str] | None = _field(default=None)
+    """Список ключей. Это **обязательное поле**, если вы хотите создать предложение из категории
+    (`section`): - **Ключи активации** — `3` …
+    """
+    meta: OfferMetaRequest | None = _field(default=None)
+    price: int | None = _field(default=None)
+    """Цена предложения, ₽"""
+    section: int | None = _field(default=None)
+    """ID категории предложения: - `1` — Видеоконтент - `2` — Аудиоконтент - `3` — Ключи активации
+    - `4` — Электронные книги - `5` — Аудиокниги …
+    """
+    status: int | None = _field(default=None)
+    """Задается статус вашего предложения: - `0` — Добавить в черновик - `1` — Опубликовать"""
+    tags: list[str] | None = _field(default=None)
+    """Массив тегов. Теги нужны для группирования, ранжирования и облегчения поиска вашего товара.
+    **Ограничения**: - Максимальное количество тегов — **5** …
+    """
+    title: str | None = _field(default=None)
+    """Название предложения.Максимальная длина — **500 символов.**"""
+
+
+class OfferMetaRequest(WBModel):
+    """Метаданные предложения"""
+
+    addresses: str | None = _field(default=None)
+    """Адреса где можно воспользоваться купонами, подарочными сертификатами"""
+    key_instruction: str | None = _field(default=None)
+    """Инструкция по активации ключа"""
+
+
+class OfferPriceUpdateRequest(WBModel):
+    """Новая цена для предложения"""
+
+    discount_price: int | None = _field(default=None)
+    """Цена с учетом скидки, ₽"""
+    regular_price: int | None = _field(default=None)
+    """Цена, ₽"""
+
+
+class OfferResponse(WBModel):
+    adult: bool | None = _field(default=None)
+    """Флаг, который отвечает за ограничение контента для взрослых (блюр контента)"""
+    age_rating: str | None = _field(default=None)
+    """Возрастное ограничение. Это система, которая используется для определения, подходит ли ваше
+    предложение для определенной возрастной группы
+    """
+    catalog_path: list[int] | None = _field(default=None)
+    """Массив ID подкатегорий, в котором находится предложение"""
+    content: list[OfferContent] | None = _field(default=None)
+    """Контент предложения"""
+    created: str | None = _field(default=None)
+    """Дата создания, UTC+3 (Москва)"""
+    deleted: str | None = _field(default=None)
+    """Дата удаления, UTC+3 (Москва). `1970-01-01T00:00:00Z` — является нулевым значением"""
+    description: str | None = _field(default=None)
+    """Описание предложения"""
+    discount_price: int | None = _field(default=None)
+    """Цена с учетом скидки, ₽"""
+    gallery: list[str] | None = _field(default=None)
+    """Список URL-адресов дополнительных изображений, а так же видео превью"""
+    id: int | None = _field(default=None)
+    """ID предложения"""
+    meta: str | None = _field(default=None)
+    """Метаданные предложения"""
+    price: int | None = _field(default=None)
+    """Цена предложения, ₽"""
+    purchase_count: int | None = _field(default=None)
+    """Количество покупок"""
+    rating: float | None = _field(default=None)
+    """Рейтинг предложения"""
+    section: int | None = _field(default=None)
+    """ID категории товара: - `1` — Видеоконтент - `2` — Аудиоконтент - `3` — Ключи активации - `4`
+    — Электронные книги - `5` — Аудиокниги - `6` — Цифровые товары …
+    """
+    status: int | None = _field(default=None)
+    """Статус вашего предложения: - `0` — Добавить в черновик - `1` — Опубликовать"""
+    tags: list[Tag] | None = _field(default=None)
+    """Список тегов. Теги нужны для группирования, ранжирования и облегчения поиска вашего товара
+    """
+    thumbnail: list[str] | None = _field(default=None)
+    """Обложка предложения"""
+    title: str | None = _field(default=None)
+    """Название предложения"""
+    updated: str | None = _field(default=None)
+    """Дата обновления, UTC+3 (Москва)"""
+    view_count: int | None = _field(default=None)
+    """Количество просмотров"""
+
+
+class OfferResponseList(WBModel):
+    items: list[OfferResponse] | None = _field(default=None)
+    """Список предложений"""
+    total: int | None = _field(default=None)
+
+
+class OfferStatusUpdateRequest(WBModel):
+    """Новый статус"""
+
+    status: int | None = _field(default=None)
+
+
+class OfferUpdateRequest(WBModel):
+    """Характеристика предложения"""
+
+    age_rating: str | None = _field(default=None)
+    """Возрастное ограничение. Это система, которая используется для определения, подходит ли ваше
+    предложение для определенной возрастной группы.
+    """
+    catalog_path: list[int] | None = _field(default=None)
+    """Массив ID подкатегорий, в котором находится предложение. …"""
+    description: str | None = _field(default=None)
+    """Описание предложения. Это текст, который описывает ваше предложение и помогает людям понять,
+    что именно представляет из себя продаваемый вами товар и чем он мож …
+    """
+    discount_price: int | None = _field(default=None)
+    """Цена с учетом скидки, ₽"""
+    gallery: list[str] | None = _field(default=None)
+    """Список URL-адресов дополнительных изображений, а так же видео превью. **Можно передать до 8
+    медиафайлов.** …
+    """
+    meta: OfferMetaRequest | None = _field(default=None)
+    price: int | None = _field(default=None)
+    """Цена предложения, ₽"""
+    status: int | None = _field(default=None)
+    """Статус вашего предложения: - `0` — Добавить в черновик - `1` — Опубликовать - `2` —
+    Приостановить продажу - `3` — Удалить
+    """
+    tags: list[str] | None = _field(default=None)
+    """Массив тегов. Теги нужны для группирования, ранжирования и облегчения поиска вашего товара.
+    **Ограничения**: - Максимальное количество тегов — **5** …
+    """
+    title: str | None = _field(default=None)
+    """Название предложения.Максимальная длина — **500 символов.**"""
+
+
+class Tag(WBModel):
+    id: int | None = _field(default=None)
+    """ID тега"""
+    value: str | None = _field(default=None)
+    """Название тега"""
+    value_translit: str | None = _field(default=None)
+    """Перевод названия тега"""
+    weight: float | None = _field(default=None)
+    """Вес тега"""
+
+
+class UpdateContentRequest(WBModel):
+    """Обновленные данные"""
+
+    description: str | None = _field(default=None)
+    """Описание контента.Максимальная длина — **1000 символов.**"""
+    title: str | None = _field(default=None)
+    """Название контента.Максимальная длина — **500 символов.**"""
+
+
+class UploadChunkResponse(WBModel):
+    """Файл успешно загружен.<br>"""
+
+    chunk: int | None = _field(default=None)
+    """Количество переданных фреймов (частей контента)"""
+    uri: str | None = _field(default=None)
+    """URI адреса загруженного файла"""
+
+
+class UploadGalleryResponse(WBModel):
+    """Файлы успешно загружены.<br>"""
+
+    uris: list[str] | None = _field(default=None)
+    """Список URI адресов медиафайлов"""
+
+
+class UploadInitRequest(WBModel):
+    catalog_id: int | None = _field(default=None)
+    """ID категории контента: - `1` — Видеоконтент - `2` — Аудиоконтент - `4` — Документ"""
+    content_type: str | None = _field(default=None)
+    """Тип файла: - Видеоконтент:     - `video/mp4` - Аудиоконтент:     - `audio/mpeg` - Документ:
+    - `application/pdf`     - `application/epub+zip` …
+    """
+    description: str | None = _field(default=None)
+    """Описание контента.Максимальная длина — **1000 символов.**"""
+    meta: ContentMeta | None = _field(default=None)
+    parts: list[ChunkPart] | None = _field(default=None)
+    """Для оптимальной скорости загрузки контента следует разбить файл на фреймы по 2 Мб. В массиве
+    указываются индекс каждого фрейма и его размер
+    """
+    title: str | None = _field(default=None)
+    """Название контента.Максимальная длина — **500 символов.**"""
+
+
+class UploadInitResponse(WBModel):
+    """Ответ. Содержит UUID контента, необходимый для метода [Загрузить контент (файл)](./wbd#t"""
+
+    content_id: int | None = _field(default=None)
+    """ID контента"""
+    uuid: str | None = _field(default=None)
+    """Уникальный ID. Этот ID необходим для загрузки самого файла в методе Загрузка контента
+    (файла)
+    """

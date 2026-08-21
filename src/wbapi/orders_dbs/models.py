@@ -1,0 +1,625 @@
+from __future__ import annotations
+
+from typing import Any
+
+from msgspec import field as _field
+
+from ..client.model import WBModel
+
+
+class ApiB2bClientInfo(WBModel):
+    """Данные покупателя B2B"""
+
+    inn: Any | None = _field(default=None)
+    """Индивидуальный номер налогоплательщика (ИНН)"""
+    kpp: Any | None = _field(default=None)
+    """Код причины постановки на учёт (КПП)"""
+    org_name: Any | None = _field(default=None, name="orgName")
+    """Наименование организации"""
+
+
+class ApiB2bClientInfoResponse(WBModel):
+    data: ApiB2bClientInfo | None = _field(default=None)
+    errors: list[ApiB2bClientInfoResponseErrorsItem] | None = _field(default=None)
+    """Детали ошибки"""
+    is_error: bool | None = _field(default=None, name="isError")
+    """Есть ли ошибки"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+
+
+class ApiB2bClientInfoResponseErrorsItem(WBModel):
+    code: Any | None = _field(default=None)
+    """Код ошибки"""
+    detail: Any | None = _field(default=None)
+    """Описание ошибки"""
+
+
+class ApiB2bClientInfoResponses(WBModel):
+    request_id: str | None = _field(default=None, name="requestId")
+    """Уникальный ID запроса"""
+    results: list[ApiB2bClientInfoResponse] | None = _field(default=None)
+
+
+class ApiBatchErrorDeliverResponse(WBModel):
+    code: Any | None = _field(default=None)
+    """Код ошибки:   - `404`   - `409`"""
+    detail: Any | None = _field(default=None)
+    """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
+    этого статуса сборочного задания …
+    """
+    meta_details: Any | None = _field(default=None, name="metaDetails")
+    """Детали ошибки валидации идентификаторов маркировки"""
+
+
+class ApiBatchErrorFinalPriceResponse(WBModel):
+    code: Any | None = _field(default=None)
+    """Код ошибки:   - `404` — `NotFound`   - `400` — `StatusMismatch`   - `422` —
+    `PriceNotCalculated`
+    """
+    detail: Any | None = _field(default=None)
+    """- `NotFound` — сборочное задание не найдено (`404`) - `StatusMismatch` — операция невозможна
+    для этого статуса сборочного задания (`400`) …
+    """
+
+
+class ApiBatchErrorResponse(WBModel):
+    code: Any | None = _field(default=None)
+    """Код ошибки:   - `404`   - `409`   - `400`"""
+    detail: Any | None = _field(default=None)
+    """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
+    этого статуса сборочного задания …
+    """
+
+
+class ApiGTIN(WBModel):
+    gtin: str | None = _field(default=None)
+    """GTIN"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+
+
+class ApiIMEI(WBModel):
+    imei: str | None = _field(default=None)
+    """IMEI"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+
+
+class ApiOrderCodeRequest(WBModel):
+    code: str | None = _field(default=None)
+    """Код подтверждения.  Отображается у покупателя на сайте и в приложении Wildberries"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+
+
+class ApiOrderFinalPriceResult(WBModel):
+    data: ApiOrderFinalPriceResultData | None = _field(default=None)
+    """Данные сборочного задания.  Если `"data":{}`, данные формируются. Повторите запрос позднее.
+    Максимальное время формирования данных около 3 минут. …
+    """
+    errors: list[ApiBatchErrorFinalPriceResponse] | None = _field(default=None)
+    """Детали ошибки"""
+    is_error: bool | None = _field(default=None, name="isError")
+    """Есть ли ошибки"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+
+
+class ApiOrderFinalPriceResultData(WBModel):
+    """Данные сборочного задания."""
+
+    converted_currency_code: Any | None = _field(default=None, name="convertedCurrencyCode")
+    """Код валюты страны продавца"""
+    converted_original_final_price: Any | None = _field(default=None, name="convertedOriginalFinalPrice")
+    """Сумма к оплате покупателем в валюте страны продавца с учетом всех скидок и кэшбека,
+    умноженная на 100. Предоставляется в информационных целях
+    """
+    converted_original_price: Any | None = _field(default=None, name="convertedOriginalPrice")
+    """Цена продавца в валюте страны продавца без учёта скидок, умноженная на 100. Предоставляется
+    в информационных целях
+    """
+    currency_code: Any | None = _field(default=None, name="currencyCode")
+    """Код валюты продажи"""
+    original_final_price: Any | None = _field(default=None, name="originalFinalPrice")
+    """Сумма к оплате покупателем в валюте продажи с учетом всех скидок и кэшбека, умноженная на
+    100. Код валюты продажи указан в поле `currencyCode`. Предоставляется …
+    """
+    original_price: Any | None = _field(default=None, name="originalPrice")
+    """Цена продавца в валюте продажи без учёта скидок, умноженная на 100. Предоставляется в
+    информационных целях
+    """
+
+
+class ApiOrderGroupsRequest(WBModel):
+    groups: list[str] | None = _field(default=None)
+    """Список значений `groupId`. Можно получить из новых и завершенных сборочных заданий"""
+
+
+class ApiOrderStatusV2(WBModel):
+    errors: list[ApiBatchErrorResponse] | None = _field(default=None)
+    """Информация об ошибке"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+    supplier_status: str | None = _field(default=None, name="supplierStatus")
+    """Статус сборочного задания, установленный продавцом"""
+    wb_status: str | None = _field(default=None, name="wbStatus")
+    """Статус сборочного задания в системе Wildberries"""
+
+
+class ApiOrderStatusesV2(WBModel):
+    orders: list[ApiOrderStatusV2] | None = _field(default=None)
+    """Информация о статусах"""
+
+
+class ApiOrdersCodeRequest(WBModel):
+    orders: list[ApiOrderCodeRequest] | None = _field(default=None)
+
+
+class ApiOrdersFinalPriceResponse(WBModel):
+    request_id: str | None = _field(default=None, name="requestId")
+    """Уникальный ID запроса"""
+    results: list[ApiOrderFinalPriceResult] | None = _field(default=None)
+
+
+class ApiOrdersGTINSetRequest(WBModel):
+    orders: list[ApiGTIN] | None = _field(default=None)
+
+
+class ApiOrdersIMEISetRequest(WBModel):
+    orders: list[ApiIMEI] | None = _field(default=None)
+
+
+class ApiOrdersMetaDeleteRequest(WBModel):
+    key: str | None = _field(default=None)
+    """Название идентификатора маркировки для удаления. Передаётся только одно значение"""
+    order_ids: list[int] | None = _field(default=None, name="orderIds")
+    """Список ID сборочных заданий"""
+
+
+class ApiOrdersMetaDetailsResponse(WBModel):
+    orders: list[ApiOrdersMetaDetailsResponseOrdersItem] | None = _field(default=None)
+    """Идентификаторы маркировки сборочных заданий и статусы их валидации"""
+    request_id: str | None = _field(default=None, name="requestId")
+    """Уникальный ID запроса"""
+
+
+class ApiOrdersMetaDetailsResponseOrdersItem(WBModel):
+    errors: list[ApiOrdersMetaDetailsResponseOrdersItemErrorsItem] | None = _field(default=None)
+    """Информация об ошибке"""
+    is_error: bool | None = _field(default=None, name="isError")
+    """Есть ли ошибки"""
+    meta_details: list[ApiOrdersMetaDetailsResponseOrdersItemMetaDetailsItem] | None = _field(
+        default=None, name="metaDetails"
+    )
+    """Идентификаторы маркировки и статусы их валидации"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+
+
+class ApiOrdersMetaDetailsResponseOrdersItemErrorsItem(WBModel):
+    code: Any | None = _field(default=None)
+    """Код ошибки"""
+    detail: Any | None = _field(default=None)
+    """Дополнительная информация об ошибке"""
+
+
+class ApiOrdersMetaDetailsResponseOrdersItemMetaDetailsItem(WBModel):
+    decision: Any | None = _field(default=None)
+    """Статус проверки: - `imei`   - `pending` — Маркировка на проверке   - `optional` — Маркировка
+    не обязательна   - `filled` — Валидация пройдена …
+    """
+    key: Any | None = _field(default=None)
+    """Идентификатор маркировки:   - `imei` — IMEI   - `uin` — УИН   - `gtin` — GTIN   - `sgtin` —
+    код маркировки   - `customsDeclaration` — номер ДТ …
+    """
+    value: Any | None = _field(default=None)
+    """Значение идентификатора маркировки"""
+
+
+class ApiOrdersRequestV2(WBModel):
+    orders_ids: list[int] | None = _field(default=None, name="ordersIds")
+    """Список ID сборочных заданий"""
+
+
+class ApiOrdersSGTINsSetRequest(WBModel):
+    orders: list[ApiSGTINs] | None = _field(default=None)
+
+
+class ApiOrdersUINSetRequest(WBModel):
+    orders: list[ApiUIN] | None = _field(default=None)
+
+
+class ApiSGTINs(WBModel):
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+    sgtins: list[str] | None = _field(default=None)
+    """Массив кодов маркировки Честного знака. Допускается от 16 до 135 символов для кода одной
+    маркировки
+    """
+
+
+class ApiStatusSetDeliverResponse(WBModel):
+    errors: list[ApiBatchErrorDeliverResponse] | None = _field(default=None)
+    """Детали ошибки"""
+    is_error: bool | None = _field(default=None, name="isError")
+    """Есть ли ошибки"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания с успешно обновлёнными данными"""
+
+
+class ApiStatusSetDeliverResponses(WBModel):
+    request_id: str | None = _field(default=None, name="requestId")
+    """Уникальный ID запроса"""
+    results: list[ApiStatusSetDeliverResponse] | None = _field(default=None)
+
+
+class ApiStatusSetResponse(WBModel):
+    errors: list[ApiBatchErrorResponse] | None = _field(default=None)
+    """Детали ошибки"""
+    is_error: bool | None = _field(default=None, name="isError")
+    """Есть ли ошибки"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания с успешно обновлёнными данными"""
+
+
+class ApiStatusSetResponses(WBModel):
+    request_id: str | None = _field(default=None, name="requestId")
+    """Уникальный ID запроса"""
+    results: list[ApiStatusSetResponse] | None = _field(default=None)
+
+
+class ApiUIN(WBModel):
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+    uin: str | None = _field(default=None)
+    """УИН"""
+
+
+class CreateOrdersStatusReceiveResponse(WBModel):
+    request_id: str | None = _field(default=None, name="requestId")
+    """Уникальный ID запроса"""
+    results: list[CreateOrdersStatusReceiveResponseResultsItem] | None = _field(default=None)
+
+
+class CreateOrdersStatusReceiveResponseResultsItem(WBModel):
+    errors: list[CreateOrdersStatusReceiveResponseResultsItemErrorsItem] | None = _field(default=None)
+    """Детали ошибки"""
+    is_error: bool | None = _field(default=None, name="isError")
+    """Есть ли ошибки"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания с успешно обновлёнными данными"""
+
+
+class CreateOrdersStatusReceiveResponseResultsItemErrorsItem(WBModel):
+    code: Any | None = _field(default=None)
+    """Код ошибки"""
+    detail: Any | None = _field(default=None)
+    """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
+    этого статуса сборочного задания …
+    """
+
+
+class DbsOnlyClientInfo(WBModel):
+    additional_phone_codes: list[str] | None = _field(default=None, name="additionalPhoneCodes")
+    """Дополнительные добавочные коды. Используйте, если не получилось дозвониться по добавочному
+    коду из `phoneCode`. …
+    """
+    first_name: str | None = _field(default=None, name="firstName")
+    """Имя покупателя"""
+    full_name: str | None = _field(default=None, name="fullName")
+    """Полное имя, используется для оформления документов. Например, документы на автомобиль"""
+    order_id: int | None = _field(default=None, name="orderID")
+    """ID сборочного задания"""
+    phone: str | None = _field(default=None)
+    """Резервный подменный номер телефона для связи с покупателем. Используйте, если недоступен
+    основной номер из `replacementPhone`. …
+    """
+    phone_code: int | None = _field(default=None, name="phoneCode")
+    """Добавочный код. Пустое значение `""` указывает, что код ещё не назначен"""
+    replacement_phone: str | None = _field(default=None, name="replacementPhone")
+    """Подменный номер для связи с покупателем. Пустое значение `""` указывает, что номер еще не
+    назначен
+    """
+
+
+class DbsOnlyClientInfoResp(WBModel):
+    orders: list[DbsOnlyClientInfo] | None = _field(default=None)
+    """Информация о покупателе"""
+
+
+class DeliveryDatesInfoResp(WBModel):
+    orders: list[DeliveryDatesInfoRespOrdersItem] | None = _field(default=None)
+
+
+class DeliveryDatesInfoRespOrdersItem(WBModel):
+    d_date: str | None = _field(default=None, name="dDate")
+    """Актуальная дата доставки, указанная покупателем"""
+    d_date_from: str | None = _field(default=None, name="dDateFrom")
+    """Не используется"""
+    d_date_old: str | None = _field(default=None, name="dDateOld")
+    """Прежняя дата доставки. Доступна первые сутки после изменения"""
+    d_date_to: str | None = _field(default=None, name="dDateTo")
+    """Не используется"""
+    d_time_from: str | None = _field(default=None, name="dTimeFrom")
+    """Актуальное время доставки "с"""
+    d_time_from_old: str | None = _field(default=None, name="dTimeFromOld")
+    """Прежнее время доставки "с". Доступно первые сутки после изменения"""
+    d_time_to: str | None = _field(default=None, name="dTimeTo")
+    """Актуальное время доставки "по"""
+    d_time_to_old: str | None = _field(default=None, name="dTimeToOld")
+    """Прежнее время доставки "по". Доступно первые сутки после изменения"""
+    id: int | None = _field(default=None)
+    """ID сборочного задания"""
+
+
+class DeliveryDatesRequest(WBModel):
+    orders: list[int] | None = _field(default=None)
+    """Список ID сборочных заданий"""
+
+
+class GetDbsGroupsResponseItem(WBModel):
+    converted_currency_code: int | None = _field(default=None, name="convertedCurrencyCode")
+    """Код валюты страны продавца"""
+    converted_delivery_cost: int | None = _field(default=None, name="convertedDeliveryCost")
+    """Стоимость платной доставки в валюте страны продавца, умноженная на 100. Предоставляется в
+    информационных целях.
+    """
+    currency_code: int | None = _field(default=None, name="currencyCode")
+    """Код валюты продажи"""
+    delivery_cost: int | None = _field(default=None, name="deliveryCost")
+    """Стоимость платной доставки в валюте продажи, умноженная на 100"""
+    group_id: str | None = _field(default=None, name="groupID")
+    """ID группы сборочных заданий"""
+
+
+class GetDbsOrdersResponse(WBModel):
+    next: int | None = _field(default=None)
+    orders: list[OrderDBS] | None = _field(default=None)
+
+
+class GetOrdersNewResponse(WBModel):
+    orders: list[OrderNewDBS] | None = _field(default=None)
+    """Список новых сборочных заданий"""
+
+
+class GetOrdersStickersBody(WBModel):
+    orders: list[int] | None = _field(default=None)
+    """Список ID сборочных заданий"""
+
+
+class GetOrdersStickersResponse(WBModel):
+    stickers: list[GetOrdersStickersResponseStickersItem] | None = _field(default=None)
+    """Стикеры"""
+
+
+class GetOrdersStickersResponseStickersItem(WBModel):
+    barcode: str | None = _field(default=None)
+    """Закодированное значение стикера"""
+    file: str | None = _field(default=None)
+    """Полное представление стикера, кодировка base64"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+    part_a: str | None = _field(default=None, name="partA")
+    """Первая часть ID стикера"""
+    part_b: str | None = _field(default=None, name="partB")
+    """Вторая часть ID стикера"""
+
+
+class OrderDBS(WBModel):
+    address: OrderDBSAddress | None = _field(default=None)
+    """Адрес покупателя для доставки. При доставке заказов в ПВЗ указан адрес ПВЗ"""
+    article: str | None = _field(default=None)
+    """Артикул продавца"""
+    cargo_type: int | None = _field(default=None, name="cargoType")
+    """Тип товара:   - `1` — малогабаритный товар (МГТ)   - `2` — сверхгабаритный товар (СГТ)   -
+    `3` — крупногабаритный товар (КГТ+)
+    """
+    chrt_id: int | None = _field(default=None, name="chrtId")
+    """ID размера товара в системе WB"""
+    color_code: str | None = _field(default=None, name="colorCode")
+    """Код цвета (только для колеруемых товаров)"""
+    comment: str | None = _field(default=None)
+    """Комментарий покупателя"""
+    converted_currency_code: int | None = _field(default=None, name="convertedCurrencyCode")
+    """Код валюты страны продавца"""
+    converted_final_price: int | None = _field(default=None, name="convertedFinalPrice")
+    """Сумма к оплате покупателем в валюте страны продавца с учетом всех скидок, умноженная на 100.
+    Предоставляется в информационных целях. …
+    """
+    converted_price: int | None = _field(default=None, name="convertedPrice")
+    """Цена в валюте страны продавца с учетом всех скидок, кроме скидки по WB Кошельку, умноженная
+    на 100. Предоставляется в информационных целях
+    """
+    created_at: str | None = _field(default=None, name="createdAt")
+    """Дата создания сборочного задания"""
+    currency_code: int | None = _field(default=None, name="currencyCode")
+    """Код валюты продажи"""
+    delivery_type: str | None = _field(default=None, name="deliveryType")
+    """Тип доставки:   - `dbs` — доставка силами продавца   - `dbsPickupPoint` — доставка силами
+    продавца в ПВЗ   - `edbs` — экспресс-доставка силами продавца
+    """
+    final_price: int | None = _field(default=None, name="finalPrice")
+    """Сумма к оплате покупателем в валюте продажи с учётом всех скидок, умноженная на 100.  Код
+    валюты продажи указан в поле `currencyCode`. …
+    """
+    group_id: str | None = _field(default=None, name="groupId")
+    """ID группы сборочных заданий.  Объединяет сборочные задания, поступившие на один склад
+    (`warehouseId`) в рамках одной транзакции покупателя (`orderUid`)
+    """
+    id: int | None = _field(default=None)
+    """ID сборочного задания"""
+    is_zero_order: bool | None = _field(default=None, name="isZeroOrder")
+    """Признак заказа товара с нулевым остатком:   - `false` — заказ сделан на товар с ненулевым
+    остатком …
+    """
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    options: OrderDBSOptions | None = _field(default=None)
+    """Опции заказа"""
+    order_uid: str | None = _field(default=None, name="orderUid")
+    """ID транзакции для группировки сборочных заданий. Сборочные задания в одной корзине
+    покупателя будут иметь одинаковый `orderUID`
+    """
+    price: int | None = _field(default=None)
+    """Цена в валюте продажи с учетом всех скидок, кроме скидки по WB Кошельку, умноженная на 100.
+    Код валюты продажи указан в поле `currencyCode`. Предоставляется в и …
+    """
+    rid: Any | None = _field(default=None)
+    """Уникальный ID заказа. Примечание: `rid` — это `srid` в ответах методов:   - Заявки
+    покупателей на возврат   - Лента заказов   - Заказы   - Продажи …
+    """
+    scan_price: int | None = _field(default=None, name="scanPrice")
+    """Цена приёмки заказов в ПВЗ, в копейках. Отображается только для заказов в ПВЗ"""
+    skus: list[str] | None = _field(default=None)
+    """Массив баркодов товара"""
+    warehouse_id: int | None = _field(default=None, name="warehouseId")
+    """ID склада продавца, на который поступило сборочное задание"""
+    wb_sticker_id: int | None = _field(default=None, name="wbStickerId")
+    """ID стикера. Отображается только для заказов в ПВЗ"""
+
+
+class OrderDBSAddress(WBModel):
+    """Адрес покупателя для доставки. При доставке заказов в ПВЗ указан адрес ПВЗ"""
+
+    full_address: Any | None = _field(default=None, name="fullAddress")
+    """Адрес доставки"""
+    latitude: Any | None = _field(default=None)
+    """Широта"""
+    longitude: Any | None = _field(default=None)
+    """Долгота"""
+
+
+class OrderDBSOptions(WBModel):
+    """Опции заказа"""
+
+    is_b2b: Any | None = _field(default=None, name="isB2b")
+    """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
+
+
+class OrderNewDBS(WBModel):
+    address: OrderNewDBSAddress | None = _field(default=None)
+    """Адрес покупателя для доставки. При доставке заказов в ПВЗ указан адрес ПВЗ"""
+    article: str | None = _field(default=None)
+    """Артикул продавца"""
+    cargo_type: int | None = _field(default=None, name="cargoType")
+    """Тип товара:   - `1` — малогабаритный товар (МГТ)   - `2` — сверхгабаритный товар (СГТ)   -
+    `3` — крупногабаритный товар (КГТ+)
+    """
+    chrt_id: int | None = _field(default=None, name="chrtId")
+    """ID размера товара в системе WB"""
+    color_code: str | None = _field(default=None, name="colorCode")
+    """Код цвета (только для колеруемых товаров)"""
+    comment: str | None = _field(default=None)
+    """Комментарий покупателя"""
+    converted_currency_code: int | None = _field(default=None, name="convertedCurrencyCode")
+    """Код валюты страны продавца"""
+    converted_final_price: int | None = _field(default=None, name="convertedFinalPrice")
+    """Сумма к оплате покупателем в валюте страны продавца с учетом всех скидок, умноженная на 100.
+    Предоставляется в информационных целях. …
+    """
+    converted_price: int | None = _field(default=None, name="convertedPrice")
+    """Цена в валюте страны продавца с учетом всех скидок, кроме скидки по WB Кошельку, умноженная
+    на 100. Предоставляется в информационных целях
+    """
+    created_at: str | None = _field(default=None, name="createdAt")
+    """Дата создания сборочного задания"""
+    currency_code: int | None = _field(default=None, name="currencyCode")
+    """Код валюты продажи"""
+    delivery_type: str | None = _field(default=None, name="deliveryType")
+    """Тип доставки:   - `dbs` — доставка силами продавца   - `dbsPickupPoint` — доставка силами
+    продавца в ПВЗ   - `edbs` — экспресс-доставка силами продавца
+    """
+    final_price: int | None = _field(default=None, name="finalPrice")
+    """Сумма к оплате покупателем в валюте продажи с учётом всех скидок, умноженная на 100.  Код
+    валюты продажи указан в поле `currencyCode`. …
+    """
+    group_id: str | None = _field(default=None, name="groupId")
+    """ID группы сборочных заданий.  Объединяет сборочные задания, поступившие на один склад
+    (`warehouseId`) в рамках одной транзакции покупателя (`orderUid`)
+    """
+    id: int | None = _field(default=None)
+    """ID сборочного задания"""
+    is_zero_order: bool | None = _field(default=None, name="isZeroOrder")
+    """Признак заказа товара с нулевым остатком:   - `false` — заказ сделан на товар с ненулевым
+    остатком …
+    """
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    options: OrderNewDBSOptions | None = _field(default=None)
+    """Опции заказа"""
+    order_uid: str | None = _field(default=None, name="orderUid")
+    """ID транзакции для группировки сборочных заданий. Сборочные задания в одной корзине
+    покупателя будут иметь одинаковый `orderUID`
+    """
+    price: int | None = _field(default=None)
+    """Цена в валюте продажи с учетом всех скидок, кроме скидки по WB Кошельку, умноженная на 100.
+    Код валюты продажи указан в поле `currencyCode`. Предоставляется в и …
+    """
+    required_meta: list[str] | None = _field(default=None, name="requiredMeta")
+    """Список идентификаторов маркировки, доступных для сборочного задания. Указывать IMEI
+    обязательно для предмета `Смартфоны`, `"subjectId":515`
+    """
+    rid: Any | None = _field(default=None)
+    """Уникальный ID заказа. Примечание: `rid` — это `srid` в ответах методов:   - Заявки
+    покупателей на возврат   - Лента заказов   - Заказы   - Продажи …
+    """
+    sale_price: int | None = _field(default=None, name="salePrice")
+    """Цена в валюте продажи с учетом скидки продавца, без учета скидки WB Клуба, умноженная на
+    100. Предоставляется в информационных целях
+    """
+    skus: list[str] | None = _field(default=None)
+    """Массив баркодов товара"""
+    warehouse_id: int | None = _field(default=None, name="warehouseId")
+    """ID склада продавца, на который поступило сборочное задание"""
+    wb_sticker_id: int | None = _field(default=None, name="wbStickerId")
+    """ID стикера. Отображается только для заказов в ПВЗ"""
+
+
+class OrderNewDBSAddress(WBModel):
+    """Адрес покупателя для доставки. При доставке заказов в ПВЗ указан адрес ПВЗ"""
+
+    full_address: Any | None = _field(default=None, name="fullAddress")
+    """Адрес доставки"""
+    latitude: Any | None = _field(default=None)
+    """Широта"""
+    longitude: Any | None = _field(default=None)
+    """Долгота"""
+
+
+class OrderNewDBSOptions(WBModel):
+    """Опции заказа"""
+
+    is_b2b: Any | None = _field(default=None, name="isB2b")
+    """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
+
+
+class OrdersRequestAPI(WBModel):
+    orders: list[int] | None = _field(default=None)
+    """Список ID сборочных заданий"""
+
+
+class SetOrdersMetaCustomsDeclarationBody(WBModel):
+    orders: list[SetOrdersMetaCustomsDeclarationBodyOrdersItem] | None = _field(default=None)
+
+
+class SetOrdersMetaCustomsDeclarationBodyOrdersItem(WBModel):
+    customs_declaration: str | None = _field(default=None, name="customsDeclaration")
+    """Номер ДТ"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+    origin_country_code: str | None = _field(default=None, name="originCountryCode")
+    """Числовой код страны происхождения товара из Общероссийского классификатора стран мира.
+    Необходимо указывать только для сборочных заданий с признаком B2B-продажи …
+    """
+
+
+class SetOrdersMetaCustomsDeclarationOrdersItem(WBModel):
+    customs_declaration: str | None = _field(default=None, name="customsDeclaration")
+    """Номер ДТ"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+    origin_country_code: str | None = _field(default=None, name="originCountryCode")
+    """Числовой код страны происхождения товара из Общероссийского классификатора стран мира.
+    Необходимо указывать только для сборочных заданий с признаком B2B-продажи …
+    """

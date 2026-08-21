@@ -142,7 +142,22 @@ ignore_missing_imports = true
 [tool.coverage.run]
 source = ["wbapi"]
 branch = true
-omit = ["*/resources/*/__init__.py"]
+omit = [
+    "*/wbapi/analytics/__init__.py",
+    "*/wbapi/communications/__init__.py",
+    "*/wbapi/finances/__init__.py",
+    "*/wbapi/general/__init__.py",
+    "*/wbapi/in_store_pickup/__init__.py",
+    "*/wbapi/items/__init__.py",
+    "*/wbapi/orders_dbs/__init__.py",
+    "*/wbapi/orders_dbw/__init__.py",
+    "*/wbapi/orders_fbs/__init__.py",
+    "*/wbapi/orders_fbw/__init__.py",
+    "*/wbapi/promotion/__init__.py",
+    "*/wbapi/rates/__init__.py",
+    "*/wbapi/reports/__init__.py",
+    "*/wbapi/wbd/__init__.py",
+]
 
 [tool.coverage.report]
 fail_under = 95
