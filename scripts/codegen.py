@@ -11,7 +11,6 @@ import yaml
 
 
 SCALARS = {"string": "str", "integer": "int", "number": "float", "boolean": "bool"}
-STRIP = re.compile(r"^(api|marketplace|v\d+)_")
 # Only keywords need a suffix: a field named id or type shadows nothing and
 # reads better plain. Builtins are shadowed only in method signatures, so the
 # suffix belongs there rather than on struct fields.
@@ -156,20 +155,47 @@ def _param_lines(meth: dict, kwargs: list[str]) -> list[str]:
 # The action comes from the summary rather than the HTTP verb: Wildberries
 # often uses POST for reads (order stickers, for one), so a _post suffix would
 # be misleading.
+# The leading verb of a summary names the action. Order matters only within a
+# group; the match is anchored, so a noun later in the summary cannot win.
 _ACTIONS: tuple[tuple[str, str], ...] = (
-    (r"получить|получение|список|информаци|проверить|проверка|скачать|запросить|история|статус", ""),
-    (r"создать|создание|добавить|добавление|сформировать|загрузить|назначить", "create"),
+    (r"создать|создание|добавить|добавление|сформировать|генерац|присоедин|назначить", "create"),
+    (r"удалить|удаление|убрать|открепить|очистить|расформировать", "delete"),
+    (r"отменить|отмена", "cancel"),
+    (r"загрузить|загрузка", "upload"),
+    (r"закрепить|привязать|установить|задать", "set"),
     (
         r"обновить|обновление|изменить|изменение|редактировать|отредактировать|"
-        r"установить|закрепить|передать|перевести|подтвердить",
+        r"редактирование|передать|перевести|подтвердить|объединение|перенос|"
+        r"восстановление|разъединение|пересчитать",
         "update",
     ),
-    (r"удалить|удаление|убрать|открепить|очистить", "delete"),
-    (r"отменить|отмена", "cancel"),
+    (
+        r"получить|получение|список|информаци|проверить|проверка|скачать|запросить|"
+        r"история|статус|детализац|детали|состояние|лимит|бренды|характеристик|"
+        r"отчёт|отчет|данные|поиск|найти|количество|"
+        # Wildberries serves these reads over POST and titles them with a noun,
+        # so the HTTP verb would name them create_*.
+        r"статистика|остатки|пагинация|заказы|воронка|основная страница",
+        "get",
+    ),
 )
 
-# When the summary does not start with an action verb, fall back to the verb.
-_VERB_ACTION = {"GET": "", "POST": "create", "PUT": "update", "PATCH": "update", "DELETE": "delete"}
+
+_VERB_ACTION = {
+    "GET": "get",
+    "POST": "create",
+    "PUT": "set",
+    "PATCH": "update",
+    "DELETE": "delete",
+}
+
+# Path segments that carry no meaning in a method name.
+_NOISE = frozenset({"api", "v0", "v1", "v2", "v3", "v5", "marketplace", "adv", "info"})
+
+# Filler WB puts mid-path (/get/cards/list, /list/goods/filter). Kept as the
+# last segment, where "list" tells /offer/keys/{id}/list apart from
+# /offer/keys/{id}.
+_LEADING_NOISE = frozenset({"list", "get"})
 
 
 _LIMIT_ROW = re.compile(
@@ -207,12 +233,11 @@ _SCOPE_BY_CATEGORY = {
 
 
 def parse_rate_limits(description: str) -> dict[str, tuple[int, int]]:
-    """Выбрать лимиты запросов из markdown-таблицы в описании метода.
+    """Read rate limits out of the markdown table in a method description.
 
-    Wildberries публикует лимиты таблицей «Период | Лимит | Интервал |
-    Всплеск», иногда с ведущей колонкой категории токена. Для базового
-    токена лимиты на порядки строже, поэтому категории сохраняются
-    раздельно.
+    Wildberries publishes them as "Период | Лимит | Интервал | Всплеск",
+    sometimes with a leading token-category column. A basic token is limited
+    orders of magnitude harder, so the categories are kept apart.
     """
     limits: dict[str, tuple[int, int]] = {}
     for match in _LIMIT_ROW.finditer(description or ""):
@@ -239,7 +264,7 @@ def parse_rate_limits(description: str) -> dict[str, tuple[int, int]]:
 
 
 def _servers_for(op: dict, item_servers: list | None, spec: dict, sandbox: bool = False) -> list[str]:
-    """Адреса эндпоинта — боевые или песочницы."""
+    """The endpoint hosts: production, or the sandbox ones."""
     for scope in (op.get("servers"), item_servers, spec.get("servers")):
         urls = [
             s["url"].rstrip("/")
@@ -254,16 +279,16 @@ def _servers_for(op: dict, item_servers: list | None, spec: dict, sandbox: bool 
     return []
 
 
-# Точечные поправки к спецификациям Wildberries: где описание расходится с
-# тем, что API отдаёт на самом деле. Проверено запросами к рабочему API.
+# Spot fixes where a Wildberries spec disagrees with what the API returns.
+# Each one was confirmed against the live API.
 SPEC_FIXES: dict[tuple[str, str, str], str] = {
-    # Ярлыки возвращаются массивом, хотя в спецификации описан один объект.
+    # Tags come back as an array, though the spec describes a single object.
     ("/content/v2/tags", "get", "data"): "array",
 }
 
 
 def apply_spec_fixes(path: str, verb: str, schema: dict) -> dict:
-    """Поправить схему ответа там, где спецификация расходится с API."""
+    """Apply the fixes above to a response schema."""
     properties = schema.get("properties") if isinstance(schema, dict) else None
     if not properties:
         return schema
@@ -277,20 +302,123 @@ def apply_spec_fixes(path: str, verb: str, schema: dict) -> dict:
 
 
 def action_for(summary: str, verb: str) -> str:
-    low = summary.lower().strip()
+    """The action a method performs, read from the leading verb of its summary.
+
+    Anchored on purpose: an unanchored search let a noun anywhere in the
+    summary decide, so "Создать отчёт" matched the get pattern on "отчёт".
+    """
+    low = summary.lower().strip().lstrip("«\"'")
     for pattern, action in _ACTIONS:
-        if re.match(pattern, low):
+        if re.match(rf"(?:{pattern})", low):
+            # "Добавить" makes a new thing over POST, but over PATCH it edits
+            # one that already exists: adding orders to a supply.
+            if action == "create" and verb == "PATCH":
+                return "update"
             return action
     return _VERB_ACTION.get(verb, verb.lower())
 
 
-def compose_name(base: str, action: str) -> str:
-    """Собрать имя метода, не дублируя действие, если оно уже есть в пути."""
-    if not action:
-        return base
-    if base.endswith(f"_{action}") or base == action:
-        return base
-    return f"{base}_{action}"
+# Words whose singular a suffix rule would get wrong.
+_SINGULARS = {
+    # "pass" is a keyword, so this one stays plural.
+    "passes": "passes",
+    "status": "status",
+    "statuses": "status",
+    "offices": "office",
+    "boxes": "box",
+    "warehouses": "warehouse",
+    "taxes": "tax",
+    "stickers": "sticker",
+    "news": "news",
+    "trbx": "trbx",
+    "stats": "stats",
+    "settings": "settings",
+    "goods": "goods",
+    "meta": "meta",
+}
+
+
+def singular(word: str) -> str:
+    """A rough singular, enough for method names."""
+    if word in _SINGULARS:
+        return _SINGULARS[word]
+    if word.endswith("ies") and len(word) > 5:
+        return word[:-3] + "y"
+    if word.endswith(("ses", "xes", "zes", "ches", "shes")):
+        return word[:-2]
+    if word.endswith("us") or word.endswith("ss"):
+        return word
+    if word.endswith("s") and len(word) > 3:
+        return word[:-1]
+    return word
+
+
+# Paths that carry less meaning than the endpoint does: /adv/v0/delete says
+# nothing about what is deleted.
+NAME_FIXES: dict[str, str] = {
+    "/adv/v0/delete": "delete_campaign",
+    # WB tells these apart by a singular/plural path alone.
+    "/api/v1/offer/{offer_id}": "update_offer_status",
+}
+
+
+def _rename_refs(text: str, renames: dict[str, str]) -> str:
+    """Rewrite whole-word class references, longest name first."""
+    for old_name in sorted(renames, key=len, reverse=True):
+        text = re.sub(rf"\b{re.escape(old_name)}\b", renames[old_name], text)
+    return text
+
+
+def compose_name(path: str, action: str, section: str) -> str:
+    """Build a verb-first name: create_supply, get_orders_new, set_meta_gtin."""
+    if path in NAME_FIXES:
+        return NAME_FIXES[path]
+
+    # Compare on singular stems: the finances section owns /api/finance/... .
+    section_words = {singular(w) for w in section.split("_")}
+    parts = [
+        snake(part) for part in path.strip("/").split("/") if part not in _NOISE and not part.startswith("{")
+    ]
+    # Split to words first: snake() has fused hyphenated segments, so
+    # /normquery/get-bids arrives as one part and a per-part filter misses the
+    # "get" inside it.
+    words = [w for part in parts for w in part.split("_") if w]
+
+    # Filler anywhere but last: /content/v2/get/cards/list keeps "list".
+    # "get" is never the point of a path, so it goes even there.
+    parts = [
+        w for i, w in enumerate(words) if (i == len(words) - 1 and w != "get") or w not in _LEADING_NOISE
+    ]
+
+    # WB repeats a word across segment boundaries (/search-report/report,
+    # /upload/upload-chunk); saying it twice adds nothing.
+    parts = [w for i, w in enumerate(parts) if i == 0 or w != parts[i - 1]]
+
+    # A segment equal to the action would read as cancel_cancel or
+    # delete_delete; the action already carries it, at either end.
+    if parts and parts[-1] == action:
+        parts = parts[:-1]
+    if len(parts) > 1 and parts[0] == action:
+        parts = parts[1:]
+
+    # The leading segment usually repeats the section name, but it is the
+    # subject in /supplies/{id}/orders, so it is dropped only from the front —
+    # and only when what remains still names something specific.
+    if len(parts) > 2 and singular(parts[0]) in section_words:
+        parts = parts[1:]
+
+    if action in ("create", "delete", "set", "update", "cancel") and parts:
+        parts = parts[:-1] + [singular(parts[-1])]
+
+    if not parts:
+        return action
+
+    # A keyword as the last word cannot end a method name; the plural reads
+    # better than the underscore snake() would leave: get_tariffs_returns.
+    if keyword.iskeyword(parts[-1]):
+        parts = parts[:-1] + [parts[-1] + "s"]
+
+    return f"{action}_{'_'.join(parts)}"
 
 
 class Generator:
@@ -303,7 +431,7 @@ class Generator:
         self.structs: dict[str, str] = {}
         self.methods: list[dict] = []
 
-    # ---- типы -----------------------------------------------------------
+    # ---- types ----------------------------------------------------------
     def _resolve(self, ref: str) -> dict:
         node: dict = self.spec
         for part in ref.lstrip("#/").split("/"):
@@ -315,8 +443,8 @@ class Generator:
             return "Any"
         if "$ref" in sch:
             target = self._resolve(sch["$ref"])
-            # Компонент может описывать скаляр или массив, а не объект —
-            # структуру порождаем только когда за ссылкой действительно объект.
+            # A component can describe a scalar or an array rather than an
+            # object; only emit a struct when the reference really is one.
             if not isinstance(target, dict) or not (
                 target.get("properties") or target.get("type") == "object"
             ):
@@ -340,7 +468,7 @@ class Generator:
         return SCALARS.get(sch.get("type", ""), "Any")
 
     def emit_struct(self, name: str, sch: dict, depth: int = 0) -> None:
-        self.structs[name] = ""  # заглушка от рекурсии
+        self.structs[name] = ""  # placeholder that stops the recursion
         props = sch.get("properties") or {}
         if not props:
             self.structs[name] = f"class {name}(WBModel):\n    pass\n"
@@ -364,36 +492,39 @@ class Generator:
             lines.extend(wrap_doc(doc))
         self.structs[name] = "\n".join(lines) + "\n"
 
-    # ---- методы ---------------------------------------------------------
-    def method_name(self, path: str, verb: str) -> str:
-        """Имя метода: путь без служебных префиксов, глагол в конце.
-
-        Имя раздела тоже срезается — оно уже задано неймспейсом клиента,
-        поэтому ``api.fbs.fbs_settings_get`` превращается в
-        ``api.fbs.settings_get``.
-        """
-        base = snake(re.sub(r"\{(\w+)\}", r"\1", path))
-        while STRIP.match(base):
-            base = STRIP.sub("", base)
-        # Имя раздела уже задано неймспейсом клиента, поэтому из имени метода
-        # срезается и оно целиком, и его последняя часть: в разделе orders_fbs
-        # метод fbs_settings_autoreturns становится settings_autoreturns.
-        for prefix in (f"{self.domain}_", f"{self.domain.rsplit('_', 1)[-1]}_"):
-            if base.startswith(prefix) and len(base) > len(prefix):
-                base = base[len(prefix) :]
-                break
-        return base
+    # ---- methods --------------------------------------------------------
 
     def collect(self) -> None:
         self._collect_methods()
         self._resolve_name_clashes()
+        self._rename_shadowed_models()
+
+    def _rename_shadowed_models(self) -> None:
+        """Keep a model from taking the name of a method class.
+
+        Both land in the section facade, where the second import silently wins
+        and the call resolves to the model instead of the endpoint.
+        """
+        taken = {method["cls"] for method in self.methods}
+        shadowed = sorted(name for name in self.structs if name in taken)
+        if not shadowed:
+            return
+
+        renames = {name: f"{name}Model" for name in shadowed}
+        self.structs = {
+            renames.get(name, name): _rename_refs(body, renames) for name, body in self.structs.items()
+        }
+        for method in self.methods:
+            for key in ("return_type", "item_type"):
+                if isinstance(method.get(key), str):
+                    method[key] = _rename_refs(method[key], renames)
 
     def _resolve_name_clashes(self) -> None:
-        """Развести методы, у которых совпали имена.
+        """Separate methods that ended up with the same name.
 
-        Смысловое имя изредка совпадает у двух эндпоинтов одного пути —
-        например, товары с ценами отдаются и списком, и по артикулам.
-        Тогда к имени добавляется HTTP-метод.
+        Two endpoints on one path occasionally mean the same thing — goods
+        with prices come both as a list and by article. The id, the API
+        version, or failing both the HTTP verb tells them apart.
         """
         seen: dict[str, list[dict]] = {}
         for method in self.methods:
@@ -402,6 +533,25 @@ class Generator:
         for name, group in seen.items():
             if len(group) < 2:
                 continue
+            # /supplies and /supplies/{supplyId} collapse to the same name once
+            # the placeholder is dropped, and both are GET — the id is what
+            # tells them apart, so name it before falling back to the verb.
+            by_id = [m for m in group if "{" in m["path"]]
+            if len(by_id) == 1 and len(group) == 2:
+                by_id[0]["name"] = f"{name}_by_id"
+                by_id[0]["cls"] = pascal(by_id[0]["name"])
+                continue
+
+            # Two versions of one endpoint (/adv/v0/… and /adv/v1/…) share a
+            # verb, so the version is the only thing that separates them.
+            versions = [re.search(r"/(v\d+)/", m["path"]) for m in group]
+            if all(versions) and len({v.group(1) for v in versions if v}) == len(group):
+                for method, version in zip(group, versions, strict=True):
+                    assert version is not None
+                    method["name"] = f"{name}_{version.group(1)}"
+                    method["cls"] = pascal(method["name"])
+                continue
+
             for method in group:
                 method["name"] = f"{name}_{method['verb'].lower()}"
                 method["cls"] = pascal(method["name"])
@@ -427,12 +577,13 @@ class Generator:
         item_servers: list | None = None,
     ) -> dict:
         summary = (op.get("summary") or "").strip().split("\n")[0]
-        name = compose_name(self.method_name(path, verb), action_for(summary, verb.upper()))
+        name = compose_name(path, action_for(summary, verb.upper()), self.domain)
         params = list(shared or []) + [p for p in (op.get("parameters") or []) if isinstance(p, dict)]
-        # ссылки на общие параметры тоже надо развернуть
+        # shared parameters arrive as references and need resolving too
         params = [self._resolve(p["$ref"]) if "$ref" in p else p for p in params]
         params = [p for p in params if isinstance(p, dict) and p.get("name")]
-        # плейсхолдеры из самого пути — источник истины, спека их иногда не объявляет
+        # The path placeholders are the source of truth: a spec sometimes
+        # leaves them undeclared.
         declared = {p["name"] for p in params if p.get("in") == "path"}
         for ph in re.findall(r"\{(\w+)\}", path):
             if ph not in declared:
@@ -448,8 +599,8 @@ class Generator:
         rsch = ((ok or {}).get("content") or {}).get("application/json", {}).get("schema")
         if isinstance(rsch, dict):
             rsch = apply_spec_fixes(path, verb, rsch)
-        # Тело-объект раскрывается в именованные аргументы: вместо
-        # body={"trbxIds": [...]} пользователь пишет trbx_ids=[...].
+        # An object body becomes keyword arguments: trbx_ids=[...] rather
+        # than body={"trbxIds": [...]}.
         body_fields: list[tuple[str, bool, str]] = []
         body_docs: dict[str, str] = {}
         body_kind = None
@@ -484,7 +635,7 @@ class Generator:
             path,
         )
 
-        return dict(  # noqa: C408 — именованные поля читаются лучше литерала
+        return dict(  # noqa: C408 — named fields read better than a literal
             scope=_SCOPE_BY_CATEGORY.get(str(op.get("x-category") or "").lower()),
             rate_limits=parse_rate_limits(op.get("description") or ""),
             host=(_servers_for(op, item_servers, self.spec) or [""])[0],
@@ -516,7 +667,7 @@ class Generator:
             return_type=self.type_of(rsch, f"{pascal(name)}Response") if rsch else "None",
         )
 
-    # ---- рендер ---------------------------------------------------------
+    # ---- rendering ------------------------------------------------------
     def render_types(self) -> str:
         head = [
             "from __future__ import annotations",
@@ -525,7 +676,7 @@ class Generator:
             "",
             "from msgspec import field as _field",
             "",
-            "from ...client.model import WBModel",
+            "from ..client.model import WBModel",
             "",
             "",
         ]
@@ -537,7 +688,7 @@ class Generator:
             "from __future__ import annotations",
             "",
             "@TYPING@",
-            "from ...client.method import WBMethod",
+            "from ..client.method import WBMethod",
             "@SCOPE@",
             "@MODELS@",
             "",
@@ -551,8 +702,8 @@ class Generator:
                 lines.extend(wrap_doc((docs.get(api_name) or "").strip()))
                 return lines
 
-            # Обязательные поля обязаны идти перед полями со значением по
-            # умолчанию, поэтому сортировка идёт внутри каждой группы.
+            # Required fields must precede defaulted ones, so each group is
+            # sorted on its own.
             required: list[tuple[str, list[str]]] = []
             optional: list[tuple[str, list[str]]] = []
             for p in m["path_params"]:
@@ -606,7 +757,7 @@ class Generator:
         rendered = "\n".join(out).replace("@MODELS@", self._models_import(out))
         typing_import = "from typing import Any\n" if re.search(r"\bAny\b", rendered) else ""
         rendered = rendered.replace("@TYPING@\n", typing_import)
-        scope_import = "from ...utils.token import Scope\n" if "Scope." in rendered else ""
+        scope_import = "from ..utils.token import Scope\n" if "Scope." in rendered else ""
         return rendered.replace("@SCOPE@\n", scope_import)
 
     def _models_import(self, lines: list[str]) -> str:
@@ -632,7 +783,7 @@ class Generator:
             "",
             "",
             "if TYPE_CHECKING:",
-            "    from ...client import WBApi",
+            "    from ..client import WBApi",
             "",
             "",
             f"class {pascal(self.domain)}:",
@@ -671,7 +822,7 @@ class Generator:
             param_docs = _param_lines(meth, kwargs)
 
             if paged:
-                # auto_paginate=True обходит все страницы; по умолчанию — одна.
+                # auto_paginate=True walks every page; one page by default.
                 sig_c = sig + ", auto_paginate: bool = False"
                 out.append(f"    async def {meth['name']}({sig_c}) -> {meth['return_type']} | list[Any]:")
                 out.append(f'        """{safe_doc(meth["summary"])}')
@@ -754,14 +905,42 @@ SECTIONS: dict[str, str] = {
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SPECS_DIR = ROOT / "specs"
-RESOURCES = ROOT / "src" / "wbapi" / "resources"
+PACKAGE = ROOT / "src" / "wbapi"
+
+
+class SpecError(RuntimeError):
+    """A spec that cannot be turned into a section."""
+
+
+def load_spec(spec_file: pathlib.Path) -> dict:
+    """Parse a spec and refuse the shapes that would generate nothing.
+
+    Without these checks a spec that changed shape — or that arrived as an
+    antibot HTML page — yields zero methods and silently overwrites a working
+    section with an empty one.
+    """
+    try:
+        spec = yaml.safe_load(spec_file.read_text())
+    except yaml.YAMLError as exc:
+        raise SpecError(f"not valid YAML: {exc}") from exc
+
+    if not isinstance(spec, dict):
+        raise SpecError(f"expected a mapping at the top level, got {type(spec).__name__}")
+    paths = spec.get("paths")
+    if not isinstance(paths, dict) or not paths:
+        raise SpecError("no paths")
+    return spec
 
 
 def generate_section(spec_file: pathlib.Path, package: str) -> tuple[int, int, str]:
-    generator = Generator(yaml.safe_load(spec_file.read_text()), package)
+    generator = Generator(load_spec(spec_file), package)
     generator.collect()
 
-    out_dir = RESOURCES / package
+    # Writing an empty section would drop every method the package already has.
+    if not generator.methods:
+        raise SpecError("no methods survived generation")
+
+    out_dir = PACKAGE / package
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "models.py").write_text(generator.render_types())
     (out_dir / "methods.py").write_text(generator.render_methods())
@@ -771,19 +950,15 @@ def generate_section(spec_file: pathlib.Path, package: str) -> tuple[int, int, s
     return structs, len(generator.methods), generator.title
 
 
-def render_resources_init(sections: dict[str, str]) -> str:
-    lines = ["from __future__ import annotations", ""]
-    for package, cls in sorted(sections.items()):
-        lines.append(f"from .{package} import {cls}")
-    lines += ["", "", "__all__ = ("]
-    lines += [f'    "{cls}",' for cls in sorted(sections.values())]
-    lines += [")", ""]
-    return "\n".join(lines)
-
-
 def main() -> int:
     only = sys.argv[1] if len(sys.argv) > 1 else None
+    if only and only not in SECTIONS.values():
+        known = ", ".join(sorted(SECTIONS.values()))
+        print(f"unknown section {only!r}; known: {known}", file=sys.stderr)
+        return 2
+
     built: dict[str, str] = {}
+    failed: list[str] = []
     total_methods = total_models = 0
 
     for spec_name, package in SECTIONS.items():
@@ -791,26 +966,31 @@ def main() -> int:
             continue
         spec_file = SPECS_DIR / spec_name
         if not spec_file.exists():
-            print(f"  ! {spec_name}: файла нет", file=sys.stderr)
+            print(f"  ! {spec_name}: missing", file=sys.stderr)
+            failed.append(package)
             continue
-        models, methods, title = generate_section(spec_file, package)
+        try:
+            models, methods, title = generate_section(spec_file, package)
+        except SpecError as exc:
+            # The section on disk is left alone: a bad spec must not erase it.
+            print(f"  ! {spec_name}: {exc}", file=sys.stderr)
+            failed.append(package)
+            continue
         built[package] = pascal(package)
         total_models += models
         total_methods += methods
-        print(f"  {package:18} {methods:4d} методов, {models:4d} моделей   «{title}»")
+        print(f"  {package:18} {methods:4d} methods, {models:4d} models   {title}")
 
-    if not only:
-        (RESOURCES / "__init__.py").write_text(
-            render_resources_init({p: pascal(p) for p in SECTIONS.values()})
-        )
-
-    files = [str(f) for f in RESOURCES.rglob("*.py")]
+    files = [str(f) for package in SECTIONS.values() for f in (PACKAGE / package).rglob("*.py")]
     for args in (["check", "--select", "I,F401", "--fix", "-q"], ["format", "-q"]):
         result = subprocess.run(["ruff", *args, *files], capture_output=True, text=True)
         if result.returncode not in (0, 1):
             print(f"  ! ruff {args[0]}: {result.stderr.strip()}", file=sys.stderr)
 
-    print(f"\nвсего: {total_methods} методов, {total_models} моделей в {len(built)} разделах")
+    print(f"\ntotal: {total_methods} methods, {total_models} models in {len(built)} sections")
+    if failed:
+        print(f"failed: {', '.join(failed)}", file=sys.stderr)
+        return 1
     return 0
 
 

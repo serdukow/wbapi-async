@@ -24,13 +24,13 @@ gen = load_generator()
 @pytest.mark.parametrize(
     ("summary", "verb", "expected"),
     [
-        ("Получить список поставок", "GET", ""),
+        ("Получить список поставок", "GET", "get"),
         ("Создать поставку", "POST", "create"),
         ("Обновить остатки", "PUT", "update"),
         ("Удалить поставку", "DELETE", "delete"),
         ("Отменить сборочное задание", "PATCH", "cancel"),
-        ("Получить стикеры", "POST", ""),
-        ("Закрепить IMEI", "PUT", "update"),
+        ("Получить стикеры", "POST", "get"),
+        ("Закрепить IMEI", "PUT", "set"),
     ],
 )
 def test_action_comes_from_the_summary(summary: str, verb: str, expected: str) -> None:
@@ -39,9 +39,22 @@ def test_action_comes_from_the_summary(summary: str, verb: str, expected: str) -
 
 
 @pytest.mark.parametrize(
+    ("summary", "verb"),
+    [
+        ("Создать отчёт", "POST"),
+        ("Удалить ставки поисковых кластеров", "DELETE"),
+        ("Обновить список контактов", "PUT"),
+    ],
+)
+def test_a_noun_later_in_the_summary_does_not_decide(summary: str, verb: str) -> None:
+    """An unanchored match let "отчёт" in "Создать отчёт" read as a get."""
+    assert gen.action_for(summary, verb) != "get"
+
+
+@pytest.mark.parametrize(
     ("summary", "verb", "expected"),
     [
-        ("Непонятное описание", "GET", ""),
+        ("Непонятное описание", "GET", "get"),
         ("Непонятное описание", "POST", "create"),
         ("Непонятное описание", "DELETE", "delete"),
     ],
@@ -51,16 +64,26 @@ def test_action_falls_back_to_the_verb(summary: str, verb: str, expected: str) -
 
 
 @pytest.mark.parametrize(
-    ("base", "action", "expected"),
+    ("path", "action", "section", "expected"),
     [
-        ("supplies", "create", "supplies_create"),
-        ("supplies", "", "supplies"),
-        ("orders_cancel", "cancel", "orders_cancel"),
-        ("delete", "delete", "delete"),
+        ("/api/v3/supplies", "create", "orders_fbs", "create_supply"),
+        ("/api/v3/orders/new", "get", "orders_fbs", "get_orders_new"),
+        ("/api/v3/orders/{orderId}/cancel", "cancel", "orders_fbs", "cancel_order"),
+        ("/api/v1/account/balance", "get", "finances", "get_account_balance"),
+        # The section name is dropped only when what is left still names something.
+        ("/api/finance/v1/acquiring/detailed", "get", "finances", "get_acquiring_detailed"),
+        # Filler segments WB puts mid-path.
+        ("/content/v2/get/cards/list", "get", "items", "get_content_cards_list"),
+        ("/api/v1/offer/keys/{offer_id}/list", "get", "wbd", "get_offer_keys_list"),
+        # A segment equal to the action, at either end.
+        ("/api/v1/content/delete", "delete", "wbd", "delete_content"),
+        ("/api/v1/upload/upload-chunk", "upload", "wbd", "upload_chunk"),
+        # A keyword cannot end a method name.
+        ("/api/v1/tariffs/return", "get", "rates", "get_tariffs_returns"),
     ],
 )
-def test_action_is_not_duplicated(base: str, action: str, expected: str) -> None:
-    assert gen.compose_name(base, action) == expected
+def test_names_are_verb_first(path: str, action: str, section: str, expected: str) -> None:
+    assert gen.compose_name(path, action, section) == expected
 
 
 @pytest.mark.parametrize(
@@ -171,3 +194,38 @@ def test_name_clashes_are_resolved() -> None:
     generator.collect()
     names = [method["name"] for method in generator.methods]
     assert len(names) == len(set(names))
+
+
+@pytest.mark.parametrize(
+    ("name", "text"),
+    [
+        ("invalid yaml", "a: [1,\nb"),
+        ("not a mapping", "- one\n- two"),
+        ("no paths key", "info:\n  title: X"),
+        ("empty paths", "info:\n  title: X\npaths: {}"),
+        ("an antibot page", "<!DOCTYPE html><html>498</html>"),
+    ],
+)
+def test_unusable_specs_are_refused(tmp_path: Path, name: str, text: str) -> None:
+    """A spec that would generate nothing must raise, not return empty.
+
+    Writing an empty section would erase every method the package already has.
+    """
+    spec_file = tmp_path / "spec.yaml"
+    spec_file.write_text(text)
+
+    with pytest.raises(gen.SpecError):
+        gen.load_spec(spec_file)
+
+
+def test_a_section_is_not_written_when_no_methods_survive(tmp_path: Path) -> None:
+    spec_file = tmp_path / "spec.yaml"
+    spec_file.write_text("info:\n  title: X\npaths:\n  /a: {}\n")
+
+    with pytest.raises(gen.SpecError, match="no methods"):
+        gen.generate_section(spec_file, "items")
+
+
+def test_a_real_spec_still_loads() -> None:
+    spec = gen.load_spec(gen.SPECS_DIR / "10-rates.yaml")
+    assert spec["paths"]
