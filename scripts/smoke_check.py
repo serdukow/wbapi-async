@@ -6,7 +6,6 @@ import asyncio
 from dataclasses import dataclass
 import importlib
 from pathlib import Path
-import pkgutil
 import re
 import sys
 import time
@@ -38,11 +37,11 @@ class Result:
 
 
 def discover(sandbox_only: bool) -> list[Check]:
-    import wbapi.resources as resources
+    from wbapi import SECTIONS
 
     checks: list[Check] = []
-    for module in pkgutil.iter_modules(resources.__path__):
-        methods = importlib.import_module(f"wbapi.resources.{module.name}.methods")
+    for section in SECTIONS:
+        methods = importlib.import_module(f"wbapi.{section}.methods")
         for name in dir(methods):
             cls = getattr(methods, name)
             if not isinstance(cls, type) or not issubclass(cls, WBMethod):
@@ -55,7 +54,7 @@ def discover(sandbox_only: bool) -> list[Check]:
                 continue
             checks.append(
                 Check(
-                    section=module.name,
+                    section=section,
                     method=re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", name).lower(),
                     scope=getattr(cls, "__scope__", None),
                     sandbox=bool(getattr(cls, "__sandbox_host__", "")),
