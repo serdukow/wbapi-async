@@ -235,8 +235,8 @@ _NOISE = frozenset({"api", "v0", "v1", "v2", "v3", "v5", "marketplace", "adv", "
 
 # Filler WB puts mid-path (/get/cards/list, /list/goods/filter). Kept as the
 # last segment, where "list" tells /offer/keys/{id}/list apart from
-# /offer/keys/{id}.
-_LEADING_NOISE = frozenset({"list", "get"})
+# /offer/keys/{id}, and "content" is the whole subject of /api/v1/content/delete.
+_LEADING_NOISE = frozenset({"list", "get", "content"})
 
 
 _LIMIT_ROW = re.compile(
@@ -454,6 +454,10 @@ def compose_name(path: str, action: str, section: str) -> str:
     # delete_delete; the action already carries it, at either end.
     if parts and parts[-1] == action:
         parts = parts[:-1]
+    # Unless that empties the name: /api/v1/content/delete is about the content,
+    # and a bare verb says nothing, so the filler word earns its place back.
+    if not parts:
+        parts = [w for w in words if w not in {"get", action}] or words
     if len(parts) > 1 and parts[0] == action:
         parts = parts[1:]
 

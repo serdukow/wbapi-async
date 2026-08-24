@@ -75,7 +75,7 @@ def test_action_falls_back_to_the_verb(summary: str, verb: str, expected: str) -
         # The section name is dropped only when what is left still names something.
         ("/api/finance/v1/acquiring/detailed", "get", "finances", "get_acquiring_detailed"),
         # Filler segments WB puts mid-path.
-        ("/content/v2/get/cards/list", "get", "items", "get_content_cards_list"),
+        ("/content/v2/get/cards/list", "get", "items", "get_cards_list"),
         ("/api/v1/offer/keys/{offer_id}/list", "get", "wbd", "get_offer_keys_list"),
         # A segment equal to the action, at either end.
         ("/api/v1/content/delete", "delete", "wbd", "delete_content"),

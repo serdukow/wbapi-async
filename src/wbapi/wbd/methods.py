@@ -24,42 +24,6 @@ from .models import (
 )
 
 
-class CreateContentUploadInit(WBMethod[UploadInitResponse]):
-    """Инициализировать новый контент
-
-    POST /api/v1/content/upload/init
-    """
-
-    __path__ = "/api/v1/content/upload/init"
-    __http_method__ = "POST"
-    __returns__ = UploadInitResponse
-    __host__ = "https://devapi-digital.wildberries.ru"
-    __body_fields__ = {
-        "title": "title",
-        "description": "description",
-        "catalog_id": "catalog_id",
-        "content_type": "content_type",
-        "parts": "parts",
-        "meta": "meta",
-    }
-
-    catalog_id: int
-    """ID категории контента: - `1` — Видеоконтент - `2` — Аудиоконтент - `4` — Документ"""
-    content_type: str
-    """Тип файла: - Видеоконтент:     - `video/mp4` - Аудиоконтент:     - `audio/mpeg` - Документ:
-    - `application/pdf`     - `application/epub+zip` …
-    """
-    description: str
-    """Описание контента.Максимальная длина — **1000 символов.**"""
-    meta: ContentMeta
-    parts: list[ChunkPart]
-    """Для оптимальной скорости загрузки контента следует разбить файл на фреймы по 2 Мб. В массиве
-    указываются индекс каждого фрейма и его размер
-    """
-    title: str
-    """Название контента.Максимальная длина — **500 символов.**"""
-
-
 class CreateKeysApiKey(WBMethod[None]):
     """Добавить ключи активации
 
@@ -106,6 +70,42 @@ class CreateOffersThumb(WBMethod[None]):
     __host__ = "https://devapi-digital.wildberries.ru"
 
 
+class CreateUploadInit(WBMethod[UploadInitResponse]):
+    """Инициализировать новый контент
+
+    POST /api/v1/content/upload/init
+    """
+
+    __path__ = "/api/v1/content/upload/init"
+    __http_method__ = "POST"
+    __returns__ = UploadInitResponse
+    __host__ = "https://devapi-digital.wildberries.ru"
+    __body_fields__ = {
+        "title": "title",
+        "description": "description",
+        "catalog_id": "catalog_id",
+        "content_type": "content_type",
+        "parts": "parts",
+        "meta": "meta",
+    }
+
+    catalog_id: int
+    """ID категории контента: - `1` — Видеоконтент - `2` — Аудиоконтент - `4` — Документ"""
+    content_type: str
+    """Тип файла: - Видеоконтент:     - `video/mp4` - Аудиоконтент:     - `audio/mpeg` - Документ:
+    - `application/pdf`     - `application/epub+zip` …
+    """
+    description: str
+    """Описание контента.Максимальная длина — **1000 символов.**"""
+    meta: ContentMeta
+    parts: list[ChunkPart]
+    """Для оптимальной скорости загрузки контента следует разбить файл на фреймы по 2 Мб. В массиве
+    указываются индекс каждого фрейма и его размер
+    """
+    title: str
+    """Название контента.Максимальная длина — **500 символов.**"""
+
+
 class DeleteContent(WBMethod[None]):
     """Удалить контент
 
@@ -138,20 +138,7 @@ class DeleteKeysApiKey(WBMethod[KeysDeleteResponse]):
     """Список ID ключей"""
 
 
-class GetCatalog(WBMethod[GetFullCatalogResponse]):
-    """Получить категории и их подкатегории
-
-    GET /api/v1/catalog
-    """
-
-    __path__ = "/api/v1/catalog"
-    __http_method__ = "GET"
-    __returns__ = GetFullCatalogResponse
-    __host__ = "https://devapi-digital.wildberries.ru"
-    __items__ = "items"
-
-
-class GetContentAuthor(WBMethod[ContentList]):
+class GetAuthor(WBMethod[ContentList]):
     """Получить список своего контента
 
     GET /api/v1/content/author
@@ -191,7 +178,7 @@ class GetContentAuthor(WBMethod[ContentList]):
     """Количество контента для получения"""
 
 
-class GetContentAuthorById(WBMethod[Content]):
+class GetAuthorById(WBMethod[Content]):
     """Получить информацию о контенте
 
     GET /api/v1/content/author/{content_id}
@@ -207,7 +194,20 @@ class GetContentAuthorById(WBMethod[Content]):
     """ID контента"""
 
 
-class GetContentDownload(WBMethod[None]):
+class GetCatalog(WBMethod[GetFullCatalogResponse]):
+    """Получить категории и их подкатегории
+
+    GET /api/v1/catalog
+    """
+
+    __path__ = "/api/v1/catalog"
+    __http_method__ = "GET"
+    __returns__ = GetFullCatalogResponse
+    __host__ = "https://devapi-digital.wildberries.ru"
+    __items__ = "items"
+
+
+class GetDownload(WBMethod[None]):
     """Скачать контент
 
     GET /api/v1/content/download/{uri}
@@ -375,7 +375,7 @@ class GetOffersAuthor(WBMethod[OfferResponseList]):
     """Количество предложений для получения"""
 
 
-class UpdateContentAuthor(WBMethod[Content]):
+class UpdateAuthor(WBMethod[Content]):
     """Редактировать контент
 
     POST /api/v1/content/author/{content_id}
@@ -492,7 +492,19 @@ class UpdateOfferStatus(WBMethod[None]):
     status: int
 
 
-class UploadContentGallery(WBMethod[UploadGalleryResponse]):
+class UploadChunk(WBMethod[UploadChunkResponse]):
+    """Загрузить контент (файл)
+
+    POST /api/v1/content/upload/chunk
+    """
+
+    __path__ = "/api/v1/content/upload/chunk"
+    __http_method__ = "POST"
+    __returns__ = UploadChunkResponse
+    __host__ = "https://devapi-digital.wildberries.ru"
+
+
+class UploadGallery(WBMethod[UploadGalleryResponse]):
     """Загрузить медиафайлы для предложения
 
     POST /api/v1/content/gallery
@@ -504,7 +516,7 @@ class UploadContentGallery(WBMethod[UploadGalleryResponse]):
     __host__ = "https://devapi-digital.wildberries.ru"
 
 
-class UploadContentIllustration(WBMethod[IllustrationResponse]):
+class UploadIllustration(WBMethod[IllustrationResponse]):
     """Загрузить обложку контента
 
     POST /api/v1/content/illustration
@@ -513,16 +525,4 @@ class UploadContentIllustration(WBMethod[IllustrationResponse]):
     __path__ = "/api/v1/content/illustration"
     __http_method__ = "POST"
     __returns__ = IllustrationResponse
-    __host__ = "https://devapi-digital.wildberries.ru"
-
-
-class UploadContentUploadChunk(WBMethod[UploadChunkResponse]):
-    """Загрузить контент (файл)
-
-    POST /api/v1/content/upload/chunk
-    """
-
-    __path__ = "/api/v1/content/upload/chunk"
-    __http_method__ = "POST"
-    __returns__ = UploadChunkResponse
     __host__ = "https://devapi-digital.wildberries.ru"
