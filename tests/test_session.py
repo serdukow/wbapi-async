@@ -184,3 +184,18 @@ async def test_a_success_with_broken_json_is_typed(recorder: Recorder) -> None:
 async def test_session_repr_masks_the_token() -> None:
     api = WBApi(token=make_token(scopes=ALL_SCOPES))
     assert "***" in repr(api._session)
+
+
+async def test_endpoints_sharing_a_quota_get_separate_limiters() -> None:
+    """Wildberries meters each endpoint separately.
+
+    Keyed on the rate alone, the 65 endpoints that declare {"all": (200, 20)}
+    shared a single token bucket and throttled one another.
+    """
+    from wbapi.client.session import _limiter_for
+
+    orders = _limiter_for("/api/v3/orders", (200, 20))
+    supplies = _limiter_for("/api/v3/supplies", (200, 20))
+
+    assert orders is not supplies
+    assert orders is _limiter_for("/api/v3/orders", (200, 20))
