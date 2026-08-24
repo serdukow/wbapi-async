@@ -104,3 +104,6 @@ TODO.md
 # Coverage badge payload
 coverage.json
 generate.log
+
+# Reports from the spec-compliance skill
+spec-compliance/
