@@ -1,6 +1,9 @@
 <div align="center">
 
-<a href="https://dev.wildberries.ru"><img src="https://cdn4.telesco.pe/file/W0OrlInD4X-cl4BV-edSM_z_0GS5OTozjMLZMJWe3a-oviQrn28aFzIaWemGcka9I7tHVAqC9-JeWPW_dZspW_JGJjqNhY59kmMv85zx2oz4FCrd5VYLMOPtiGEhDwqb85_1tNBq3ihHwXoyHLykA7OyyZFG80rBys94jY172-rrJ1BmkNLF2aTNmblEgI2YRKeP3LbUUZQvYMAdM1YBAIbvZpqfz0jt5Zv3tvX242TYILu9N3lxn_pE6aQgdk4d6k5mB8q3TEvYWESxFQqK2YZyc2VkdAoc4pNgu6HkILF6Q30xfv73K3cmeUIsrzDwG-Byz7XUxM5rcfAVZzw0Fw.jpg" alt="Документация для разработчиков"></a>
+<a href="https://dev.wildberries.ru">
+  <img src="https://raw.githubusercontent.com/serdukow/wbapi-async/main/docs/logo.jpeg"
+       alt="wbapi" width="220">
+</a>
 
 <p>Асинхронный клиент WB API</p>
 
