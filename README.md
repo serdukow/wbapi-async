@@ -18,8 +18,15 @@
 
 </div>
 
-308 методов сгенерированных из официальных спецификаций
-WB с user-friendly именами.
+308 сгенерированных методов с автоматической пагинацией и понятными
+именами:
+
+| OpenAPI Generator                       | wbapi                                |
+| --------------------------------------- | ------------------------------------ |
+| `api_v3_supplies_post()`                | `api.orders_fbs.create_supply()`     |
+| `api_v3_orders_new_get()`               | `api.orders_fbs.get_orders_new()`    |
+| `api_v3_orders_order_id_cancel_patch()` | `api.orders_fbs.cancel_order()`      |
+| `content_v2_get_cards_list_post()`      | `api.items.get_content_cards_list()` |
 
 ## Установка
 
