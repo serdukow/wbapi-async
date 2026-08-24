@@ -118,7 +118,9 @@ docstring-code-line-length = 60
 
 
 [tool.pytest.ini_options]
-addopts = "-q --strict-markers --strict-config"
+# Integration tests reach the live Wildberries API and need WB_TOKEN, so they
+# are opt-in: uv run pytest -m integration
+addopts = "-q --strict-markers --strict-config -m 'not integration'"
 asyncio_mode = "auto"
 testpaths = ["tests"]
 filterwarnings = ["error"]

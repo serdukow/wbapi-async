@@ -92,8 +92,9 @@ out of the markdown tables in each endpoint's description. Two tables hold the
 cases the specs get wrong: `SPEC_FIXES` for schemas that disagree with the live
 response, `NAME_FIXES` for paths that carry less meaning than the endpoint.
 
-`scripts/smoke_check.py` runs read-only calls against the live API; it needs
-`WB_TOKEN` in the environment.
+`tests/test_live.py` calls the read-only endpoints against the live API. It
+is marked `integration` and excluded from the default run, since it needs
+`WB_TOKEN` and reaches an external service.
 
 ## Adding a pagination scheme
 
@@ -113,3 +114,11 @@ uv run ruff format --check src tests scripts
 ```
 
 All four must pass before a change is complete.
+
+Before a release, also run the endpoints against the live API. A mock cannot
+tell whether the specs still describe what Wildberries returns:
+
+```console
+WB_TOKEN=... uv run pytest -m integration
+WB_TOKEN=... WB_SANDBOX=1 uv run pytest -m integration
+```
