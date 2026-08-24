@@ -1,11 +1,52 @@
 {
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "packages": {
     ".": {
       "release-type": "python",
       "package-name": "wbapi-async",
       "changelog-path": "CHANGELOG.md",
-      "extra-files": [
-        "pyproject.toml"
+      "extra-files": ["pyproject.toml"],
+      "prerelease": true,
+      "prerelease-type": "rc",
+      "versioning": "prerelease",
+      "include-component-in-tag": false,
+      "changelog-sections": [
+        {
+          "type": "feat",
+          "section": "Новое"
+        },
+        {
+          "type": "fix",
+          "section": "Исправления"
+        },
+        {
+          "type": "refactor",
+          "section": "Изменения"
+        },
+        {
+          "type": "perf",
+          "section": "Производительность"
+        },
+        {
+          "type": "docs",
+          "section": "Документация",
+          "hidden": true
+        },
+        {
+          "type": "test",
+          "section": "Тесты",
+          "hidden": true
+        },
+        {
+          "type": "ci",
+          "section": "CI",
+          "hidden": true
+        },
+        {
+          "type": "chore",
+          "section": "Разное",
+          "hidden": true
+        }
       ]
     }
   }
