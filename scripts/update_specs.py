@@ -132,7 +132,7 @@ def git(*args: str) -> str:
 
 
 def new_endpoints() -> list[str]:
-    diff = git("diff", "--", "src/wbapi/resources")
+    diff = git("diff", "--", "src/wbapi")
     return [
         line.split('"')[1]
         for line in diff.splitlines()
@@ -150,7 +150,7 @@ def open_pull_request(added: list[str]) -> int:
         body = f"New endpoints:\n{listed}{more}\n\n{body}"
 
     git("checkout", "-B", branch)
-    git("add", "specs", "src/wbapi/resources")
+    git("add", "specs", "src/wbapi")
     git("commit", "-m", title)
     git("push", "-u", "origin", branch, "--force-with-lease")
 
@@ -162,6 +162,19 @@ def open_pull_request(added: list[str]) -> int:
     )
     print(result.stdout.strip() or result.stderr.strip())
     return result.returncode
+
+
+def generator_is_sound() -> bool:
+    """Check the generator before it writes anything over the client."""
+    result = subprocess.run(
+        ["uv", "run", "pytest", "tests/test_codegen.py", "-q"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(result.stdout.strip(), file=sys.stderr)
+    return result.returncode == 0
 
 
 def regenerate() -> bool:
@@ -211,6 +224,10 @@ async def main() -> int:
     for name in changed:
         (SPECS_DIR / name).write_text(downloaded[name])
     print(f"Updated: {', '.join(changed)}\n")
+
+    if not generator_is_sound():
+        print("Generator tests failed; the client was left untouched.", file=sys.stderr)
+        return 1
 
     if not regenerate():
         return 1

@@ -36,7 +36,7 @@ _ERROR_PREVIEW = 200
 # Limiters are shared per event loop: the quota is per account, but an
 # AsyncLimiter belongs to the loop that created it. A weak key lets both
 # the limiters and their entry go when that loop is collected.
-_limiters: WeakKeyDictionary[asyncio.AbstractEventLoop, dict[tuple[int, int], AsyncLimiter]] = (
+_limiters: WeakKeyDictionary[asyncio.AbstractEventLoop, dict[tuple[str, tuple[int, int]], AsyncLimiter]] = (
     WeakKeyDictionary()
 )
 
@@ -49,11 +49,15 @@ def _limiter_for(path: str, rate: tuple[int, int] | None = None) -> AsyncLimiter
         _limiters[loop] = per_loop
 
     rate = rate or DEFAULT_RATE_LIMIT
-    limiter = per_loop.get(rate)
+    # Wildberries meters each endpoint separately, so the path has to be part
+    # of the key: keyed on the rate alone, the 65 endpoints that happen to
+    # declare the same quota would throttle one another.
+    key = (path, rate)
+    limiter = per_loop.get(key)
     if limiter is None:
         interval_ms, burst = rate
         limiter = AsyncLimiter(max_rate=burst, time_period=interval_ms / 1000)
-        per_loop[rate] = limiter
+        per_loop[key] = limiter
     return limiter
 
 
@@ -80,7 +84,6 @@ class Session:
         "max_retries",
         "retry_backoff",
         "max_retry_wait",
-        "user_agent",
     )
 
     def __init__(
@@ -91,7 +94,6 @@ class Session:
         max_retries: int = DEFAULT_MAX_RETRIES,
         retry_backoff: float = DEFAULT_RETRY_BACKOFF,
         max_retry_wait: float = DEFAULT_MAX_RETRY_WAIT,
-        user_agent: str | None = None,
         transport: httpx.AsyncBaseTransport | None = None,
     ) -> None:
         from .. import __version__
@@ -100,7 +102,6 @@ class Session:
         self.max_retries = max(0, max_retries)
         self.retry_backoff = retry_backoff
         self.max_retry_wait = max_retry_wait
-        self.user_agent = user_agent or f"wbapi/{__version__}"
 
         self._client = httpx.AsyncClient(
             timeout=timeout,
@@ -108,7 +109,7 @@ class Session:
             headers={
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "User-Agent": self.user_agent,
+                "User-Agent": f"wbapi/{__version__}",
                 "Authorization": token,
             },
             limits=httpx.Limits(max_connections=100, max_keepalive_connections=20),
@@ -120,10 +121,6 @@ class Session:
     @property
     def masked_token(self) -> str:
         return mask_token(self._token)
-
-    @property
-    def is_closed(self) -> bool:
-        return self._client.is_closed
 
     async def close(self) -> None:
         await self._client.aclose()

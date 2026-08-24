@@ -1,0 +1,438 @@
+from __future__ import annotations
+
+from ..client.method import WBMethod
+from ..utils.token import Scope
+from .models import (
+    ApiB2bClientInfoResponses,
+    ApiGTIN,
+    ApiIMEI,
+    ApiOrderCodeRequest,
+    ApiOrdersFinalPriceResponse,
+    ApiOrdersMetaDetailsResponse,
+    ApiOrderStatusesV2,
+    ApiSGTINs,
+    ApiStatusSetDeliverResponses,
+    ApiStatusSetResponses,
+    ApiUIN,
+    CreateOrdersStatusReceiveResponse,
+    DbsOnlyClientInfoResp,
+    DeliveryDatesInfoResp,
+    GetDbsGroupsResponseItem,
+    GetDbsOrdersResponse,
+    GetOrdersNewResponse,
+    GetOrdersStickersResponse,
+    SetOrdersMetaCustomsDeclarationOrdersItem,
+)
+
+
+class CancelOrdersStatus(WBMethod[ApiStatusSetResponses]):
+    """Отменить сборочные задания
+
+    POST /api/marketplace/v3/dbs/orders/status/cancel
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/status/cancel"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (10000, 10)}
+    __body_fields__ = {"orders_ids": "ordersIds"}
+
+    orders_ids: list[int]
+    """Список ID сборочных заданий"""
+
+
+class CreateOrdersStatusReceive(WBMethod[CreateOrdersStatusReceiveResponse]):
+    """Сообщить о получении заказов
+
+    POST /api/marketplace/v3/dbs/orders/status/receive
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/status/receive"
+    __http_method__ = "POST"
+    __returns__ = CreateOrdersStatusReceiveResponse
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (10000, 10)}
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[ApiOrderCodeRequest]
+
+
+class CreateOrdersStatusReject(WBMethod[ApiStatusSetResponses]):
+    """Сообщить об отказе от заказов
+
+    POST /api/marketplace/v3/dbs/orders/status/reject
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/status/reject"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (10000, 10)}
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[ApiOrderCodeRequest]
+
+
+class DeleteOrdersMeta(WBMethod[ApiStatusSetResponses]):
+    """Удалить идентификаторы маркировки сборочных заданий
+
+    POST /api/marketplace/v3/dbs/orders/meta/delete
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/meta/delete"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (8000, 20)}
+    __body_fields__ = {"key": "key", "order_ids": "orderIds"}
+
+    key: str
+    """Название идентификатора маркировки для удаления. Передаётся только одно значение"""
+    order_ids: list[int]
+    """Список ID сборочных заданий"""
+
+
+class GetDbsGroups(WBMethod[list[GetDbsGroupsResponseItem]]):
+    """Получить информацию о платной доставке
+
+    POST /api/v3/dbs/groups/info
+    """
+
+    __path__ = "/api/v3/dbs/groups/info"
+    __http_method__ = "POST"
+    __returns__ = list[GetDbsGroupsResponseItem]
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __body_fields__ = {"groups": "groups"}
+
+    groups: list[str] | None = None
+    """Список значений `groupId`. Можно получить из новых и завершенных сборочных заданий"""
+
+
+class GetDbsOrders(WBMethod[GetDbsOrdersResponse]):
+    """Получить информацию о завершенных сборочных заданиях
+
+    GET /api/v3/dbs/orders
+    """
+
+    __path__ = "/api/v3/dbs/orders"
+    __http_method__ = "GET"
+    __returns__ = GetDbsOrdersResponse
+    __query_params__ = {"limit": "limit", "next_": "next", "date_from": "dateFrom", "date_to": "dateTo"}
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __paginate__ = "next"
+    __items__ = "orders"
+
+    date_from: int
+    """Дата начала периода в формате Unix timestamp"""
+    date_to: int
+    """Дата конца периода в формате Unix timestamp"""
+    limit: int
+    """Параметр пагинации. Устанавливает предельное количество возвращаемых данных."""
+    next_: int
+    """Параметр пагинации. Устанавливает значение, с которого надо получить следующий пакет данных.
+    Для получения полного списка данных должен быть равен `0` в первом …
+    """
+
+
+class GetOrdersB2b(WBMethod[ApiB2bClientInfoResponses]):
+    """Информация о покупателе B2B
+
+    POST /api/marketplace/v3/dbs/orders/b2b/info
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/b2b/info"
+    __http_method__ = "POST"
+    __returns__ = ApiB2bClientInfoResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __body_fields__ = {"orders_ids": "ordersIds"}
+
+    orders_ids: list[int]
+    """Список ID сборочных заданий"""
+
+
+class GetOrdersClient(WBMethod[DbsOnlyClientInfoResp]):
+    """Информация о покупателе
+
+    POST /api/v3/dbs/orders/client
+    """
+
+    __path__ = "/api/v3/dbs/orders/client"
+    __http_method__ = "POST"
+    __returns__ = DbsOnlyClientInfoResp
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __items__ = "orders"
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[int] | None = None
+    """Список ID сборочных заданий"""
+
+
+class GetOrdersDeliveryDate(WBMethod[DeliveryDatesInfoResp]):
+    """Получить дату и время доставки
+
+    POST /api/v3/dbs/orders/delivery-date
+    """
+
+    __path__ = "/api/v3/dbs/orders/delivery-date"
+    __http_method__ = "POST"
+    __returns__ = DeliveryDatesInfoResp
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __items__ = "orders"
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[int] | None = None
+    """Список ID сборочных заданий"""
+
+
+class GetOrdersFinalPrice(WBMethod[ApiOrdersFinalPriceResponse]):
+    """Получить цены продавца и суммы к оплате
+
+    POST /api/marketplace/v3/dbs/orders/final-price
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/final-price"
+    __http_method__ = "POST"
+    __returns__ = ApiOrdersFinalPriceResponse
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __rate_limits__ = {"all": (8000, 20)}
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[int] | None = None
+    """Список ID сборочных заданий"""
+
+
+class GetOrdersMetaDetails(WBMethod[ApiOrdersMetaDetailsResponse]):
+    """Получить идентификаторы маркировки сборочных заданий
+
+    POST /api/marketplace/v3/dbs/orders/meta/details
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/meta/details"
+    __http_method__ = "POST"
+    __returns__ = ApiOrdersMetaDetailsResponse
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __items__ = "orders"
+    __body_fields__ = {"orders_ids": "ordersIds"}
+
+    orders_ids: list[int]
+    """Список ID сборочных заданий"""
+
+
+class GetOrdersNew(WBMethod[GetOrdersNewResponse]):
+    """Получить список новых сборочных заданий
+
+    GET /api/v3/dbs/orders/new
+    """
+
+    __path__ = "/api/v3/dbs/orders/new"
+    __http_method__ = "GET"
+    __returns__ = GetOrdersNewResponse
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __items__ = "orders"
+
+
+class GetOrdersStatus(WBMethod[ApiOrderStatusesV2]):
+    """Получить статусы сборочных заданий
+
+    POST /api/marketplace/v3/dbs/orders/status/info
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/status/info"
+    __http_method__ = "POST"
+    __returns__ = ApiOrderStatusesV2
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __items__ = "orders"
+    __body_fields__ = {"orders_ids": "ordersIds"}
+
+    orders_ids: list[int]
+    """Список ID сборочных заданий"""
+
+
+class GetOrdersStickers(WBMethod[GetOrdersStickersResponse]):
+    """Получить стикеры для сборочных заданий с доставкой в ПВЗ
+
+    POST /api/marketplace/v3/dbs/orders/stickers
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/stickers"
+    __http_method__ = "POST"
+    __returns__ = GetOrdersStickersResponse
+    __query_params__ = {"type_": "type", "width": "width", "height": "height"}
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __body_fields__ = {"orders": "orders"}
+
+    height: int
+    """Высота стикера"""
+    orders: list[int]
+    """Список ID сборочных заданий"""
+    type_: str
+    """Формат стикера"""
+    width: int
+    """Ширина стикера"""
+
+
+class SetOrdersMetaCustomsDeclaration(WBMethod[ApiStatusSetResponses]):
+    """Закрепить номера ДТ за сборочными заданиями
+
+    POST /api/marketplace/v3/dbs/orders/meta/customs-declaration
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/meta/customs-declaration"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (2400, 20)}
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[SetOrdersMetaCustomsDeclarationOrdersItem]
+
+
+class SetOrdersMetaGtin(WBMethod[ApiStatusSetResponses]):
+    """Закрепить GTIN за сборочными заданиями
+
+    POST /api/marketplace/v3/dbs/orders/meta/gtin
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/meta/gtin"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (2400, 20)}
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[ApiGTIN]
+
+
+class SetOrdersMetaImei(WBMethod[ApiStatusSetResponses]):
+    """Закрепить IMEI за сборочными заданиями
+
+    POST /api/marketplace/v3/dbs/orders/meta/imei
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/meta/imei"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (2400, 20)}
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[ApiIMEI]
+
+
+class SetOrdersMetaSgtin(WBMethod[ApiStatusSetResponses]):
+    """Закрепить коды маркировки Честного знака за сборочными заданиями
+
+    POST /api/marketplace/v3/dbs/orders/meta/sgtin
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/meta/sgtin"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (2400, 20),
+        "service": (2400, 20),
+        "basic_secret": (2400, 20),
+        "basic": (360000, 1),
+    }
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[ApiSGTINs]
+
+
+class SetOrdersMetaUin(WBMethod[ApiStatusSetResponses]):
+    """Закрепить УИН за сборочными заданиями
+
+    POST /api/marketplace/v3/dbs/orders/meta/uin
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/meta/uin"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (2400, 20)}
+    __body_fields__ = {"orders": "orders"}
+
+    orders: list[ApiUIN]
+
+
+class UpdateOrdersStatusConfirm(WBMethod[ApiStatusSetResponses]):
+    """Перевести сборочные задания на сборку
+
+    POST /api/marketplace/v3/dbs/orders/status/confirm
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/status/confirm"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (10000, 10)}
+    __body_fields__ = {"orders_ids": "ordersIds"}
+
+    orders_ids: list[int]
+    """Список ID сборочных заданий"""
+
+
+class UpdateOrdersStatusDeliver(WBMethod[ApiStatusSetDeliverResponses]):
+    """Перевести сборочные задания в доставку
+
+    POST /api/marketplace/v3/dbs/orders/status/deliver
+    """
+
+    __path__ = "/api/marketplace/v3/dbs/orders/status/deliver"
+    __http_method__ = "POST"
+    __returns__ = ApiStatusSetDeliverResponses
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (10000, 10)}
+    __body_fields__ = {"orders_ids": "ordersIds"}
+
+    orders_ids: list[int]
+    """Список ID сборочных заданий"""

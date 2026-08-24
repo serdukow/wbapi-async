@@ -1,0 +1,564 @@
+from __future__ import annotations
+
+from collections.abc import AsyncIterator
+from typing import TYPE_CHECKING, Any
+
+from .methods import (
+    CreateAdvertBidsMin,
+    CreateBudgetDeposit,
+    CreateCalendarPromotionsUpload,
+    CreateNormqueryList,
+    CreateNormquerySetMinus,
+    CreateRename,
+    CreateSeacatSaveAd,
+    CreateSupplierNms,
+    DeleteCampaign,
+    DeleteNormqueryBid,
+    GetAdvert,
+    GetAdvertAdverts,
+    GetAdvertBidsRecommendations,
+    GetAdvertConfig,
+    GetAdverts,
+    GetBalance,
+    GetBudget,
+    GetCalendarPromotions,
+    GetCalendarPromotionsDetails,
+    GetCalendarPromotionsNomenclatures,
+    GetCount,
+    GetFullstats,
+    GetNormqueryBids,
+    GetNormqueryMinus,
+    GetNormqueryStatsV0,
+    GetNormqueryStatsV1,
+    GetPause,
+    GetPayments,
+    GetPromotionCount,
+    GetStart,
+    GetStats,
+    GetStop,
+    GetSupplierSubjects,
+    GetUpd,
+    SetAdvertNormqueryBid,
+    SetNormqueryBid,
+    UpdateAdvertBid,
+    UpdateAuctionNms,
+    UpdateAuctionPlacement,
+)
+from .models import (
+    CreateAdvertBidsMinResponse,
+    CreateSupplierNmsResponseItem,
+    FullStatsItem,
+    GetAdvertResponse,
+    GetAdvertsModel,
+    GetAdvertsResponseItem,
+    GetBalanceResponse,
+    GetBudgetResponse,
+    GetCountResponse,
+    GetNormqueryStatsItemsItem,
+    GetPaymentsResponseItem,
+    GetPromotionCountResponse,
+    GetSupplierSubjectsResponseItem,
+    GetUpdResponseItem,
+    ResponseWithReturn,
+    StatInterval,
+    UpdateAdvertBidBidsItem,
+    UpdateAdvertBidResponse,
+    UpdateAuctionNmsNmsItem,
+    UpdateAuctionNmsResponse,
+    UpdateAuctionPlacementPlacementsItem,
+    V0BidsRecommendationsCpmResponse,
+    V0DeleteNormQueryBidsRequestItem,
+    V0GetNormQueryBidsRequestItem,
+    V0GetNormQueryBidsResponse,
+    V0GetNormQueryListRequestItem,
+    V0GetNormQueryListResponse,
+    V0GetNormQueryMinusRequestItem,
+    V0GetNormQueryMinusResponse,
+    V0GetNormQueryStatsResponse,
+    V0SetNormQueryBidsRequestItem,
+    V1GetNormQueryStatsResponse,
+    V1SetNormQueryBidsRequestItem,
+    V1SetNormQueryBidsResponse,
+    V2GetConfigResponse,
+)
+
+
+if TYPE_CHECKING:
+    from ..client import WBApi
+
+
+class Promotion:
+    """Маркетинг и продвижение.
+
+    Узнать больше о маркетинге и продвижении можно в справочном центре
+
+    Методы маркетинга и продвижения позволяют:
+      1. Получать информацию о кампаниях продвижения и медиакампаниях
+      2. Создавать и управлять кампаниями
+      3. Управлять финансами кампаний
+      4. Выгружать статистику кампаний продвижения и медиакампаний
+      5. Работать с календарём акций
+
+    Данные синхронизируются с базой раз в 3 минуты. Статусы кампаний меняются раз в минуту. Ставки
+    кампаний меняются раз в 30 секунд.
+
+    Вы можете протестировать методы продвижения в песочнице. Также в песочнице доступны специальные
+    методы для управления тестовым балансом
+    """
+
+    __slots__ = ("_api",)
+
+    def __init__(self, api: WBApi) -> None:
+        self._api = api
+
+    async def create_advert_bids_min(
+        self, *, advert_id: int, nm_ids: list[int], payment_type: str, placement_types: list[str]
+    ) -> CreateAdvertBidsMinResponse:
+        """Минимальные ставки для карточек товаров
+
+        :param advert_id: ID кампании
+        :param nm_ids: Список артикулов WB
+        :param payment_type: Тип оплаты:       - `cpm` — за показы       - `cpc` — за клик
+        :param placement_types: Места размещения:   - `search` — поиск   - `recommendation` — рекомендации
+            - `combined` — поиск и рекомендации
+        """
+        return await CreateAdvertBidsMin(
+            advert_id=advert_id, nm_ids=nm_ids, payment_type=payment_type, placement_types=placement_types
+        ).emit(self._api)
+
+    async def create_budget_deposit(
+        self,
+        *,
+        id_: int,
+        cashback_percent: int | None = None,
+        cashback_sum: int | None = None,
+        return_: bool | None = None,
+        sum: int | None = None,
+        type_: int | None = None,
+    ) -> ResponseWithReturn:
+        """Пополнение бюджета кампании
+
+        :param id_: ID кампании
+        :param cashback_percent: Процент от суммы пополнения, который можно пополнить промо-бонусами. Нужно
+            указать значение поля percent из ответа метода получения баланса …
+        :param cashback_sum: Сумма пополнения бюджета промо-бонусами. …
+        :param return_: Флаг возврата ответа (`true` — в ответе вернется обновлённый размер бюджета
+            кампании, `false` или не указать параметр вообще — не вернётся.)
+        :param sum: Общая сумма пополнения бюджета в базовых единицах валюты аккаунта продавца
+        :param type_: Тип источника пополнения: - `0` — Счёт - `1` — Баланс - `3` — Бонусы
+        """
+        return await CreateBudgetDeposit(
+            id_=id_,
+            cashback_percent=cashback_percent,
+            cashback_sum=cashback_sum,
+            return_=return_,
+            sum=sum,
+            type_=type_,
+        ).emit(self._api)
+
+    async def create_calendar_promotions_upload(self) -> None:
+        """Добавить товар в акцию"""
+        await CreateCalendarPromotionsUpload().emit(self._api)
+
+    async def create_normquery_list(
+        self, *, items: list[V0GetNormQueryListRequestItem]
+    ) -> V0GetNormQueryListResponse:
+        """Списки активных и неактивных поисковых кластеров"""
+        return await CreateNormqueryList(items=items).emit(self._api)
+
+    async def create_normquery_set_minus(
+        self, *, advert_id: int, nm_id: int, norm_queries: list[str]
+    ) -> None:
+        """Установка и удаление минус-фраз
+
+        :param advert_id: ID кампании
+        :param nm_id: Артикул WB
+        """
+        await CreateNormquerySetMinus(advert_id=advert_id, nm_id=nm_id, norm_queries=norm_queries).emit(
+            self._api
+        )
+
+    async def create_rename(self, *, advert_id: int, name: str) -> None:
+        """Переименование кампании
+
+        :param advert_id: ID кампании, в которой меняется название
+        :param name: Новое название (максимум 100 символов)
+        """
+        await CreateRename(advert_id=advert_id, name=name).emit(self._api)
+
+    async def create_seacat_save_ad(
+        self,
+        *,
+        name: str,
+        bid_type: str | None = None,
+        nms: list[int] | None = None,
+        payment_type: str | None = None,
+        placement_types: list[str] | None = None,
+    ) -> int:
+        """Создать кампанию
+
+        :param name: Название кампании
+        :param bid_type: Тип ставки:   - `manual` — ручная   - `unified` — единая
+        :param nms: Карточки товаров для кампании. Доступные карточки товаров можно получить с помощью
+            метода Карточки товаров для кампаний. Максимум 50 товаров (`nm`)
+        :param payment_type: Тип оплаты: - `cpm` — за показы - `cpc` — за клик. При создании с этим типом
+            оплаты в кампании автоматически устанавливается минимальная ставка
+        :param placement_types: Места размещения:   - `search` — в поиске   - `recommendations` — в
+            рекомендациях  Укажите только для кампании с ручной ставкой
+        """
+        return await CreateSeacatSaveAd(
+            name=name, bid_type=bid_type, nms=nms, payment_type=payment_type, placement_types=placement_types
+        ).emit(self._api)
+
+    async def create_supplier_nms(self, *, body: Any) -> list[CreateSupplierNmsResponseItem]:
+        """Карточки товаров для кампаний"""
+        return await CreateSupplierNms(body=body).emit(self._api)
+
+    async def delete_campaign(self, *, id_: int) -> None:
+        """Удаление кампании
+
+        :param id_: ID кампании
+        """
+        await DeleteCampaign(id_=id_).emit(self._api)
+
+    async def delete_normquery_bid(self, *, bids: list[V0DeleteNormQueryBidsRequestItem]) -> None:
+        """Удалить ставки поисковых кластеров"""
+        await DeleteNormqueryBid(bids=bids).emit(self._api)
+
+    async def get_advert(self, *, id_: int) -> GetAdvertResponse:
+        """Информация о медиакампании
+
+        :param id_: ID медиакампании
+        """
+        return await GetAdvert(id_=id_).emit(self._api)
+
+    async def get_advert_adverts(
+        self, *, ids: str | None = None, payment_type: str | None = None, statuses: str | None = None
+    ) -> GetAdvertsModel:
+        """Информация о кампаниях
+
+        :param ids: ID кампаний, максимум 50
+        :param payment_type: Тип оплаты: - `cpm` — за показы - `cpc` — за клик
+        :param statuses: Статусы кампаний: - `-1` — удалена, процесс удаления будет завершён в течение 10
+            минут - `4` — готова к запуску - `7` — завершена - `8` — отменена …
+        """
+        return await GetAdvertAdverts(ids=ids, payment_type=payment_type, statuses=statuses).emit(self._api)
+
+    async def get_advert_bids_recommendations(
+        self, *, advert_id: int, nm_id: int
+    ) -> V0BidsRecommendationsCpmResponse:
+        """Рекомендуемые ставки для карточек товаров и поисковых кластеров
+
+        :param advert_id: ID кампании
+        :param nm_id: Артикул WB
+        """
+        return await GetAdvertBidsRecommendations(advert_id=advert_id, nm_id=nm_id).emit(self._api)
+
+    async def get_advert_config(self) -> V2GetConfigResponse:
+        """Конфигурационные значения продвижения"""
+        return await GetAdvertConfig().emit(self._api)
+
+    async def get_adverts(
+        self,
+        *,
+        direction: str | None = None,
+        limit: int | None = None,
+        offset: int | None = None,
+        order: str | None = None,
+        status: str | None = None,
+        type_: int | None = None,
+        auto_paginate: bool = False,
+    ) -> list[GetAdvertsResponseItem] | list[Any]:
+        """Список медиакампаний
+
+        :param direction: Порядок сортировки: - `desc` — от большего к меньшему - `asc` — от меньшего к
+            большему
+        :param limit: Количество кампаний в ответе
+        :param offset: Смещение относительно первой медиакампании
+        :param order: Порядок вывода ответа: - `create` — по времени создания медиакампании - `id` — по ID
+            медиакампании
+        :param status: Статус медиакампании:   - `1` — черновик   - `2` — модерация   - `3` — отклонена (с
+            возможностью вернуть на модерацию)   - `4` — готова к запуску …
+        :param type_: Тип медиакампании: - `1` — размещение по дням - `2` — размещение по просмотрам
+        :param auto_paginate: автоматически собрать все страницы выборки
+        """
+        call = GetAdverts(
+            direction=direction, limit=limit, offset=offset, order=order, status=status, type_=type_
+        )
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
+
+    async def iter_get_adverts(
+        self,
+        *,
+        direction: str | None = None,
+        limit: int | None = None,
+        offset: int | None = None,
+        order: str | None = None,
+        status: str | None = None,
+        type_: int | None = None,
+    ) -> AsyncIterator[Any]:
+        """Список медиакампаний — постранично, по одной записи.
+
+        :param direction: Порядок сортировки: - `desc` — от большего к меньшему - `asc` — от меньшего к
+            большему
+        :param limit: Количество кампаний в ответе
+        :param offset: Смещение относительно первой медиакампании
+        :param order: Порядок вывода ответа: - `create` — по времени создания медиакампании - `id` — по ID
+            медиакампании
+        :param status: Статус медиакампании:   - `1` — черновик   - `2` — модерация   - `3` — отклонена (с
+            возможностью вернуть на модерацию)   - `4` — готова к запуску …
+        :param type_: Тип медиакампании: - `1` — размещение по дням - `2` — размещение по просмотрам
+        """
+        async for item in GetAdverts(
+            direction=direction, limit=limit, offset=offset, order=order, status=status, type_=type_
+        ).stream(self._api):
+            yield item
+
+    async def get_balance(self) -> GetBalanceResponse:
+        """Баланс"""
+        return await GetBalance().emit(self._api)
+
+    async def get_budget(self, *, id_: int) -> GetBudgetResponse:
+        """Бюджет кампании
+
+        :param id_: ID кампании
+        """
+        return await GetBudget(id_=id_).emit(self._api)
+
+    async def get_calendar_promotions(
+        self,
+        *,
+        all_promo: bool,
+        end_date_time: str,
+        start_date_time: str,
+        limit: int | None = None,
+        offset: int | None = None,
+        auto_paginate: bool = False,
+    ) -> None | list[Any]:
+        """Список акций
+
+        :param all_promo: Показать акции:   - `false` — доступные для участия   - `true` — все акции
+        :param end_date_time: Конец периода, формат `YYYY-MM-DDTHH:MM:SSZ`
+        :param start_date_time: Начало периода, формат `YYYY-MM-DDTHH:MM:SSZ`
+        :param limit: Количество запрашиваемых акций
+        :param offset: После какого элемента выдавать данные
+        :param auto_paginate: автоматически собрать все страницы выборки
+        """
+        call = GetCalendarPromotions(
+            all_promo=all_promo,
+            end_date_time=end_date_time,
+            start_date_time=start_date_time,
+            limit=limit,
+            offset=offset,
+        )
+        if auto_paginate:
+            return await call.paginate(self._api)
+        await call.emit(self._api)
+        return None
+
+    async def iter_get_calendar_promotions(
+        self,
+        *,
+        all_promo: bool,
+        end_date_time: str,
+        start_date_time: str,
+        limit: int | None = None,
+        offset: int | None = None,
+    ) -> AsyncIterator[Any]:
+        """Список акций — постранично, по одной записи.
+
+        :param all_promo: Показать акции:   - `false` — доступные для участия   - `true` — все акции
+        :param end_date_time: Конец периода, формат `YYYY-MM-DDTHH:MM:SSZ`
+        :param start_date_time: Начало периода, формат `YYYY-MM-DDTHH:MM:SSZ`
+        :param limit: Количество запрашиваемых акций
+        :param offset: После какого элемента выдавать данные
+        """
+        async for item in GetCalendarPromotions(
+            all_promo=all_promo,
+            end_date_time=end_date_time,
+            start_date_time=start_date_time,
+            limit=limit,
+            offset=offset,
+        ).stream(self._api):
+            yield item
+
+    async def get_calendar_promotions_details(self, *, promotion_ids: list[int]) -> None:
+        """Детальная информация об акциях
+
+        :param promotion_ids: ID акций, по которым нужно вернуть информацию
+        """
+        await GetCalendarPromotionsDetails(promotion_ids=promotion_ids).emit(self._api)
+
+    async def get_calendar_promotions_nomenclatures(
+        self,
+        *,
+        in_action: bool,
+        promotion_id: int,
+        limit: int | None = None,
+        offset: int | None = None,
+        auto_paginate: bool = False,
+    ) -> None | list[Any]:
+        """Список товаров для участия в акции
+
+        :param in_action: Участвует в акции:   - `true` — да   - `false` — нет
+        :param promotion_id: ID акции
+        :param limit: Количество запрашиваемых товаров
+        :param offset: После какого элемента выдавать данные
+        :param auto_paginate: автоматически собрать все страницы выборки
+        """
+        call = GetCalendarPromotionsNomenclatures(
+            in_action=in_action, promotion_id=promotion_id, limit=limit, offset=offset
+        )
+        if auto_paginate:
+            return await call.paginate(self._api)
+        await call.emit(self._api)
+        return None
+
+    async def iter_get_calendar_promotions_nomenclatures(
+        self, *, in_action: bool, promotion_id: int, limit: int | None = None, offset: int | None = None
+    ) -> AsyncIterator[Any]:
+        """Список товаров для участия в акции — постранично, по одной записи.
+
+        :param in_action: Участвует в акции:   - `true` — да   - `false` — нет
+        :param promotion_id: ID акции
+        :param limit: Количество запрашиваемых товаров
+        :param offset: После какого элемента выдавать данные
+        """
+        async for item in GetCalendarPromotionsNomenclatures(
+            in_action=in_action, promotion_id=promotion_id, limit=limit, offset=offset
+        ).stream(self._api):
+            yield item
+
+    async def get_count(self) -> GetCountResponse:
+        """Количество медиакампаний"""
+        return await GetCount().emit(self._api)
+
+    async def get_fullstats(self, *, begin_date: str, end_date: str, ids: str) -> list[FullStatsItem]:
+        """Статистика кампаний
+
+        :param begin_date: Дата начала интервала
+        :param end_date: Дата окончания интервала
+        :param ids: ID кампаний, максимум 50 значений
+        """
+        return await GetFullstats(begin_date=begin_date, end_date=end_date, ids=ids).emit(self._api)
+
+    async def get_normquery_bids(
+        self, *, items: list[V0GetNormQueryBidsRequestItem]
+    ) -> V0GetNormQueryBidsResponse:
+        """Список ставок поисковых кластеров"""
+        return await GetNormqueryBids(items=items).emit(self._api)
+
+    async def get_normquery_minus(
+        self, *, items: list[V0GetNormQueryMinusRequestItem]
+    ) -> V0GetNormQueryMinusResponse:
+        """Список минус-фраз кампаний"""
+        return await GetNormqueryMinus(items=items).emit(self._api)
+
+    async def get_normquery_stats_v0(
+        self, *, from_: str, items: list[GetNormqueryStatsItemsItem], to: str
+    ) -> V0GetNormQueryStatsResponse:
+        """Статистика поисковых кластеров
+
+        :param from_: Дата начала периода
+        :param to: Дата окончания периода
+        """
+        return await GetNormqueryStatsV0(from_=from_, items=items, to=to).emit(self._api)
+
+    async def get_normquery_stats_v1(
+        self, *, from_: str, items: list[GetNormqueryStatsItemsItem], to: str
+    ) -> V1GetNormQueryStatsResponse:
+        """Статистика по поисковым кластерам с детализацией по дням
+
+        :param from_: Дата начала периода
+        :param to: Дата окончания периода периода
+        """
+        return await GetNormqueryStatsV1(from_=from_, items=items, to=to).emit(self._api)
+
+    async def get_pause(self, *, id_: int) -> None:
+        """Пауза кампании
+
+        :param id_: ID кампании
+        """
+        await GetPause(id_=id_).emit(self._api)
+
+    async def get_payments(
+        self, *, from_: str | None = None, to: str | None = None
+    ) -> list[GetPaymentsResponseItem]:
+        """Получение истории пополнений счёта
+
+        :param from_: Начало интервала
+        :param to: Конец интервала. (Минимальный интервал 1 день, максимальный 31)
+        """
+        return await GetPayments(from_=from_, to=to).emit(self._api)
+
+    async def get_promotion_count(self) -> GetPromotionCountResponse:
+        """Списки кампаний"""
+        return await GetPromotionCount().emit(self._api)
+
+    async def get_start(self, *, id_: int) -> None:
+        """Запуск кампании
+
+        :param id_: ID кампании
+        """
+        await GetStart(id_=id_).emit(self._api)
+
+    async def get_stats(self, *, body: Any) -> list[StatInterval]:
+        """Статистика медиакампаний"""
+        return await GetStats(body=body).emit(self._api)
+
+    async def get_stop(self, *, id_: int) -> None:
+        """Завершение кампании
+
+        :param id_: ID кампании
+        """
+        await GetStop(id_=id_).emit(self._api)
+
+    async def get_supplier_subjects(
+        self, *, payment_type: str | None = None
+    ) -> list[GetSupplierSubjectsResponseItem]:
+        """Предметы для кампаний
+
+        :param payment_type: Тип оплаты: - `cpm` — за показы - `cpc` — за клик
+        """
+        return await GetSupplierSubjects(payment_type=payment_type).emit(self._api)
+
+    async def get_upd(self, *, from_: str, to: str) -> list[GetUpdResponseItem]:
+        """Получение истории затрат
+
+        :param from_: Начало интервала
+        :param to: Конец интервала. (Минимальный интервал 1 день, максимальный 31)
+        """
+        return await GetUpd(from_=from_, to=to).emit(self._api)
+
+    async def set_advert_normquery_bid(
+        self, *, bids: list[V1SetNormQueryBidsRequestItem]
+    ) -> V1SetNormQueryBidsResponse:
+        """Установить ставки для поисковых кластеров в валюте аккаунта продавца"""
+        return await SetAdvertNormqueryBid(bids=bids).emit(self._api)
+
+    async def set_normquery_bid(self, *, bids: list[V0SetNormQueryBidsRequestItem]) -> None:
+        """Установить ставки для поисковых кластеров"""
+        await SetNormqueryBid(bids=bids).emit(self._api)
+
+    async def update_advert_bid(self, *, bids: list[UpdateAdvertBidBidsItem]) -> UpdateAdvertBidResponse:
+        """Изменение ставок в кампаниях
+
+        :param bids: Ставки в кампаниях
+        """
+        return await UpdateAdvertBid(bids=bids).emit(self._api)
+
+    async def update_auction_nms(self, *, nms: list[UpdateAuctionNmsNmsItem]) -> UpdateAuctionNmsResponse:
+        """Изменение списка карточек товаров в кампаниях
+
+        :param nms: Карточки товаров в кампаниях
+        """
+        return await UpdateAuctionNms(nms=nms).emit(self._api)
+
+    async def update_auction_placement(
+        self, *, placements: list[UpdateAuctionPlacementPlacementsItem]
+    ) -> None:
+        """Изменение мест размещения в кампаниях с ручной ставкой
+
+        :param placements: Места размещения в кампаниях
+        """
+        await UpdateAuctionPlacement(placements=placements).emit(self._api)

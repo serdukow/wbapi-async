@@ -1,22 +1,32 @@
 <div align="center">
 
-<h1>wbapi</h1>
+<a href="https://dev.wildberries.ru">
+  <img src="https://raw.githubusercontent.com/serdukow/wbapi-async/main/docs/logo.jpeg"
+       alt="wbapi" width="220">
+</a>
 
-<p>Асинхронный клиент Wildberries Seller API</p>
+<p>Асинхронный клиент WB API</p>
 
 [![PyPI version](https://img.shields.io/pypi/v/wbapi-async.svg)](https://pypi.org/project/wbapi-async/)
 [![Downloads](https://img.shields.io/pypi/dm/wbapi-async.svg)](https://pypi.python.org/pypi/wbapi-async)
 [![Tests](https://github.com/serdukow/wb-api/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/serdukow/wb-api/actions/workflows/tests.yml)
 [![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/serdukow/cf37fee32eccac65721c605a306aa138/raw/wb-api-coverage.json)](https://github.com/serdukow/wb-api/actions/workflows/tests.yml)
 [![Checked with mypy](https://img.shields.io/badge/mypy-checked-2A6DB2.svg)](https://mypy-lang.org/)
+[![msgspec](https://img.shields.io/badge/msgspec-0.19-2E7D32.svg)](https://github.com/jcrist/msgspec)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://pypi.org/project/wbapi-async/)
 
 </div>
 
-308 методов и 687 моделей, сгенерированных из официальных спецификаций
-Wildberries. Автодополнение в редакторе, повторы при сбоях, лимиты запросов и
-постраничный обход из коробки.
+308 сгенерированных методов с автоматической пагинацией и понятными
+именами:
+
+| OpenAPI Generator                       | wbapi                                |
+| --------------------------------------- | ------------------------------------ |
+| `api_v3_supplies_post()`                | `api.orders_fbs.create_supply()`     |
+| `api_v3_orders_new_get()`               | `api.orders_fbs.get_orders_new()`    |
+| `api_v3_orders_order_id_cancel_patch()` | `api.orders_fbs.cancel_order()`      |
+| `content_v2_get_cards_list_post()`      | `api.items.get_content_cards_list()` |
 
 ## Установка
 
@@ -26,7 +36,9 @@ Wildberries. Автодополнение в редакторе, повторы 
 pip install wbapi-async
 ```
 
-## Быстрый старт
+## Примеры использования
+
+### Новые сборочные задания
 
 ```python
 import asyncio
@@ -35,98 +47,122 @@ import os
 from wbapi import WBApi
 
 
-async def main() -> None:
-    async with WBApi(token=os.environ["WB_TOKEN"]) as api:
-        orders = await api.orders_fbs.orders_new()
-        for order in orders.orders:
-            print(order.id, order.nm_id, order.sale_price)
+async def main():
+    async with WBApi(token="your_token_here") as api:
+        response = await api.orders_fbs.get_orders_new()
+        for order in response.orders:
+            print(f"{order.id}: артикул {order.nm_id}, {order.sale_price / 100:.2f} ₽")
 
 
 asyncio.run(main())
 ```
 
-## Разделы
+### End-to-end поставка FBS
 
 ```python
-await api.general.seller_info()
-await api.items.content_v2_cards_limits()
-await api.orders_fbs.orders_new()
-await api.promotion.adv_v1_promotion_count()
-await api.finances.account_balance()
+import asyncio
+import os
+
+from wbapi import WBApi
+
+
+async def main():
+    async with WBApi(token="your_token_here") as api:
+        supply = await api.orders_fbs.create_supply()
+        print(f"Создана поставка: {supply.id}")
+
+        new_orders = await api.orders_fbs.get_orders_new()
+        order_ids = [order.id for order in new_orders.orders[:10]]
+        await api.orders_fbs.update_supplies_order(supply_id=supply.id, orders=order_ids)
+        print(f"Добавлено {len(order_ids)} новых сборочных заданий")
+
+        await api.orders_fbs.update_supplies_deliver(supply_id=supply.id)
+        print(f"Передана {supply.id} в доставку")
+
+
+asyncio.run(main())
 ```
 
-| Раздел | Что внутри |
-| --- | --- |
-| `general` | Общее: подключение, продавец, пользователи |
-| `items` | Работа с товарами: карточки, категории, медиа |
-| `orders_fbs` | Заказы FBS: задания, поставки, пропуска |
-| `orders_dbs` | Заказы DBS |
-| `orders_dbw` | Заказы DBW |
-| `orders_fbw` | Поставки FBW |
-| `in_store_pickup` | Самовывоз |
-| `promotion` | Маркетинг и продвижение |
-| `communications` | Отзывы, вопросы, чат с покупателями |
-| `analytics` | Аналитика и данные |
-| `reports` | Отчёты |
-| `finances` | Документы и бухгалтерия |
-| `rates` | Тарифы |
-| `wbd` | Wildberries Цифровой |
+### Пагинация
 
-## Ответы
+Клиент поддерживает все существующие схемы пагинации: токен, курсор,
+`rrdId`, смещение и подбирает нужную автоматически.
+
+`auto_paginate=True` собирает все страницы в один список:
 
 ```python
-response = await api.orders_fbs.orders_new()
+import asyncio
 
-order = response.orders[0]
-order.nm_id
-order.sale_price
-order.created_at
+from wbapi import WBApi
 
-order.to_dict()
-order.to_dict(by_alias=True)
-order.to_json()
+
+async def main():
+    async with WBApi(token="your_token_here") as api:
+        rows = await api.orders_fbs.get_orders(limit=1000, next_=0, auto_paginate=True)
+        print(f"Всего заказов: {len(rows)}")
+
+
+asyncio.run(main())
 ```
 
-## Постраничный обход
+На больших выборках лучше `iter_*` методы:
 
 ```python
-# одна страница
-page = await api.orders_fbs.orders(limit=1000, next_=0)
+import asyncio
 
-# все страницы списком
-rows = await api.orders_fbs.orders(limit=1000, next_=0, auto_paginate=True)
+from wbapi import WBApi
 
-# по одной записи — память не растёт с размером выборки
-async for order in api.orders_fbs.iter_orders(limit=1000, next_=0):
-    await save(order)
+
+async def main():
+    async with WBApi(token="your_token_here") as api:
+        async for order in api.orders_fbs.iter_get_orders(limit=1000, next_=0):
+            print(order.id, order.nm_id)
+
+
+asyncio.run(main())
 ```
 
-## Повторы и лимиты
+### Повторы и лимиты
 
-Запросы к 429, 5xx и сетевым сбоям повторяются автоматически — с
+429, 5xx и сетевые сбои повторяются автоматически — с
 экспоненциальной задержкой, джиттером и учётом заголовка `X-Ratelimit-Retry`.
+Лимиты wb соблюдаются по каждому эндпоинту отдельно.
+
+### Обработка ошибок
 
 ```python
-api = WBApi(
-    token=...,
-    timeout=60,            # или httpx.Timeout(connect=5, read=60)
-    max_retries=3,
-    retry_backoff=0.5,
-    max_retry_wait=60,
-    user_agent="myapp/1.0",
-)
+import asyncio
+import os
+
+from wbapi import WBApi
+from wbapi.exceptions import WBAPIError, WBAuthError, WBRateLimitError
+
+
+async def main():
+    async with WBApi(token="your_token_here") as api:
+        try:
+            await api.orders_fbs.get_orders_new()
+        except WBAuthError:
+            print("Токен просрочен или у него нет доступа к нужной категории")
+        except WBRateLimitError as error:
+            print(f"Превышен лимит, повтор через {error.retry_after} с")
+        except WBAPIError as error:
+            print(f"WB вернул {error.status_code}: {error}")
+
+
+asyncio.run(main())
 ```
 
-## Песочница
+### Песочница
 
-Нужен токен с опцией «Тестовый контур» — данные там случайные.
+Вы можете протестировать методы API на случайных данных. Для этого понадобится [токен](https://dev.wildberries.ru/ru/openapi/api-information#tag/authorization/Kak-sozdat-personalnyj-bazovyj-ili-testovyj-token) с опцией Тестовый контур.
+
+Данные в тестовом контуре сгенерированы случайным образом и не принадлежат реальным продавцам. Использование тестового контура не несёт риска непреднамеренного раскрытия информации.
 
 ```python
-async with WBApi(token=..., sandbox=True) as api:
-    supply = await api.orders_fbs.supplies_create(name="test")
+async with WBApi(token="your_token_here", sandbox=True) as api:
+    supply = await api.orders_fbs.create_supply(name="test")
 ```
-
-Если у метода песочницы нет, запрос не уйдёт — клиент сообщит об этом.
 
 ## Лицензия
 

@@ -4,18 +4,33 @@ on:
   push:
     branches:
       - main
+  # Lets a release be cut without waiting for the next push to main.
+  workflow_dispatch:
 
 permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
 
+    outputs:
+      released: ${{ steps.release.outputs.release_created }}
+      tag: ${{ steps.release.outputs.tag_name }}
+
     steps:
+      # Settings live in release-please-config.json so the workflow and the
+      # config cannot drift apart.
       - uses: googleapis/release-please-action@v4
         id: release
         with:
-          release-type: python
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report
+        if: steps.release.outputs.release_created == 'true'
+        run: echo "::notice::Released ${{ steps.release.outputs.tag_name }}"
