@@ -46,7 +46,7 @@
         }
       ],
       "prerelease": true,
-      "release-as": "1.0.0-rc.2"
+      "release-as": "1.0.0rc2"
     }
   }
 }
