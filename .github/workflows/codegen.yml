@@ -3,18 +3,8 @@ name: Codegen
 on:
   push:
     branches: [main]
-    paths:
-      - ".github/workflows/codegen.yml"
-      - "scripts/codegen.py"
-      - "specs/**"
-      - "src/wbapi/**"
 
   pull_request:
-    paths:
-      - ".github/workflows/codegen.yml"
-      - "scripts/codegen.py"
-      - "specs/**"
-      - "src/wbapi/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

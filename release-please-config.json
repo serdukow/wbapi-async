@@ -6,9 +6,6 @@
       "package-name": "wbapi-async",
       "changelog-path": "CHANGELOG.md",
       "extra-files": ["pyproject.toml"],
-      "prerelease": true,
-      "prerelease-type": "rc",
-      "versioning": "prerelease",
       "include-component-in-tag": false,
       "changelog-sections": [
         {
@@ -47,7 +44,8 @@
           "section": "Разное",
           "hidden": true
         }
-      ]
+      ],
+      "release-as": "1.0.0rc2"
     }
   }
 }

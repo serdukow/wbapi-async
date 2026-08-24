@@ -4,20 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - ".github/workflows/lint.yml"
-      - "src/**"
-      - "tests/**"
-      - "scripts/**"
-      - "pyproject.toml"
 
   pull_request:
-    paths:
-      - ".github/workflows/lint.yml"
-      - "src/**"
-      - "tests/**"
-      - "scripts/**"
-      - "pyproject.toml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
