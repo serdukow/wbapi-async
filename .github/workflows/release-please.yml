@@ -26,7 +26,7 @@ jobs:
     steps:
       # Settings live in release-please-config.json so the workflow and the
       # config cannot drift apart.
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
