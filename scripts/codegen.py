@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 import textwrap
+import unicodedata
 
 import yaml
 
@@ -19,10 +20,55 @@ RESERVED = {"type", "filter", "format", "list", "next", "object", "bytes", "id"}
 
 def snake(x: str) -> str:
     x = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", x)
+    # Latinise first: stripping non-ASCII outright turned every Cyrillic or CJK
+    # name into the same "field_", silently merging distinct fields.
+    x = unicodedata.normalize("NFKD", x).encode("ascii", "ignore").decode() or _transliterate(x)
     x = re.sub(r"[^a-zA-Z0-9]+", "_", x).lower().strip("_")
     if keyword.iskeyword(x):
         x += "_"
     return x or "field_"
+
+
+_CYRILLIC = {
+    "а": "a",
+    "б": "b",
+    "в": "v",
+    "г": "g",
+    "д": "d",
+    "е": "e",
+    "ё": "e",
+    "ж": "zh",
+    "з": "z",
+    "и": "i",
+    "й": "y",
+    "к": "k",
+    "л": "l",
+    "м": "m",
+    "н": "n",
+    "о": "o",
+    "п": "p",
+    "р": "r",
+    "с": "s",
+    "т": "t",
+    "у": "u",
+    "ф": "f",
+    "х": "h",
+    "ц": "c",
+    "ч": "ch",
+    "ш": "sh",
+    "щ": "sch",
+    "ъ": "",
+    "ы": "y",
+    "ь": "",
+    "э": "e",
+    "ю": "yu",
+    "я": "ya",
+}
+
+
+def _transliterate(x: str) -> str:
+    """A Cyrillic name is worth romanising; anything else keeps its fallback."""
+    return "".join(_CYRILLIC.get(c, _CYRILLIC.get(c.lower(), "")) for c in x)
 
 
 def arg(x: str) -> str:
@@ -335,6 +381,10 @@ _SINGULARS = {
     "taxes": "tax",
     "stickers": "sticker",
     "news": "news",
+    # Not plurals, though they end like them.
+    "series": "series",
+    "species": "species",
+    "cookies": "cookie",
     "trbx": "trbx",
     "stats": "stats",
     "settings": "settings",
@@ -351,7 +401,8 @@ def singular(word: str) -> str:
         return word[:-3] + "y"
     if word.endswith(("ses", "xes", "zes", "ches", "shes")):
         return word[:-2]
-    if word.endswith("us") or word.endswith("ss"):
+    # Latin singulars that already end in s: status, bonus, analysis, basis.
+    if word.endswith(("us", "ss", "is")):
         return word
     if word.endswith("s") and len(word) > 3:
         return word[:-1]
@@ -416,7 +467,10 @@ def compose_name(path: str, action: str, section: str) -> str:
         parts = parts[:-1] + [singular(parts[-1])]
 
     if not parts:
-        return action
+        # A path made only of placeholders leaves nothing to name the subject
+        # after, and a bare verb says nothing about what it acts on.
+        placeholders = [snake(seg.strip("{}")) for seg in path.strip("/").split("/") if seg.startswith("{")]
+        return f"{action}_by_{placeholders[0]}" if placeholders else action
 
     # A keyword as the last word cannot end a method name; the plural reads
     # better than the underscore snake() would leave: get_tariffs_returns.
@@ -876,7 +930,9 @@ class Generator:
                 out.append("")
 
         used = sorted({meth["cls"] for meth in self.methods})
-        block = "from .methods import (\n" + "".join(f"    {c},\n" for c in used) + ")"
+        # An empty parenthesised import is a SyntaxError, so a section that
+        # collected nothing must render no import at all.
+        block = "from .methods import (\n" + "".join(f"    {c},\n" for c in used) + ")" if used else ""
         rendered = "\n".join(out).replace("@IMPORTS@", block)
         rendered = rendered.replace("@MODELS@", self._models_import(out))
         iter_import = (

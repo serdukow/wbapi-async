@@ -346,3 +346,49 @@ def test_generated_names_are_well_formed() -> None:
                     problems.append(f"{package}.{name}: a bare verb says nothing")
 
     assert not problems, problems[:5]
+
+
+@pytest.mark.parametrize(
+    ("plural", "expected"),
+    [
+        ("orders", "order"),
+        ("supplies", "supply"),
+        ("countries", "country"),
+        ("addresses", "address"),
+        ("statuses", "status"),
+        ("warehouses", "warehouse"),
+        # Words that end like a plural but are not one.
+        ("series", "series"),
+        ("species", "species"),
+        ("news", "news"),
+        ("status", "status"),
+        ("analysis", "analysis"),
+        ("basis", "basis"),
+        ("settings", "settings"),
+        # "pass" is a keyword, so this one stays plural.
+        ("passes", "passes"),
+    ],
+)
+def test_singular_handles_words_outside_the_table(plural: str, expected: str) -> None:
+    """The suffix rules must cover words the exception table never lists."""
+    assert gen.singular(plural) == expected
+
+
+def test_a_placeholder_only_path_names_its_parameter() -> None:
+    """A path with nothing but a placeholder would otherwise be a bare verb."""
+    assert gen.compose_name("/{supplyId}", "get", "items") == "get_by_supply_id"
+
+
+def test_non_ascii_names_are_latinised_not_dropped() -> None:
+    """Stripping non-ASCII collapsed every Cyrillic field onto one name."""
+    assert gen.snake("количество") != gen.snake("данные")
+    assert gen.snake("количество").isidentifier()
+
+
+def test_a_section_with_no_methods_renders_valid_python() -> None:
+    """An empty parenthesised import is a SyntaxError."""
+    generator = gen.Generator({"info": {"title": "T"}, "paths": {"/api/v3/x": {"get": None}}}, "items")
+    generator.collect()
+
+    compile(generator.render_facade(), "facade", "exec")
+    compile(generator.render_methods(), "methods", "exec")
