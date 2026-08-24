@@ -190,9 +190,9 @@ class Promotion:
         self,
         *,
         name: str,
-        bid_type: str | None = None,
+        bid_type: str | None = "manual",
         nms: list[int] | None = None,
-        payment_type: str | None = None,
+        payment_type: str | None = "cpm",
         placement_types: list[str] | None = None,
     ) -> int:
         """Создать кампанию
@@ -514,7 +514,7 @@ class Promotion:
         await GetStop(id_=id_).emit(self._api)
 
     async def get_supplier_subjects(
-        self, *, payment_type: str | None = None
+        self, *, payment_type: str | None = "cpm"
     ) -> list[GetSupplierSubjectsResponseItem]:
         """Предметы для кампаний
 

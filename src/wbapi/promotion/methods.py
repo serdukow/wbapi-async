@@ -247,13 +247,13 @@ class CreateSeacatSaveAd(WBMethod[int]):
 
     name: str
     """Название кампании"""
-    bid_type: str | None = None
+    bid_type: str | None = "manual"
     """Тип ставки:   - `manual` — ручная   - `unified` — единая"""
     nms: list[int] | None = None
     """Карточки товаров для кампании. Доступные карточки товаров можно получить с помощью метода
     Карточки товаров для кампаний. Максимум 50 товаров (`nm`)
     """
-    payment_type: str | None = None
+    payment_type: str | None = "cpm"
     """Тип оплаты: - `cpm` — за показы - `cpc` — за клик. При создании с этим типом оплаты в
     кампании автоматически устанавливается минимальная ставка
     """
@@ -906,7 +906,7 @@ class GetSupplierSubjects(WBMethod[list[GetSupplierSubjectsResponseItem]]):
         "basic": (1800000, 1),
     }
 
-    payment_type: str | None = None
+    payment_type: str | None = "cpm"
     """Тип оплаты: - `cpm` — за показы - `cpc` — за клик"""
 
 

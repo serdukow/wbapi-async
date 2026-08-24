@@ -104,25 +104,25 @@ class CreateWarehouseRemain(WBMethod[CreateTaskResponse]):
     }
     __items__ = "data"
 
-    filter_pics: int | None = None
+    filter_pics: int | None = 0
     """Фильтр по фото:   - `-1` — без фото   - `0` — не применять фильтр   - `1` — с фото"""
-    filter_volume: int | None = None
+    filter_volume: int | None = 0
     """Фильтр по объёму:   - `-1` — без габаритов   - `0` — не применять фильтр   - `3` — свыше
     трёх литров
     """
-    group_by_barcode: bool | None = None
+    group_by_barcode: bool | None = False
     """Разбивка по баркодам"""
-    group_by_brand: bool | None = None
+    group_by_brand: bool | None = False
     """Разбивка по брендам"""
-    group_by_nm: bool | None = None
+    group_by_nm: bool | None = False
     """Разбивка по артикулам WB. Если `groupByNm=true`, в ответе будет поле `volume`"""
-    group_by_sa: bool | None = None
+    group_by_sa: bool | None = False
     """Разбивка по артикулам продавца"""
-    group_by_size: bool | None = None
+    group_by_size: bool | None = False
     """Разбивка по размерам"""
-    group_by_subject: bool | None = None
+    group_by_subject: bool | None = False
     """Разбивка по предметам"""
-    locale: str | None = None
+    locale: str | None = "ru"
     """Язык полей ответа `subjectName` и `warehouseName`:   - `ru` — русский   - `en` — английский
     - `zh` — китайский. Значения `warehouseName` на английском
     """
@@ -307,7 +307,7 @@ class GetAnalyticsBrandShareParentSubjects(WBMethod[None]):
     """Начало отчётного периода, `ГГГГ-ММ-ДД`"""
     date_to: str
     """Конец отчётного периода, `ГГГГ-ММ-ДД`"""
-    locale: str | None = None
+    locale: str | None = "ru"
     """Язык поля ответа `parentName`:   - `ru` — русский   - `en` — английский   - `zh` — китайский
     """
 
@@ -347,11 +347,11 @@ class GetAnalyticsDeductions(WBMethod[None]):
     """Начало отчётного периода. По умолчанию используются дата и время, когда были впервые
     получены данные для отчёта
     """
-    offset: int | None = None
+    offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
-    order: str | None = None
+    order: str | None = "desc"
     """Порядок выдачи: - `desc` — по убыванию - `asc` — по возрастанию"""
-    sort: str | None = None
+    sort: str | None = "dtBonus"
     """Сортировка: - `nmId` — по артикулу WB - `dtBonus` — по дате и времени удержания -
     `bonusSumm` — по сумме удержания
     """
@@ -466,7 +466,7 @@ class GetAnalyticsMeasurementPenalties(WBMethod[MeasurementPenalties]):
     """Начало отчётного периода. По умолчанию используется дата, когда были впервые получены данные
     для отчёта
     """
-    offset: int | None = None
+    offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
 
 
@@ -524,7 +524,7 @@ class GetAnalyticsWarehouseMeasurements(WBMethod[WHM]):
     """Начало отчётного периода. По умолчанию используется дата, когда были впервые получены данные
     для отчёта
     """
-    offset: int | None = None
+    offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
 
 
@@ -599,7 +599,7 @@ class GetSupplierOrders(WBMethod[list[OrdersItem]]):
     """Дата и время последнего изменения по заказу. Дата в формате RFC3339. Можно передать дату или
     дату со временем. …
     """
-    flag: int | None = None
+    flag: int | None = 0
     """Если параметр `flag=0` (или не указан в строке запроса), при вызове API возвращаются данные,
     …
     """
@@ -629,7 +629,7 @@ class GetSupplierSales(WBMethod[list[SalesItem]]):
     """Дата и время последнего изменения по продаже/возврату. Дата в формате RFC3339. Можно
     передать дату или дату со временем. …
     """
-    flag: int | None = None
+    flag: int | None = 0
     """Если параметр `flag=0` (или не указан в строке запроса), при вызове API возвращаются данные,
     …
     """

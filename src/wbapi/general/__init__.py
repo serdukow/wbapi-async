@@ -79,7 +79,7 @@ class General:
         return await GetCommonSubscriptions().emit(self._api)
 
     async def get_common_tariff_constructor_options(
-        self, *, locale: str | None = None
+        self, *, locale: str | None = "ru"
     ) -> PlanBuilderOptionsInfo:
         """Получить информацию об опциях Конструктора тарифов
 
@@ -108,9 +108,9 @@ class General:
     async def get_users(
         self,
         *,
-        is_invite_only: bool | None = None,
-        limit: int | None = None,
-        offset: int | None = None,
+        is_invite_only: bool | None = False,
+        limit: int | None = 100,
+        offset: int | None = 0,
         auto_paginate: bool = False,
     ) -> GetUsersResponse | list[Any]:
         """Получить список активных или приглашённых пользователей продавца
@@ -126,7 +126,7 @@ class General:
         return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_users(
-        self, *, is_invite_only: bool | None = None, limit: int | None = None, offset: int | None = None
+        self, *, is_invite_only: bool | None = False, limit: int | None = 100, offset: int | None = 0
     ) -> AsyncIterator[Any]:
         """Получить список активных или приглашённых пользователей продавца — постранично, по одной записи.
 

@@ -127,11 +127,11 @@ class Wbd:
         *,
         category: int | None = None,
         search: str | None = None,
-        skip: int | None = None,
+        skip: int | None = 0,
         sort: str | None = None,
         sort_dir: str | None = None,
         status: int | None = None,
-        take: int | None = None,
+        take: int | None = 50,
         auto_paginate: bool = False,
     ) -> ContentList | list[Any]:
         """Получить список своего контента
@@ -162,11 +162,11 @@ class Wbd:
         *,
         category: int | None = None,
         search: str | None = None,
-        skip: int | None = None,
+        skip: int | None = 0,
         sort: str | None = None,
         sort_dir: str | None = None,
         status: int | None = None,
-        take: int | None = None,
+        take: int | None = 50,
     ) -> AsyncIterator[Any]:
         """Получить список своего контента — постранично, по одной записи.
 
@@ -214,8 +214,8 @@ class Wbd:
         date_from: str | None = None,
         date_to: str | None = None,
         offer_id: int | None = None,
-        skip: int | None = None,
-        take: int | None = None,
+        skip: int | None = 0,
+        take: int | None = 50,
         auto_paginate: bool = False,
     ) -> KeysRedeemedResponseList | list[Any]:
         """Получить купленные ключи
@@ -243,8 +243,8 @@ class Wbd:
         date_from: str | None = None,
         date_to: str | None = None,
         offer_id: int | None = None,
-        skip: int | None = None,
-        take: int | None = None,
+        skip: int | None = 0,
+        take: int | None = 50,
     ) -> AsyncIterator[Any]:
         """Получить купленные ключи — постранично, по одной записи.
 
@@ -275,12 +275,12 @@ class Wbd:
         self,
         *,
         offer_id: str | int,
-        deleted: bool | None = None,
-        expired: bool | None = None,
-        reserved: bool | None = None,
-        skip: int | None = None,
-        sold: bool | None = None,
-        take: int | None = None,
+        deleted: bool | None = True,
+        expired: bool | None = True,
+        reserved: bool | None = True,
+        skip: int | None = 0,
+        sold: bool | None = True,
+        take: int | None = 50,
         auto_paginate: bool = False,
     ) -> KeysResponseList | list[Any]:
         """Получить список ключей
@@ -311,12 +311,12 @@ class Wbd:
         self,
         *,
         offer_id: str | int,
-        deleted: bool | None = None,
-        expired: bool | None = None,
-        reserved: bool | None = None,
-        skip: int | None = None,
-        sold: bool | None = None,
-        take: int | None = None,
+        deleted: bool | None = True,
+        expired: bool | None = True,
+        reserved: bool | None = True,
+        skip: int | None = 0,
+        sold: bool | None = True,
+        take: int | None = 50,
     ) -> AsyncIterator[Any]:
         """Получить список ключей — постранично, по одной записи.
 
@@ -353,11 +353,11 @@ class Wbd:
         *,
         category: int | None = None,
         search: str | None = None,
-        skip: int | None = None,
+        skip: int | None = 0,
         sort: str | None = None,
         sort_dir: str | None = None,
         status: int | None = None,
-        take: int | None = None,
+        take: int | None = 50,
         auto_paginate: bool = False,
     ) -> OfferResponseList | list[Any]:
         """Получить список своих предложений
@@ -388,11 +388,11 @@ class Wbd:
         *,
         category: int | None = None,
         search: str | None = None,
-        skip: int | None = None,
+        skip: int | None = 0,
         sort: str | None = None,
         sort_dir: str | None = None,
         status: int | None = None,
-        take: int | None = None,
+        take: int | None = 50,
     ) -> AsyncIterator[Any]:
         """Получить список своих предложений — постранично, по одной записи.
 

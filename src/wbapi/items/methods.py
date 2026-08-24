@@ -768,7 +768,7 @@ class GetObjectAll(WBMethod[GetObjectAllResponse]):
     __paginate__ = "offset_query"
     __items__ = "data"
 
-    limit: int | None = None
+    limit: int | None = 30
     """Количество предметов, максимум 1000"""
     locale: str | None = None
     """Язык полей ответа:   - `ru` — русский   - `en` — английский   - `zh` — китайский …"""
@@ -776,7 +776,7 @@ class GetObjectAll(WBMethod[GetObjectAllResponse]):
     """Поиск по названию предмета (Носки), поиск работает по подстроке, искать можно на любом из
     поддерживаемых языков
     """
-    offset: int | None = None
+    offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнется с 11 элемента"""
     parent_id: int | None = None
     """ID родительской категории предмета"""
@@ -894,9 +894,9 @@ class GetRecommendationsList(WBMethod[GetRecomRes]):
 
     brand_names: list[str] | None = None
     """Бренды"""
-    limit: int | None = None
+    limit: int | None = 20
     """Количество товаров в ответе"""
-    next_: int | None = None
+    next_: int | None = 0
     """Курсор. Последний `nmId` в ответе"""
     search: str | None = None
     """Поиск:   - по артикулу WB `nmId` — полное совпадение   - по артикулу продавца `vendorCode` —
@@ -994,7 +994,7 @@ class SetRecommendation(WBMethod[SetRecomRes]):
 
     rec_list: list[SetRecommendationRecListItem]
     """Список рекомендаций для товаров"""
-    replace: bool | None = None
+    replace: bool | None = False
     """Действие в запросе:   - `false` — добавить новые рекомендации к существующим   - `true` —
     заменить существующие рекомендации новыми
     """

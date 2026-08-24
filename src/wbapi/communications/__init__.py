@@ -107,9 +107,9 @@ class Communications:
         *,
         is_archive: bool,
         id_: str | None = None,
-        limit: int | None = None,
+        limit: int | None = 50,
         nm_id: int | None = None,
-        offset: int | None = None,
+        offset: int | None = 0,
         auto_paginate: bool = False,
     ) -> None | list[Any]:
         """Заявки покупателей на возврат
@@ -132,9 +132,9 @@ class Communications:
         *,
         is_archive: bool,
         id_: str | None = None,
-        limit: int | None = None,
+        limit: int | None = 50,
         nm_id: int | None = None,
-        offset: int | None = None,
+        offset: int | None = 0,
     ) -> AsyncIterator[Any]:
         """Заявки покупателей на возврат — постранично, по одной записи.
 
@@ -281,7 +281,7 @@ class Communications:
         date_to: str | None = None,
         feedback_id: int | None = None,
         imt_id: int | None = None,
-        limit: int | None = None,
+        limit: int | None = 500,
         next_: int | None = None,
         nm_id: int | None = None,
         pin_on: str | None = None,
@@ -323,7 +323,7 @@ class Communications:
         date_to: str | None = None,
         feedback_id: int | None = None,
         imt_id: int | None = None,
-        limit: int | None = None,
+        limit: int | None = 500,
         next_: int | None = None,
         nm_id: int | None = None,
         pin_on: str | None = None,
@@ -475,7 +475,7 @@ class Communications:
             yield item
 
     async def get_questions_count(
-        self, *, date_from: int | None = None, date_to: int | None = None, is_answered: bool | None = None
+        self, *, date_from: int | None = None, date_to: int | None = None, is_answered: bool | None = True
     ) -> GetQuestionsCountResponse:
         """Количество вопросов
 

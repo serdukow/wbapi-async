@@ -530,10 +530,10 @@ class Items:
     async def get_object_all(
         self,
         *,
-        limit: int | None = None,
+        limit: int | None = 30,
         locale: str | None = None,
         name: str | None = None,
-        offset: int | None = None,
+        offset: int | None = 0,
         parent_id: int | None = None,
         auto_paginate: bool = False,
     ) -> GetObjectAllResponse | list[Any]:
@@ -554,10 +554,10 @@ class Items:
     async def iter_get_object_all(
         self,
         *,
-        limit: int | None = None,
+        limit: int | None = 30,
         locale: str | None = None,
         name: str | None = None,
-        offset: int | None = None,
+        offset: int | None = 0,
         parent_id: int | None = None,
     ) -> AsyncIterator[Any]:
         """Список предметов — постранично, по одной записи.
@@ -628,8 +628,8 @@ class Items:
         self,
         *,
         brand_names: list[str] | None = None,
-        limit: int | None = None,
-        next_: int | None = None,
+        limit: int | None = 20,
+        next_: int | None = 0,
         search: str | None = None,
         subject_ids: list[int] | None = None,
         auto_paginate: bool = False,
@@ -653,8 +653,8 @@ class Items:
         self,
         *,
         brand_names: list[str] | None = None,
-        limit: int | None = None,
-        next_: int | None = None,
+        limit: int | None = 20,
+        next_: int | None = 0,
         search: str | None = None,
         subject_ids: list[int] | None = None,
     ) -> AsyncIterator[Any]:
@@ -693,7 +693,7 @@ class Items:
         await SetDiscountsPricesUploadTaskB2bWholesale().emit(self._api)
 
     async def set_recommendation(
-        self, *, rec_list: list[SetRecommendationRecListItem], replace: bool | None = None
+        self, *, rec_list: list[SetRecommendationRecListItem], replace: bool | None = False
     ) -> SetRecomRes:
         """Установить рекомендации для товаров
 

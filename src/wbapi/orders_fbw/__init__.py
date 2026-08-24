@@ -60,8 +60,8 @@ class OrdersFbw:
         self,
         *,
         dates: list[ModelsDateFilterRequest] | None = None,
-        limit: int | None = None,
-        offset: int | None = None,
+        limit: int | None = 1000,
+        offset: int | None = 0,
         status_ids: list[int] | None = None,
         auto_paginate: bool = False,
     ) -> list[ModelsSupply] | list[Any]:
@@ -81,8 +81,8 @@ class OrdersFbw:
         self,
         *,
         dates: list[ModelsDateFilterRequest] | None = None,
-        limit: int | None = None,
-        offset: int | None = None,
+        limit: int | None = 1000,
+        offset: int | None = 0,
         status_ids: list[int] | None = None,
     ) -> AsyncIterator[Any]:
         """Список поставок — постранично, по одной записи.
@@ -99,7 +99,7 @@ class OrdersFbw:
             yield item
 
     async def get_supplies_by_id(
-        self, *, id_: str | int, is_preorder_id: bool | None = None
+        self, *, id_: str | int, is_preorder_id: bool | None = False
     ) -> ModelsSupplyDetails:
         """Детали поставки
 
@@ -113,9 +113,9 @@ class OrdersFbw:
         self,
         *,
         id_: str | int,
-        is_preorder_id: bool | None = None,
-        limit: int | None = None,
-        offset: int | None = None,
+        is_preorder_id: bool | None = False,
+        limit: int | None = 100,
+        offset: int | None = 0,
         auto_paginate: bool = False,
     ) -> list[ModelsGoodInSupply] | list[Any]:
         """Товары поставки
@@ -134,9 +134,9 @@ class OrdersFbw:
         self,
         *,
         id_: str | int,
-        is_preorder_id: bool | None = None,
-        limit: int | None = None,
-        offset: int | None = None,
+        is_preorder_id: bool | None = False,
+        limit: int | None = 100,
+        offset: int | None = 0,
     ) -> AsyncIterator[Any]:
         """Товары поставки — постранично, по одной записи.
 

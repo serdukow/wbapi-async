@@ -392,3 +392,36 @@ def test_a_section_with_no_methods_renders_valid_python() -> None:
 
     compile(generator.render_facade(), "facade", "exec")
     compile(generator.render_methods(), "methods", "exec")
+
+
+@pytest.mark.parametrize(
+    ("schema", "expected"),
+    [
+        ({"type": "integer", "default": 100000}, "100000"),
+        ({"type": "string", "default": "weekly"}, "'weekly'"),
+        ({"type": "boolean", "default": True}, "True"),
+        ({"type": "integer"}, None),
+        (None, None),
+        # A mutable default would be shared between every call.
+        ({"type": "array", "default": []}, None),
+        ({"type": "object", "default": {}}, None),
+    ],
+)
+def test_scalar_defaults_are_carried_into_the_signature(schema: Any, expected: str | None) -> None:
+    assert gen.literal_default(schema) == expected
+
+
+def test_a_spec_default_reaches_the_generated_method() -> None:
+    """The sales report page size defaults to 100000 in the spec.
+
+    Left at None the call still worked, but nothing in the editor said how
+    much a single page would fetch.
+    """
+    import inspect
+
+    from wbapi import WBApi
+
+    api = WBApi(token="t")
+    limit = inspect.signature(api.finances.get_sales_reports_detailed).parameters["limit"]
+
+    assert limit.default == 100000

@@ -67,9 +67,9 @@ class GetAcquiringDetailed(WBMethod[list[AcquiringReportsDetailedRes]]):
     fields: list[str] | None = None
     """Список полей, которые вернутся в ответе. Если параметр не указан, возвращаются все поля
     """
-    limit: int | None = None
+    limit: int | None = 100000
     """Количество строк в ответе"""
-    rrd_id: int | None = None
+    rrd_id: int | None = 0
     """ID строки ответа. Необходим для получения отчёта частями.Начинайте загрузку отчёта с
     `"rrdid":0`. В последующих запросах передавайте значение `rrdId` из последн …
     """
@@ -96,9 +96,9 @@ class GetAcquiringDetailedById(WBMethod[list[AcquiringReportsDetailedRes]]):
     fields: list[str] | None = None
     """Список полей, которые вернутся в ответе. Если параметр не указан, возвращаются все поля
     """
-    limit: int | None = None
+    limit: int | None = 100000
     """Количество строк в ответе"""
-    rrd_id: int | None = None
+    rrd_id: int | None = 0
     """ID строки ответа. Необходим для получения отчёта частями.Начинайте загрузку отчёта с
     `"rrdid":0`. В последующих запросах передавайте значение `rrdId` из последн …
     """
@@ -127,9 +127,9 @@ class GetAcquiringList(WBMethod[list[AcquiringReportListRes]]):
     """Конечная дата отчёта.Дата в формате RFC3339. Можно передать дату или дату со временем. Время
     можно указывать с точностью до секунд или миллисекунд.Время передаё …
     """
-    limit: int | None = None
+    limit: int | None = 1000
     """Количество отчётов в ответе"""
-    offset: int | None = None
+    offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
 
 
@@ -153,7 +153,7 @@ class GetDocumentsCategories(WBMethod[GetCategories]):
     }
     __items__ = "data"
 
-    locale: str | None = None
+    locale: str | None = "en"
     """Язык поля `title`:   - `ru` — русский   - `en` — английский   - `zh` — китайский"""
 
 
@@ -243,18 +243,18 @@ class GetDocumentsList(WBMethod[GetList]):
     """ID категории документов из поля `name`"""
     end_time: str | None = None
     """Конец периода. Только вместе с `beginTime`"""
-    limit: int | None = None
+    limit: int | None = 50
     """Максимальное количество строк ответа"""
-    locale: str | None = None
+    locale: str | None = "en"
     """Язык поля `category`:   - `ru` — русский   - `en` — английский   - `zh` — китайский"""
-    offset: int | None = None
+    offset: int | None = 0
     """После какой строки выдавать данные"""
-    order: str | None = None
+    order: str | None = "desc"
     """Сортировка:   - `desc` — по убыванию   - `asc` — по возрастанию  Только вместе с `sort`
     """
     service_name: str | None = None
     """Уникальный ID документа"""
-    sort: str | None = None
+    sort: str | None = "date"
     """Сортировка:   - `date` — по дате создания документа   - `category` — по категории (только
     при `locale=ru`)  Только вместе с `order`
     """
@@ -298,11 +298,11 @@ class GetSalesReportsDetailed(WBMethod[list[SalesReportsDetailedRes]]):
     fields: list[str] | None = None
     """Список полей, которые вернутся в ответе. Если параметр не указан, возвращаются все поля
     """
-    limit: int | None = None
+    limit: int | None = 100000
     """Количество строк в ответе"""
-    period: str | None = None
+    period: str | None = "weekly"
     """Периодичность отчётов:   - `weekly` — еженедельные   - `daily` — ежедневные"""
-    rrd_id: int | None = None
+    rrd_id: int | None = 0
     """ID строки ответа. Необходим для получения отчёта частями.Начинайте загрузку отчёта с
     `"rrdid":0`. В последующих запросах передавайте значение `rrdId` из последн …
     """
@@ -331,9 +331,9 @@ class GetSalesReportsDetailedById(WBMethod[list[SalesReportsDetailedRes]]):
     fields: list[str] | None = None
     """Список полей, которые вернутся в ответе. Если параметр не указан, возвращаются все поля
     """
-    limit: int | None = None
+    limit: int | None = 100000
     """Количество строк в ответе"""
-    rrd_id: int | None = None
+    rrd_id: int | None = 0
     """ID строки ответа. Необходим для получения отчёта частями.Начинайте загрузку отчёта с
     `"rrdid":0`. В последующих запросах передавайте значение `rrdId` из последн …
     """
@@ -368,9 +368,9 @@ class GetSalesReportsList(WBMethod[list[SalesReportListRes]]):
     """Конечная дата отчёта.Дата в формате RFC3339. Можно передать дату или дату со временем. Время
     можно указывать с точностью до секунд или миллисекунд.Время передаё …
     """
-    limit: int | None = None
+    limit: int | None = 1000
     """Количество отчётов в ответе"""
-    offset: int | None = None
+    offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
-    period: str | None = None
+    period: str | None = "weekly"
     """Периодичность отчётов:   - `weekly` — еженедельные   - `daily` — ежедневные"""

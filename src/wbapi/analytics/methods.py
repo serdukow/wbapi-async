@@ -118,15 +118,15 @@ class GetItemRating(WBMethod[GetItemRatingResponse]):
     order_by: OrderByItemRating
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
-    is_not_include_nms_without_sales: bool | None = None
+    is_not_include_nms_without_sales: bool | None = False
     """Не возвращать товары без продаж:   - `true` — да, возвращаются только товары с продажами за
     период, указанный в объекте `currentPeriod` …
     """
-    limit: int | None = None
+    limit: int | None = 100
     """Количество товаров в ответе"""
     nm_ids: list[int] | None = None
     """Список артикулов WB для фильтрации"""
-    only_shadowed_nms: bool | None = None
+    only_shadowed_nms: bool | None = False
     """Возвращаются ли в ответе только скрытые товары:   - `true` — да, возвращаются только скрытые
     из каталога товары …
     """
@@ -299,13 +299,13 @@ class GetSalesFunnelProducts(WBMethod[GetSalesFunnelProductsResponse]):
     selected_period: dict[str, Any]
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
-    limit: int | None = None
+    limit: int | None = 50
     """Количество карточек товара в ответе"""
     nm_ids: list[int] | None = None
     """Артикулы WB, по которым нужно составить отчёт. Оставьте пустым, чтобы получить отчёт обо
     всех товарах
     """
-    offset: int | None = None
+    offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
     order_by: OrderBy | None = None
     past_period: dict[str, Any] | None = None
@@ -391,9 +391,9 @@ class GetSearchReport(WBMethod[CommonResponseProperties]):
     position_cluster: str
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
-    include_search_texts: bool | None = None
+    include_search_texts: bool | None = True
     """Показать данные по поисковым запросам без учёта подменного артикула"""
-    include_substituted_skus: bool | None = None
+    include_substituted_skus: bool | None = True
     """Показать данные по прямым запросам с подменным артикулом"""
     nm_ids: list[int] | None = None
     """Список артикулов WB для фильтрации"""
@@ -467,9 +467,9 @@ class GetSearchReportProductSearchTexts(WBMethod[CommonResponseProperties]):
     """Фильтрация по поисковым запросам, по которым больше всего:   - `openCard` — перешли в
     карточку   - `addToCart` — добавили в корзину …
     """
-    include_search_texts: bool | None = None
+    include_search_texts: bool | None = True
     """Показать данные по поисковым запросам без учёта подменного артикула"""
-    include_substituted_skus: bool | None = None
+    include_substituted_skus: bool | None = True
     """Показать данные по прямым запросам с подменным артикулом"""
     past_period: PastPeriod | None = None
 
@@ -519,9 +519,9 @@ class GetSearchReportTableDetails(WBMethod[CommonResponseProperties]):
     """
     brand_name: str | None = None
     """Название товара"""
-    include_search_texts: bool | None = None
+    include_search_texts: bool | None = True
     """Показать данные по поисковым запросам без учёта подменного артикула"""
-    include_substituted_skus: bool | None = None
+    include_substituted_skus: bool | None = True
     """Показать данные по прямым запросам с подменным артикулом"""
     nm_ids: list[int] | None = None
     """Список артикулов WB"""
@@ -574,9 +574,9 @@ class GetSearchReportTableGroups(WBMethod[CommonResponseProperties]):
     position_cluster: str
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
-    include_search_texts: bool | None = None
+    include_search_texts: bool | None = True
     """Показать данные по поисковым запросам без учёта подменного артикула"""
-    include_substituted_skus: bool | None = None
+    include_substituted_skus: bool | None = True
     """Показать данные по прямым запросам с подменным артикулом"""
     nm_ids: list[int] | None = None
     """Список артикулов WB для фильтрации"""
@@ -693,9 +693,9 @@ class GetStocksReportWbWarehouses(WBMethod[GetStocksReportWbWarehousesResponse])
 
     chrt_ids: list[int] | None = None
     """ID размеров. Используется только для указанных в массиве `nmIds` артикулов"""
-    limit: int | None = None
+    limit: int | None = 250000
     """Количество строк в ответе"""
     nm_ids: list[int] | None = None
     """Артикулы WB"""
-    offset: int | None = None
+    offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""

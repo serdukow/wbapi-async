@@ -425,6 +425,18 @@ def _rename_refs(text: str, renames: dict[str, str]) -> str:
     return text
 
 
+def literal_default(schema: dict | None) -> str | None:
+    """The spec's default as a Python literal, when it is one worth carrying.
+
+    Only scalars: a mutable default would be shared between calls, and a
+    complex one reads worse in a signature than None does.
+    """
+    if not isinstance(schema, dict) or "default" not in schema:
+        return None
+    value = schema["default"]
+    return repr(value) if isinstance(value, str | int | float | bool) else None
+
+
 def compose_name(path: str, action: str, section: str) -> str:
     """Build a verb-first name: create_supply, get_orders_new, set_meta_gtin."""
     if path in NAME_FIXES:
@@ -681,6 +693,7 @@ class Generator:
                             prop,
                             prop in required,
                             self.type_of(ps, f"{pascal(name)}{pascal(prop)}"),
+                            literal_default(ps if isinstance(ps, dict) else None),
                         )
                     )
                     if isinstance(ps, dict):
@@ -692,7 +705,7 @@ class Generator:
         if isinstance(rsch, dict):
             target = self._resolve(rsch["$ref"]) if "$ref" in rsch else rsch
             resp_props = set((target.get("properties") or {}).keys()) if isinstance(target, dict) else set()
-        body_props = {prop for prop, _, _ in body_fields}
+        body_props = {prop for prop, _, _, _ in body_fields}
         pagination = detect_pagination(
             {p["name"] for p in params if p.get("in") == "query"},
             body_props,
@@ -714,7 +727,12 @@ class Generator:
             summary=summary,
             path_params=[p["name"] for p in params if p.get("in") == "path"],
             query_params=[
-                (p["name"], bool(p.get("required")), self.type_of(p.get("schema"), pascal(p["name"])))
+                (
+                    p["name"],
+                    bool(p.get("required")),
+                    self.type_of(p.get("schema"), pascal(p["name"])),
+                    literal_default(p.get("schema")),
+                )
                 for p in params
                 if p.get("in") == "query"
             ],
@@ -775,11 +793,11 @@ class Generator:
                 required.append((arg(p), _field(p, f"    {arg(p)}: str | int")))
             if m["body_kind"] == "raw":
                 required.append(("body", [f"    body: {m['body_type']} | list[Any] | dict[str, Any]"]))
-            for prop, req, pt in m["body_fields"]:
-                line = f"    {arg(prop)}: {pt}" if req else f"    {arg(prop)}: {pt} | None = None"
+            for prop, req, pt, dflt in m["body_fields"]:
+                line = f"    {arg(prop)}: {pt}" if req else f"    {arg(prop)}: {pt} | None = {dflt or 'None'}"
                 (required if req else optional).append((arg(prop), _field(prop, line)))
-            for q, req, qt in m["query_params"]:
-                line = f"    {arg(q)}: {qt}" if req else f"    {arg(q)}: {qt} | None = None"
+            for q, req, qt, dflt in m["query_params"]:
+                line = f"    {arg(q)}: {qt}" if req else f"    {arg(q)}: {qt} | None = {dflt or 'None'}"
                 (required if req else optional).append((arg(q), _field(q, line)))
 
             fields = [
@@ -797,7 +815,7 @@ class Generator:
             if m["path_params"]:
                 out.append(f"    __path_params__ = {tuple(m['path_params'])!r}")
             if m["query_params"]:
-                qmap = {arg(q): q for q, _, _ in m["query_params"]}
+                qmap = {arg(q): q for q, _, _, _ in m["query_params"]}
                 out.append(f"    __query_params__ = {qmap!r}")
             if m["scope"]:
                 out.append(f"    __scope__ = Scope.{m['scope']}")
@@ -812,7 +830,7 @@ class Generator:
             if m["items_field"]:
                 out.append(f'    __items__ = "{m["items_field"]}"')
             if m["body_fields"]:
-                bmap = {arg(prop): prop for prop, _, _ in m["body_fields"]}
+                bmap = {arg(prop): prop for prop, _, _, _ in m["body_fields"]}
                 out.append(f"    __body_fields__ = {bmap!r}")
             if fields:
                 out.append("")
@@ -869,11 +887,11 @@ class Generator:
                 req_args.append((arg(p), f"{arg(p)}: str | int"))
             if meth["body_kind"] == "raw":
                 req_args.append(("body", "body: Any"))
-            for prop, required, pt in meth["body_fields"]:
-                decl = f"{arg(prop)}: {pt}" if required else f"{arg(prop)}: {pt} | None = None"
+            for prop, required, pt, dflt in meth["body_fields"]:
+                decl = f"{arg(prop)}: {pt}" if required else f"{arg(prop)}: {pt} | None = {dflt or 'None'}"
                 (req_args if required else opt_args).append((arg(prop), decl))
-            for q, required, qt in meth["query_params"]:
-                decl = f"{arg(q)}: {qt}" if required else f"{arg(q)}: {qt} | None = None"
+            for q, required, qt, dflt in meth["query_params"]:
+                decl = f"{arg(q)}: {qt}" if required else f"{arg(q)}: {qt} | None = {dflt or 'None'}"
                 (req_args if required else opt_args).append((arg(q), decl))
 
             req_args.sort(key=lambda x: x[0])

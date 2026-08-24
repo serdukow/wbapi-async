@@ -148,11 +148,11 @@ class GetClaims(WBMethod[None]):
     """Состояние заявки:   * `false` — на рассмотрении   * `true` — в архиве"""
     id_: str | None = None
     """ID заявки"""
-    limit: int | None = None
+    limit: int | None = 50
     """Количество заявок в ответе"""
     nm_id: int | None = None
     """Артикул WB"""
-    offset: int | None = None
+    offset: int | None = 0
     """После какого элемента выдавать данные"""
 
 
@@ -349,7 +349,7 @@ class GetFeedbacksPins(WBMethod[RespondSuccessResponse]):
     """ID для объединённых карточек товаров.Един для всех артикулов WB группы объединённых
     карточек.У каждой карточки товара есть `imtId`, даже если она не объединена …
     """
-    limit: int | None = None
+    limit: int | None = 500
     """Количество отзывов на одной странице (пагинация)"""
     next_: int | None = None
     """ID последней операции закрепления (пагинатор)"""
@@ -548,7 +548,7 @@ class GetQuestionsCount(WBMethod[GetQuestionsCountResponse]):
     """Дата начала периода в формате Unix timestamp"""
     date_to: int | None = None
     """Дата конца периода в формате Unix timestamp"""
-    is_answered: bool | None = None
+    is_answered: bool | None = True
     """Есть ли ответ на вопрос:   - `true` — да   - `false` — нет"""
 
 

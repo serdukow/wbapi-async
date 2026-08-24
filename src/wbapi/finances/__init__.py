@@ -57,8 +57,8 @@ class Finances:
         date_from: str,
         date_to: str,
         fields: list[str] | None = None,
-        limit: int | None = None,
-        rrd_id: int | None = None,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
         auto_paginate: bool = False,
     ) -> list[AcquiringReportsDetailedRes] | list[Any]:
         """Детализации к отчётам об издержках на приём платежей за период
@@ -87,8 +87,8 @@ class Finances:
         date_from: str,
         date_to: str,
         fields: list[str] | None = None,
-        limit: int | None = None,
-        rrd_id: int | None = None,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
     ) -> AsyncIterator[Any]:
         """Детализации к отчётам об издержках на приём платежей за период — постранично, по одной записи.
 
@@ -114,8 +114,8 @@ class Finances:
         *,
         report_id: str | int,
         fields: list[str] | None = None,
-        limit: int | None = None,
-        rrd_id: int | None = None,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
         auto_paginate: bool = False,
     ) -> list[AcquiringReportsDetailedRes] | list[Any]:
         """Детализации к отчётам об издержках на приём платежей по ID отчётов
@@ -136,8 +136,8 @@ class Finances:
         *,
         report_id: str | int,
         fields: list[str] | None = None,
-        limit: int | None = None,
-        rrd_id: int | None = None,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
     ) -> AsyncIterator[Any]:
         """Детализации к отчётам об издержках на приём платежей по ID отчётов — постранично, по одной записи.
 
@@ -158,8 +158,8 @@ class Finances:
         *,
         date_from: str,
         date_to: str,
-        limit: int | None = None,
-        offset: int | None = None,
+        limit: int | None = 1000,
+        offset: int | None = 0,
         auto_paginate: bool = False,
     ) -> list[AcquiringReportListRes] | list[Any]:
         """Список отчётов об издержках на приём платежей
@@ -179,7 +179,7 @@ class Finances:
         return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_acquiring_list(
-        self, *, date_from: str, date_to: str, limit: int | None = None, offset: int | None = None
+        self, *, date_from: str, date_to: str, limit: int | None = 1000, offset: int | None = 0
     ) -> AsyncIterator[Any]:
         """Список отчётов об издержках на приём платежей — постранично, по одной записи.
 
@@ -198,7 +198,7 @@ class Finances:
         ).stream(self._api):
             yield item
 
-    async def get_documents_categories(self, *, locale: str | None = None) -> GetCategories:
+    async def get_documents_categories(self, *, locale: str | None = "en") -> GetCategories:
         """Категории документов
 
         :param locale: Язык поля `title`:   - `ru` — русский   - `en` — английский   - `zh` — китайский
@@ -225,12 +225,12 @@ class Finances:
         begin_time: str | None = None,
         category: str | None = None,
         end_time: str | None = None,
-        limit: int | None = None,
-        locale: str | None = None,
-        offset: int | None = None,
-        order: str | None = None,
+        limit: int | None = 50,
+        locale: str | None = "en",
+        offset: int | None = 0,
+        order: str | None = "desc",
         service_name: str | None = None,
-        sort: str | None = None,
+        sort: str | None = "date",
         auto_paginate: bool = False,
     ) -> GetList | list[Any]:
         """Список документов
@@ -267,12 +267,12 @@ class Finances:
         begin_time: str | None = None,
         category: str | None = None,
         end_time: str | None = None,
-        limit: int | None = None,
-        locale: str | None = None,
-        offset: int | None = None,
-        order: str | None = None,
+        limit: int | None = 50,
+        locale: str | None = "en",
+        offset: int | None = 0,
+        order: str | None = "desc",
         service_name: str | None = None,
-        sort: str | None = None,
+        sort: str | None = "date",
     ) -> AsyncIterator[Any]:
         """Список документов — постранично, по одной записи.
 
@@ -307,9 +307,9 @@ class Finances:
         date_from: str,
         date_to: str,
         fields: list[str] | None = None,
-        limit: int | None = None,
-        period: str | None = None,
-        rrd_id: int | None = None,
+        limit: int | None = 100000,
+        period: str | None = "weekly",
+        rrd_id: int | None = 0,
         auto_paginate: bool = False,
     ) -> list[SalesReportsDetailedRes] | list[Any]:
         """Детализации к отчётам реализации за период
@@ -339,9 +339,9 @@ class Finances:
         date_from: str,
         date_to: str,
         fields: list[str] | None = None,
-        limit: int | None = None,
-        period: str | None = None,
-        rrd_id: int | None = None,
+        limit: int | None = 100000,
+        period: str | None = "weekly",
+        rrd_id: int | None = 0,
     ) -> AsyncIterator[Any]:
         """Детализации к отчётам реализации за период — постранично, по одной записи.
 
@@ -368,8 +368,8 @@ class Finances:
         *,
         report_id: str | int,
         fields: list[str] | None = None,
-        limit: int | None = None,
-        rrd_id: int | None = None,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
         auto_paginate: bool = False,
     ) -> list[SalesReportsDetailedRes] | list[Any]:
         """Детализации к отчётам реализации по ID отчётов
@@ -391,8 +391,8 @@ class Finances:
         *,
         report_id: str | int,
         fields: list[str] | None = None,
-        limit: int | None = None,
-        rrd_id: int | None = None,
+        limit: int | None = 100000,
+        rrd_id: int | None = 0,
     ) -> AsyncIterator[Any]:
         """Детализации к отчётам реализации по ID отчётов — постранично, по одной записи.
 
@@ -414,9 +414,9 @@ class Finances:
         *,
         date_from: str,
         date_to: str,
-        limit: int | None = None,
-        offset: int | None = None,
-        period: str | None = None,
+        limit: int | None = 1000,
+        offset: int | None = 0,
+        period: str | None = "weekly",
         auto_paginate: bool = False,
     ) -> list[SalesReportListRes] | list[Any]:
         """Список отчётов реализации
@@ -443,9 +443,9 @@ class Finances:
         *,
         date_from: str,
         date_to: str,
-        limit: int | None = None,
-        offset: int | None = None,
-        period: str | None = None,
+        limit: int | None = 1000,
+        offset: int | None = 0,
+        period: str | None = "weekly",
     ) -> AsyncIterator[Any]:
         """Список отчётов реализации — постранично, по одной записи.
 
