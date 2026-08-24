@@ -34,11 +34,6 @@ def pascal(x: str) -> str:
     return "".join(p[:1].upper() + p[1:] for p in re.split(r"[^a-zA-Z0-9]+", x) if p)
 
 
-# Pagination schemes recognised from endpoint parameters. Order matters: the
-# more specific scheme has to be checked before the general one.
-PAGINATION = ("next", "cursor", "rrdid", "skip_take", "offset_query", "offset_body")
-
-
 def detect_pagination(query: set[str], body_props: set[str], resp_props: set[str], path: str) -> str | None:
     """Detect how an endpoint paginates."""
     if path.endswith("/count"):  # counters return a number, not a page
@@ -252,14 +247,24 @@ def parse_rate_limits(description: str) -> dict[str, tuple[int, int]]:
             cells = cells[1:]
         if len(cells) < 4:
             continue
-        interval = _NUM_UNIT.match(cells[2])
+        # "Период | Лимит" is the sustained rate; "Интервал | Всплеск" only
+        # describes how much of it may be spent at once. Configuring the
+        # limiter from the burst columns let /news run at 10 req/min where the
+        # spec allows 1.
+        period = _NUM_UNIT.match(cells[0])
+        allowance = re.match(r"^(\d+)", cells[1])
         burst = re.match(r"^(\d+)", cells[3])
-        if not interval or not burst:
+        if not period or not allowance or not burst:
             continue
-        limits[kind] = (
-            int(interval.group(1)) * _TO_MS[interval.group(2)],
-            int(burst.group(1)),
-        )
+        window_ms = int(period.group(1)) * _TO_MS[period.group(2)]
+        permitted = int(allowance.group(1))
+        if permitted < 1:
+            continue
+        # Scale the window rather than dividing it, so integer division cannot
+        # round the rate upward: 1000 // 3 * 6 is 1998ms, slightly faster than
+        # the 3 req/s the row allows.
+        burst_size = int(burst.group(1))
+        limits[kind] = (window_ms * burst_size // permitted, burst_size)
     return limits
 
 
@@ -415,8 +420,10 @@ def compose_name(path: str, action: str, section: str) -> str:
 
     # A keyword as the last word cannot end a method name; the plural reads
     # better than the underscore snake() would leave: get_tariffs_returns.
+    # A word already ending in "s" would triple it — class, pass, is.
     if keyword.iskeyword(parts[-1]):
-        parts = parts[:-1] + [parts[-1] + "s"]
+        last = parts[-1]
+        parts = parts[:-1] + [f"{last}es" if last.endswith("s") else f"{last}s"]
 
     return f"{action}_{'_'.join(parts)}"
 

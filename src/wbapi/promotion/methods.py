@@ -56,9 +56,9 @@ class CreateAdvertBidsMin(WBMethod[CreateAdvertBidsMinResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (3000, 5),
-        "service": (3000, 5),
-        "basic_secret": (3000, 5),
+        "personal": (15000, 5),
+        "service": (15000, 5),
+        "basic_secret": (15000, 5),
         "basic": (720000, 1),
     }
     __body_fields__ = {
@@ -94,9 +94,9 @@ class CreateBudgetDeposit(WBMethod[ResponseWithReturn]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 5),
-        "service": (1000, 5),
-        "basic_secret": (1000, 5),
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
         "basic": (720000, 1),
     }
     __body_fields__ = {
@@ -137,9 +137,9 @@ class CreateCalendarPromotionsUpload(WBMethod[None]):
     __scope__ = Scope.PRICES
     __host__ = "https://dp-calendar-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (3600000, 1),
     }
 
@@ -156,9 +156,9 @@ class CreateNormqueryList(WBMethod[V0GetNormQueryListResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 10),
-        "service": (200, 10),
-        "basic_secret": (200, 10),
+        "personal": (2000, 10),
+        "service": (2000, 10),
+        "basic_secret": (2000, 10),
         "basic": (720000, 1),
     }
     __items__ = "items"
@@ -179,9 +179,9 @@ class CreateNormquerySetMinus(WBMethod[None]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 10),
-        "service": (200, 10),
-        "basic_secret": (200, 10),
+        "personal": (2000, 10),
+        "service": (2000, 10),
+        "basic_secret": (2000, 10),
         "basic": (720000, 1),
     }
     __body_fields__ = {"advert_id": "advert_id", "nm_id": "nm_id", "norm_queries": "norm_queries"}
@@ -206,9 +206,9 @@ class CreateRename(WBMethod[None]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 5),
-        "service": (200, 5),
-        "basic_secret": (200, 5),
+        "personal": (1000, 5),
+        "service": (1000, 5),
+        "basic_secret": (1000, 5),
         "basic": (1800000, 1),
     }
     __body_fields__ = {"advert_id": "advertId", "name": "name"}
@@ -232,9 +232,9 @@ class CreateSeacatSaveAd(WBMethod[int]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (12000, 5),
-        "service": (12000, 5),
-        "basic_secret": (12000, 5),
+        "personal": (60000, 5),
+        "service": (60000, 5),
+        "basic_secret": (60000, 5),
         "basic": (720000, 1),
     }
     __body_fields__ = {
@@ -276,9 +276,9 @@ class CreateSupplierNms(WBMethod[list[CreateSupplierNmsResponseItem]]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (12000, 5),
-        "service": (12000, 5),
-        "basic_secret": (12000, 5),
+        "personal": (60000, 5),
+        "service": (60000, 5),
+        "basic_secret": (60000, 5),
         "basic": (1800000, 1),
     }
 
@@ -299,9 +299,9 @@ class DeleteCampaign(WBMethod[None]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 5),
-        "service": (200, 5),
-        "basic_secret": (200, 5),
+        "personal": (1000, 5),
+        "service": (1000, 5),
+        "basic_secret": (1000, 5),
         "basic": (720000, 1),
     }
 
@@ -321,9 +321,9 @@ class DeleteNormqueryBid(WBMethod[None]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 10),
-        "service": (200, 10),
-        "basic_secret": (200, 10),
+        "personal": (2000, 10),
+        "service": (2000, 10),
+        "basic_secret": (2000, 10),
         "basic": (720000, 1),
     }
     __body_fields__ = {"bids": "bids"}
@@ -344,9 +344,9 @@ class GetAdvert(WBMethod[GetAdvertResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-media-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (100, 10),
-        "service": (100, 10),
-        "basic_secret": (100, 10),
+        "personal": (1000, 10),
+        "service": (1000, 10),
+        "basic_secret": (1000, 10),
         "basic": (720000, 1),
     }
     __items__ = "items"
@@ -368,9 +368,9 @@ class GetAdvertAdverts(WBMethod[GetAdvertsModel]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 5),
-        "service": (200, 5),
-        "basic_secret": (200, 5),
+        "personal": (1000, 5),
+        "service": (1000, 5),
+        "basic_secret": (1000, 5),
         "basic": (3600000, 1),
     }
 
@@ -397,9 +397,9 @@ class GetAdvertBidsRecommendations(WBMethod[V0BidsRecommendationsCpmResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (12000, 5),
-        "service": (12000, 5),
-        "basic_secret": (12000, 5),
+        "personal": (60000, 5),
+        "service": (60000, 5),
+        "basic_secret": (60000, 5),
         "basic": (180000, 1),
     }
 
@@ -420,7 +420,7 @@ class GetAdvertConfig(WBMethod[V2GetConfigResponse]):
     __returns__ = V2GetConfigResponse
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
-    __rate_limits__ = {"all": (60000, 10)}
+    __rate_limits__ = {"all": (600000, 10)}
 
 
 class GetAdverts(WBMethod[list[GetAdvertsResponseItem]]):
@@ -443,9 +443,9 @@ class GetAdverts(WBMethod[list[GetAdvertsResponseItem]]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-media-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (100, 10),
-        "service": (100, 10),
-        "basic_secret": (100, 10),
+        "personal": (1000, 10),
+        "service": (1000, 10),
+        "basic_secret": (1000, 10),
         "basic": (3600000, 1),
     }
     __paginate__ = "offset_query"
@@ -481,9 +481,9 @@ class GetBalance(WBMethod[GetBalanceResponse]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 5),
-        "service": (1000, 5),
-        "basic_secret": (1000, 5),
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
         "basic": (1800000, 1),
     }
 
@@ -502,9 +502,9 @@ class GetBudget(WBMethod[GetBudgetResponse]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (250, 4),
-        "service": (250, 4),
-        "basic_secret": (250, 4),
+        "personal": (1000, 4),
+        "service": (1000, 4),
+        "basic_secret": (1000, 4),
         "basic": (900000, 1),
     }
 
@@ -531,9 +531,9 @@ class GetCalendarPromotions(WBMethod[None]):
     __scope__ = Scope.PRICES
     __host__ = "https://dp-calendar-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (3600000, 1),
     }
     __paginate__ = "offset_query"
@@ -563,9 +563,9 @@ class GetCalendarPromotionsDetails(WBMethod[None]):
     __scope__ = Scope.PRICES
     __host__ = "https://dp-calendar-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (3600000, 1),
     }
 
@@ -590,7 +590,7 @@ class GetCalendarPromotionsNomenclatures(WBMethod[None]):
     }
     __scope__ = Scope.PRICES
     __host__ = "https://dp-calendar-api.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __paginate__ = "offset_query"
 
     in_action: bool
@@ -615,9 +615,9 @@ class GetCount(WBMethod[GetCountResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-media-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (100, 10),
-        "service": (100, 10),
-        "basic_secret": (100, 10),
+        "personal": (1000, 10),
+        "service": (1000, 10),
+        "basic_secret": (1000, 10),
         "basic": (3600000, 1),
     }
 
@@ -661,9 +661,9 @@ class GetNormqueryBids(WBMethod[V0GetNormQueryBidsResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 10),
-        "service": (200, 10),
-        "basic_secret": (200, 10),
+        "personal": (2000, 10),
+        "service": (2000, 10),
+        "basic_secret": (2000, 10),
         "basic": (720000, 1),
     }
     __body_fields__ = {"items": "items"}
@@ -683,9 +683,9 @@ class GetNormqueryMinus(WBMethod[V0GetNormQueryMinusResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 10),
-        "service": (200, 10),
-        "basic_secret": (200, 10),
+        "personal": (2000, 10),
+        "service": (2000, 10),
+        "basic_secret": (2000, 10),
         "basic": (720000, 1),
     }
     __items__ = "items"
@@ -706,9 +706,9 @@ class GetNormqueryStatsV0(WBMethod[V0GetNormQueryStatsResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (6000, 20),
-        "service": (6000, 20),
-        "basic_secret": (6000, 20),
+        "personal": (120000, 20),
+        "service": (120000, 20),
+        "basic_secret": (120000, 20),
         "basic": (720000, 1),
     }
     __body_fields__ = {"from_": "from", "to": "to", "items": "items"}
@@ -732,9 +732,9 @@ class GetNormqueryStatsV1(WBMethod[V1GetNormQueryStatsResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (6000, 20),
-        "service": (6000, 20),
-        "basic_secret": (6000, 20),
+        "personal": (120000, 20),
+        "service": (120000, 20),
+        "basic_secret": (120000, 20),
         "basic": (1800000, 1),
     }
     __items__ = "items"
@@ -761,9 +761,9 @@ class GetPause(WBMethod[None]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 5),
-        "service": (200, 5),
-        "basic_secret": (200, 5),
+        "personal": (1000, 5),
+        "service": (1000, 5),
+        "basic_secret": (1000, 5),
         "basic": (720000, 1),
     }
 
@@ -785,9 +785,9 @@ class GetPayments(WBMethod[list[GetPaymentsResponseItem]]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 5),
-        "service": (1000, 5),
-        "basic_secret": (1000, 5),
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
         "basic": (3600000, 1),
     }
 
@@ -810,9 +810,9 @@ class GetPromotionCount(WBMethod[GetPromotionCountResponse]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 5),
-        "service": (200, 5),
-        "basic_secret": (200, 5),
+        "personal": (1000, 5),
+        "service": (1000, 5),
+        "basic_secret": (1000, 5),
         "basic": (900000, 1),
     }
 
@@ -831,9 +831,9 @@ class GetStart(WBMethod[None]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 5),
-        "service": (200, 5),
-        "basic_secret": (200, 5),
+        "personal": (1000, 5),
+        "service": (1000, 5),
+        "basic_secret": (1000, 5),
         "basic": (720000, 1),
     }
 
@@ -853,9 +853,9 @@ class GetStats(WBMethod[list[StatInterval]]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-media-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (100, 10),
-        "service": (100, 10),
-        "basic_secret": (100, 10),
+        "personal": (1000, 10),
+        "service": (1000, 10),
+        "basic_secret": (1000, 10),
         "basic": (3600000, 1),
     }
 
@@ -876,9 +876,9 @@ class GetStop(WBMethod[None]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 5),
-        "service": (200, 5),
-        "basic_secret": (200, 5),
+        "personal": (1000, 5),
+        "service": (1000, 5),
+        "basic_secret": (1000, 5),
         "basic": (720000, 1),
     }
 
@@ -900,9 +900,9 @@ class GetSupplierSubjects(WBMethod[list[GetSupplierSubjectsResponseItem]]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (12000, 5),
-        "service": (12000, 5),
-        "basic_secret": (12000, 5),
+        "personal": (60000, 5),
+        "service": (60000, 5),
+        "basic_secret": (60000, 5),
         "basic": (1800000, 1),
     }
 
@@ -924,9 +924,9 @@ class GetUpd(WBMethod[list[GetUpdResponseItem]]):
     __host__ = "https://advert-api.wildberries.ru"
     __sandbox_host__ = "https://advert-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 5),
-        "service": (1000, 5),
-        "basic_secret": (1000, 5),
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
         "basic": (3600000, 1),
     }
 
@@ -947,7 +947,7 @@ class SetAdvertNormqueryBid(WBMethod[V1SetNormQueryBidsResponse]):
     __returns__ = V1SetNormQueryBidsResponse
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
-    __rate_limits__ = {"personal": (500, 4), "service": (500, 4)}
+    __rate_limits__ = {"personal": (2000, 4), "service": (2000, 4)}
     __body_fields__ = {"bids": "bids"}
 
     bids: list[V1SetNormQueryBidsRequestItem]
@@ -965,9 +965,9 @@ class SetNormqueryBid(WBMethod[None]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (500, 4),
-        "service": (500, 4),
-        "basic_secret": (500, 4),
+        "personal": (2000, 4),
+        "service": (2000, 4),
+        "basic_secret": (2000, 4),
         "basic": (720000, 1),
     }
     __body_fields__ = {"bids": "bids"}
@@ -987,9 +987,9 @@ class UpdateAdvertBid(WBMethod[UpdateAdvertBidResponse]):
     __scope__ = Scope.PROMOTION
     __host__ = "https://advert-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (200, 5),
-        "service": (200, 5),
-        "basic_secret": (200, 5),
+        "personal": (1000, 5),
+        "service": (1000, 5),
+        "basic_secret": (1000, 5),
         "basic": (1800000, 1),
     }
     __body_fields__ = {"bids": "bids"}

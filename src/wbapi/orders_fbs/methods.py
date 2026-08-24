@@ -44,7 +44,7 @@ class CancelOrder(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 20)}
+    __rate_limits__ = {"all": (12000, 20)}
 
     order_id: str | int
     """ID сборочного задания"""
@@ -95,7 +95,7 @@ class CreateSuppliesTrbx(WBMethod[CreateSuppliesTrbxResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"amount": "amount"}
 
     amount: int
@@ -116,7 +116,7 @@ class CreateSupply(WBMethod[CreateSupplyResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"name": "name"}
 
     name: str | None = None
@@ -137,7 +137,7 @@ class DeleteOrdersMeta(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     key: str
     """Название идентификаторов маркировки для удаления. Передаётся только одно значение."""
@@ -158,7 +158,7 @@ class DeletePasses(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     pass_id: str | int
     """ID пропуска"""
@@ -177,7 +177,7 @@ class DeleteSuppliesTrbx(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"trbx_ids": "trbxIds"}
 
     supply_id: str | int
@@ -199,7 +199,7 @@ class DeleteSupply(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     supply_id: str | int
     """ID поставки"""
@@ -218,7 +218,7 @@ class GetOrders(WBMethod[GetOrdersResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __paginate__ = "next"
     __items__ = "orders"
 
@@ -248,7 +248,7 @@ class GetOrdersArchive(WBMethod[V3ArchiveOrders]):
     __query_params__ = {"year": "year", "month": "month", "next_": "next", "limit": "limit"}
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __paginate__ = "next"
     __items__ = "orders"
 
@@ -276,7 +276,7 @@ class GetOrdersClient(WBMethod[CrossborderTurkeyClientInfoResp]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __items__ = "orders"
     __body_fields__ = {"orders": "orders"}
 
@@ -296,7 +296,7 @@ class GetOrdersMeta(WBMethod[V3OrdersMetaAPI]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __items__ = "orders"
     __body_fields__ = {"orders": "orders"}
 
@@ -315,7 +315,7 @@ class GetOrdersNew(WBMethod[GetOrdersNewResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __items__ = "orders"
 
 
@@ -331,7 +331,7 @@ class GetOrdersStatus(WBMethod[GetOrdersStatusResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __items__ = "orders"
     __body_fields__ = {"orders": "orders"}
 
@@ -352,7 +352,7 @@ class GetOrdersStickers(WBMethod[GetOrdersStickersResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"orders": "orders"}
 
     height: int
@@ -377,7 +377,7 @@ class GetPasses(WBMethod[list[Pass]]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
 
 class GetPassesOffices(WBMethod[list[PassOffice]]):
@@ -392,7 +392,7 @@ class GetPassesOffices(WBMethod[list[PassOffice]]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
 
 class GetSettingsAutoreturns(WBMethod[GetSettingsAutoreturnsResponse]):
@@ -406,7 +406,7 @@ class GetSettingsAutoreturns(WBMethod[GetSettingsAutoreturnsResponse]):
     __returns__ = GetSettingsAutoreturnsResponse
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
 
 class GetSettingsAutoreturnsItems(WBMethod[GetSettingsAutoreturnsItemsResponse]):
@@ -420,7 +420,7 @@ class GetSettingsAutoreturnsItems(WBMethod[GetSettingsAutoreturnsItemsResponse])
     __returns__ = GetSettingsAutoreturnsItemsResponse
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"chrt_ids": "chrtIds"}
 
     chrt_ids: list[int]
@@ -441,7 +441,7 @@ class GetSettingsAutoreturnsSubcategoriesRestricted(
     __query_params__ = {"next_": "next", "limit": "limit"}
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __paginate__ = "next"
     __items__ = "data"
 
@@ -465,7 +465,7 @@ class GetStatusHistory(WBMethod[GetStatusHistoryResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __items__ = "orders"
     __body_fields__ = {"orders": "orders"}
 
@@ -484,7 +484,7 @@ class GetStickersCrossBorder(WBMethod[GetStickersCrossBorderResponse]):
     __returns__ = GetStickersCrossBorderResponse
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"orders": "orders"}
 
     orders: list[int] | None = None
@@ -504,7 +504,7 @@ class GetSupplies(WBMethod[GetSuppliesResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __paginate__ = "next"
     __items__ = "supplies"
 
@@ -530,7 +530,7 @@ class GetSuppliesBarcode(WBMethod[GetSuppliesBarcodeResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     supply_id: str | int
     """ID поставки"""
@@ -551,7 +551,7 @@ class GetSuppliesById(WBMethod[Supply]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     supply_id: str | int
     """ID поставки"""
@@ -570,7 +570,7 @@ class GetSuppliesOrderIds(WBMethod[V3SupplyOrderIDsAPI]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     supply_id: str | int
     """ID поставки"""
@@ -588,7 +588,7 @@ class GetSuppliesOrdersReshipment(WBMethod[GetSuppliesOrdersReshipmentResponse])
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __items__ = "orders"
 
 
@@ -605,7 +605,7 @@ class GetSuppliesTrbx(WBMethod[GetSuppliesTrbxResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     supply_id: str | int
     """ID поставки"""
@@ -625,7 +625,7 @@ class GetSuppliesTrbxStickers(WBMethod[GetSuppliesTrbxStickersResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"trbx_ids": "trbxIds"}
 
     supply_id: str | int
@@ -649,7 +649,7 @@ class SetMetaCustomsDeclaration(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (60, 20)}
+    __rate_limits__ = {"all": (1200, 20)}
     __body_fields__ = {"customs_declaration": "customsDeclaration"}
 
     customs_declaration: str
@@ -671,7 +671,7 @@ class SetMetaExpiration(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (60, 20)}
+    __rate_limits__ = {"all": (1200, 20)}
     __body_fields__ = {"expiration": "expiration"}
 
     expiration: str
@@ -693,7 +693,7 @@ class SetMetaGtin(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (60, 20)}
+    __rate_limits__ = {"all": (1200, 20)}
     __body_fields__ = {"gtin": "gtin"}
 
     gtin: str
@@ -715,7 +715,7 @@ class SetMetaImei(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (60, 20)}
+    __rate_limits__ = {"all": (1200, 20)}
     __body_fields__ = {"imei": "imei"}
 
     imei: str
@@ -737,7 +737,7 @@ class SetMetaSgtin(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (60, 20)}
+    __rate_limits__ = {"all": (1200, 20)}
     __body_fields__ = {"sgtins": "sgtins"}
 
     order_id: str | int
@@ -761,7 +761,7 @@ class SetMetaUin(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (60, 20)}
+    __rate_limits__ = {"all": (1200, 20)}
     __body_fields__ = {"uin": "uin"}
 
     order_id: str | int
@@ -783,7 +783,7 @@ class UpdatePasses(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {
         "first_name": "firstName",
         "last_name": "lastName",
@@ -817,7 +817,7 @@ class UpdateSettingsAutoreturn(WBMethod[None]):
     __returns__ = None
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"type_": "type"}
 
     type_: str
@@ -835,7 +835,7 @@ class UpdateSettingsAutoreturnsItem(WBMethod[UpdateSettingsAutoreturnsItemRespon
     __returns__ = UpdateSettingsAutoreturnsItemResponse
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"chrt_ids": "chrtIds", "type_": "type"}
 
     chrt_ids: list[int]
@@ -859,7 +859,7 @@ class UpdateSuppliesDeliver(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     supply_id: str | int
     """ID поставки"""
@@ -878,7 +878,7 @@ class UpdateSuppliesOrder(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"orders": "orders"}
 
     supply_id: str | int

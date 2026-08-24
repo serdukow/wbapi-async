@@ -50,9 +50,9 @@ class CreateNmReportDownload(WBMethod[NmReportCreateReportResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
     __items__ = "data"
@@ -72,9 +72,9 @@ class CreateNmReportDownloadsRetry(WBMethod[NmReportRetryReportResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
     __items__ = "data"
@@ -95,7 +95,7 @@ class GetItemRating(WBMethod[GetItemRatingResponse]):
     __returns__ = GetItemRatingResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
-    __rate_limits__ = {"all": (20000, 3)}
+    __rate_limits__ = {"all": (60000, 3)}
     __paginate__ = "offset_body"
     __items__ = "data"
     __body_fields__ = {
@@ -150,9 +150,9 @@ class GetNmReportDownloads(WBMethod[NmReportGetReportsResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
     __items__ = "data"
@@ -174,9 +174,9 @@ class GetNmReportDownloadsFile(WBMethod[None]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
 
@@ -237,9 +237,9 @@ class GetSalesFunnelGroupedHistory(WBMethod[GetSalesFunnelGroupedHistoryResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -276,9 +276,9 @@ class GetSalesFunnelProducts(WBMethod[GetSalesFunnelProductsResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
     __paginate__ = "offset_body"
@@ -329,9 +329,9 @@ class GetSalesFunnelProductsHistory(WBMethod[list[GetSalesFunnelProductsHistoryR
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
     __body_fields__ = {
@@ -361,9 +361,9 @@ class GetSearchReport(WBMethod[CommonResponseProperties]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
     __paginate__ = "offset_body"
@@ -416,9 +416,9 @@ class GetSearchReportProductOrders(WBMethod[CommonResponseProperties]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
     __body_fields__ = {"period": "period", "nm_id": "nmId", "search_texts": "searchTexts"}
@@ -442,9 +442,9 @@ class GetSearchReportProductSearchTexts(WBMethod[CommonResponseProperties]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
     __body_fields__ = {
@@ -486,9 +486,9 @@ class GetSearchReportTableDetails(WBMethod[CommonResponseProperties]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
     __paginate__ = "offset_body"
@@ -544,9 +544,9 @@ class GetSearchReportTableGroups(WBMethod[CommonResponseProperties]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (3600000, 1),
     }
     __paginate__ = "offset_body"
@@ -599,9 +599,9 @@ class GetStocksReportOffices(WBMethod[GetStocksReportOfficesResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -621,9 +621,9 @@ class GetStocksReportProducts(WBMethod[GetStocksReportProductsResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -643,9 +643,9 @@ class GetStocksReportProductsGroups(WBMethod[GetStocksReportProductsGroupsRespon
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -665,9 +665,9 @@ class GetStocksReportProductsSizes(WBMethod[GetStocksReportProductsSizesResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 3),
-        "service": (20000, 3),
-        "basic_secret": (20000, 3),
+        "personal": (60000, 3),
+        "service": (60000, 3),
+        "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
     __items__ = "data"

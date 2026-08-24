@@ -28,7 +28,7 @@ class CreateInvite(WBMethod[CreateInviteResponse]):
     __returns__ = CreateInviteResponse
     __scope__ = Scope.USERS
     __host__ = "https://user-management-api.wildberries.ru"
-    __rate_limits__ = {"all": (1000, 5)}
+    __rate_limits__ = {"all": (5000, 5)}
     __body_fields__ = {"access": "access", "invite": "invite"}
 
     invite: CreateInviteInvite
@@ -47,7 +47,7 @@ class DeleteUser(WBMethod[None]):
     __query_params__ = {"deleted_user_id": "deletedUserID"}
     __scope__ = Scope.USERS
     __host__ = "https://user-management-api.wildberries.ru"
-    __rate_limits__ = {"all": (1000, 10)}
+    __rate_limits__ = {"all": (10000, 10)}
 
     deleted_user_id: int
     """ID пользователя, которому будет закрыт доступ"""
@@ -77,7 +77,7 @@ class GetCommonSubscriptions(WBMethod[SubscriptionsJamInfo]):
     __http_method__ = "GET"
     __returns__ = SubscriptionsJamInfo
     __host__ = "https://common-api.wildberries.ru"
-    __rate_limits__ = {"all": (60000, 10)}
+    __rate_limits__ = {"all": (600000, 10)}
 
 
 class GetCommonTariffConstructorOptions(WBMethod[PlanBuilderOptionsInfo]):
@@ -91,7 +91,7 @@ class GetCommonTariffConstructorOptions(WBMethod[PlanBuilderOptionsInfo]):
     __returns__ = PlanBuilderOptionsInfo
     __query_params__ = {"locale": "locale"}
     __host__ = "https://common-api.wildberries.ru"
-    __rate_limits__ = {"all": (60000, 10)}
+    __rate_limits__ = {"all": (600000, 10)}
 
     locale: str | None = None
     """Язык полей ответа:   - `ru` — русский   - `en` — английский"""
@@ -109,9 +109,9 @@ class GetCommunicationsNews(WBMethod[GetCommunicationsNewsResponse]):
     __query_params__ = {"from_": "from", "from_id": "fromID"}
     __host__ = "https://common-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 10),
-        "service": (60000, 10),
-        "basic_secret": (60000, 10),
+        "personal": (600000, 10),
+        "service": (600000, 10),
+        "basic_secret": (600000, 10),
         "basic": (3600000, 1),
     }
     __items__ = "data"
@@ -145,9 +145,9 @@ class GetSellerInfo(WBMethod[GetSellerInfoResponse]):
     __returns__ = GetSellerInfoResponse
     __host__ = "https://common-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 10),
-        "service": (60000, 10),
-        "basic_secret": (60000, 10),
+        "personal": (600000, 10),
+        "service": (600000, 10),
+        "basic_secret": (600000, 10),
         "basic": (86400000, 1),
     }
 
@@ -164,7 +164,7 @@ class GetUsers(WBMethod[GetUsersResponse]):
     __query_params__ = {"limit": "limit", "offset": "offset", "is_invite_only": "isInviteOnly"}
     __scope__ = Scope.USERS
     __host__ = "https://user-management-api.wildberries.ru"
-    __rate_limits__ = {"all": (1000, 5)}
+    __rate_limits__ = {"all": (5000, 5)}
     __paginate__ = "offset_query"
 
     is_invite_only: bool | None = None
@@ -188,7 +188,7 @@ class UpdateUsersAccess(WBMethod[None]):
     __returns__ = None
     __scope__ = Scope.USERS
     __host__ = "https://user-management-api.wildberries.ru"
-    __rate_limits__ = {"all": (1000, 5)}
+    __rate_limits__ = {"all": (5000, 5)}
     __body_fields__ = {"users_accesses": "usersAccesses"}
 
     users_accesses: list[UserAccess]

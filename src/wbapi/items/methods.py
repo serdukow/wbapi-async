@@ -60,7 +60,7 @@ class CreateContentBarcode(WBMethod[CreateContentBarcodeResponse]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __items__ = "data"
     __body_fields__ = {"count": "count"}
 
@@ -82,7 +82,7 @@ class CreateContentCardsUpload(WBMethod[ResponseItemList]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (6000, 5)}
+    __rate_limits__ = {"all": (30000, 5)}
     __items__ = "data"
 
     body: list[CreateContentCardsUploadBodyItem] | list[Any] | dict[str, Any]
@@ -101,9 +101,9 @@ class CreateContentCardsUploadAdd(WBMethod[ResponseItemList]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (6000, 5),
-        "service": (6000, 5),
-        "basic_secret": (6000, 5),
+        "personal": (30000, 5),
+        "service": (30000, 5),
+        "basic_secret": (30000, 5),
         "basic": (7200000, 1),
     }
     __items__ = "data"
@@ -130,9 +130,9 @@ class CreateContentTag(WBMethod[ResponseContentError]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -159,9 +159,9 @@ class CreateContentTagNomenclatureLink(WBMethod[ResponseContentError]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -187,7 +187,7 @@ class CreateWarehouse(WBMethod[CreateWarehouseResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"name": "name", "office_id": "officeId"}
 
     name: str
@@ -210,9 +210,9 @@ class DeleteContentTag(WBMethod[ResponseContentError]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -234,7 +234,7 @@ class DeleteStock(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (6000, 2)}
+    __rate_limits__ = {"all": (12000, 2)}
     __body_fields__ = {"chrt_ids": "chrtIds"}
 
     chrt_ids: list[int]
@@ -256,7 +256,7 @@ class DeleteWarehouse(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     warehouse_id: str | int
     """ID склада продавца"""
@@ -276,9 +276,9 @@ class GetBufferGoodsTask(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
@@ -305,9 +305,9 @@ class GetBufferTasks(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
 
@@ -328,9 +328,9 @@ class GetContentBrands(WBMethod[BrandsResponse]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 5),
-        "service": (1000, 5),
-        "basic_secret": (1000, 5),
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
         "basic": (3600000, 1),
     }
     __paginate__ = "next"
@@ -356,7 +356,7 @@ class GetContentCardsErrorList(WBMethod[ResponsePublicViewerPublicErrorsTableLis
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (6000, 5)}
+    __rate_limits__ = {"all": (30000, 5)}
     __paginate__ = "cursor"
     __items__ = "data"
     __body_fields__ = {"cursor": "cursor", "order": "order"}
@@ -382,9 +382,9 @@ class GetContentCardsLimits(WBMethod[GetContentCardsLimitsResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -403,7 +403,7 @@ class GetContentCardsList(WBMethod[GetContentCardsListResponse]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __paginate__ = "cursor"
     __items__ = "cards"
     __body_fields__ = {"settings": "settings"}
@@ -429,7 +429,7 @@ class GetContentCardsTrash(WBMethod[GetContentCardsTrashResponse]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __paginate__ = "cursor"
     __items__ = "cards"
     __body_fields__ = {"settings": "settings"}
@@ -456,9 +456,9 @@ class GetContentDirectoryColors(WBMethod[GetContentDirectoryColorsResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -482,7 +482,7 @@ class GetContentDirectoryCountries(WBMethod[GetContentDirectoryCountriesResponse
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __items__ = "data"
 
     locale: str | None = None
@@ -505,9 +505,9 @@ class GetContentDirectoryKinds(WBMethod[GetContentDirectoryKindsResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -532,9 +532,9 @@ class GetContentDirectorySeasons(WBMethod[GetContentDirectorySeasonsResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -558,7 +558,7 @@ class GetContentDirectoryTnved(WBMethod[GetContentDirectoryTnvedResponse]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __items__ = "data"
 
     subject_id: int
@@ -583,9 +583,9 @@ class GetContentDirectoryVat(WBMethod[GetContentDirectoryVatResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -615,7 +615,7 @@ class GetContentObjectAll(WBMethod[GetContentObjectAllResponse]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __paginate__ = "offset_query"
     __items__ = "data"
 
@@ -647,7 +647,7 @@ class GetContentObjectCharcs(WBMethod[GetContentObjectCharcsResponse]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __items__ = "data"
 
     subject_id: str | int
@@ -671,7 +671,7 @@ class GetContentObjectParentAll(WBMethod[GetContentObjectParentAllResponse]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __items__ = "data"
 
     locale: str | None = None
@@ -690,7 +690,7 @@ class GetContentRecommendationsList(WBMethod[GetRecomRes]):
     __returns__ = GetRecomRes
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __paginate__ = "next"
     __items__ = "data"
     __body_fields__ = {
@@ -728,9 +728,9 @@ class GetContentTags(WBMethod[GetContentTagsResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -748,7 +748,7 @@ class GetDbwWarehousesContacts(WBMethod[GetDbwWarehousesContactsResponse]):
     __path_params__ = ("warehouseId",)
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
     warehouse_id: str | int
     """ID склада продавца"""
@@ -768,9 +768,9 @@ class GetGoodsFilterGet(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
@@ -796,9 +796,9 @@ class GetGoodsFilterPost(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
 
@@ -817,9 +817,9 @@ class GetGoodsSizeNm(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
@@ -846,9 +846,9 @@ class GetHistoryGoodsTask(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
@@ -875,9 +875,9 @@ class GetHistoryTasks(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
 
@@ -897,7 +897,7 @@ class GetOffices(WBMethod[list[Office]]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
 
 class GetQuarantineGoods(WBMethod[None]):
@@ -914,9 +914,9 @@ class GetQuarantineGoods(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
@@ -940,7 +940,7 @@ class GetStocks(WBMethod[GetStocksResponse]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"chrt_ids": "chrtIds"}
 
     chrt_ids: list[int]
@@ -961,7 +961,7 @@ class GetWarehouses(WBMethod[list[Warehouse]]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
 
 
 class SetContentRecommendation(WBMethod[SetRecomRes]):
@@ -975,7 +975,7 @@ class SetContentRecommendation(WBMethod[SetRecomRes]):
     __returns__ = SetRecomRes
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __body_fields__ = {"rec_list": "recList", "replace": "replace"}
 
     rec_list: list[SetContentRecommendationRecListItem]
@@ -997,7 +997,7 @@ class SetDiscountsPricesUploadTaskB2bWholesale(WBMethod[None]):
     __returns__ = None
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
-    __rate_limits__ = {"personal": (600, 5), "service": (600, 5)}
+    __rate_limits__ = {"personal": (3000, 5), "service": (3000, 5)}
 
 
 class SetUploadTask(WBMethod[None]):
@@ -1013,9 +1013,9 @@ class SetUploadTask(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
 
@@ -1033,9 +1033,9 @@ class SetUploadTaskClubDiscount(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
 
@@ -1053,9 +1053,9 @@ class SetUploadTaskSize(WBMethod[None]):
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
 
@@ -1072,7 +1072,7 @@ class UpdateContentCard(WBMethod[ResponseItemList]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (6000, 5)}
+    __rate_limits__ = {"all": (30000, 5)}
     __items__ = "data"
 
     body: list[UpdateContentCardBodyItem] | list[Any] | dict[str, Any]
@@ -1091,9 +1091,9 @@ class UpdateContentCardsDeleteTrash(WBMethod[UpdateContentCardsDeleteTrashRespon
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -1115,7 +1115,7 @@ class UpdateContentCardsMoveNm(WBMethod[ResponseItemList]):
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (600, 5)}
+    __rate_limits__ = {"all": (3000, 5)}
     __items__ = "data"
 
     body: RequestMoveNmsImtConn | list[Any] | dict[str, Any]
@@ -1134,9 +1134,9 @@ class UpdateContentCardsRecover(WBMethod[UpdateContentCardsRecoverResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (20000, 5),
-        "service": (20000, 5),
-        "basic_secret": (20000, 5),
+        "personal": (100000, 5),
+        "service": (100000, 5),
+        "basic_secret": (100000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -1160,9 +1160,9 @@ class UpdateContentTag(WBMethod[ResponseContentError]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -1188,7 +1188,7 @@ class UpdateDbwWarehousesContact(WBMethod[None]):
     __path_params__ = ("warehouseId",)
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"contacts": "contacts"}
 
     warehouse_id: str | int
@@ -1209,7 +1209,7 @@ class UpdateStock(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"stocks": "stocks"}
 
     stocks: list[UpdateStockStocksItem]
@@ -1231,7 +1231,7 @@ class UpdateWarehouse(WBMethod[None]):
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (200, 20)}
+    __rate_limits__ = {"all": (4000, 20)}
     __body_fields__ = {"name": "name", "office_id": "officeId"}
 
     name: str
@@ -1257,9 +1257,9 @@ class UploadContentMediaFile(WBMethod[UploadContentMediaFileResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"
@@ -1278,9 +1278,9 @@ class UploadContentMediaSave(WBMethod[UploadContentMediaSaveResponse]):
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600, 5),
-        "service": (600, 5),
-        "basic_secret": (600, 5),
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
         "basic": (1800000, 1),
     }
     __items__ = "data"

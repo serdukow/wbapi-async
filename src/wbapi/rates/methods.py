@@ -22,9 +22,9 @@ class GetTariffsAcceptanceCoefficients(WBMethod[list[ModelsAcceptanceCoefficient
     __query_params__ = {"warehouse_ids": "warehouseIDs"}
     __host__ = "https://common-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 6),
-        "service": (10000, 6),
-        "basic_secret": (10000, 6),
+        "personal": (60000, 6),
+        "service": (60000, 6),
+        "basic_secret": (60000, 6),
         "basic": (3600000, 1),
     }
 
@@ -44,9 +44,9 @@ class GetTariffsBox(WBMethod[RatesBoxResponse]):
     __query_params__ = {"date": "date"}
     __host__ = "https://common-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 5),
-        "service": (1000, 5),
-        "basic_secret": (1000, 5),
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
         "basic": (3600000, 1),
     }
 
@@ -66,9 +66,9 @@ class GetTariffsCommission(WBMethod[Fee]):
     __query_params__ = {"locale": "locale"}
     __host__ = "https://common-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 2),
-        "service": (60000, 2),
-        "basic_secret": (60000, 2),
+        "personal": (120000, 2),
+        "service": (120000, 2),
+        "basic_secret": (120000, 2),
         "basic": (720000, 1),
     }
 
@@ -90,9 +90,9 @@ class GetTariffsPallet(WBMethod[RatesPalletResponse]):
     __query_params__ = {"date": "date"}
     __host__ = "https://common-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 5),
-        "service": (1000, 5),
-        "basic_secret": (1000, 5),
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
         "basic": (3600000, 1),
     }
 
@@ -112,9 +112,9 @@ class GetTariffsReturns(WBMethod[ReturnRatesResponse]):
     __query_params__ = {"date": "date"}
     __host__ = "https://common-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 5),
-        "service": (1000, 5),
-        "basic_secret": (1000, 5),
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
         "basic": (3600000, 1),
     }
 

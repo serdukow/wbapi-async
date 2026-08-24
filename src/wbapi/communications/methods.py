@@ -39,9 +39,9 @@ class CreateFeedbacksAnswer(WBMethod[None]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __body_fields__ = {"id_": "id", "text": "text"}
@@ -65,9 +65,9 @@ class CreateFeedbacksOrderReturns(WBMethod[CreateFeedbacksOrderReturnsResponse])
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"
@@ -89,9 +89,9 @@ class CreateSellerMessage(WBMethod[MessageResponse]):
     __scope__ = Scope.BUYER_CHAT
     __host__ = "https://buyer-chat-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 10),
-        "service": (1000, 10),
-        "basic_secret": (1000, 10),
+        "personal": (10000, 10),
+        "service": (10000, 10),
+        "basic_secret": (10000, 10),
         "basic": (3600000, 1),
     }
     __items__ = "result"
@@ -109,9 +109,9 @@ class DeleteFeedbacksPin(WBMethod[RespondSuccessResponse]):
     __scope__ = Scope.FEEDBACKS
     __host__ = "https://feedbacks-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
 
@@ -137,9 +137,9 @@ class GetClaims(WBMethod[None]):
     __scope__ = Scope.RETURNS
     __host__ = "https://returns-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (3000, 10),
-        "service": (3000, 10),
-        "basic_secret": (3000, 10),
+        "personal": (30000, 10),
+        "service": (30000, 10),
+        "basic_secret": (30000, 10),
         "basic": (3600000, 1),
     }
     __paginate__ = "offset_query"
@@ -170,9 +170,9 @@ class GetFeedback(WBMethod[GetFeedbackResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"
@@ -203,9 +203,9 @@ class GetFeedbacks(WBMethod[GetFeedbacksResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __paginate__ = "skip_take"
@@ -241,9 +241,9 @@ class GetFeedbacksArchive(WBMethod[GetFeedbacksArchiveResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __paginate__ = "skip_take"
@@ -273,9 +273,9 @@ class GetFeedbacksCount(WBMethod[GetFeedbacksCountResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"
@@ -301,9 +301,9 @@ class GetFeedbacksCountUnanswered(WBMethod[GetFeedbacksCountUnansweredResponse])
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"
@@ -332,9 +332,9 @@ class GetFeedbacksPins(WBMethod[RespondSuccessResponse]):
     __scope__ = Scope.FEEDBACKS
     __host__ = "https://feedbacks-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __paginate__ = "next"
@@ -384,9 +384,9 @@ class GetFeedbacksPinsCount(WBMethod[RespondSuccessResponse]):
     __scope__ = Scope.FEEDBACKS
     __host__ = "https://feedbacks-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
 
@@ -422,9 +422,9 @@ class GetFeedbacksPinsLimits(WBMethod[RespondSuccessResponse]):
     __scope__ = Scope.FEEDBACKS
     __host__ = "https://feedbacks-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
 
@@ -442,9 +442,9 @@ class GetNewFeedbacksQuestions(WBMethod[GetNewFeedbacksQuestionsResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"
@@ -464,9 +464,9 @@ class GetQuestion(WBMethod[GetQuestionResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"
@@ -497,9 +497,9 @@ class GetQuestions(WBMethod[GetQuestionsResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __paginate__ = "skip_take"
@@ -537,9 +537,9 @@ class GetQuestionsCount(WBMethod[GetQuestionsCountResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"
@@ -565,9 +565,9 @@ class GetQuestionsCountUnanswered(WBMethod[GetQuestionsCountUnansweredResponse])
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"
@@ -585,9 +585,9 @@ class GetSellerChats(WBMethod[ChatsResponse]):
     __scope__ = Scope.BUYER_CHAT
     __host__ = "https://buyer-chat-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 10),
-        "service": (1000, 10),
-        "basic_secret": (1000, 10),
+        "personal": (10000, 10),
+        "service": (10000, 10),
+        "basic_secret": (10000, 10),
         "basic": (3600000, 1),
     }
     __items__ = "result"
@@ -606,9 +606,9 @@ class GetSellerDownload(WBMethod[None]):
     __scope__ = Scope.BUYER_CHAT
     __host__ = "https://buyer-chat-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 10),
-        "service": (1000, 10),
-        "basic_secret": (1000, 10),
+        "personal": (10000, 10),
+        "service": (10000, 10),
+        "basic_secret": (10000, 10),
         "basic": (360000, 1),
     }
 
@@ -629,9 +629,9 @@ class GetSellerEvents(WBMethod[EventsResponse]):
     __scope__ = Scope.BUYER_CHAT
     __host__ = "https://buyer-chat-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1000, 10),
-        "service": (1000, 10),
-        "basic_secret": (1000, 10),
+        "personal": (10000, 10),
+        "service": (10000, 10),
+        "basic_secret": (10000, 10),
         "basic": (3600000, 1),
     }
     __paginate__ = "next"
@@ -655,9 +655,9 @@ class SetFeedbacksPin(WBMethod[RespondSuccessResponse]):
     __scope__ = Scope.FEEDBACKS
     __host__ = "https://feedbacks-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
 
@@ -676,9 +676,9 @@ class UpdateClaim(WBMethod[None]):
     __scope__ = Scope.RETURNS
     __host__ = "https://returns-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (3000, 10),
-        "service": (3000, 10),
-        "basic_secret": (3000, 10),
+        "personal": (30000, 10),
+        "service": (30000, 10),
+        "basic_secret": (30000, 10),
         "basic": (3600000, 1),
     }
 
@@ -696,9 +696,9 @@ class UpdateFeedbacksAnswer(WBMethod[None]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __body_fields__ = {"id_": "id", "text": "text"}
@@ -722,9 +722,9 @@ class UpdateQuestion(WBMethod[UpdateQuestionResponse]):
     __host__ = "https://feedbacks-api.wildberries.ru"
     __sandbox_host__ = "https://feedbacks-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (333, 6),
-        "service": (333, 6),
-        "basic_secret": (333, 6),
+        "personal": (2000, 6),
+        "service": (2000, 6),
+        "basic_secret": (2000, 6),
         "basic": (720000, 1),
     }
     __items__ = "data"

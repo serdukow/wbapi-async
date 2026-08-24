@@ -57,9 +57,9 @@ class CreatePaidStorage(WBMethod[CreateTaskResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 5),
-        "service": (60000, 5),
-        "basic_secret": (60000, 5),
+        "personal": (300000, 5),
+        "service": (300000, 5),
+        "basic_secret": (300000, 5),
         "basic": (3600000, 1),
     }
     __items__ = "data"
@@ -97,9 +97,9 @@ class CreateWarehouseRemain(WBMethod[CreateTaskResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 5),
-        "service": (60000, 5),
-        "basic_secret": (60000, 5),
+        "personal": (300000, 5),
+        "service": (300000, 5),
+        "basic_secret": (300000, 5),
         "basic": (900000, 1),
     }
     __items__ = "data"
@@ -188,9 +188,9 @@ class GetAnalyticsAntifraudDetails(WBMethod[None]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (600000, 10),
-        "service": (600000, 10),
-        "basic_secret": (600000, 10),
+        "personal": (6000000, 10),
+        "service": (6000000, 10),
+        "basic_secret": (6000000, 10),
         "basic": (3600000, 1),
     }
 
@@ -213,9 +213,9 @@ class GetAnalyticsBannedProductsBlocked(WBMethod[GetAnalyticsBannedProductsBlock
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 6),
-        "service": (10000, 6),
-        "basic_secret": (10000, 6),
+        "personal": (60000, 6),
+        "service": (60000, 6),
+        "basic_secret": (60000, 6),
         "basic": (3600000, 1),
     }
 
@@ -247,9 +247,9 @@ class GetAnalyticsBrandShare(WBMethod[None]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (5000, 20),
-        "service": (5000, 20),
-        "basic_secret": (5000, 20),
+        "personal": (100000, 20),
+        "service": (100000, 20),
+        "basic_secret": (100000, 20),
         "basic": (3600000, 1),
     }
 
@@ -275,9 +275,9 @@ class GetAnalyticsBrandShareBrands(WBMethod[None]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 10),
-        "service": (60000, 10),
-        "basic_secret": (60000, 10),
+        "personal": (600000, 10),
+        "service": (600000, 10),
+        "basic_secret": (600000, 10),
         "basic": (3600000, 1),
     }
 
@@ -295,9 +295,9 @@ class GetAnalyticsBrandShareParentSubjects(WBMethod[None]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (5000, 20),
-        "service": (5000, 20),
-        "basic_secret": (5000, 20),
+        "personal": (100000, 20),
+        "service": (100000, 20),
+        "basic_secret": (100000, 20),
         "basic": (3600000, 1),
     }
 
@@ -370,9 +370,9 @@ class GetAnalyticsExciseReport(WBMethod[ExciseReportResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (1800000, 10),
-        "service": (1800000, 10),
-        "basic_secret": (1800000, 10),
+        "personal": (18000000, 10),
+        "service": (18000000, 10),
+        "basic_secret": (18000000, 10),
         "basic": (43200000, 1),
     }
     __body_fields__ = {"countries": "countries"}
@@ -400,9 +400,9 @@ class GetAnalyticsGoodsLabeling(WBMethod[None]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 10),
-        "service": (60000, 10),
-        "basic_secret": (60000, 10),
+        "personal": (600000, 10),
+        "service": (600000, 10),
+        "basic_secret": (600000, 10),
         "basic": (3600000, 1),
     }
 
@@ -425,9 +425,9 @@ class GetAnalyticsGoodsReturns(WBMethod[GetAnalyticsGoodsReturnsResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 10),
-        "service": (60000, 10),
-        "basic_secret": (60000, 10),
+        "personal": (600000, 10),
+        "service": (600000, 10),
+        "basic_secret": (600000, 10),
         "basic": (1800000, 1),
     }
 
@@ -483,9 +483,9 @@ class GetAnalyticsRegionSale(WBMethod[None]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 5),
-        "service": (10000, 5),
-        "basic_secret": (10000, 5),
+        "personal": (50000, 5),
+        "service": (50000, 5),
+        "basic_secret": (50000, 5),
         "basic": (3600000, 1),
     }
 
@@ -564,10 +564,10 @@ class GetPaidStorageTasksStatus(WBMethod[GetTasksResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (5000, 5),
-        "service": (5000, 5),
-        "basic_secret": (5000, 5),
-        "basic": (1800000, 2),
+        "personal": (25000, 5),
+        "service": (25000, 5),
+        "basic_secret": (25000, 5),
+        "basic": (3600000, 2),
     }
     __items__ = "data"
 
@@ -589,9 +589,9 @@ class GetSupplierOrders(WBMethod[list[OrdersItem]]):
     __host__ = "https://statistics-api.wildberries.ru"
     __sandbox_host__ = "https://statistics-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (60000, 10),
-        "service": (60000, 10),
-        "basic_secret": (60000, 10),
+        "personal": (600000, 10),
+        "service": (600000, 10),
+        "basic_secret": (600000, 10),
         "basic": (10800000, 1),
     }
 
@@ -671,9 +671,9 @@ class GetWarehouseRemainsTasksStatus(WBMethod[GetTasksResponse]):
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (5000, 5),
-        "service": (5000, 5),
-        "basic_secret": (5000, 5),
+        "personal": (25000, 5),
+        "service": (25000, 5),
+        "basic_secret": (25000, 5),
         "basic": (900000, 1),
     }
     __items__ = "data"

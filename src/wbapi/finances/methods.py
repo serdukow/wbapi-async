@@ -146,9 +146,9 @@ class GetDocumentsCategories(WBMethod[GetCategories]):
     __scope__ = Scope.DOCUMENTS
     __host__ = "https://documents-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 5),
-        "service": (10000, 5),
-        "basic_secret": (10000, 5),
+        "personal": (50000, 5),
+        "service": (50000, 5),
+        "basic_secret": (50000, 5),
         "basic": (86400000, 1),
     }
     __items__ = "data"
@@ -170,9 +170,9 @@ class GetDocumentsDownload(WBMethod[GetDoc]):
     __scope__ = Scope.DOCUMENTS
     __host__ = "https://documents-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 5),
-        "service": (10000, 5),
-        "basic_secret": (10000, 5),
+        "personal": (50000, 5),
+        "service": (50000, 5),
+        "basic_secret": (50000, 5),
         "basic": (86400000, 1),
     }
     __items__ = "data"
@@ -195,9 +195,9 @@ class GetDocumentsDownloadAll(WBMethod[GetDocs]):
     __scope__ = Scope.DOCUMENTS
     __host__ = "https://documents-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (300000, 5),
-        "service": (300000, 5),
-        "basic_secret": (300000, 5),
+        "personal": (1500000, 5),
+        "service": (1500000, 5),
+        "basic_secret": (1500000, 5),
         "basic": (86400000, 1),
     }
     __items__ = "data"
@@ -229,9 +229,9 @@ class GetDocumentsList(WBMethod[GetList]):
     __scope__ = Scope.DOCUMENTS
     __host__ = "https://documents-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 5),
-        "service": (10000, 5),
-        "basic_secret": (10000, 5),
+        "personal": (50000, 5),
+        "service": (50000, 5),
+        "basic_secret": (50000, 5),
         "basic": (86400000, 1),
     }
     __paginate__ = "offset_query"

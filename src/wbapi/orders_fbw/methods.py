@@ -31,9 +31,9 @@ class CreateAcceptanceOption(WBMethod[ModelsOptionsResultModel]):
     __host__ = "https://supplies-api.wildberries.ru"
     __sandbox_host__ = "https://supplies-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 6),
-        "service": (10000, 6),
-        "basic_secret": (10000, 6),
+        "personal": (60000, 6),
+        "service": (60000, 6),
+        "basic_secret": (60000, 6),
         "basic": (1800000, 1),
     }
     __items__ = "result"
@@ -58,9 +58,9 @@ class GetSupplies(WBMethod[list[ModelsSupply]]):
     __scope__ = Scope.SUPPLIES
     __host__ = "https://supplies-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (2000, 10),
-        "service": (2000, 10),
-        "basic_secret": (2000, 10),
+        "personal": (20000, 10),
+        "service": (20000, 10),
+        "basic_secret": (20000, 10),
         "basic": (1800000, 1),
     }
     __paginate__ = "offset_query"
@@ -92,9 +92,9 @@ class GetSuppliesById(WBMethod[ModelsSupplyDetails]):
     __scope__ = Scope.SUPPLIES
     __host__ = "https://supplies-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (2000, 10),
-        "service": (2000, 10),
-        "basic_secret": (2000, 10),
+        "personal": (20000, 10),
+        "service": (20000, 10),
+        "basic_secret": (20000, 10),
         "basic": (1800000, 1),
     }
 
@@ -120,9 +120,9 @@ class GetSuppliesGoods(WBMethod[list[ModelsGoodInSupply]]):
     __scope__ = Scope.SUPPLIES
     __host__ = "https://supplies-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (2000, 10),
-        "service": (2000, 10),
-        "basic_secret": (2000, 10),
+        "personal": (20000, 10),
+        "service": (20000, 10),
+        "basic_secret": (20000, 10),
         "basic": (1800000, 1),
     }
     __paginate__ = "offset_query"
@@ -152,9 +152,9 @@ class GetSuppliesPackage(WBMethod[list[ModelsBox]]):
     __scope__ = Scope.SUPPLIES
     __host__ = "https://supplies-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (2000, 10),
-        "service": (2000, 10),
-        "basic_secret": (2000, 10),
+        "personal": (20000, 10),
+        "service": (20000, 10),
+        "basic_secret": (20000, 10),
         "basic": (1800000, 1),
     }
 
@@ -174,9 +174,9 @@ class GetTransitTariffs(WBMethod[list[ModelsTransitTariff]]):
     __scope__ = Scope.SUPPLIES
     __host__ = "https://supplies-api.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 10),
-        "service": (10000, 10),
-        "basic_secret": (10000, 10),
+        "personal": (100000, 10),
+        "service": (100000, 10),
+        "basic_secret": (100000, 10),
         "basic": (43200000, 1),
     }
 
@@ -194,8 +194,8 @@ class GetWarehouses(WBMethod[list[ModelsWarehousesResultItems]]):
     __host__ = "https://supplies-api.wildberries.ru"
     __sandbox_host__ = "https://supplies-api-sandbox.wildberries.ru"
     __rate_limits__ = {
-        "personal": (10000, 6),
-        "service": (10000, 6),
-        "basic_secret": (10000, 6),
+        "personal": (60000, 6),
+        "service": (60000, 6),
+        "basic_secret": (60000, 6),
         "basic": (43200000, 1),
     }
