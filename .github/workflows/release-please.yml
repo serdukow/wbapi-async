@@ -34,3 +34,14 @@ jobs:
       - name: Report
         if: steps.release.outputs.release_created == 'true'
         run: echo "::notice::Released ${{ steps.release.outputs.tag_name }}"
+
+  publish:
+    name: Publish to PyPI
+    needs: release-please
+    if: needs.release-please.outputs.released == 'true'
+    uses: ./.github/workflows/pypi_release.yml
+    with:
+      ref: ${{ needs.release-please.outputs.tag }}
+    permissions:
+      id-token: write
+      contents: read

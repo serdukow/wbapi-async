@@ -6,49 +6,49 @@ from ..client.method import WBMethod
 from ..utils.token import Scope
 from .models import (
     BrandsResponse,
-    CreateContentBarcodeResponse,
-    CreateContentCardsUploadAddCardsToAddItem,
-    CreateContentCardsUploadBodyItem,
+    CreateBarcodeResponse,
+    CreateCardsUploadAddCardsToAddItem,
+    CreateCardsUploadBodyItem,
     CreateWarehouseResponse,
-    GetContentCardsLimitsResponse,
-    GetContentCardsListResponse,
-    GetContentCardsListSettings,
-    GetContentCardsTrashResponse,
-    GetContentCardsTrashSettings,
-    GetContentDirectoryColorsResponse,
-    GetContentDirectoryCountriesResponse,
-    GetContentDirectoryKindsResponse,
-    GetContentDirectorySeasonsResponse,
-    GetContentDirectoryTnvedResponse,
-    GetContentDirectoryVatResponse,
-    GetContentObjectAllResponse,
-    GetContentObjectCharcsResponse,
-    GetContentObjectParentAllResponse,
-    GetContentTagsResponse,
+    GetCardsLimitsResponse,
+    GetCardsListResponse,
+    GetCardsListSettings,
+    GetCardsTrashResponse,
+    GetCardsTrashSettings,
     GetDbwWarehousesContactsResponse,
+    GetDirectoryColorsResponse,
+    GetDirectoryCountriesResponse,
+    GetDirectoryKindsResponse,
+    GetDirectorySeasonsResponse,
+    GetDirectoryTnvedResponse,
+    GetDirectoryVatResponse,
+    GetObjectAllResponse,
+    GetObjectCharcsResponse,
+    GetObjectParentAllResponse,
     GetRecomRes,
     GetStocksResponse,
+    GetTagsResponse,
     Office,
     RequestMoveNmsImtConn,
     ResponseContentError,
     ResponseItemList,
     ResponsePublicViewerPublicErrorsTableListV2,
-    SetContentRecommendationRecListItem,
+    SetRecommendationRecListItem,
     SetRecomRes,
     SwaggerPublicErrorsCursorInput,
     SwaggerPublicErrorsOrderV2,
-    UpdateContentCardBodyItem,
-    UpdateContentCardsDeleteTrashResponse,
-    UpdateContentCardsRecoverResponse,
+    UpdateCardBodyItem,
+    UpdateCardsDeleteTrashResponse,
+    UpdateCardsRecoverResponse,
     UpdateDbwWarehousesContactContactsItem,
     UpdateStockStocksItem,
-    UploadContentMediaFileResponse,
-    UploadContentMediaSaveResponse,
+    UploadMediaFileResponse,
+    UploadMediaSaveResponse,
     Warehouse,
 )
 
 
-class CreateContentBarcode(WBMethod[CreateContentBarcodeResponse]):
+class CreateBarcode(WBMethod[CreateBarcodeResponse]):
     """Генерация баркодов
 
     POST /content/v2/barcodes
@@ -56,7 +56,7 @@ class CreateContentBarcode(WBMethod[CreateContentBarcodeResponse]):
 
     __path__ = "/content/v2/barcodes"
     __http_method__ = "POST"
-    __returns__ = CreateContentBarcodeResponse
+    __returns__ = CreateBarcodeResponse
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
@@ -70,7 +70,7 @@ class CreateContentBarcode(WBMethod[CreateContentBarcodeResponse]):
     """
 
 
-class CreateContentCardsUpload(WBMethod[ResponseItemList]):
+class CreateCardsUpload(WBMethod[ResponseItemList]):
     """Создание карточек товаров
 
     POST /content/v2/cards/upload
@@ -85,10 +85,10 @@ class CreateContentCardsUpload(WBMethod[ResponseItemList]):
     __rate_limits__ = {"all": (30000, 5)}
     __items__ = "data"
 
-    body: list[CreateContentCardsUploadBodyItem] | list[Any] | dict[str, Any]
+    body: list[CreateCardsUploadBodyItem] | list[Any] | dict[str, Any]
 
 
-class CreateContentCardsUploadAdd(WBMethod[ResponseItemList]):
+class CreateCardsUploadAdd(WBMethod[ResponseItemList]):
     """Создание карточек товаров с присоединением
 
     POST /content/v2/cards/upload/add
@@ -109,7 +109,7 @@ class CreateContentCardsUploadAdd(WBMethod[ResponseItemList]):
     __items__ = "data"
     __body_fields__ = {"imt_id": "imtID", "cards_to_add": "cardsToAdd"}
 
-    cards_to_add: list[CreateContentCardsUploadAddCardsToAddItem] | None = None
+    cards_to_add: list[CreateCardsUploadAddCardsToAddItem] | None = None
     """Добавляемые карточки товаров"""
     imt_id: int | None = None
     """`imtID` отдельной карточки товара или группы объединённых карточек товаров, к которой
@@ -117,7 +117,7 @@ class CreateContentCardsUploadAdd(WBMethod[ResponseItemList]):
     """
 
 
-class CreateContentTag(WBMethod[ResponseContentError]):
+class CreateTag(WBMethod[ResponseContentError]):
     """Создание ярлыка
 
     POST /content/v2/tag
@@ -146,7 +146,7 @@ class CreateContentTag(WBMethod[ResponseContentError]):
     """Имя ярлыка"""
 
 
-class CreateContentTagNomenclatureLink(WBMethod[ResponseContentError]):
+class CreateTagNomenclatureLink(WBMethod[ResponseContentError]):
     """Управление ярлыками в карточке товара
 
     POST /content/v2/tag/nomenclature/link
@@ -196,7 +196,29 @@ class CreateWarehouse(WBMethod[CreateWarehouseResponse]):
     """ID склада WB.Нельзя привязывать склад WB, который уже используется"""
 
 
-class DeleteContentTag(WBMethod[ResponseContentError]):
+class DeleteStock(WBMethod[None]):
+    """Удалить остатки товаров
+
+    DELETE /api/v3/stocks/{warehouseId}
+    """
+
+    __path__ = "/api/v3/stocks/{warehouseId}"
+    __http_method__ = "DELETE"
+    __returns__ = None
+    __path_params__ = ("warehouseId",)
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (12000, 2)}
+    __body_fields__ = {"chrt_ids": "chrtIds"}
+
+    chrt_ids: list[int]
+    """Массив ID размеров товаров"""
+    warehouse_id: str | int
+    """ID склада продавца"""
+
+
+class DeleteTag(WBMethod[ResponseContentError]):
     """Удаление ярлыка
 
     DELETE /content/v2/tag/{id}
@@ -221,28 +243,6 @@ class DeleteContentTag(WBMethod[ResponseContentError]):
     """Числовой ID ярлыка"""
 
 
-class DeleteStock(WBMethod[None]):
-    """Удалить остатки товаров
-
-    DELETE /api/v3/stocks/{warehouseId}
-    """
-
-    __path__ = "/api/v3/stocks/{warehouseId}"
-    __http_method__ = "DELETE"
-    __returns__ = None
-    __path_params__ = ("warehouseId",)
-    __scope__ = Scope.MARKETPLACE
-    __host__ = "https://marketplace-api.wildberries.ru"
-    __sandbox_host__ = "https://marketplace-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (12000, 2)}
-    __body_fields__ = {"chrt_ids": "chrtIds"}
-
-    chrt_ids: list[int]
-    """Массив ID размеров товаров"""
-    warehouse_id: str | int
-    """ID склада продавца"""
-
-
 class DeleteWarehouse(WBMethod[None]):
     """Удалить склад продавца
 
@@ -260,6 +260,34 @@ class DeleteWarehouse(WBMethod[None]):
 
     warehouse_id: str | int
     """ID склада продавца"""
+
+
+class GetBrands(WBMethod[BrandsResponse]):
+    """Бренды
+
+    GET /api/content/v1/brands
+    """
+
+    __path__ = "/api/content/v1/brands"
+    __http_method__ = "GET"
+    __returns__ = BrandsResponse
+    __query_params__ = {"subject_id": "subjectId", "next_": "next"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (5000, 5),
+        "service": (5000, 5),
+        "basic_secret": (5000, 5),
+        "basic": (3600000, 1),
+    }
+    __paginate__ = "next"
+
+    subject_id: int
+    """ID предмета"""
+    next_: int | None = None
+    """Параметр пагинации. Используйте значение `next` из ответа, чтобы получить следующий пакет
+    данных
+    """
 
 
 class GetBufferGoodsTask(WBMethod[None]):
@@ -315,35 +343,7 @@ class GetBufferTasks(WBMethod[None]):
     """ID загрузки"""
 
 
-class GetContentBrands(WBMethod[BrandsResponse]):
-    """Бренды
-
-    GET /api/content/v1/brands
-    """
-
-    __path__ = "/api/content/v1/brands"
-    __http_method__ = "GET"
-    __returns__ = BrandsResponse
-    __query_params__ = {"subject_id": "subjectId", "next_": "next"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __rate_limits__ = {
-        "personal": (5000, 5),
-        "service": (5000, 5),
-        "basic_secret": (5000, 5),
-        "basic": (3600000, 1),
-    }
-    __paginate__ = "next"
-
-    subject_id: int
-    """ID предмета"""
-    next_: int | None = None
-    """Параметр пагинации. Используйте значение `next` из ответа, чтобы получить следующий пакет
-    данных
-    """
-
-
-class GetContentCardsErrorList(WBMethod[ResponsePublicViewerPublicErrorsTableListV2]):
+class GetCardsErrorList(WBMethod[ResponsePublicViewerPublicErrorsTableListV2]):
     """Список несозданных карточек товаров с ошибками
 
     POST /content/v2/cards/error/list
@@ -369,7 +369,7 @@ class GetContentCardsErrorList(WBMethod[ResponsePublicViewerPublicErrorsTableLis
     order: SwaggerPublicErrorsOrderV2 | None = None
 
 
-class GetContentCardsLimits(WBMethod[GetContentCardsLimitsResponse]):
+class GetCardsLimits(WBMethod[GetCardsLimitsResponse]):
     """Лимиты карточек товаров
 
     GET /content/v2/cards/limits
@@ -377,7 +377,7 @@ class GetContentCardsLimits(WBMethod[GetContentCardsLimitsResponse]):
 
     __path__ = "/content/v2/cards/limits"
     __http_method__ = "GET"
-    __returns__ = GetContentCardsLimitsResponse
+    __returns__ = GetCardsLimitsResponse
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
@@ -390,7 +390,7 @@ class GetContentCardsLimits(WBMethod[GetContentCardsLimitsResponse]):
     __items__ = "data"
 
 
-class GetContentCardsList(WBMethod[GetContentCardsListResponse]):
+class GetCardsList(WBMethod[GetCardsListResponse]):
     """Список карточек товаров
 
     POST /content/v2/get/cards/list
@@ -398,7 +398,7 @@ class GetContentCardsList(WBMethod[GetContentCardsListResponse]):
 
     __path__ = "/content/v2/get/cards/list"
     __http_method__ = "POST"
-    __returns__ = GetContentCardsListResponse
+    __returns__ = GetCardsListResponse
     __query_params__ = {"locale": "locale"}
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
@@ -412,11 +412,11 @@ class GetContentCardsList(WBMethod[GetContentCardsListResponse]):
     """Язык полей ответа `name`, `value` и `object`:   - `ru` — русский   - `en` — английский   -
     `zh` — китайский …
     """
-    settings: GetContentCardsListSettings | None = None
+    settings: GetCardsListSettings | None = None
     """Настройки"""
 
 
-class GetContentCardsTrash(WBMethod[GetContentCardsTrashResponse]):
+class GetCardsTrash(WBMethod[GetCardsTrashResponse]):
     """Список карточек товаров в корзине
 
     POST /content/v2/get/cards/trash
@@ -424,7 +424,7 @@ class GetContentCardsTrash(WBMethod[GetContentCardsTrashResponse]):
 
     __path__ = "/content/v2/get/cards/trash"
     __http_method__ = "POST"
-    __returns__ = GetContentCardsTrashResponse
+    __returns__ = GetCardsTrashResponse
     __query_params__ = {"locale": "locale"}
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
@@ -438,302 +438,8 @@ class GetContentCardsTrash(WBMethod[GetContentCardsTrashResponse]):
     """Язык полей ответа `name`, `value` и `object`:   - `ru` — русский   - `en` — английский   -
     `zh` — китайский …
     """
-    settings: GetContentCardsTrashSettings | None = None
+    settings: GetCardsTrashSettings | None = None
     """Настройки"""
-
-
-class GetContentDirectoryColors(WBMethod[GetContentDirectoryColorsResponse]):
-    """Цвет
-
-    GET /content/v2/directory/colors
-    """
-
-    __path__ = "/content/v2/directory/colors"
-    __http_method__ = "GET"
-    __returns__ = GetContentDirectoryColorsResponse
-    __query_params__ = {"locale": "locale"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {
-        "personal": (3000, 5),
-        "service": (3000, 5),
-        "basic_secret": (3000, 5),
-        "basic": (1800000, 1),
-    }
-    __items__ = "data"
-
-    locale: str | None = None
-    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
-    — китайский …
-    """
-
-
-class GetContentDirectoryCountries(WBMethod[GetContentDirectoryCountriesResponse]):
-    """Страна производства
-
-    GET /content/v2/directory/countries
-    """
-
-    __path__ = "/content/v2/directory/countries"
-    __http_method__ = "GET"
-    __returns__ = GetContentDirectoryCountriesResponse
-    __query_params__ = {"locale": "locale"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (3000, 5)}
-    __items__ = "data"
-
-    locale: str | None = None
-    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
-    — китайский …
-    """
-
-
-class GetContentDirectoryKinds(WBMethod[GetContentDirectoryKindsResponse]):
-    """Пол
-
-    GET /content/v2/directory/kinds
-    """
-
-    __path__ = "/content/v2/directory/kinds"
-    __http_method__ = "GET"
-    __returns__ = GetContentDirectoryKindsResponse
-    __query_params__ = {"locale": "locale"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {
-        "personal": (3000, 5),
-        "service": (3000, 5),
-        "basic_secret": (3000, 5),
-        "basic": (1800000, 1),
-    }
-    __items__ = "data"
-
-    locale: str | None = None
-    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
-    — китайский …
-    """
-
-
-class GetContentDirectorySeasons(WBMethod[GetContentDirectorySeasonsResponse]):
-    """Сезон
-
-    GET /content/v2/directory/seasons
-    """
-
-    __path__ = "/content/v2/directory/seasons"
-    __http_method__ = "GET"
-    __returns__ = GetContentDirectorySeasonsResponse
-    __query_params__ = {"locale": "locale"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {
-        "personal": (3000, 5),
-        "service": (3000, 5),
-        "basic_secret": (3000, 5),
-        "basic": (1800000, 1),
-    }
-    __items__ = "data"
-
-    locale: str | None = None
-    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
-    — китайский …
-    """
-
-
-class GetContentDirectoryTnved(WBMethod[GetContentDirectoryTnvedResponse]):
-    """ТНВЭД-код
-
-    GET /content/v2/directory/tnved
-    """
-
-    __path__ = "/content/v2/directory/tnved"
-    __http_method__ = "GET"
-    __returns__ = GetContentDirectoryTnvedResponse
-    __query_params__ = {"subject_id": "subjectID", "search": "search", "locale": "locale"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (3000, 5)}
-    __items__ = "data"
-
-    subject_id: int
-    """ID предмета"""
-    locale: str | None = None
-    """Язык полей ответа:   - `ru` — русский   - `en` — английский   - `zh` — китайский …"""
-    search: int | None = None
-    """Поиск по ТНВЭД-коду. Работает только в паре с `subjectID`"""
-
-
-class GetContentDirectoryVat(WBMethod[GetContentDirectoryVatResponse]):
-    """Ставка НДС
-
-    GET /content/v2/directory/vat
-    """
-
-    __path__ = "/content/v2/directory/vat"
-    __http_method__ = "GET"
-    __returns__ = GetContentDirectoryVatResponse
-    __query_params__ = {"locale": "locale"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {
-        "personal": (3000, 5),
-        "service": (3000, 5),
-        "basic_secret": (3000, 5),
-        "basic": (1800000, 1),
-    }
-    __items__ = "data"
-
-    locale: str | None = None
-    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
-    — китайский …
-    """
-
-
-class GetContentObjectAll(WBMethod[GetContentObjectAllResponse]):
-    """Список предметов
-
-    GET /content/v2/object/all
-    """
-
-    __path__ = "/content/v2/object/all"
-    __http_method__ = "GET"
-    __returns__ = GetContentObjectAllResponse
-    __query_params__ = {
-        "locale": "locale",
-        "name": "name",
-        "limit": "limit",
-        "offset": "offset",
-        "parent_id": "parentID",
-    }
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (3000, 5)}
-    __paginate__ = "offset_query"
-    __items__ = "data"
-
-    limit: int | None = None
-    """Количество предметов, максимум 1000"""
-    locale: str | None = None
-    """Язык полей ответа:   - `ru` — русский   - `en` — английский   - `zh` — китайский …"""
-    name: str | None = None
-    """Поиск по названию предмета (Носки), поиск работает по подстроке, искать можно на любом из
-    поддерживаемых языков
-    """
-    offset: int | None = None
-    """Сколько элементов пропустить. Например, для значения `10` ответ начнется с 11 элемента"""
-    parent_id: int | None = None
-    """ID родительской категории предмета"""
-
-
-class GetContentObjectCharcs(WBMethod[GetContentObjectCharcsResponse]):
-    """Характеристики предмета
-
-    GET /content/v2/object/charcs/{subjectId}
-    """
-
-    __path__ = "/content/v2/object/charcs/{subjectId}"
-    __http_method__ = "GET"
-    __returns__ = GetContentObjectCharcsResponse
-    __path_params__ = ("subjectId",)
-    __query_params__ = {"locale": "locale"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (3000, 5)}
-    __items__ = "data"
-
-    subject_id: str | int
-    """ID предмета"""
-    locale: str | None = None
-    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
-    — китайский …
-    """
-
-
-class GetContentObjectParentAll(WBMethod[GetContentObjectParentAllResponse]):
-    """Родительские категории товаров
-
-    GET /content/v2/object/parent/all
-    """
-
-    __path__ = "/content/v2/object/parent/all"
-    __http_method__ = "GET"
-    __returns__ = GetContentObjectParentAllResponse
-    __query_params__ = {"locale": "locale"}
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {"all": (3000, 5)}
-    __items__ = "data"
-
-    locale: str | None = None
-    """Язык поля ответа `name`:   - `ru` — русский   - `en` — английский   - `zh` — китайский …
-    """
-
-
-class GetContentRecommendationsList(WBMethod[GetRecomRes]):
-    """Список рекомендаций в карточках товаров
-
-    POST /api/content/v1/recommendations/list
-    """
-
-    __path__ = "/api/content/v1/recommendations/list"
-    __http_method__ = "POST"
-    __returns__ = GetRecomRes
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __rate_limits__ = {"all": (3000, 5)}
-    __paginate__ = "next"
-    __items__ = "data"
-    __body_fields__ = {
-        "brand_names": "brandNames",
-        "limit": "limit",
-        "next_": "next",
-        "search": "search",
-        "subject_ids": "subjectIds",
-    }
-
-    brand_names: list[str] | None = None
-    """Бренды"""
-    limit: int | None = None
-    """Количество товаров в ответе"""
-    next_: int | None = None
-    """Курсор. Последний `nmId` в ответе"""
-    search: str | None = None
-    """Поиск:   - по артикулу WB `nmId` — полное совпадение   - по артикулу продавца `vendorCode` —
-    частичное совпадение
-    """
-    subject_ids: list[int] | None = None
-    """ID предметов"""
-
-
-class GetContentTags(WBMethod[GetContentTagsResponse]):
-    """Список ярлыков
-
-    GET /content/v2/tags
-    """
-
-    __path__ = "/content/v2/tags"
-    __http_method__ = "GET"
-    __returns__ = GetContentTagsResponse
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {
-        "personal": (3000, 5),
-        "service": (3000, 5),
-        "basic_secret": (3000, 5),
-        "basic": (1800000, 1),
-    }
-    __items__ = "data"
 
 
 class GetDbwWarehousesContacts(WBMethod[GetDbwWarehousesContactsResponse]):
@@ -752,6 +458,160 @@ class GetDbwWarehousesContacts(WBMethod[GetDbwWarehousesContactsResponse]):
 
     warehouse_id: str | int
     """ID склада продавца"""
+
+
+class GetDirectoryColors(WBMethod[GetDirectoryColorsResponse]):
+    """Цвет
+
+    GET /content/v2/directory/colors
+    """
+
+    __path__ = "/content/v2/directory/colors"
+    __http_method__ = "GET"
+    __returns__ = GetDirectoryColorsResponse
+    __query_params__ = {"locale": "locale"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
+        "basic": (1800000, 1),
+    }
+    __items__ = "data"
+
+    locale: str | None = None
+    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
+    — китайский …
+    """
+
+
+class GetDirectoryCountries(WBMethod[GetDirectoryCountriesResponse]):
+    """Страна производства
+
+    GET /content/v2/directory/countries
+    """
+
+    __path__ = "/content/v2/directory/countries"
+    __http_method__ = "GET"
+    __returns__ = GetDirectoryCountriesResponse
+    __query_params__ = {"locale": "locale"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (3000, 5)}
+    __items__ = "data"
+
+    locale: str | None = None
+    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
+    — китайский …
+    """
+
+
+class GetDirectoryKinds(WBMethod[GetDirectoryKindsResponse]):
+    """Пол
+
+    GET /content/v2/directory/kinds
+    """
+
+    __path__ = "/content/v2/directory/kinds"
+    __http_method__ = "GET"
+    __returns__ = GetDirectoryKindsResponse
+    __query_params__ = {"locale": "locale"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
+        "basic": (1800000, 1),
+    }
+    __items__ = "data"
+
+    locale: str | None = None
+    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
+    — китайский …
+    """
+
+
+class GetDirectorySeasons(WBMethod[GetDirectorySeasonsResponse]):
+    """Сезон
+
+    GET /content/v2/directory/seasons
+    """
+
+    __path__ = "/content/v2/directory/seasons"
+    __http_method__ = "GET"
+    __returns__ = GetDirectorySeasonsResponse
+    __query_params__ = {"locale": "locale"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
+        "basic": (1800000, 1),
+    }
+    __items__ = "data"
+
+    locale: str | None = None
+    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
+    — китайский …
+    """
+
+
+class GetDirectoryTnved(WBMethod[GetDirectoryTnvedResponse]):
+    """ТНВЭД-код
+
+    GET /content/v2/directory/tnved
+    """
+
+    __path__ = "/content/v2/directory/tnved"
+    __http_method__ = "GET"
+    __returns__ = GetDirectoryTnvedResponse
+    __query_params__ = {"subject_id": "subjectID", "search": "search", "locale": "locale"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (3000, 5)}
+    __items__ = "data"
+
+    subject_id: int
+    """ID предмета"""
+    locale: str | None = None
+    """Язык полей ответа:   - `ru` — русский   - `en` — английский   - `zh` — китайский …"""
+    search: int | None = None
+    """Поиск по ТНВЭД-коду. Работает только в паре с `subjectID`"""
+
+
+class GetDirectoryVat(WBMethod[GetDirectoryVatResponse]):
+    """Ставка НДС
+
+    GET /content/v2/directory/vat
+    """
+
+    __path__ = "/content/v2/directory/vat"
+    __http_method__ = "GET"
+    __returns__ = GetDirectoryVatResponse
+    __query_params__ = {"locale": "locale"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
+        "basic": (1800000, 1),
+    }
+    __items__ = "data"
+
+    locale: str | None = None
+    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
+    — китайский …
+    """
 
 
 class GetGoodsFilterGet(WBMethod[None]):
@@ -885,6 +745,89 @@ class GetHistoryTasks(WBMethod[None]):
     """ID загрузки"""
 
 
+class GetObjectAll(WBMethod[GetObjectAllResponse]):
+    """Список предметов
+
+    GET /content/v2/object/all
+    """
+
+    __path__ = "/content/v2/object/all"
+    __http_method__ = "GET"
+    __returns__ = GetObjectAllResponse
+    __query_params__ = {
+        "locale": "locale",
+        "name": "name",
+        "limit": "limit",
+        "offset": "offset",
+        "parent_id": "parentID",
+    }
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (3000, 5)}
+    __paginate__ = "offset_query"
+    __items__ = "data"
+
+    limit: int | None = None
+    """Количество предметов, максимум 1000"""
+    locale: str | None = None
+    """Язык полей ответа:   - `ru` — русский   - `en` — английский   - `zh` — китайский …"""
+    name: str | None = None
+    """Поиск по названию предмета (Носки), поиск работает по подстроке, искать можно на любом из
+    поддерживаемых языков
+    """
+    offset: int | None = None
+    """Сколько элементов пропустить. Например, для значения `10` ответ начнется с 11 элемента"""
+    parent_id: int | None = None
+    """ID родительской категории предмета"""
+
+
+class GetObjectCharcs(WBMethod[GetObjectCharcsResponse]):
+    """Характеристики предмета
+
+    GET /content/v2/object/charcs/{subjectId}
+    """
+
+    __path__ = "/content/v2/object/charcs/{subjectId}"
+    __http_method__ = "GET"
+    __returns__ = GetObjectCharcsResponse
+    __path_params__ = ("subjectId",)
+    __query_params__ = {"locale": "locale"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (3000, 5)}
+    __items__ = "data"
+
+    subject_id: str | int
+    """ID предмета"""
+    locale: str | None = None
+    """Язык полей ответа `subjectName` и `name`:   - `ru` — русский   - `en` — английский   - `zh`
+    — китайский …
+    """
+
+
+class GetObjectParentAll(WBMethod[GetObjectParentAllResponse]):
+    """Родительские категории товаров
+
+    GET /content/v2/object/parent/all
+    """
+
+    __path__ = "/content/v2/object/parent/all"
+    __http_method__ = "GET"
+    __returns__ = GetObjectParentAllResponse
+    __query_params__ = {"locale": "locale"}
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {"all": (3000, 5)}
+    __items__ = "data"
+
+    locale: str | None = None
+    """Язык поля ответа `name`:   - `ru` — русский   - `en` — английский   - `zh` — китайский …
+    """
+
+
 class GetOffices(WBMethod[list[Office]]):
     """Получить список складов WB
 
@@ -927,6 +870,42 @@ class GetQuarantineGoods(WBMethod[None]):
     """Сколько элементов пропустить. Например, для значения `10` ответ начнется с 11 элемента"""
 
 
+class GetRecommendationsList(WBMethod[GetRecomRes]):
+    """Список рекомендаций в карточках товаров
+
+    POST /api/content/v1/recommendations/list
+    """
+
+    __path__ = "/api/content/v1/recommendations/list"
+    __http_method__ = "POST"
+    __returns__ = GetRecomRes
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __rate_limits__ = {"all": (3000, 5)}
+    __paginate__ = "next"
+    __items__ = "data"
+    __body_fields__ = {
+        "brand_names": "brandNames",
+        "limit": "limit",
+        "next_": "next",
+        "search": "search",
+        "subject_ids": "subjectIds",
+    }
+
+    brand_names: list[str] | None = None
+    """Бренды"""
+    limit: int | None = None
+    """Количество товаров в ответе"""
+    next_: int | None = None
+    """Курсор. Последний `nmId` в ответе"""
+    search: str | None = None
+    """Поиск:   - по артикулу WB `nmId` — полное совпадение   - по артикулу продавца `vendorCode` —
+    частичное совпадение
+    """
+    subject_ids: list[int] | None = None
+    """ID предметов"""
+
+
 class GetStocks(WBMethod[GetStocksResponse]):
     """Получить остатки товаров
 
@@ -949,6 +928,27 @@ class GetStocks(WBMethod[GetStocksResponse]):
     """ID склада продавца"""
 
 
+class GetTags(WBMethod[GetTagsResponse]):
+    """Список ярлыков
+
+    GET /content/v2/tags
+    """
+
+    __path__ = "/content/v2/tags"
+    __http_method__ = "GET"
+    __returns__ = GetTagsResponse
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
+        "basic": (1800000, 1),
+    }
+    __items__ = "data"
+
+
 class GetWarehouses(WBMethod[list[Warehouse]]):
     """Получить список складов продавца
 
@@ -964,7 +964,21 @@ class GetWarehouses(WBMethod[list[Warehouse]]):
     __rate_limits__ = {"all": (4000, 20)}
 
 
-class SetContentRecommendation(WBMethod[SetRecomRes]):
+class SetDiscountsPricesUploadTaskB2bWholesale(WBMethod[None]):
+    """Установить оптовые скидки для B2B-продаж
+
+    POST /api/discounts-prices/v1/upload/task/b2b/wholesale
+    """
+
+    __path__ = "/api/discounts-prices/v1/upload/task/b2b/wholesale"
+    __http_method__ = "POST"
+    __returns__ = None
+    __scope__ = Scope.PRICES
+    __host__ = "https://discounts-prices-api.wildberries.ru"
+    __rate_limits__ = {"personal": (3000, 5), "service": (3000, 5)}
+
+
+class SetRecommendation(WBMethod[SetRecomRes]):
     """Установить рекомендации для товаров
 
     POST /api/content/v1/recommendations/set
@@ -978,26 +992,12 @@ class SetContentRecommendation(WBMethod[SetRecomRes]):
     __rate_limits__ = {"all": (3000, 5)}
     __body_fields__ = {"rec_list": "recList", "replace": "replace"}
 
-    rec_list: list[SetContentRecommendationRecListItem]
+    rec_list: list[SetRecommendationRecListItem]
     """Список рекомендаций для товаров"""
     replace: bool | None = None
     """Действие в запросе:   - `false` — добавить новые рекомендации к существующим   - `true` —
     заменить существующие рекомендации новыми
     """
-
-
-class SetDiscountsPricesUploadTaskB2bWholesale(WBMethod[None]):
-    """Установить оптовые скидки для B2B-продаж
-
-    POST /api/discounts-prices/v1/upload/task/b2b/wholesale
-    """
-
-    __path__ = "/api/discounts-prices/v1/upload/task/b2b/wholesale"
-    __http_method__ = "POST"
-    __returns__ = None
-    __scope__ = Scope.PRICES
-    __host__ = "https://discounts-prices-api.wildberries.ru"
-    __rate_limits__ = {"personal": (3000, 5), "service": (3000, 5)}
 
 
 class SetUploadTask(WBMethod[None]):
@@ -1060,7 +1060,7 @@ class SetUploadTaskSize(WBMethod[None]):
     }
 
 
-class UpdateContentCard(WBMethod[ResponseItemList]):
+class UpdateCard(WBMethod[ResponseItemList]):
     """Редактирование карточек товаров
 
     POST /content/v2/cards/update
@@ -1075,10 +1075,10 @@ class UpdateContentCard(WBMethod[ResponseItemList]):
     __rate_limits__ = {"all": (30000, 5)}
     __items__ = "data"
 
-    body: list[UpdateContentCardBodyItem] | list[Any] | dict[str, Any]
+    body: list[UpdateCardBodyItem] | list[Any] | dict[str, Any]
 
 
-class UpdateContentCardsDeleteTrash(WBMethod[UpdateContentCardsDeleteTrashResponse]):
+class UpdateCardsDeleteTrash(WBMethod[UpdateCardsDeleteTrashResponse]):
     """Перенос карточек товаров в корзину
 
     POST /content/v2/cards/delete/trash
@@ -1086,7 +1086,7 @@ class UpdateContentCardsDeleteTrash(WBMethod[UpdateContentCardsDeleteTrashRespon
 
     __path__ = "/content/v2/cards/delete/trash"
     __http_method__ = "POST"
-    __returns__ = UpdateContentCardsDeleteTrashResponse
+    __returns__ = UpdateCardsDeleteTrashResponse
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
@@ -1103,7 +1103,7 @@ class UpdateContentCardsDeleteTrash(WBMethod[UpdateContentCardsDeleteTrashRespon
     """Артикулы WB"""
 
 
-class UpdateContentCardsMoveNm(WBMethod[ResponseItemList]):
+class UpdateCardsMoveNm(WBMethod[ResponseItemList]):
     """Объединение и разъединение карточек товаров
 
     POST /content/v2/cards/moveNm
@@ -1121,7 +1121,7 @@ class UpdateContentCardsMoveNm(WBMethod[ResponseItemList]):
     body: RequestMoveNmsImtConn | list[Any] | dict[str, Any]
 
 
-class UpdateContentCardsRecover(WBMethod[UpdateContentCardsRecoverResponse]):
+class UpdateCardsRecover(WBMethod[UpdateCardsRecoverResponse]):
     """Восстановление карточек товаров из корзины
 
     POST /content/v2/cards/recover
@@ -1129,7 +1129,7 @@ class UpdateContentCardsRecover(WBMethod[UpdateContentCardsRecoverResponse]):
 
     __path__ = "/content/v2/cards/recover"
     __http_method__ = "POST"
-    __returns__ = UpdateContentCardsRecoverResponse
+    __returns__ = UpdateCardsRecoverResponse
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
@@ -1144,36 +1144,6 @@ class UpdateContentCardsRecover(WBMethod[UpdateContentCardsRecoverResponse]):
 
     nm_ids: list[int] | None = None
     """Артикулы WB"""
-
-
-class UpdateContentTag(WBMethod[ResponseContentError]):
-    """Изменение ярлыка
-
-    PATCH /content/v2/tag/{id}
-    """
-
-    __path__ = "/content/v2/tag/{id}"
-    __http_method__ = "PATCH"
-    __returns__ = ResponseContentError
-    __path_params__ = ("id",)
-    __scope__ = Scope.CONTENT
-    __host__ = "https://content-api.wildberries.ru"
-    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
-    __rate_limits__ = {
-        "personal": (3000, 5),
-        "service": (3000, 5),
-        "basic_secret": (3000, 5),
-        "basic": (1800000, 1),
-    }
-    __items__ = "data"
-    __body_fields__ = {"color": "color", "name": "name"}
-
-    id_: str | int
-    """Числовой ID ярлыка"""
-    color: str | None = None
-    """Цвет ярлыка"""
-    name: str | None = None
-    """Имя ярлыка"""
 
 
 class UpdateDbwWarehousesContact(WBMethod[None]):
@@ -1218,6 +1188,36 @@ class UpdateStock(WBMethod[None]):
     """ID склада продавца"""
 
 
+class UpdateTag(WBMethod[ResponseContentError]):
+    """Изменение ярлыка
+
+    PATCH /content/v2/tag/{id}
+    """
+
+    __path__ = "/content/v2/tag/{id}"
+    __http_method__ = "PATCH"
+    __returns__ = ResponseContentError
+    __path_params__ = ("id",)
+    __scope__ = Scope.CONTENT
+    __host__ = "https://content-api.wildberries.ru"
+    __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
+    __rate_limits__ = {
+        "personal": (3000, 5),
+        "service": (3000, 5),
+        "basic_secret": (3000, 5),
+        "basic": (1800000, 1),
+    }
+    __items__ = "data"
+    __body_fields__ = {"color": "color", "name": "name"}
+
+    id_: str | int
+    """Числовой ID ярлыка"""
+    color: str | None = None
+    """Цвет ярлыка"""
+    name: str | None = None
+    """Имя ярлыка"""
+
+
 class UpdateWarehouse(WBMethod[None]):
     """Обновить склад продавца
 
@@ -1244,7 +1244,7 @@ class UpdateWarehouse(WBMethod[None]):
     """ID склада продавца"""
 
 
-class UploadContentMediaFile(WBMethod[UploadContentMediaFileResponse]):
+class UploadMediaFile(WBMethod[UploadMediaFileResponse]):
     """Загрузить медиафайл
 
     POST /content/v3/media/file
@@ -1252,7 +1252,7 @@ class UploadContentMediaFile(WBMethod[UploadContentMediaFileResponse]):
 
     __path__ = "/content/v3/media/file"
     __http_method__ = "POST"
-    __returns__ = UploadContentMediaFileResponse
+    __returns__ = UploadMediaFileResponse
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"
@@ -1265,7 +1265,7 @@ class UploadContentMediaFile(WBMethod[UploadContentMediaFileResponse]):
     __items__ = "data"
 
 
-class UploadContentMediaSave(WBMethod[UploadContentMediaSaveResponse]):
+class UploadMediaSave(WBMethod[UploadMediaSaveResponse]):
     """Загрузить медиафайлы по ссылкам
 
     POST /content/v3/media/save
@@ -1273,7 +1273,7 @@ class UploadContentMediaSave(WBMethod[UploadContentMediaSaveResponse]):
 
     __path__ = "/content/v3/media/save"
     __http_method__ = "POST"
-    __returns__ = UploadContentMediaSaveResponse
+    __returns__ = UploadMediaSaveResponse
     __scope__ = Scope.CONTENT
     __host__ = "https://content-api.wildberries.ru"
     __sandbox_host__ = "https://content-api-sandbox.wildberries.ru"

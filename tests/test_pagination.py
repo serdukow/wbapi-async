@@ -87,7 +87,7 @@ async def test_offset_query_advances_by_limit(api: WBApi, recorder: Recorder) ->
         return httpx.Response(200, json={"data": rows})
 
     recorder.handle(handler)
-    rows = [row async for row in api.items.iter_get_content_object_all(limit=2)]
+    rows = [row async for row in api.items.iter_get_object_all(limit=2)]
     assert len(rows) == 2
     assert recorder.requests[1].url.params["offset"] == "2"
 
@@ -175,7 +175,7 @@ async def test_cursor_carries_updated_at_and_nm_id(api: WBApi, recorder: Recorde
         )
 
     recorder.handle(handler)
-    rows = [row async for row in api.items.iter_get_content_cards_list()]
+    rows = [row async for row in api.items.iter_get_cards_list()]
     assert len(rows) == 100
     second = recorder.body(1)["settings"]["cursor"]
     assert second["updatedAt"] == "2026-08-20"
@@ -186,7 +186,7 @@ async def test_cursor_stops_without_continuation(api: WBApi, recorder: Recorder)
     recorder.handle(
         lambda request: httpx.Response(200, json={"cards": [{"nmID": 1}] * 5, "cursor": {"total": 99}})
     )
-    rows = [row async for row in api.items.iter_get_content_cards_list()]
+    rows = [row async for row in api.items.iter_get_cards_list()]
     assert len(rows) == 5
     assert recorder.count == 1
 

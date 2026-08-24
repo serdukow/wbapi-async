@@ -26,14 +26,14 @@ class BrandsResponseBrandsItem(WBModel):
     """Название бренда"""
 
 
-class CreateContentBarcodeBody(WBModel):
+class CreateBarcodeBody(WBModel):
     count: int | None = _field(default=None)
     """Кол-во баркодов которые надо сгенерировать, максимальное доступное количество баркодов для
     генерации - `5 000`
     """
 
 
-class CreateContentBarcodeResponse(WBModel):
+class CreateBarcodeResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: list[str] | None = _field(default=None)
@@ -44,8 +44,8 @@ class CreateContentBarcodeResponse(WBModel):
     """Описание ошибки"""
 
 
-class CreateContentCardsUploadAddBody(WBModel):
-    cards_to_add: list[CreateContentCardsUploadAddBodyCardsToAddItem] | None = _field(
+class CreateCardsUploadAddBody(WBModel):
+    cards_to_add: list[CreateCardsUploadAddBodyCardsToAddItem] | None = _field(
         default=None, name="cardsToAdd"
     )
     """Добавляемые карточки товаров"""
@@ -55,10 +55,10 @@ class CreateContentCardsUploadAddBody(WBModel):
     """
 
 
-class CreateContentCardsUploadAddBodyCardsToAddItem(WBModel):
+class CreateCardsUploadAddBodyCardsToAddItem(WBModel):
     brand: str | None = _field(default=None)
     """Бренд"""
-    characteristics: list[CreateContentCardsUploadAddBodyCardsToAddItemCharacteristicsItem] | None = _field(
+    characteristics: list[CreateCardsUploadAddBodyCardsToAddItemCharacteristicsItem] | None = _field(
         default=None
     )
     """Характеристики товара.  Можно получить методом Характеристики предмета"""
@@ -66,13 +66,13 @@ class CreateContentCardsUploadAddBodyCardsToAddItem(WBModel):
     """Описание товара. Максимальное количество символов зависит от категории товара Стандарт —
     2000, минимум — 1000, максимум — 5000 …
     """
-    dimensions: CreateContentCardsUploadAddBodyCardsToAddItemDimensions | None = _field(default=None)
+    dimensions: CreateCardsUploadAddBodyCardsToAddItemDimensions | None = _field(default=None)
     """Габариты и вес товара **c упаковкой**. Укажите в `сантиметрах` и `килограммах` для любого
     товара. …
     """
     kiz_marked: bool | None = _field(default=None, name="kizMarked")
     """Подтверждение, что на товар нанесён обязательный код маркировки Честного знака: …"""
-    sizes: list[CreateContentCardsUploadAddBodyCardsToAddItemSizesItem] | None = _field(default=None)
+    sizes: list[CreateCardsUploadAddBodyCardsToAddItemSizesItem] | None = _field(default=None)
     """Массив размеров. Если не указать для размерного товара (обувь, одежда и др.), сгенерируется
     автоматически с `techSize` = "A", `wbSize` = "1" и баркодом
     """
@@ -80,11 +80,11 @@ class CreateContentCardsUploadAddBodyCardsToAddItem(WBModel):
     """Наименование товара"""
     vendor_code: str | None = _field(default=None, name="vendorCode")
     """Артикул продавца"""
-    wholesale: CreateContentCardsUploadAddBodyCardsToAddItemWholesale | None = _field(default=None)
+    wholesale: CreateCardsUploadAddBodyCardsToAddItemWholesale | None = _field(default=None)
     """Оптовая продажа"""
 
 
-class CreateContentCardsUploadAddBodyCardsToAddItemCharacteristicsItem(WBModel):
+class CreateCardsUploadAddBodyCardsToAddItemCharacteristicsItem(WBModel):
     id: Any | None = _field(default=None)
     """ID характеристики"""
     value: Any | None = _field(default=None)
@@ -93,7 +93,7 @@ class CreateContentCardsUploadAddBodyCardsToAddItemCharacteristicsItem(WBModel):
     """
 
 
-class CreateContentCardsUploadAddBodyCardsToAddItemDimensions(WBModel):
+class CreateCardsUploadAddBodyCardsToAddItemDimensions(WBModel):
     """Габариты и вес товара **c упаковкой**.<br>"""
 
     height: Any | None = _field(default=None)
@@ -106,7 +106,7 @@ class CreateContentCardsUploadAddBodyCardsToAddItemDimensions(WBModel):
     """Ширина, см"""
 
 
-class CreateContentCardsUploadAddBodyCardsToAddItemSizesItem(WBModel):
+class CreateCardsUploadAddBodyCardsToAddItemSizesItem(WBModel):
     price: Any | None = _field(default=None)
     """Цена товара"""
     skus: Any | None = _field(default=None)
@@ -117,7 +117,7 @@ class CreateContentCardsUploadAddBodyCardsToAddItemSizesItem(WBModel):
     """Российский размер товара"""
 
 
-class CreateContentCardsUploadAddBodyCardsToAddItemWholesale(WBModel):
+class CreateCardsUploadAddBodyCardsToAddItemWholesale(WBModel):
     """Оптовая продажа"""
 
     enabled: Any | None = _field(default=None)
@@ -126,24 +126,22 @@ class CreateContentCardsUploadAddBodyCardsToAddItemWholesale(WBModel):
     """Количество единиц товара в упаковке"""
 
 
-class CreateContentCardsUploadAddCardsToAddItem(WBModel):
+class CreateCardsUploadAddCardsToAddItem(WBModel):
     brand: str | None = _field(default=None)
     """Бренд"""
-    characteristics: list[CreateContentCardsUploadAddCardsToAddItemCharacteristicsItem] | None = _field(
-        default=None
-    )
+    characteristics: list[CreateCardsUploadAddCardsToAddItemCharacteristicsItem] | None = _field(default=None)
     """Характеристики товара.  Можно получить методом Характеристики предмета"""
     description: str | None = _field(default=None)
     """Описание товара. Максимальное количество символов зависит от категории товара Стандарт —
     2000, минимум — 1000, максимум — 5000 …
     """
-    dimensions: CreateContentCardsUploadAddCardsToAddItemDimensions | None = _field(default=None)
+    dimensions: CreateCardsUploadAddCardsToAddItemDimensions | None = _field(default=None)
     """Габариты и вес товара **c упаковкой**. Укажите в `сантиметрах` и `килограммах` для любого
     товара. …
     """
     kiz_marked: bool | None = _field(default=None, name="kizMarked")
     """Подтверждение, что на товар нанесён обязательный код маркировки Честного знака: …"""
-    sizes: list[CreateContentCardsUploadAddCardsToAddItemSizesItem] | None = _field(default=None)
+    sizes: list[CreateCardsUploadAddCardsToAddItemSizesItem] | None = _field(default=None)
     """Массив размеров. Если не указать для размерного товара (обувь, одежда и др.), сгенерируется
     автоматически с `techSize` = "A", `wbSize` = "1" и баркодом
     """
@@ -151,11 +149,11 @@ class CreateContentCardsUploadAddCardsToAddItem(WBModel):
     """Наименование товара"""
     vendor_code: str | None = _field(default=None, name="vendorCode")
     """Артикул продавца"""
-    wholesale: CreateContentCardsUploadAddCardsToAddItemWholesale | None = _field(default=None)
+    wholesale: CreateCardsUploadAddCardsToAddItemWholesale | None = _field(default=None)
     """Оптовая продажа"""
 
 
-class CreateContentCardsUploadAddCardsToAddItemCharacteristicsItem(WBModel):
+class CreateCardsUploadAddCardsToAddItemCharacteristicsItem(WBModel):
     id: int | None = _field(default=None)
     """ID характеристики"""
     value: Any | None = _field(default=None)
@@ -164,7 +162,7 @@ class CreateContentCardsUploadAddCardsToAddItemCharacteristicsItem(WBModel):
     """
 
 
-class CreateContentCardsUploadAddCardsToAddItemDimensions(WBModel):
+class CreateCardsUploadAddCardsToAddItemDimensions(WBModel):
     """Габариты и вес товара **c упаковкой**.<br>"""
 
     height: int | None = _field(default=None)
@@ -177,7 +175,7 @@ class CreateContentCardsUploadAddCardsToAddItemDimensions(WBModel):
     """Ширина, см"""
 
 
-class CreateContentCardsUploadAddCardsToAddItemSizesItem(WBModel):
+class CreateCardsUploadAddCardsToAddItemSizesItem(WBModel):
     price: int | None = _field(default=None)
     """Цена товара"""
     skus: list[Any] | None = _field(default=None)
@@ -188,7 +186,7 @@ class CreateContentCardsUploadAddCardsToAddItemSizesItem(WBModel):
     """Российский размер товара"""
 
 
-class CreateContentCardsUploadAddCardsToAddItemWholesale(WBModel):
+class CreateCardsUploadAddCardsToAddItemWholesale(WBModel):
     """Оптовая продажа"""
 
     enabled: bool | None = _field(default=None)
@@ -197,15 +195,15 @@ class CreateContentCardsUploadAddCardsToAddItemWholesale(WBModel):
     """Количество единиц товара в упаковке"""
 
 
-class CreateContentCardsUploadBodyItem(WBModel):
+class CreateCardsUploadBodyItem(WBModel):
     subject_id: int | None = _field(default=None, name="subjectID")
     """ID предмета"""
-    variants: list[CreateContentCardsUploadBodyItemVariantsItem] | None = _field(default=None)
+    variants: list[CreateCardsUploadBodyItemVariantsItem] | None = _field(default=None)
     """Объединённые карточки товаров.Чтобы создать отдельную карточку, передайте только один объект
     """
 
 
-class CreateContentCardsUploadBodyItemVariantsItem(WBModel):
+class CreateCardsUploadBodyItemVariantsItem(WBModel):
     brand: str | None = _field(default=None)
     """Бренд"""
     characteristics: list[Any] | None = _field(default=None)
@@ -214,7 +212,7 @@ class CreateContentCardsUploadBodyItemVariantsItem(WBModel):
     """Описание товара. Максимальное количество символов зависит от категории товара Стандарт —
     2000, минимум — 1000, максимум — 5000 …
     """
-    dimensions: CreateContentCardsUploadBodyItemVariantsItemDimensions | None = _field(default=None)
+    dimensions: CreateCardsUploadBodyItemVariantsItemDimensions | None = _field(default=None)
     """Габариты и вес товара **c упаковкой**. Укажите в `сантиметрах` и `килограммах` для любого
     товара. …
     """
@@ -228,11 +226,11 @@ class CreateContentCardsUploadBodyItemVariantsItem(WBModel):
     """Наименование товара"""
     vendor_code: str | None = _field(default=None, name="vendorCode")
     """Артикул продавца"""
-    wholesale: CreateContentCardsUploadBodyItemVariantsItemWholesale | None = _field(default=None)
+    wholesale: CreateCardsUploadBodyItemVariantsItemWholesale | None = _field(default=None)
     """Оптовая продажа"""
 
 
-class CreateContentCardsUploadBodyItemVariantsItemDimensions(WBModel):
+class CreateCardsUploadBodyItemVariantsItemDimensions(WBModel):
     """Габариты и вес товара **c упаковкой**.<br>"""
 
     height: Any | None = _field(default=None)
@@ -245,7 +243,7 @@ class CreateContentCardsUploadBodyItemVariantsItemDimensions(WBModel):
     """Ширина, см"""
 
 
-class CreateContentCardsUploadBodyItemVariantsItemWholesale(WBModel):
+class CreateCardsUploadBodyItemVariantsItemWholesale(WBModel):
     """Оптовая продажа"""
 
     enabled: Any | None = _field(default=None)
@@ -254,7 +252,7 @@ class CreateContentCardsUploadBodyItemVariantsItemWholesale(WBModel):
     """Количество единиц товара в упаковке"""
 
 
-class CreateContentTagBody(WBModel):
+class CreateTagBody(WBModel):
     color: str | None = _field(default=None)
     """Цвет ярлыка.  Доступные цвета:   - `D1CFD7` — серый   - `FEE0E0` — красный   - `ECDAFF` —
     фиолетовый   - `E4EAFF` — синий   - `DEF1DD` — зеленый …
@@ -263,7 +261,7 @@ class CreateContentTagBody(WBModel):
     """Имя ярлыка"""
 
 
-class CreateContentTagNomenclatureLinkBody(WBModel):
+class CreateTagNomenclatureLinkBody(WBModel):
     nm_id: int | None = _field(default=None, name="nmID")
     """Артикул WB"""
     tags_ids: list[int] | None = _field(default=None, name="tagsIDs")
@@ -289,40 +287,40 @@ class DeleteStockBody(WBModel):
     """Массив ID размеров товаров"""
 
 
-class GetContentCardsLimitsResponse(WBModel):
+class GetCardsLimitsResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
-    data: GetContentCardsLimitsResponseData | None = _field(default=None)
+    data: GetCardsLimitsResponseData | None = _field(default=None)
     error: bool | None = _field(default=None)
     """Флаг ошибки"""
     error_text: str | None = _field(default=None, name="errorText")
     """Описание ошибки"""
 
 
-class GetContentCardsLimitsResponseData(WBModel):
+class GetCardsLimitsResponseData(WBModel):
     free_limits: int | None = _field(default=None, name="freeLimits")
     """Количество бесплатных лимитов"""
     paid_limits: int | None = _field(default=None, name="paidLimits")
     """Количество оплаченных лимитов"""
 
 
-class GetContentCardsListBody(WBModel):
-    settings: GetContentCardsListBodySettings | None = _field(default=None)
+class GetCardsListBody(WBModel):
+    settings: GetCardsListBodySettings | None = _field(default=None)
     """Настройки"""
 
 
-class GetContentCardsListBodySettings(WBModel):
+class GetCardsListBodySettings(WBModel):
     """Настройки"""
 
-    cursor: GetContentCardsListBodySettingsCursor | None = _field(default=None)
+    cursor: GetCardsListBodySettingsCursor | None = _field(default=None)
     """Курсор"""
-    filter: GetContentCardsListBodySettingsFilter | None = _field(default=None)
+    filter: GetCardsListBodySettingsFilter | None = _field(default=None)
     """Параметры фильтрации"""
-    sort: GetContentCardsListBodySettingsSort | None = _field(default=None)
+    sort: GetCardsListBodySettingsSort | None = _field(default=None)
     """Параметр сортировки"""
 
 
-class GetContentCardsListBodySettingsCursor(WBModel):
+class GetCardsListBodySettingsCursor(WBModel):
     """Курсор"""
 
     limit: int | None = _field(default=None)
@@ -333,7 +331,7 @@ class GetContentCardsListBodySettingsCursor(WBModel):
     """Дата и время изменения"""
 
 
-class GetContentCardsListBodySettingsFilter(WBModel):
+class GetCardsListBodySettingsFilter(WBModel):
     """Параметры фильтрации"""
 
     allowed_categories_only: bool | None = _field(default=None, name="allowedCategoriesOnly")
@@ -356,7 +354,7 @@ class GetContentCardsListBodySettingsFilter(WBModel):
     """
 
 
-class GetContentCardsListBodySettingsSort(WBModel):
+class GetCardsListBodySettingsSort(WBModel):
     """Параметр сортировки"""
 
     ascending: bool | None = _field(default=None)
@@ -364,25 +362,23 @@ class GetContentCardsListBodySettingsSort(WBModel):
     """
 
 
-class GetContentCardsListResponse(WBModel):
-    cards: list[GetContentCardsListResponseCardsItem] | None = _field(default=None)
+class GetCardsListResponse(WBModel):
+    cards: list[GetCardsListResponseCardsItem] | None = _field(default=None)
     """Список карточек товаров"""
-    cursor: GetContentCardsListResponseCursor | None = _field(default=None)
+    cursor: GetCardsListResponseCursor | None = _field(default=None)
     """Пагинатор"""
 
 
-class GetContentCardsListResponseCardsItem(WBModel):
+class GetCardsListResponseCardsItem(WBModel):
     brand: str | None = _field(default=None)
     """Бренд"""
-    characteristics: list[GetContentCardsListResponseCardsItemCharacteristicsItem] | None = _field(
-        default=None
-    )
+    characteristics: list[GetCardsListResponseCardsItemCharacteristicsItem] | None = _field(default=None)
     """Характеристики"""
     created_at: str | None = _field(default=None, name="createdAt")
     """Дата и время создания"""
     description: str | None = _field(default=None)
     """Описание товара"""
-    dimensions: GetContentCardsListResponseCardsItemDimensions | None = _field(default=None)
+    dimensions: GetCardsListResponseCardsItemDimensions | None = _field(default=None)
     """Габариты и вес товара c упаковкой, см и кг"""
     imt_id: int | None = _field(default=None, name="imtID")
     """ID для объединённых карточек товаров.Един для всех артикулов WB группы объединённых
@@ -400,15 +396,15 @@ class GetContentCardsListResponseCardsItem(WBModel):
     """Артикул WB"""
     nm_uuid: str | None = _field(default=None, name="nmUUID")
     """Внутренний технический ID карточки товара"""
-    photos: list[GetContentCardsListResponseCardsItemPhotosItem] | None = _field(default=None)
+    photos: list[GetCardsListResponseCardsItemPhotosItem] | None = _field(default=None)
     """Массив фото"""
-    sizes: list[GetContentCardsListResponseCardsItemSizesItem] | None = _field(default=None)
+    sizes: list[GetCardsListResponseCardsItemSizesItem] | None = _field(default=None)
     """Размеры товара"""
     subject_id: int | None = _field(default=None, name="subjectID")
     """ID предмета"""
     subject_name: str | None = _field(default=None, name="subjectName")
     """Название предмета"""
-    tags: list[GetContentCardsListResponseCardsItemTagsItem] | None = _field(default=None)
+    tags: list[GetCardsListResponseCardsItemTagsItem] | None = _field(default=None)
     """Ярлыки"""
     title: str | None = _field(default=None)
     """Наименование товара"""
@@ -418,11 +414,11 @@ class GetContentCardsListResponseCardsItem(WBModel):
     """Артикул продавца"""
     video: str | None = _field(default=None)
     """URL видео"""
-    wholesale: GetContentCardsListResponseCardsItemWholesale | None = _field(default=None)
+    wholesale: GetCardsListResponseCardsItemWholesale | None = _field(default=None)
     """Оптовая продажа"""
 
 
-class GetContentCardsListResponseCardsItemCharacteristicsItem(WBModel):
+class GetCardsListResponseCardsItemCharacteristicsItem(WBModel):
     id: Any | None = _field(default=None)
     """ID характеристики"""
     name: Any | None = _field(default=None)
@@ -431,7 +427,7 @@ class GetContentCardsListResponseCardsItemCharacteristicsItem(WBModel):
     """Значение характеристики. Тип значения зависит от типа характеристики"""
 
 
-class GetContentCardsListResponseCardsItemDimensions(WBModel):
+class GetCardsListResponseCardsItemDimensions(WBModel):
     """Габариты и вес товара c упаковкой, см и кг"""
 
     height: Any | None = _field(default=None)
@@ -446,7 +442,7 @@ class GetContentCardsListResponseCardsItemDimensions(WBModel):
     """Ширина, см"""
 
 
-class GetContentCardsListResponseCardsItemPhotosItem(WBModel):
+class GetCardsListResponseCardsItemPhotosItem(WBModel):
     big: Any | None = _field(default=None)
     """URL фото `900x1200`"""
     c246x328: Any | None = _field(default=None)
@@ -459,7 +455,7 @@ class GetContentCardsListResponseCardsItemPhotosItem(WBModel):
     """URL фото `75x100`"""
 
 
-class GetContentCardsListResponseCardsItemSizesItem(WBModel):
+class GetCardsListResponseCardsItemSizesItem(WBModel):
     chrt_id: Any | None = _field(default=None, name="chrtID")
     """Числовой ID размера для данного артикула WB"""
     skus: Any | None = _field(default=None)
@@ -470,7 +466,7 @@ class GetContentCardsListResponseCardsItemSizesItem(WBModel):
     """Российский размер товара"""
 
 
-class GetContentCardsListResponseCardsItemTagsItem(WBModel):
+class GetCardsListResponseCardsItemTagsItem(WBModel):
     color: Any | None = _field(default=None)
     """Цвет ярлыка. Доступные цвета: - `D1CFD7` — серый - `FEE0E0` — красный - `ECDAFF` —
     фиолетовый - `E4EAFF` — синий - `DEF1DD` — зеленый - `FFECC7` — желтый
@@ -481,7 +477,7 @@ class GetContentCardsListResponseCardsItemTagsItem(WBModel):
     """Название ярлыка"""
 
 
-class GetContentCardsListResponseCardsItemWholesale(WBModel):
+class GetCardsListResponseCardsItemWholesale(WBModel):
     """Оптовая продажа"""
 
     enabled: Any | None = _field(default=None)
@@ -490,7 +486,7 @@ class GetContentCardsListResponseCardsItemWholesale(WBModel):
     """Количество единиц товара в упаковке"""
 
 
-class GetContentCardsListResponseCursor(WBModel):
+class GetCardsListResponseCursor(WBModel):
     """Пагинатор"""
 
     nm_id: int | None = _field(default=None, name="nmID")
@@ -501,18 +497,18 @@ class GetContentCardsListResponseCursor(WBModel):
     """Дата и время, с которых надо запрашивать следующий список карточек товаров"""
 
 
-class GetContentCardsListSettings(WBModel):
+class GetCardsListSettings(WBModel):
     """Настройки"""
 
-    cursor: GetContentCardsListSettingsCursor | None = _field(default=None)
+    cursor: GetCardsListSettingsCursor | None = _field(default=None)
     """Курсор"""
-    filter: GetContentCardsListSettingsFilter | None = _field(default=None)
+    filter: GetCardsListSettingsFilter | None = _field(default=None)
     """Параметры фильтрации"""
-    sort: GetContentCardsListSettingsSort | None = _field(default=None)
+    sort: GetCardsListSettingsSort | None = _field(default=None)
     """Параметр сортировки"""
 
 
-class GetContentCardsListSettingsCursor(WBModel):
+class GetCardsListSettingsCursor(WBModel):
     """Курсор"""
 
     limit: int | None = _field(default=None)
@@ -523,7 +519,7 @@ class GetContentCardsListSettingsCursor(WBModel):
     """Дата и время изменения"""
 
 
-class GetContentCardsListSettingsFilter(WBModel):
+class GetCardsListSettingsFilter(WBModel):
     """Параметры фильтрации"""
 
     allowed_categories_only: bool | None = _field(default=None, name="allowedCategoriesOnly")
@@ -546,7 +542,7 @@ class GetContentCardsListSettingsFilter(WBModel):
     """
 
 
-class GetContentCardsListSettingsSort(WBModel):
+class GetCardsListSettingsSort(WBModel):
     """Параметр сортировки"""
 
     ascending: bool | None = _field(default=None)
@@ -554,23 +550,23 @@ class GetContentCardsListSettingsSort(WBModel):
     """
 
 
-class GetContentCardsTrashBody(WBModel):
-    settings: GetContentCardsTrashBodySettings | None = _field(default=None)
+class GetCardsTrashBody(WBModel):
+    settings: GetCardsTrashBodySettings | None = _field(default=None)
     """Настройки"""
 
 
-class GetContentCardsTrashBodySettings(WBModel):
+class GetCardsTrashBodySettings(WBModel):
     """Настройки"""
 
-    cursor: GetContentCardsTrashBodySettingsCursor | None = _field(default=None)
+    cursor: GetCardsTrashBodySettingsCursor | None = _field(default=None)
     """Пагинатор"""
-    filter: GetContentCardsTrashBodySettingsFilter | None = _field(default=None)
+    filter: GetCardsTrashBodySettingsFilter | None = _field(default=None)
     """Параметры фильтрации"""
-    sort: GetContentCardsTrashBodySettingsSort | None = _field(default=None)
+    sort: GetCardsTrashBodySettingsSort | None = _field(default=None)
     """Параметр сортировки"""
 
 
-class GetContentCardsTrashBodySettingsCursor(WBModel):
+class GetCardsTrashBodySettingsCursor(WBModel):
     """Пагинатор"""
 
     limit: int | None = _field(default=None)
@@ -581,35 +577,33 @@ class GetContentCardsTrashBodySettingsCursor(WBModel):
     """Дата и время помещения в корзину"""
 
 
-class GetContentCardsTrashBodySettingsFilter(WBModel):
+class GetCardsTrashBodySettingsFilter(WBModel):
     """Параметры фильтрации"""
 
     text_search: str | None = _field(default=None, name="textSearch")
     """Поиск по артикулу продавца, артикулу WB, баркоду"""
 
 
-class GetContentCardsTrashBodySettingsSort(WBModel):
+class GetCardsTrashBodySettingsSort(WBModel):
     """Параметр сортировки"""
 
     ascending: bool | None = _field(default=None)
     """Сортировать по `trashedAt`:   - `false` — по убыванию   - `true` — по возрастанию"""
 
 
-class GetContentCardsTrashResponse(WBModel):
-    cards: list[GetContentCardsTrashResponseCardsItem] | None = _field(default=None)
+class GetCardsTrashResponse(WBModel):
+    cards: list[GetCardsTrashResponseCardsItem] | None = _field(default=None)
     """Массив карточек товаров"""
-    cursor: GetContentCardsTrashResponseCursor | None = _field(default=None)
+    cursor: GetCardsTrashResponseCursor | None = _field(default=None)
     """Пагинатор"""
 
 
-class GetContentCardsTrashResponseCardsItem(WBModel):
-    characteristics: list[GetContentCardsTrashResponseCardsItemCharacteristicsItem] | None = _field(
-        default=None
-    )
+class GetCardsTrashResponseCardsItem(WBModel):
+    characteristics: list[GetCardsTrashResponseCardsItemCharacteristicsItem] | None = _field(default=None)
     """Характеристики"""
     created_at: str | None = _field(default=None, name="createdAt")
     """Date and time the item was listed"""
-    dimensions: GetContentCardsTrashResponseCardsItemDimensions | None = _field(default=None)
+    dimensions: GetCardsTrashResponseCardsItemDimensions | None = _field(default=None)
     """Габариты и вес товара c упаковкой, см и кг"""
     kiz_marked: bool | None = _field(default=None, name="kizMarked")
     """Есть ли подтверждение от продавца, что обязательный код маркировки Честного знака нанесён на
@@ -617,9 +611,9 @@ class GetContentCardsTrashResponseCardsItem(WBModel):
     """
     nm_id: int | None = _field(default=None, name="nmID")
     """Артикул WB"""
-    photos: list[GetContentCardsTrashResponseCardsItemPhotosItem] | None = _field(default=None)
+    photos: list[GetCardsTrashResponseCardsItemPhotosItem] | None = _field(default=None)
     """Массив фото"""
-    sizes: list[GetContentCardsTrashResponseCardsItemSizesItem] | None = _field(default=None)
+    sizes: list[GetCardsTrashResponseCardsItemSizesItem] | None = _field(default=None)
     """Массив размеров"""
     subject_id: int | None = _field(default=None, name="subjectID")
     """ID предмета"""
@@ -631,11 +625,11 @@ class GetContentCardsTrashResponseCardsItem(WBModel):
     """Артикул продавца"""
     video: str | None = _field(default=None)
     """URL видео"""
-    wholesale: GetContentCardsTrashResponseCardsItemWholesale | None = _field(default=None)
+    wholesale: GetCardsTrashResponseCardsItemWholesale | None = _field(default=None)
     """Оптовая продажа"""
 
 
-class GetContentCardsTrashResponseCardsItemCharacteristicsItem(WBModel):
+class GetCardsTrashResponseCardsItemCharacteristicsItem(WBModel):
     id: Any | None = _field(default=None)
     """ID характеристики"""
     name: Any | None = _field(default=None)
@@ -644,7 +638,7 @@ class GetContentCardsTrashResponseCardsItemCharacteristicsItem(WBModel):
     """Значение характеристики. Тип значения зависит от типа характеристики"""
 
 
-class GetContentCardsTrashResponseCardsItemDimensions(WBModel):
+class GetCardsTrashResponseCardsItemDimensions(WBModel):
     """Габариты и вес товара c упаковкой, см и кг"""
 
     height: Any | None = _field(default=None)
@@ -659,7 +653,7 @@ class GetContentCardsTrashResponseCardsItemDimensions(WBModel):
     """Ширина, см"""
 
 
-class GetContentCardsTrashResponseCardsItemPhotosItem(WBModel):
+class GetCardsTrashResponseCardsItemPhotosItem(WBModel):
     big: Any | None = _field(default=None)
     """URL фото `900x1200`"""
     c246x328: Any | None = _field(default=None)
@@ -672,7 +666,7 @@ class GetContentCardsTrashResponseCardsItemPhotosItem(WBModel):
     """URL фото `75x100`"""
 
 
-class GetContentCardsTrashResponseCardsItemSizesItem(WBModel):
+class GetCardsTrashResponseCardsItemSizesItem(WBModel):
     chrt_id: Any | None = _field(default=None, name="chrtID")
     """ID размера"""
     skus: Any | None = _field(default=None)
@@ -683,7 +677,7 @@ class GetContentCardsTrashResponseCardsItemSizesItem(WBModel):
     """Российский размер товара"""
 
 
-class GetContentCardsTrashResponseCardsItemWholesale(WBModel):
+class GetCardsTrashResponseCardsItemWholesale(WBModel):
     """Оптовая продажа"""
 
     enabled: Any | None = _field(default=None)
@@ -692,7 +686,7 @@ class GetContentCardsTrashResponseCardsItemWholesale(WBModel):
     """Количество единиц товара в упаковке"""
 
 
-class GetContentCardsTrashResponseCursor(WBModel):
+class GetCardsTrashResponseCursor(WBModel):
     """Пагинатор"""
 
     nm_id: int | None = _field(default=None, name="nmID")
@@ -703,18 +697,18 @@ class GetContentCardsTrashResponseCursor(WBModel):
     """Дата и время, с которых надо запрашивать следующий список карточек товаров"""
 
 
-class GetContentCardsTrashSettings(WBModel):
+class GetCardsTrashSettings(WBModel):
     """Настройки"""
 
-    cursor: GetContentCardsTrashSettingsCursor | None = _field(default=None)
+    cursor: GetCardsTrashSettingsCursor | None = _field(default=None)
     """Пагинатор"""
-    filter: GetContentCardsTrashSettingsFilter | None = _field(default=None)
+    filter: GetCardsTrashSettingsFilter | None = _field(default=None)
     """Параметры фильтрации"""
-    sort: GetContentCardsTrashSettingsSort | None = _field(default=None)
+    sort: GetCardsTrashSettingsSort | None = _field(default=None)
     """Параметр сортировки"""
 
 
-class GetContentCardsTrashSettingsCursor(WBModel):
+class GetCardsTrashSettingsCursor(WBModel):
     """Пагинатор"""
 
     limit: int | None = _field(default=None)
@@ -725,21 +719,34 @@ class GetContentCardsTrashSettingsCursor(WBModel):
     """Дата и время помещения в корзину"""
 
 
-class GetContentCardsTrashSettingsFilter(WBModel):
+class GetCardsTrashSettingsFilter(WBModel):
     """Параметры фильтрации"""
 
     text_search: str | None = _field(default=None, name="textSearch")
     """Поиск по артикулу продавца, артикулу WB, баркоду"""
 
 
-class GetContentCardsTrashSettingsSort(WBModel):
+class GetCardsTrashSettingsSort(WBModel):
     """Параметр сортировки"""
 
     ascending: bool | None = _field(default=None)
     """Сортировать по `trashedAt`:   - `false` — по убыванию   - `true` — по возрастанию"""
 
 
-class GetContentDirectoryColorsResponse(WBModel):
+class GetDbwWarehousesContactsResponse(WBModel):
+    """Список контактов склада продавца"""
+
+    contacts: list[GetDbwWarehousesContactsResponseContactsItem] | None = _field(default=None)
+
+
+class GetDbwWarehousesContactsResponseContactsItem(WBModel):
+    comment: str | None = _field(default=None)
+    """Комментарий"""
+    phone: str | None = _field(default=None)
+    """Номер телефона"""
+
+
+class GetDirectoryColorsResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: Any | None = _field(default=None)
@@ -749,7 +756,7 @@ class GetContentDirectoryColorsResponse(WBModel):
     """Описание ошибки"""
 
 
-class GetContentDirectoryCountriesResponse(WBModel):
+class GetDirectoryCountriesResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: Any | None = _field(default=None)
@@ -759,7 +766,7 @@ class GetContentDirectoryCountriesResponse(WBModel):
     """Описание ошибки"""
 
 
-class GetContentDirectoryKindsResponse(WBModel):
+class GetDirectoryKindsResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: list[str] | None = _field(default=None)
@@ -770,7 +777,7 @@ class GetContentDirectoryKindsResponse(WBModel):
     """Описание ошибки"""
 
 
-class GetContentDirectorySeasonsResponse(WBModel):
+class GetDirectorySeasonsResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: list[str] | None = _field(default=None)
@@ -781,10 +788,10 @@ class GetContentDirectorySeasonsResponse(WBModel):
     """Описание ошибки"""
 
 
-class GetContentDirectoryTnvedResponse(WBModel):
+class GetDirectoryTnvedResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
-    data: list[GetContentDirectoryTnvedResponseDataItem] | None = _field(default=None)
+    data: list[GetDirectoryTnvedResponseDataItem] | None = _field(default=None)
     """Данные"""
     error: bool | None = _field(default=None)
     """Флаг наличия ошибки"""
@@ -792,7 +799,7 @@ class GetContentDirectoryTnvedResponse(WBModel):
     """Текст ошибки"""
 
 
-class GetContentDirectoryTnvedResponseDataItem(WBModel):
+class GetDirectoryTnvedResponseDataItem(WBModel):
     is_kiz: bool | None = _field(default=None, name="isKiz")
     """- `true` — код маркировки Честного знака требуется - `false` — код маркировки Честного знака
     не требуется
@@ -801,7 +808,7 @@ class GetContentDirectoryTnvedResponseDataItem(WBModel):
     """ТНВЭД-код"""
 
 
-class GetContentDirectoryVatResponse(WBModel):
+class GetDirectoryVatResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: list[str] | None = _field(default=None)
@@ -811,10 +818,10 @@ class GetContentDirectoryVatResponse(WBModel):
     """Текст ошибки"""
 
 
-class GetContentObjectAllResponse(WBModel):
+class GetObjectAllResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
-    data: list[GetContentObjectAllResponseDataItem] | None = _field(default=None)
+    data: list[GetObjectAllResponseDataItem] | None = _field(default=None)
     """Предметы"""
     error: bool | None = _field(default=None)
     """Флаг наличия ошибки"""
@@ -822,7 +829,7 @@ class GetContentObjectAllResponse(WBModel):
     """Текст ошибки"""
 
 
-class GetContentObjectAllResponseDataItem(WBModel):
+class GetObjectAllResponseDataItem(WBModel):
     parent_id: int | None = _field(default=None, name="parentID")
     """ID родительской категории"""
     parent_name: str | None = _field(default=None, name="parentName")
@@ -833,10 +840,10 @@ class GetContentObjectAllResponseDataItem(WBModel):
     """Название предмета"""
 
 
-class GetContentObjectCharcsResponse(WBModel):
+class GetObjectCharcsResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
-    data: list[GetContentObjectCharcsResponseDataItem] | None = _field(default=None)
+    data: list[GetObjectCharcsResponseDataItem] | None = _field(default=None)
     """Данные"""
     error: bool | None = _field(default=None)
     """Флаг наличия ошибки"""
@@ -844,7 +851,7 @@ class GetContentObjectCharcsResponse(WBModel):
     """Текст ошибки"""
 
 
-class GetContentObjectCharcsResponseDataItem(WBModel):
+class GetObjectCharcsResponseDataItem(WBModel):
     charc_id: int | None = _field(default=None, name="charcID")
     """ID характеристики"""
     charc_type: int | None = _field(default=None, name="charcType")
@@ -883,7 +890,7 @@ class GetContentObjectCharcsResponseDataItem(WBModel):
     """Единица измерения"""
 
 
-class GetContentObjectParentAllResponse(WBModel):
+class GetObjectParentAllResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: Any | None = _field(default=None)
@@ -891,38 +898,6 @@ class GetContentObjectParentAllResponse(WBModel):
     """Флаг наличия ошибки"""
     error_text: str | None = _field(default=None, name="errorText")
     """Описание ошибки"""
-
-
-class GetContentTagsResponse(WBModel):
-    additional_errors: str | None = _field(default=None, name="additionalErrors")
-    """Дополнительные ошибки"""
-    data: list[GetContentTagsResponseDataItem] | None = _field(default=None)
-    error: bool | None = _field(default=None)
-    """Флаг ошибки"""
-    error_text: str | None = _field(default=None, name="errorText")
-    """Описание ошибки"""
-
-
-class GetContentTagsResponseDataItem(WBModel):
-    color: str | None = _field(default=None)
-    """Цвет ярлыка"""
-    id: int | None = _field(default=None)
-    """Числовой ID ярлыка"""
-    name: str | None = _field(default=None)
-    """Имя ярлыка"""
-
-
-class GetDbwWarehousesContactsResponse(WBModel):
-    """Список контактов склада продавца"""
-
-    contacts: list[GetDbwWarehousesContactsResponseContactsItem] | None = _field(default=None)
-
-
-class GetDbwWarehousesContactsResponseContactsItem(WBModel):
-    comment: str | None = _field(default=None)
-    """Комментарий"""
-    phone: str | None = _field(default=None)
-    """Номер телефона"""
 
 
 class GetRecomReq(WBModel):
@@ -992,6 +967,25 @@ class GetStocksResponseStocksItem(WBModel):
     """Остаток"""
     chrt_id: int | None = _field(default=None, name="chrtId")
     """ID размера товара"""
+
+
+class GetTagsResponse(WBModel):
+    additional_errors: str | None = _field(default=None, name="additionalErrors")
+    """Дополнительные ошибки"""
+    data: list[GetTagsResponseDataItem] | None = _field(default=None)
+    error: bool | None = _field(default=None)
+    """Флаг ошибки"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Описание ошибки"""
+
+
+class GetTagsResponseDataItem(WBModel):
+    color: str | None = _field(default=None)
+    """Цвет ярлыка"""
+    id: int | None = _field(default=None)
+    """Числовой ID ярлыка"""
+    name: str | None = _field(default=None)
+    """Имя ярлыка"""
 
 
 class ModelsErrorTableListPublicRespV2(WBModel):
@@ -1096,26 +1090,6 @@ class ResponsePublicViewerPublicErrorsTableListV2(WBModel):
     """Описание ошибки"""
 
 
-class SetContentRecommendationRecListItem(WBModel):
-    nm_id: int | None = _field(default=None, name="nmId")
-    """Артикул WB"""
-    recommendations: list[SetContentRecommendationRecListItemRecommendationsItem] | None = _field(
-        default=None
-    )
-    """Рекомендуемые товары.  Укажите `recomNm` товаров, чтобы добавить их в рекомендации к
-    указанному `nmId`. …
-    """
-
-
-class SetContentRecommendationRecListItemRecommendationsItem(WBModel):
-    recom_nm: int | None = _field(default=None, name="recomNm")
-    """Артикул WB рекомендуемого товара"""
-    sort: int | None = _field(default=None)
-    """Позиция товара в списке рекомендаций.   Допустимые значения:  - `1`–`20` — фиксированная
-    позиция: …
-    """
-
-
 class SetRecomReq(WBModel):
     """Запрос на добавление или замену рекомендаций"""
 
@@ -1164,6 +1138,24 @@ class SetRecomResErrorsItem(WBModel):
     """Значение параметра `recomNm`"""
 
 
+class SetRecommendationRecListItem(WBModel):
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    recommendations: list[SetRecommendationRecListItemRecommendationsItem] | None = _field(default=None)
+    """Рекомендуемые товары.  Укажите `recomNm` товаров, чтобы добавить их в рекомендации к
+    указанному `nmId`. …
+    """
+
+
+class SetRecommendationRecListItemRecommendationsItem(WBModel):
+    recom_nm: int | None = _field(default=None, name="recomNm")
+    """Артикул WB рекомендуемого товара"""
+    sort: int | None = _field(default=None)
+    """Позиция товара в списке рекомендаций.   Допустимые значения:  - `1`–`20` — фиксированная
+    позиция: …
+    """
+
+
 class StoreContactRequestBody(WBModel):
     """Контакты склада продавца"""
 
@@ -1197,16 +1189,16 @@ class SwaggerPublicErrorsOrderV2(WBModel):
     """- `false` — сортировка по убыванию - `true` — сортировка по возрастанию"""
 
 
-class UpdateContentCardBodyItem(WBModel):
+class UpdateCardBodyItem(WBModel):
     brand: str | None = _field(default=None)
     """Бренд"""
-    characteristics: list[UpdateContentCardBodyItemCharacteristicsItem] | None = _field(default=None)
+    characteristics: list[UpdateCardBodyItemCharacteristicsItem] | None = _field(default=None)
     """Характеристики товара.  Можно получить методом Характеристики предмета"""
     description: str | None = _field(default=None)
     """Описание товара. Максимальное количество символов зависит от категории товара Стандарт —
     2000, минимум — 1000, максимум — 5000 …
     """
-    dimensions: UpdateContentCardBodyItemDimensions | None = _field(default=None)
+    dimensions: UpdateCardBodyItemDimensions | None = _field(default=None)
     """Габариты и вес товара **c упаковкой**. Укажите в `сантиметрах` и `килограммах` для любого
     товара. …
     """
@@ -1214,7 +1206,7 @@ class UpdateContentCardBodyItem(WBModel):
     """Подтверждение, что на товар нанесён обязательный код маркировки Честного знака: …"""
     nm_id: int | None = _field(default=None, name="nmID")
     """Артикул WB"""
-    sizes: list[UpdateContentCardBodyItemSizesItem] | None = _field(default=None)
+    sizes: list[UpdateCardBodyItemSizesItem] | None = _field(default=None)
     """Массив размеров Для безразмерного товара всё равно нужно передавать данный массив без
     параметров (wbSize и techSize), но с баркодом
     """
@@ -1224,7 +1216,7 @@ class UpdateContentCardBodyItem(WBModel):
     """Артикул продавца"""
 
 
-class UpdateContentCardBodyItemCharacteristicsItem(WBModel):
+class UpdateCardBodyItemCharacteristicsItem(WBModel):
     id: int | None = _field(default=None)
     """ID характеристики"""
     value: Any | None = _field(default=None)
@@ -1233,7 +1225,7 @@ class UpdateContentCardBodyItemCharacteristicsItem(WBModel):
     """
 
 
-class UpdateContentCardBodyItemDimensions(WBModel):
+class UpdateCardBodyItemDimensions(WBModel):
     """Габариты и вес товара **c упаковкой**.<br>"""
 
     height: int | None = _field(default=None)
@@ -1246,7 +1238,7 @@ class UpdateContentCardBodyItemDimensions(WBModel):
     """Ширина, см"""
 
 
-class UpdateContentCardBodyItemSizesItem(WBModel):
+class UpdateCardBodyItemSizesItem(WBModel):
     chrt_id: int | None = _field(default=None, name="chrtID")
     """ID размера для данного артикула WB Обязателен к заполнению для существующих размеров Для
     добавляемых размеров не указывается
@@ -1261,12 +1253,12 @@ class UpdateContentCardBodyItemSizesItem(WBModel):
     """Российский размер товара"""
 
 
-class UpdateContentCardsDeleteTrashBody(WBModel):
+class UpdateCardsDeleteTrashBody(WBModel):
     nm_ids: list[int] | None = _field(default=None, name="nmIDs")
     """Артикулы WB"""
 
 
-class UpdateContentCardsDeleteTrashResponse(WBModel):
+class UpdateCardsDeleteTrashResponse(WBModel):
     additional_errors: dict[str, Any] | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: dict[str, Any] | None = _field(default=None)
@@ -1276,12 +1268,12 @@ class UpdateContentCardsDeleteTrashResponse(WBModel):
     """Описание ошибки"""
 
 
-class UpdateContentCardsRecoverBody(WBModel):
+class UpdateCardsRecoverBody(WBModel):
     nm_ids: list[int] | None = _field(default=None, name="nmIDs")
     """Артикулы WB"""
 
 
-class UpdateContentCardsRecoverResponse(WBModel):
+class UpdateCardsRecoverResponse(WBModel):
     additional_errors: dict[str, Any] | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: dict[str, Any] | None = _field(default=None)
@@ -1289,13 +1281,6 @@ class UpdateContentCardsRecoverResponse(WBModel):
     """Флаг ошибки"""
     error_text: str | None = _field(default=None, name="errorText")
     """Описание ошибки"""
-
-
-class UpdateContentTagBody(WBModel):
-    color: str | None = _field(default=None)
-    """Цвет ярлыка"""
-    name: str | None = _field(default=None)
-    """Имя ярлыка"""
 
 
 class UpdateDbwWarehousesContactContactsItem(WBModel):
@@ -1326,6 +1311,13 @@ class UpdateStockStocksItem(WBModel):
     """ID размера товара"""
 
 
+class UpdateTagBody(WBModel):
+    color: str | None = _field(default=None)
+    """Цвет ярлыка"""
+    name: str | None = _field(default=None)
+    """Имя ярлыка"""
+
+
 class UpdateWarehouseBody(WBModel):
     name: str | None = _field(default=None)
     """Имя склада продавца"""
@@ -1335,7 +1327,7 @@ class UpdateWarehouseBody(WBModel):
     """
 
 
-class UploadContentMediaFileResponse(WBModel):
+class UploadMediaFileResponse(WBModel):
     additional_errors: dict[str, Any] | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: dict[str, Any] | None = _field(default=None)
@@ -1345,7 +1337,7 @@ class UploadContentMediaFileResponse(WBModel):
     """Описание ошибки"""
 
 
-class UploadContentMediaSaveBody(WBModel):
+class UploadMediaSaveBody(WBModel):
     data: list[str] | None = _field(default=None)
     """Ссылки на изображения в том порядке, в котором они будут в карточке товара, и на видео, на
     любой позиции массива
@@ -1354,7 +1346,7 @@ class UploadContentMediaSaveBody(WBModel):
     """Артикул WB"""
 
 
-class UploadContentMediaSaveResponse(WBModel):
+class UploadMediaSaveResponse(WBModel):
     additional_errors: dict[str, Any] | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: dict[str, Any] | None = _field(default=None)

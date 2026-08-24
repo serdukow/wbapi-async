@@ -115,7 +115,7 @@ async def test_user_agent_names_the_library(api: WBApi, recorder: Recorder) -> N
 async def test_shape_mismatch_is_relaxed(api: WBApi, recorder: Recorder) -> None:
     """An array where the spec promised an object must not crash the client."""
     recorder.add({"data": [{"id": 1, "color": "красный", "name": "Хит"}], "error": False})
-    result = await api.items.get_content_tags()
+    result = await api.items.get_tags()
     assert result.data[0].name == "Хит"
 
 

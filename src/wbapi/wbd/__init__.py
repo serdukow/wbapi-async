@@ -4,28 +4,28 @@ from collections.abc import AsyncIterator
 from typing import TYPE_CHECKING, Any
 
 from .methods import (
-    CreateContentUploadInit,
     CreateKeysApiKey,
     CreateOffer,
     CreateOffersThumb,
+    CreateUploadInit,
     DeleteContent,
     DeleteKeysApiKey,
+    GetAuthor,
+    GetAuthorById,
     GetCatalog,
-    GetContentAuthor,
-    GetContentAuthorById,
-    GetContentDownload,
+    GetDownload,
     GetKeysApiKeysRedeemed,
     GetOfferKeys,
     GetOfferKeysList,
     GetOffers,
     GetOffersAuthor,
-    UpdateContentAuthor,
+    UpdateAuthor,
     UpdateOffer,
     UpdateOfferPrice,
     UpdateOfferStatus,
-    UploadContentGallery,
-    UploadContentIllustration,
-    UploadContentUploadChunk,
+    UploadChunk,
+    UploadGallery,
+    UploadIllustration,
 )
 from .models import (
     ChunkPart,
@@ -62,7 +62,24 @@ class Wbd:
     def __init__(self, api: WBApi) -> None:
         self._api = api
 
-    async def create_content_upload_init(
+    async def create_keys_api_key(self, *, keys: list[str], offer_id: int) -> None:
+        """Добавить ключи активации
+
+        :param keys: Список ключей.  **Ограничения:** - Максимальное количество ключей — **1000** -
+            Максимальная длина ключа — **200 символов**
+        :param offer_id: ID предложения
+        """
+        await CreateKeysApiKey(keys=keys, offer_id=offer_id).emit(self._api)
+
+    async def create_offer(self, *, body: Any) -> OfferResponse:
+        """Создать новое предложение"""
+        return await CreateOffer(body=body).emit(self._api)
+
+    async def create_offers_thumb(self) -> None:
+        """Добавить или обновить обложку предложения"""
+        await CreateOffersThumb().emit(self._api)
+
+    async def create_upload_init(
         self,
         *,
         catalog_id: int,
@@ -82,7 +99,7 @@ class Wbd:
             массиве указываются индекс каждого фрейма и его размер
         :param title: Название контента.Максимальная длина — **500 символов.**
         """
-        return await CreateContentUploadInit(
+        return await CreateUploadInit(
             catalog_id=catalog_id,
             content_type=content_type,
             description=description,
@@ -90,23 +107,6 @@ class Wbd:
             parts=parts,
             title=title,
         ).emit(self._api)
-
-    async def create_keys_api_key(self, *, keys: list[str], offer_id: int) -> None:
-        """Добавить ключи активации
-
-        :param keys: Список ключей.  **Ограничения:** - Максимальное количество ключей — **1000** -
-            Максимальная длина ключа — **200 символов**
-        :param offer_id: ID предложения
-        """
-        await CreateKeysApiKey(keys=keys, offer_id=offer_id).emit(self._api)
-
-    async def create_offer(self, *, body: Any) -> OfferResponse:
-        """Создать новое предложение"""
-        return await CreateOffer(body=body).emit(self._api)
-
-    async def create_offers_thumb(self) -> None:
-        """Добавить или обновить обложку предложения"""
-        await CreateOffersThumb().emit(self._api)
 
     async def delete_content(self, *, content_id: int | None = None) -> None:
         """Удалить контент
@@ -122,11 +122,7 @@ class Wbd:
         """
         return await DeleteKeysApiKey(ids=ids).emit(self._api)
 
-    async def get_catalog(self) -> GetFullCatalogResponse:
-        """Получить категории и их подкатегории"""
-        return await GetCatalog().emit(self._api)
-
-    async def get_content_author(
+    async def get_author(
         self,
         *,
         category: int | None = None,
@@ -150,7 +146,7 @@ class Wbd:
         :param take: Количество контента для получения
         :param auto_paginate: автоматически собрать все страницы выборки
         """
-        call = GetContentAuthor(
+        call = GetAuthor(
             category=category,
             search=search,
             skip=skip,
@@ -161,7 +157,7 @@ class Wbd:
         )
         return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
-    async def iter_get_content_author(
+    async def iter_get_author(
         self,
         *,
         category: int | None = None,
@@ -183,7 +179,7 @@ class Wbd:
             - `3` — Ошибка в обработке или публикации - `4` — Обрабатывается …
         :param take: Количество контента для получения
         """
-        async for item in GetContentAuthor(
+        async for item in GetAuthor(
             category=category,
             search=search,
             skip=skip,
@@ -194,19 +190,23 @@ class Wbd:
         ).stream(self._api):
             yield item
 
-    async def get_content_author_by_id(self, *, content_id: str | int) -> Content:
+    async def get_author_by_id(self, *, content_id: str | int) -> Content:
         """Получить информацию о контенте
 
         :param content_id: ID контента
         """
-        return await GetContentAuthorById(content_id=content_id).emit(self._api)
+        return await GetAuthorById(content_id=content_id).emit(self._api)
 
-    async def get_content_download(self, *, uri: str | int) -> None:
+    async def get_catalog(self) -> GetFullCatalogResponse:
+        """Получить категории и их подкатегории"""
+        return await GetCatalog().emit(self._api)
+
+    async def get_download(self, *, uri: str | int) -> None:
         """Скачать контент
 
         :param uri: URI-адрес контента
         """
-        await GetContentDownload(uri=uri).emit(self._api)
+        await GetDownload(uri=uri).emit(self._api)
 
     async def get_keys_api_keys_redeemed(
         self,
@@ -416,7 +416,7 @@ class Wbd:
         ).stream(self._api):
             yield item
 
-    async def update_content_author(
+    async def update_author(
         self, *, content_id: str | int, description: str | None = None, title: str | None = None
     ) -> Content:
         """Редактировать контент
@@ -425,9 +425,7 @@ class Wbd:
         :param description: Описание контента.Максимальная длина — **1000 символов.**
         :param title: Название контента.Максимальная длина — **500 символов.**
         """
-        return await UpdateContentAuthor(content_id=content_id, description=description, title=title).emit(
-            self._api
-        )
+        return await UpdateAuthor(content_id=content_id, description=description, title=title).emit(self._api)
 
     async def update_offer(
         self,
@@ -497,14 +495,14 @@ class Wbd:
         """
         await UpdateOfferStatus(offer_id=offer_id, status=status).emit(self._api)
 
-    async def upload_content_gallery(self) -> UploadGalleryResponse:
-        """Загрузить медиафайлы для предложения"""
-        return await UploadContentGallery().emit(self._api)
-
-    async def upload_content_illustration(self) -> IllustrationResponse:
-        """Загрузить обложку контента"""
-        return await UploadContentIllustration().emit(self._api)
-
-    async def upload_content_upload_chunk(self) -> UploadChunkResponse:
+    async def upload_chunk(self) -> UploadChunkResponse:
         """Загрузить контент (файл)"""
-        return await UploadContentUploadChunk().emit(self._api)
+        return await UploadChunk().emit(self._api)
+
+    async def upload_gallery(self) -> UploadGalleryResponse:
+        """Загрузить медиафайлы для предложения"""
+        return await UploadGallery().emit(self._api)
+
+    async def upload_illustration(self) -> IllustrationResponse:
+        """Загрузить обложку контента"""
+        return await UploadIllustration().emit(self._api)
