@@ -3,22 +3,31 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from msgspec import field as _field
 
 from ..client.model import WBModel
 
 
 class ApiBatchErrorResponse(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки:   - `404`   - `409`"""
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
     этого статуса сборочного задания …
     """
-    meta_details: Any | None = _field(default=None, name="metaDetails")
+    meta_details: list[ApiBatchErrorResponseMetaDetailsItem] | None = _field(default=None, name="metaDetails")
     """Детали ошибки валидации идентификаторов маркировки"""
+
+
+class ApiBatchErrorResponseMetaDetailsItem(WBModel):
+    decision: str | None = _field(default=None)
+    """Статус проверки: - `sgtin`   - `sgtinInvalidFormat` — Неверный формат маркировки   -
+    `sgtinNotFound` — Маркировка не найдена в Честном знаке …
+    """
+    key: str | None = _field(default=None)
+    """Идентификатор маркировки"""
+    value: str | None = _field(default=None)
+    """Значение идентификатора маркировки"""
 
 
 class ApiMetaDeleteResponses(WBModel):
@@ -28,12 +37,21 @@ class ApiMetaDeleteResponses(WBModel):
 
 
 class ApiMetaDeleteResponsesResultsItem(WBModel):
-    errors: list[Any] | None = _field(default=None)
+    errors: list[ApiMetaDeleteResponsesResultsItemErrorsItem] | None = _field(default=None)
     """Детали ошибки"""
     is_error: bool | None = _field(default=None, name="isError")
     """Есть ли ошибки"""
     order_id: int | None = _field(default=None, name="orderId")
     """ID сборочного задания с успешно обновлёнными данными"""
+
+
+class ApiMetaDeleteResponsesResultsItemErrorsItem(WBModel):
+    code: int | None = _field(default=None)
+    """Код ошибки:   - `404`   - `409`"""
+    detail: str | None = _field(default=None)
+    """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
+    этого статуса сборочного задания - `ImeiIsNotFilled` — не заполнен IMEI
+    """
 
 
 class ApiOrdersMetaDetailsResponse(WBModel):
@@ -57,20 +75,20 @@ class ApiOrdersMetaDetailsResponseOrdersItem(WBModel):
 
 
 class ApiOrdersMetaDetailsResponseOrdersItemErrorsItem(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки"""
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """Дополнительная информация об ошибке"""
 
 
 class ApiOrdersMetaDetailsResponseOrdersItemMetaDetailsItem(WBModel):
-    decision: Any | None = _field(default=None)
+    decision: str | None = _field(default=None)
     """Статус проверки: - `imei`   - `pending` — Маркировка на проверке   - `optional` — Маркировка
     не обязательна   - `filled` — Валидация пройдена …
     """
-    key: Any | None = _field(default=None)
+    key: str | None = _field(default=None)
     """Идентификатор маркировки"""
-    value: Any | None = _field(default=None)
+    value: str | None = _field(default=None)
     """Значение идентификатора маркировки"""
 
 
@@ -144,12 +162,25 @@ class ClientInfoResp(WBModel):
     """Информация о покупателях"""
 
 
+class CourierContactsResponse(WBModel):
+    car_number: str | None = _field(default=None, name="carNumber")
+    """Номер автомобиля"""
+    full_name: str | None = _field(default=None, name="fullName")
+    """ФИО курьера"""
+    p_time_from: str | None = _field(default=None, name="pTimeFrom")
+    """Дата и время, с которого прибудет курьер"""
+    p_time_to: str | None = _field(default=None, name="pTimeTo")
+    """Дата и время, до которого прибудет курьер"""
+    phone: str | None = _field(default=None)
+    """Номер телефона"""
+
+
 class CourierInfo(WBModel):
-    contacts: Any | None = _field(default=None)
+    contacts: CourierContactsResponse | None = _field(default=None)
     """Контактные данные курьера"""
-    must_be_assigned: Any | None = _field(default=None, name="mustBeAssigned")
+    must_be_assigned: bool | None = _field(default=None, name="mustBeAssigned")
     """Должен ли быть назначен курьер к текущему моменту:   - `false` — нет   - `true` — да …"""
-    updated_at: Any | None = _field(default=None, name="updatedAt")
+    updated_at: str | None = _field(default=None, name="updatedAt")
     """Дата и время обновления информации о курьере.  Если `null`, информация не обновлялась"""
 
 
@@ -289,11 +320,11 @@ class Order(WBModel):
 class OrderAddress(WBModel):
     """Адрес покупателя для доставки"""
 
-    full_address: Any | None = _field(default=None, name="fullAddress")
+    full_address: str | None = _field(default=None, name="fullAddress")
     """Адрес доставки"""
-    latitude: Any | None = _field(default=None)
+    latitude: float | None = _field(default=None)
     """Широта"""
-    longitude: Any | None = _field(default=None)
+    longitude: float | None = _field(default=None)
     """Долгота"""
 
 
@@ -376,25 +407,25 @@ class OrderNewDBW(WBModel):
 class OrderNewDBWAddress(WBModel):
     """Адрес покупателя для доставки"""
 
-    full_address: Any | None = _field(default=None, name="fullAddress")
+    full_address: str | None = _field(default=None, name="fullAddress")
     """Адрес доставки"""
-    latitude: Any | None = _field(default=None)
+    latitude: float | None = _field(default=None)
     """Широта"""
-    longitude: Any | None = _field(default=None)
+    longitude: float | None = _field(default=None)
     """Долгота"""
 
 
 class OrderNewDBWOptions(WBModel):
     """Опции заказа"""
 
-    is_b2b: Any | None = _field(default=None, name="isB2b")
+    is_b2b: bool | None = _field(default=None, name="isB2b")
     """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
 
 
 class OrderOptions(WBModel):
     """Опции заказа"""
 
-    is_b2b: Any | None = _field(default=None, name="isB2b")
+    is_b2b: bool | None = _field(default=None, name="isB2b")
     """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
 
 

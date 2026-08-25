@@ -152,9 +152,9 @@ class GetSettingsAutoreturnsItemsResponseResultsItem(WBModel):
 
 
 class GetSettingsAutoreturnsItemsResponseResultsItemErrorItem(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки"""
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """Дополнительная информация об ошибке"""
 
 
@@ -199,11 +199,11 @@ class GetStatusHistoryResponseOrdersItem(WBModel):
 
 
 class GetStatusHistoryResponseOrdersItemStatusesItem(WBModel):
-    code: Any | None = _field(default=None)
+    code: str | None = _field(default=None)
     """Статус-код сборочного задания/заказа:   - `dispatched_to_delivery_service` — Продавец
     передал заказ в службу доставки в своей стране …
     """
-    date: Any | None = _field(default=None)
+    date: str | None = _field(default=None)
     """Дата присвоения статуса"""
 
 
@@ -344,11 +344,11 @@ class Order(WBModel):
 class OrderAddress(WBModel):
     """Точный адрес покупателя для доставки, если применимо. Из-за особенностей адреса некоторы"""
 
-    full_address: Any | None = _field(default=None, name="fullAddress")
+    full_address: str | None = _field(default=None, name="fullAddress")
     """Адрес доставки"""
-    latitude: Any | None = _field(default=None)
+    latitude: float | None = _field(default=None)
     """Широта"""
-    longitude: Any | None = _field(default=None)
+    longitude: float | None = _field(default=None)
     """Долгота"""
 
 
@@ -451,25 +451,25 @@ class OrderNew(WBModel):
 class OrderNewAddress(WBModel):
     """Точный адрес покупателя для доставки, если применимо. Из-за особенностей адреса некоторы"""
 
-    full_address: Any | None = _field(default=None, name="fullAddress")
+    full_address: str | None = _field(default=None, name="fullAddress")
     """Адрес доставки"""
-    latitude: Any | None = _field(default=None)
+    latitude: float | None = _field(default=None)
     """Широта"""
-    longitude: Any | None = _field(default=None)
+    longitude: float | None = _field(default=None)
     """Долгота"""
 
 
 class OrderNewOptions(WBModel):
     """Опции заказа"""
 
-    is_b2_b: Any | None = _field(default=None, name="isB2B")
+    is_b2_b: bool | None = _field(default=None, name="isB2B")
     """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
 
 
 class OrderOptions(WBModel):
     """Опции заказа"""
 
-    is_b2_b: Any | None = _field(default=None, name="isB2B")
+    is_b2_b: bool | None = _field(default=None, name="isB2B")
     """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
 
 
@@ -657,7 +657,7 @@ class V3ArchiveOrder(WBModel):
     """Признак заказа товара с нулевым остатком:   - `false` — заказ сделан на товар с ненулевым
     остатком   - `true` — заказ сделан на товар с нулевым остатком
     """
-    meta_details: Any | None = _field(default=None, name="metaDetails")
+    meta_details: list[V3ArchiveOrderMetaDetailsItem] | None = _field(default=None, name="metaDetails")
     options: V3ArchiveOrderOptions | None = _field(default=None)
     """Опции заказа"""
     order_uid: str | None = _field(default=None, name="orderUid")
@@ -687,29 +687,40 @@ class V3ArchiveOrder(WBModel):
 class V3ArchiveOrderCrossBorder(WBModel):
     """Информация о заказе по модели кроссбордер"""
 
-    parcel: Any | None = _field(default=None)
+    parcel: str | None = _field(default=None)
     """ID посылки"""
+
+
+class V3ArchiveOrderMetaDetailsItem(WBModel):
+    decision: str | None = _field(default=None)
+    """Статусы проверки идентификаторов маркировки. Статусы проверки `imei`, с которыми поставку
+    можно перевести в доставку: …
+    """
+    key: str | None = _field(default=None)
+    """Идентификатор маркировки"""
+    value: str | None = _field(default=None)
+    """Значение идентификатора маркировки"""
 
 
 class V3ArchiveOrderOptions(WBModel):
     """Опции заказа"""
 
-    is_b2_b: Any | None = _field(default=None, name="isB2B")
+    is_b2_b: bool | None = _field(default=None, name="isB2B")
     """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
 
 
 class V3ArchiveOrderPriceInfo(WBModel):
     """Информация о цене заказа"""
 
-    converted_currency_code: Any | None = _field(default=None, name="convertedCurrencyCode")
+    converted_currency_code: int | None = _field(default=None, name="convertedCurrencyCode")
     """Код валюты страны продавца"""
-    converted_price: Any | None = _field(default=None, name="convertedPrice")
+    converted_price: int | None = _field(default=None, name="convertedPrice")
     """Цена в валюте страны продавца с учетом всех скидок, кроме скидки по WB Кошельку, умноженная
     на 100
     """
-    currency_code: Any | None = _field(default=None, name="currencyCode")
+    currency_code: int | None = _field(default=None, name="currencyCode")
     """Код валюты продажи"""
-    price: Any | None = _field(default=None)
+    price: int | None = _field(default=None)
     """Цена в валюте продажи с учетом всех скидок, кроме скидки по WB Кошельку, умноженная на 100
     """
 
@@ -717,22 +728,22 @@ class V3ArchiveOrderPriceInfo(WBModel):
 class V3ArchiveOrderProduct(WBModel):
     """Информация о товаре"""
 
-    article: Any | None = _field(default=None)
+    article: str | None = _field(default=None)
     """Артикул продавца"""
-    chrt_id: Any | None = _field(default=None, name="chrtId")
+    chrt_id: int | None = _field(default=None, name="chrtId")
     """ID размера товара в системе WB"""
-    nm_id: Any | None = _field(default=None, name="nmId")
+    nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
-    skus: Any | None = _field(default=None)
+    skus: list[str] | None = _field(default=None)
     """Список баркодов"""
 
 
 class V3ArchiveOrderStatus(WBModel):
     """Последние статусы сборочного задания"""
 
-    supplier_status: Any | None = _field(default=None, name="supplierStatus")
+    supplier_status: str | None = _field(default=None, name="supplierStatus")
     """Статус сборочного задания, установленный продавцом"""
-    wb_status: Any | None = _field(default=None, name="wbStatus")
+    wb_status: str | None = _field(default=None, name="wbStatus")
     """Статус сборочного задания в системе Wildberries"""
 
 
@@ -756,7 +767,18 @@ class V3GetMetaMultiRequest(WBModel):
 class V3OrderMetaAPI(WBModel):
     id: int | None = _field(default=None)
     """ID сборочного задания"""
-    meta_details: Any | None = _field(default=None, name="metaDetails")
+    meta_details: list[V3OrderMetaAPIMetaDetailsItem] | None = _field(default=None, name="metaDetails")
+
+
+class V3OrderMetaAPIMetaDetailsItem(WBModel):
+    decision: str | None = _field(default=None)
+    """Статусы проверки идентификаторов маркировки. Статусы проверки `imei`, с которыми поставку
+    можно перевести в доставку: …
+    """
+    key: str | None = _field(default=None)
+    """Идентификатор маркировки"""
+    value: str | None = _field(default=None)
+    """Значение идентификатора маркировки"""
 
 
 class V3OrdersMetaAPI(WBModel):

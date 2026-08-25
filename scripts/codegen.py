@@ -11,6 +11,12 @@ import unicodedata
 import yaml
 
 
+# How far to follow $ref and allOf before giving up on a type. At 6 the
+# walk ran out on metaDetails and 519 fields fell back to Any; the count
+# settles at 20, where recursion terminates on its own.
+MAX_SCHEMA_DEPTH = 20
+
+
 SCALARS = {"string": "str", "integer": "int", "number": "float", "boolean": "bool"}
 # Only keywords need a suffix: a field named id or type shadows nothing and
 # reads better plain. Builtins are shadowed only in method signatures, so the
@@ -524,7 +530,7 @@ class Generator:
         return node
 
     def type_of(self, sch: dict | None, hint: str, depth: int = 0) -> str:
-        if not isinstance(sch, dict) or depth > 6:
+        if not isinstance(sch, dict) or depth > MAX_SCHEMA_DEPTH:
             return "Any"
         if "$ref" in sch:
             target = self._resolve(sch["$ref"])

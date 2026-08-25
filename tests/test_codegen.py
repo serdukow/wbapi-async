@@ -425,3 +425,31 @@ def test_a_spec_default_reaches_the_generated_method() -> None:
     limit = inspect.signature(api.finances.get_sales_reports_detailed).parameters["limit"]
 
     assert limit.default == 100000
+
+
+def test_an_allof_ref_resolves_to_its_item_type() -> None:
+    """metaDetails is an allOf around a $ref, nested deep in the order schema.
+
+    At the old depth limit the walk ran out before reaching it and 519 fields
+    across the client fell back to Any.
+    """
+    import yaml
+
+    spec = yaml.safe_load((gen.SPECS_DIR / "03-orders-fbs.yaml").read_text())
+    generator = gen.Generator(spec, "orders_fbs")
+
+    schema = {"allOf": [{"$ref": "#/components/schemas/MetaDetails"}, {"description": "x"}, {}]}
+    assert generator.type_of(schema, "MetaDetails", depth=5).startswith("list[")
+
+
+def test_few_fields_fall_back_to_any() -> None:
+    """A field is Any only when the spec itself gives it no type."""
+    import re
+
+    untyped = 0
+    for section in gen.SECTIONS.values():
+        models = gen.PACKAGE / section / "models.py"
+        if models.exists():
+            untyped += len(re.findall(r": Any\b", models.read_text()))
+
+    assert untyped < 60, f"{untyped} fields are untyped; the schema walk may be stopping short"

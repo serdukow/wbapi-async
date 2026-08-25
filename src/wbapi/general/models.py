@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from msgspec import field as _field
 
 from ..client.model import WBModel
@@ -79,9 +77,9 @@ class GetCommunicationsNewsResponseDataItem(WBModel):
 
 
 class GetCommunicationsNewsResponseDataItemTypesItem(WBModel):
-    id: Any | None = _field(default=None)
+    id: int | None = _field(default=None)
     """ID тега"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название тега"""
 
 
@@ -113,7 +111,7 @@ class GetUsersResponse(WBModel):
 
 
 class GetUsersResponseUsersItem(WBModel):
-    access: list[Any] | None = _field(default=None)
+    access: list[GetUsersResponseUsersItemAccessItem] | None = _field(default=None)
     email: str | None = _field(default=None)
     """Email пользователя"""
     first_name: str | None = _field(default=None, name="firstName")
@@ -142,18 +140,27 @@ class GetUsersResponseUsersItem(WBModel):
     """Фамилия пользователя"""
 
 
+class GetUsersResponseUsersItemAccessItem(WBModel):
+    code: str | None = _field(default=None)
+    """Код раздела профиля продавца, к которому пользователь получит доступ: * `balance` — Просмотр
+    баланса и вывод средств * `brands` — Управление брендами …
+    """
+    disabled: bool | None = _field(default=None)
+    """* `true` — доступ к разделу запрещён * `false` — доступ к разделу разрешён"""
+
+
 class GetUsersResponseUsersItemInviteeInfo(WBModel):
     """Информация о приглашении, если пользователь приглашён"""
 
-    expired_at: Any | None = _field(default=None, name="expiredAt")
+    expired_at: str | None = _field(default=None, name="expiredAt")
     """Дата и время окончания срока действия приглашения"""
-    invite_uuid: Any | None = _field(default=None, name="inviteUuid")
+    invite_uuid: str | None = _field(default=None, name="inviteUuid")
     """ID приглашения"""
-    is_active: Any | None = _field(default=None, name="isActive")
+    is_active: bool | None = _field(default=None, name="isActive")
     """- `true` — приглашение активно - `false` — приглашение неактивно"""
-    phone_number: Any | None = _field(default=None, name="phoneNumber")
+    phone_number: str | None = _field(default=None, name="phoneNumber")
     """Номер телефона приглашённого пользователя"""
-    position: Any | None = _field(default=None)
+    position: str | None = _field(default=None)
     """Должность приглашённого пользователя"""
 
 
@@ -182,11 +189,11 @@ class PlanBuilderOption(WBModel):
 
 
 class PlanBuilderOptionShort(WBModel):
-    id: Any | None = _field(default=None)
+    id: str | None = _field(default=None)
     """ID опции"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название опции на языке из параметра `locale`"""
-    slug: Any | None = _field(default=None)
+    slug: str | None = _field(default=None)
     """Код опции"""
 
 
@@ -228,9 +235,9 @@ class PlanBuilderPackage(WBModel):
 
 
 class PlanBuilderPromotion(WBModel):
-    commission_rate: Any | None = _field(default=None, name="commissionRate")
+    commission_rate: float | None = _field(default=None, name="commissionRate")
     """Стоимость подключения опции по акции, % от оборота"""
-    expires_at: Any | None = _field(default=None, name="expiresAt")
+    expires_at: str | None = _field(default=None, name="expiresAt")
     """Дата окончания действия цены по акции"""
 
 
@@ -271,9 +278,9 @@ class UserAccess(WBModel):
 
 
 class UserAccessAccessItem(WBModel):
-    code: Any | None = _field(default=None)
+    code: str | None = _field(default=None)
     """Код раздела профиля продавца, к которому пользователь получит доступ: * `balance` — Просмотр
     баланса и вывод средств * `brands` — Управление брендами …
     """
-    disabled: Any | None = _field(default=None)
+    disabled: bool | None = _field(default=None)
     """* `true` — доступ к разделу запрещён * `false` — доступ к разделу разрешён"""

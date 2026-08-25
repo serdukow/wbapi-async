@@ -248,11 +248,11 @@ class OfferContent(WBModel):
 
 
 class OfferContentFilesItem(WBModel):
-    content_type: Any | None = _field(default=None, name="contentType")
+    content_type: str | None = _field(default=None, name="contentType")
     """Тип контента"""
-    size: Any | None = _field(default=None)
+    size: int | None = _field(default=None)
     """Размер файла"""
-    uri: Any | None = _field(default=None)
+    uri: str | None = _field(default=None)
     """URI адрес файла"""
 
 

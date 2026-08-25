@@ -13,11 +13,11 @@ from ..client.model import WBModel
 class ApiB2bClientInfo(WBModel):
     """Данные покупателя B2B"""
 
-    inn: Any | None = _field(default=None)
+    inn: str | None = _field(default=None)
     """Индивидуальный номер налогоплательщика (ИНН)"""
-    kpp: Any | None = _field(default=None)
+    kpp: str | None = _field(default=None)
     """Код причины постановки на учёт (КПП)"""
-    org_name: Any | None = _field(default=None, name="orgName")
+    org_name: str | None = _field(default=None, name="orgName")
     """Наименование организации"""
 
 
@@ -32,9 +32,9 @@ class ApiB2bClientInfoResponse(WBModel):
 
 
 class ApiB2bClientInfoResponseErrorsItem(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки"""
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """Описание ошибки"""
 
 
@@ -45,31 +45,44 @@ class ApiB2bClientInfoResponses(WBModel):
 
 
 class ApiBatchErrorDeliverResponse(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки:   - `404`   - `409`"""
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
     этого статуса сборочного задания …
     """
-    meta_details: Any | None = _field(default=None, name="metaDetails")
+    meta_details: list[ApiBatchErrorDeliverResponseMetaDetailsItem] | None = _field(
+        default=None, name="metaDetails"
+    )
     """Детали ошибки валидации идентификаторов маркировки"""
 
 
+class ApiBatchErrorDeliverResponseMetaDetailsItem(WBModel):
+    decision: str | None = _field(default=None)
+    """Статус проверки: - `sgtin`   - `sgtinInvalidFormat` — Неверный формат маркировки   -
+    `sgtinNotFound` — Маркировка не найдена в Честном знаке …
+    """
+    key: str | None = _field(default=None)
+    """Идентификатор маркировки"""
+    value: str | None = _field(default=None)
+    """Значение идентификатора маркировки"""
+
+
 class ApiBatchErrorFinalPriceResponse(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки:   - `404` — `NotFound`   - `400` — `StatusMismatch`   - `422` —
     `PriceNotCalculated`
     """
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """- `NotFound` — сборочное задание не найдено (`404`) - `StatusMismatch` — операция невозможна
     для этого статуса сборочного задания (`400`) …
     """
 
 
 class ApiBatchErrorResponse(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки:   - `404`   - `409`   - `400`"""
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
     этого статуса сборочного задания …
     """
@@ -112,23 +125,23 @@ class ApiOrderFinalPriceResult(WBModel):
 class ApiOrderFinalPriceResultData(WBModel):
     """Данные сборочного задания."""
 
-    converted_currency_code: Any | None = _field(default=None, name="convertedCurrencyCode")
+    converted_currency_code: int | None = _field(default=None, name="convertedCurrencyCode")
     """Код валюты страны продавца"""
-    converted_original_final_price: Any | None = _field(default=None, name="convertedOriginalFinalPrice")
+    converted_original_final_price: int | None = _field(default=None, name="convertedOriginalFinalPrice")
     """Сумма к оплате покупателем в валюте страны продавца с учетом всех скидок и кэшбека,
     умноженная на 100. Предоставляется в информационных целях
     """
-    converted_original_price: Any | None = _field(default=None, name="convertedOriginalPrice")
+    converted_original_price: int | None = _field(default=None, name="convertedOriginalPrice")
     """Цена продавца в валюте страны продавца без учёта скидок, умноженная на 100. Предоставляется
     в информационных целях
     """
-    currency_code: Any | None = _field(default=None, name="currencyCode")
+    currency_code: int | None = _field(default=None, name="currencyCode")
     """Код валюты продажи"""
-    original_final_price: Any | None = _field(default=None, name="originalFinalPrice")
+    original_final_price: int | None = _field(default=None, name="originalFinalPrice")
     """Сумма к оплате покупателем в валюте продажи с учетом всех скидок и кэшбека, умноженная на
     100. Код валюты продажи указан в поле `currencyCode`. Предоставляется …
     """
-    original_price: Any | None = _field(default=None, name="originalPrice")
+    original_price: int | None = _field(default=None, name="originalPrice")
     """Цена продавца в валюте продажи без учёта скидок, умноженная на 100. Предоставляется в
     информационных целях
     """
@@ -201,22 +214,22 @@ class ApiOrdersMetaDetailsResponseOrdersItem(WBModel):
 
 
 class ApiOrdersMetaDetailsResponseOrdersItemErrorsItem(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки"""
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """Дополнительная информация об ошибке"""
 
 
 class ApiOrdersMetaDetailsResponseOrdersItemMetaDetailsItem(WBModel):
-    decision: Any | None = _field(default=None)
+    decision: str | None = _field(default=None)
     """Статус проверки: - `imei`   - `pending` — Маркировка на проверке   - `optional` — Маркировка
     не обязательна   - `filled` — Валидация пройдена …
     """
-    key: Any | None = _field(default=None)
+    key: str | None = _field(default=None)
     """Идентификатор маркировки:   - `imei` — IMEI   - `uin` — УИН   - `gtin` — GTIN   - `sgtin` —
     код маркировки   - `customsDeclaration` — номер ДТ …
     """
-    value: Any | None = _field(default=None)
+    value: str | None = _field(default=None)
     """Значение идентификатора маркировки"""
 
 
@@ -295,9 +308,9 @@ class CreateOrdersStatusReceiveResponseResultsItem(WBModel):
 
 
 class CreateOrdersStatusReceiveResponseResultsItemErrorsItem(WBModel):
-    code: Any | None = _field(default=None)
+    code: int | None = _field(default=None)
     """Код ошибки"""
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
     этого статуса сборочного задания …
     """
@@ -485,18 +498,18 @@ class OrderDBS(WBModel):
 class OrderDBSAddress(WBModel):
     """Адрес покупателя для доставки. При доставке заказов в ПВЗ указан адрес ПВЗ"""
 
-    full_address: Any | None = _field(default=None, name="fullAddress")
+    full_address: str | None = _field(default=None, name="fullAddress")
     """Адрес доставки"""
-    latitude: Any | None = _field(default=None)
+    latitude: float | None = _field(default=None)
     """Широта"""
-    longitude: Any | None = _field(default=None)
+    longitude: float | None = _field(default=None)
     """Долгота"""
 
 
 class OrderDBSOptions(WBModel):
     """Опции заказа"""
 
-    is_b2b: Any | None = _field(default=None, name="isB2b")
+    is_b2b: bool | None = _field(default=None, name="isB2b")
     """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
 
 
@@ -582,18 +595,18 @@ class OrderNewDBS(WBModel):
 class OrderNewDBSAddress(WBModel):
     """Адрес покупателя для доставки. При доставке заказов в ПВЗ указан адрес ПВЗ"""
 
-    full_address: Any | None = _field(default=None, name="fullAddress")
+    full_address: str | None = _field(default=None, name="fullAddress")
     """Адрес доставки"""
-    latitude: Any | None = _field(default=None)
+    latitude: float | None = _field(default=None)
     """Широта"""
-    longitude: Any | None = _field(default=None)
+    longitude: float | None = _field(default=None)
     """Долгота"""
 
 
 class OrderNewDBSOptions(WBModel):
     """Опции заказа"""
 
-    is_b2b: Any | None = _field(default=None, name="isB2b")
+    is_b2b: bool | None = _field(default=None, name="isB2b")
     """Признак B2B-продажи:   - `false` — не B2B-продажа   - `true` — B2B-продажа"""
 
 
