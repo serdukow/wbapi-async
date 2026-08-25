@@ -1,19 +1,17 @@
 name: PyPI release
 
 on:
-  # release-please calls this workflow directly when it cuts a release: a
-  # release it creates carries GITHUB_TOKEN, and GitHub will not start a
-  # workflow from an event that token raised, so release: published never
-  # fires for it.
-  workflow_call:
+  # release-please dispatches this workflow once it has cut a release. It
+  # cannot rely on release: published, because GitHub will not start a
+  # workflow from an event GITHUB_TOKEN raised.
+  workflow_dispatch:
     inputs:
       ref:
-        description: The tag to build, since the caller's SHA predates it.
+        description: The tag to build. Defaults to the current branch.
         type: string
-        required: true
+        required: false
   release:
     types: [published]
-  workflow_dispatch:
 
 jobs:
   build:

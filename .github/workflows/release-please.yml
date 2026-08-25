@@ -36,12 +36,24 @@ jobs:
         run: echo "::notice::Released ${{ steps.release.outputs.tag_name }}"
 
   publish:
-    name: Publish to PyPI
+    name: Start the PyPI release
     needs: release-please
     if: needs.release-please.outputs.released == 'true'
-    uses: ./.github/workflows/pypi_release.yml
-    with:
-      ref: ${{ needs.release-please.outputs.tag }}
+    runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
+      actions: write
+
+    steps:
+      # Dispatched rather than called: a called workflow signs its artifact
+      # with the caller's identity, so PyPI saw release-please.yml where the
+      # trusted publisher names pypi_release.yml. Dispatching keeps the OIDC
+      # claim on the workflow that actually uploads.
+      - name: Dispatch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.release-please.outputs.tag }}
+        run: |
+          gh workflow run pypi_release.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            --field ref="$TAG"
