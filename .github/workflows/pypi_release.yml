@@ -28,10 +28,11 @@ jobs:
 
       - name: Refuse to publish from outside main
         run: |
-          git fetch origin main
-          # HEAD, not GITHUB_SHA: on a called run the latter is the caller's
-          # commit, which is not what was checked out or what gets built.
-          git merge-base --is-ancestor origin/main HEAD
+          git fetch --unshallow origin main || git fetch origin main
+          # Asks whether what is being built belongs to main, not whether main
+          # is behind it: main moves on after a tag is cut, and the reversed
+          # check rejected the very tag it had just released.
+          git merge-base --is-ancestor HEAD origin/main
 
       - name: Setup Python
         uses: actions/setup-python@v5
