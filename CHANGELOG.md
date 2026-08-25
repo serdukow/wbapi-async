@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.1](https://github.com/serdukow/wbapi-async/compare/v1.0.0...v1.0.1) (2026-08-25)
+
+
+### Bug Fixes
+
+* **ci:** check the built commit belongs to main, not the reverse ([6c6a60c](https://github.com/serdukow/wbapi-async/commit/6c6a60ca556b9065ba890a82fe14dd667671a8fa))
+* **ci:** check the built commit belongs to main, not the reverse ([d4b1b1c](https://github.com/serdukow/wbapi-async/commit/d4b1b1ce13fe36b78fd1c0a5d94745d792084416))
+* **ci:** dispatch the PyPI workflow instead of calling it ([f7c9138](https://github.com/serdukow/wbapi-async/commit/f7c9138359cf652c18176d89659badcf4df09084))
+* **ci:** dispatch the PyPI workflow instead of calling it ([8057040](https://github.com/serdukow/wbapi-async/commit/8057040a46cb3f0eb89fca6f987af89abcec75d5))
+
 ## [1.0.0](https://github.com/serdukow/wbapi-async/compare/v1.0.0...v1.0.0) (2026-08-25)
 
 
