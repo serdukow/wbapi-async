@@ -57,14 +57,13 @@ def read_only_methods() -> list[tuple[str, str, Scope | None]]:
 CHECKS = read_only_methods()
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 async def live_api():
     async with WBApi(token=os.environ["WB_TOKEN"].strip(), sandbox=SANDBOX) as api:
         yield api
 
 
 def test_there_is_something_to_check() -> None:
-    """A discovery that silently found nothing would pass every other test."""
     assert len(CHECKS) > 10
 
 
@@ -76,11 +75,6 @@ def test_there_is_something_to_check() -> None:
 async def test_endpoint_answers_in_the_shape_the_spec_promised(
     live_api: WBApi, section: str, method: str, scope: Scope | None
 ) -> None:
-    """The response decodes into the generated model.
-
-    A WBDecodeError is the finding: the spec and the live API disagree, which
-    no mocked test can catch.
-    """
     if scope is not None and not live_api.token.allows(scope):
         pytest.skip(f"token lacks {scope.name}")
 
