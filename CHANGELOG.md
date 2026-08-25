@@ -3,6 +3,14 @@
 ## [1.0.0](https://github.com/serdukow/wbapi-async/compare/v1.0.0...v1.0.0) (2026-08-25)
 
 
+### Bug Fixes
+
+* **ci:** dispatch the PyPI workflow instead of calling it ([f7c9138](https://github.com/serdukow/wbapi-async/commit/f7c9138359cf652c18176d89659badcf4df09084))
+* **ci:** dispatch the PyPI workflow instead of calling it ([8057040](https://github.com/serdukow/wbapi-async/commit/8057040a46cb3f0eb89fca6f987af89abcec75d5))
+
+## [1.0.0](https://github.com/serdukow/wbapi-async/compare/v1.0.0...v1.0.0) (2026-08-25)
+
+
 ### Features
 
 * **codegen:** carry spec defaults into method signatures ([cee7cf7](https://github.com/serdukow/wbapi-async/commit/cee7cf7901d83ee2d02e81bdabb381b6fcce9132))
