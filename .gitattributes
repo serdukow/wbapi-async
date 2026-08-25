@@ -17,5 +17,7 @@ src/wbapi/rates/** linguist-generated=true
 src/wbapi/reports/** linguist-generated=true
 src/wbapi/wbd/** linguist-generated=true
 
+METHODS.md linguist-generated=true
+
 # Vendored upstream, not ours to review.
 specs/*.yaml linguist-vendored=true
