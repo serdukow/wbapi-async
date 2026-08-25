@@ -10,28 +10,28 @@
       "changelog-sections": [
         {
           "type": "feat",
-          "section": "Новое"
+          "section": "Features"
         },
         {
           "type": "fix",
-          "section": "Исправления"
+          "section": "Bug Fixes"
         },
         {
           "type": "refactor",
-          "section": "Изменения"
+          "section": "Changes"
         },
         {
           "type": "perf",
-          "section": "Производительность"
+          "section": "Performance"
         },
         {
           "type": "docs",
-          "section": "Документация",
+          "section": "Documentation",
           "hidden": true
         },
         {
           "type": "test",
-          "section": "Тесты",
+          "section": "Tests",
           "hidden": true
         },
         {
@@ -41,7 +41,7 @@
         },
         {
           "type": "chore",
-          "section": "Разное",
+          "section": "Chores",
           "hidden": true
         }
       ],
