@@ -17,12 +17,12 @@
           "section": "Bug Fixes"
         },
         {
-          "type": "refactor",
-          "section": "Changes"
-        },
-        {
           "type": "perf",
           "section": "Performance"
+        },
+        {
+          "type": "refactor",
+          "section": "Changes"
         },
         {
           "type": "docs",
@@ -40,12 +40,17 @@
           "hidden": true
         },
         {
+          "type": "build",
+          "section": "Build",
+          "hidden": true
+        },
+        {
           "type": "chore",
           "section": "Chores",
           "hidden": true
         }
       ],
-      "release-as": "1.0.0"
+      "bump-patch-for-minor-pre-major": false
     }
   }
 }
