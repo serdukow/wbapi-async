@@ -10,22 +10,49 @@ from msgspec import field as _field
 from ..client.model import WBModel
 
 
+class AdvertBidsKopecks(WBModel):
+    """Ставка в разменных единицах — 0,01 от базовой валюты [аккаунта продавца](https://cmp.wil"""
+
+    recommendations: int | None = _field(default=None)
+    """Ставка в рекомендациях"""
+    search: int | None = _field(default=None)
+    """Ставка в поиске"""
+
+
 class AdvertNMsSettings(WBModel):
-    bids_kopecks: Any | None = _field(default=None)
-    nm_id: Any | None = _field(default=None)
+    bids_kopecks: AdvertBidsKopecks | None = _field(default=None)
+    nm_id: int | None = _field(default=None)
     """Артикул WB"""
-    subject: Any | None = _field(default=None)
+    subject: AdvertSubcategory | None = _field(default=None)
 
 
 class AdvertSettings(WBModel):
     """Настройки кампании"""
 
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название кампании"""
-    payment_type: Any | None = _field(default=None)
+    payment_type: str | None = _field(default=None)
     """Тип оплаты: - `cpm` — за показы - `cpc` — за клик"""
-    placements: Any | None = _field(default=None)
+    placements: AdvertSettingsPlacements | None = _field(default=None)
     """Места размещения"""
+
+
+class AdvertSettingsPlacements(WBModel):
+    """Места размещения"""
+
+    recommendations: bool | None = _field(default=None)
+    """Размещение в рекомендациях:   - `false` — отключено   - `true` — включено"""
+    search: bool | None = _field(default=None)
+    """Размещение в поиске:   - `false` — отключено   - `true` — включено"""
+
+
+class AdvertSubcategory(WBModel):
+    """Предмет"""
+
+    id: int | None = _field(default=None)
+    """ID предмета"""
+    name: str | None = _field(default=None)
+    """Название предмета"""
 
 
 class CreateAdvertBidsMinBody(WBModel):
@@ -54,10 +81,10 @@ class CreateAdvertBidsMinResponseBidsItem(WBModel):
 
 
 class CreateAdvertBidsMinResponseBidsItemBidsItem(WBModel):
-    currency: Any | None = _field(default=None)
+    currency: str | None = _field(default=None)
     """Валюта аккаунта продавца"""
-    type: Any | None = _field(default=None)
-    value: Any | None = _field(default=None)
+    type: str | None = _field(default=None)
+    value: int | None = _field(default=None)
     """Минимальная ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
 
 
@@ -120,7 +147,7 @@ class FullStatsItem(WBModel):
     """ID кампании"""
     atbs: int | None = _field(default=None)
     """Количество добавлений товаров в корзину"""
-    booster_stats: list[Any] | None = _field(default=None, name="boosterStats")
+    booster_stats: list[FullStatsItemBoosterStatsItem] | None = _field(default=None, name="boosterStats")
     canceled: int | None = _field(default=None)
     """Отмены, шт."""
     clicks: int | None = _field(default=None)
@@ -133,7 +160,7 @@ class FullStatsItem(WBModel):
     """CTR (click-through rate) — отношение числа кликов к количеству показов в процентах"""
     currency: str | None = _field(default=None)
     """Валюта аккаунта продавца"""
-    days: list[Any] | None = _field(default=None)
+    days: list[FullStatsItemDaysItem] | None = _field(default=None)
     orders: int | None = _field(default=None)
     """Количество заказов"""
     shks: int | None = _field(default=None)
@@ -142,6 +169,103 @@ class FullStatsItem(WBModel):
     """Затраты в базовых единицах валюты аккаунта продавца"""
     sum_price: float | None = _field(default=None)
     """Сумма заказов в базовых единицах валюты аккаунта продавца"""
+    views: int | None = _field(default=None)
+    """Количество просмотров"""
+
+
+class FullStatsItemBoosterStatsItem(WBModel):
+    avg_position: int | None = _field(default=None)
+    """Средняя позиция товара"""
+    date: str | None = _field(default=None)
+    """Дата, за которую предоставлены данные"""
+    nm: int | None = _field(default=None)
+    """Артикул WB"""
+
+
+class FullStatsItemDaysItem(WBModel):
+    apps: list[FullStatsItemDaysItemAppsItem] | None = _field(default=None)
+    """Блок информации о платформе"""
+    atbs: int | None = _field(default=None)
+    """Количество добавлений товаров в корзину"""
+    canceled: int | None = _field(default=None)
+    """Отмены, шт."""
+    clicks: int | None = _field(default=None)
+    """Количество кликов"""
+    cpc: float | None = _field(default=None)
+    """Средняя стоимость клика в базовых единицах валюты аккаунта продавца"""
+    cr: float | None = _field(default=None)
+    """CR (conversion rate) — отношение количества заказов к общему количеству посещений кампании
+    """
+    ctr: float | None = _field(default=None)
+    """CTR (click-through rate) — отношение числа кликов к количеству показов в процентах"""
+    date: str | None = _field(default=None)
+    """Дата, за которую представлены данные"""
+    orders: int | None = _field(default=None)
+    """Количество заказов"""
+    shks: int | None = _field(default=None)
+    """Количество заказанных товаров, шт."""
+    sum: float | None = _field(default=None)
+    """Затраты в базовых единицах валюты аккаунта продавца"""
+    sum_price: float | None = _field(default=None)
+    """Заказов на сумму в базовых единицах валюты аккаунта продавца"""
+    views: int | None = _field(default=None)
+    """Количество просмотров"""
+
+
+class FullStatsItemDaysItemAppsItem(WBModel):
+    app_type: int | None = _field(default=None, name="appType")
+    """Тип платформы:   - `1` — сайт   - `32` — Android   - `64` — IOS"""
+    atbs: int | None = _field(default=None)
+    """Количество добавлений товаров в корзину"""
+    canceled: int | None = _field(default=None)
+    """Отмены, шт."""
+    clicks: int | None = _field(default=None)
+    """Количество кликов"""
+    cpc: float | None = _field(default=None)
+    """Средняя стоимость клика в базовых единицах валюты аккаунта продавца"""
+    cr: float | None = _field(default=None)
+    """CR (conversion rate) — отношение количества заказов к общему количеству кликов"""
+    ctr: float | None = _field(default=None)
+    """CTR (click-through rate) — отношение числа кликов к количеству показов в процентах"""
+    nms: list[FullStatsItemDaysItemAppsItemNmsItem] | None = _field(default=None)
+    """Блок статистики по артикулам WB"""
+    orders: int | None = _field(default=None)
+    """Количество заказов"""
+    shks: int | None = _field(default=None)
+    """Количество заказанных товаров, шт."""
+    sum: float | None = _field(default=None)
+    """Затраты в базовых единицах валюты аккаунта продавца"""
+    sum_price: float | None = _field(default=None)
+    """Заказов на сумму в базовых единицах валюты аккаунта продавца"""
+    views: int | None = _field(default=None)
+    """Количество просмотров"""
+
+
+class FullStatsItemDaysItemAppsItemNmsItem(WBModel):
+    atbs: int | None = _field(default=None)
+    """Количество добавлений товаров в корзину"""
+    canceled: int | None = _field(default=None)
+    """Отмены, шт."""
+    clicks: int | None = _field(default=None)
+    """Количество кликов"""
+    cpc: float | None = _field(default=None)
+    """Средняя стоимость клика в базовых единицах валюты аккаунта продавца"""
+    cr: float | None = _field(default=None)
+    """CR (conversion rate) — отношение количества заказов к общему количеству кликов"""
+    ctr: float | None = _field(default=None)
+    """CTR (click-through rate) — отношение числа кликов к количеству показов в процентах"""
+    name: str | None = _field(default=None)
+    """Название товара"""
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    orders: int | None = _field(default=None)
+    """Количество заказов"""
+    shks: int | None = _field(default=None)
+    """Количество заказанных товаров, шт."""
+    sum: float | None = _field(default=None)
+    """Затраты в базовых единицах валюты аккаунта продавца"""
+    sum_price: float | None = _field(default=None)
+    """Заказов на сумму в базовых единицах валюты аккаунта продавца"""
     views: int | None = _field(default=None)
     """Количество просмотров"""
 
@@ -247,9 +371,9 @@ class GetAdvertResponseItemsItem(WBModel):
 
 
 class GetAdvertResponseItemsItemShowHoursItem(WBModel):
-    from_: Any | None = _field(default=None, name="From")
+    from_: int | None = _field(default=None, name="From")
     """Начало показа"""
-    to: Any | None = _field(default=None, name="To")
+    to: int | None = _field(default=None, name="To")
     """Конец показа"""
 
 
@@ -275,7 +399,7 @@ class GetAdvertsAdvertsItem(WBModel):
 class GetAdvertsAdvertsItemRestrictions(WBModel):
     """Ограничения кампании"""
 
-    can_change_nms: Any | None = _field(default=None)
+    can_change_nms: bool | None = _field(default=None)
     """Можно ли изменять список товаров кампании:   - `true` — да   - `false` — нет"""
 
 
@@ -400,9 +524,9 @@ class GetPromotionCountResponseAdvertsItem(WBModel):
 
 
 class GetPromotionCountResponseAdvertsItemAdvertListItem(WBModel):
-    advert_id: Any | None = _field(default=None, name="advertId")
+    advert_id: int | None = _field(default=None, name="advertId")
     """ID кампании"""
-    change_time: Any | None = _field(default=None, name="changeTime")
+    change_time: str | None = _field(default=None, name="changeTime")
     """Дата и время последнего изменения кампании"""
 
 
@@ -480,63 +604,89 @@ class StatIntervalInterval(WBModel):
 
 
 class StatsBlok1(WBModel):
-    advert_type: Any | None = _field(default=None)
+    advert_type: int | None = _field(default=None)
     """Тип медиакампании:   - `1` — размещение по дням   - `2` — размещение по просмотрам"""
-    atbs: Any | None = _field(default=None)
+    atbs: int | None = _field(default=None)
     """Количество добавлений товаров в корзину"""
-    category_name: Any | None = _field(default=None)
+    category_name: str | None = _field(default=None)
     """Название категории"""
-    clicks: Any | None = _field(default=None)
+    clicks: int | None = _field(default=None)
     """Количество кликов"""
-    cpc: Any | None = _field(default=None)
+    cpc: float | None = _field(default=None)
     """(cost per click) — цена клика по продвигаемому товару"""
-    cr: Any | None = _field(default=None)
+    cr: float | None = _field(default=None)
     """CR(conversion rate) — это отношение количества заказов к общему количеству посещений
     медиакампании
     """
-    cr1: Any | None = _field(default=None)
+    cr1: float | None = _field(default=None)
     """Отношение количества добавлений в корзину к количеству кликов"""
-    cr2: Any | None = _field(default=None)
+    cr2: int | None = _field(default=None)
     """Отношение количества заказов к количеству добавлений в корзину"""
-    ctr: Any | None = _field(default=None)
+    ctr: float | None = _field(default=None)
     """CTR (click-through rate) — показатель кликабельности, отношение числа кликов к количеству
     показов в рамках медиакампании
     """
-    daily_stats: Any | None = _field(default=None)
-    date_from: Any | None = _field(default=None)
+    daily_stats: list[StatsBlok1DailyStatsItem] | None = _field(default=None)
+    date_from: str | None = _field(default=None)
     """Время начала размещения"""
-    date_to: Any | None = _field(default=None)
+    date_to: str | None = _field(default=None)
     """Время завершения размещения"""
-    expenses: Any | None = _field(default=None)
+    expenses: float | None = _field(default=None)
     """Стоимость размещения баннера"""
-    item_id: Any | None = _field(default=None)
+    item_id: int | None = _field(default=None)
     """ID баннера"""
-    item_name: Any | None = _field(default=None)
+    item_name: str | None = _field(default=None)
     """Бренд"""
-    orders: Any | None = _field(default=None)
+    orders: int | None = _field(default=None)
     """Количество заказов"""
-    place: Any | None = _field(default=None)
+    place: int | None = _field(default=None)
     """Место на странице"""
-    price: Any | None = _field(default=None)
+    price: float | None = _field(default=None)
     """Стоимость размещения"""
-    status: Any | None = _field(default=None)
+    status: int | None = _field(default=None)
     """Статус медиакампании"""
-    subject_name: Any | None = _field(default=None)
+    subject_name: str | None = _field(default=None)
     """Родительская категория предмета"""
-    views: Any | None = _field(default=None)
+    views: int | None = _field(default=None)
+    """Количество просмотров"""
+
+
+class StatsBlok1DailyStatsItem(WBModel):
+    app_type_stats: list[StatsBlok1DailyStatsItemAppTypeStatsItem] | None = _field(default=None)
+    """Статистика по платформам"""
+    date: str | None = _field(default=None)
+    """Дата"""
+
+
+class StatsBlok1DailyStatsItemAppTypeStatsItem(WBModel):
+    app_type: int | None = _field(default=None)
+    """Тип платформы: - `1` — сайт - `32` — Android - `64` — IOS"""
+    stats: list[StatsBlok1DailyStatsItemAppTypeStatsItemStatsItem] | None = _field(default=None)
+
+
+class StatsBlok1DailyStatsItemAppTypeStatsItemStatsItem(WBModel):
+    atbs: int | None = _field(default=None)
+    """Количество добавлений товаров в корзину"""
+    clicks: int | None = _field(default=None)
+    """Количество кликов"""
+    ctr: float | None = _field(default=None)
+    """CTR (click-through rate) — показатель кликабельности, отношение числа кликов к количеству
+    показов в рамках медиакампании
+    """
+    views: int | None = _field(default=None)
     """Количество просмотров"""
 
 
 class Timestamps(WBModel):
     """Временные отметки"""
 
-    created: Any | None = _field(default=None)
+    created: str | None = _field(default=None)
     """Время создания кампании"""
-    deleted: Any | None = _field(default=None)
+    deleted: str | None = _field(default=None)
     """Время удаления кампании. Если кампания не удалена, время указывается в будущем"""
-    started: Any | None = _field(default=None)
+    started: str | None = _field(default=None)
     """Время последнего запуска кампании"""
-    updated: Any | None = _field(default=None)
+    updated: str | None = _field(default=None)
     """Время последнего изменения кампании"""
 
 
@@ -571,11 +721,11 @@ class UpdateAdvertBidBodyBidsItem(WBModel):
 
 
 class UpdateAdvertBidBodyBidsItemNmBidsItem(WBModel):
-    bid_kopecks: Any | None = _field(default=None)
+    bid_kopecks: int | None = _field(default=None)
     """Ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
-    nm_id: Any | None = _field(default=None)
+    nm_id: int | None = _field(default=None)
     """Артикул WB"""
-    placement: Any | None = _field(default=None)
+    placement: str | None = _field(default=None)
     """Место размещения:   - `search` — в поиске (для кампаний с ручной ставкой)   -
     `recommendations`— в рекомендациях (для кампаний с ручной ставкой) …
     """
@@ -596,11 +746,11 @@ class UpdateAdvertBidResponseBidsItem(WBModel):
 
 
 class UpdateAdvertBidResponseBidsItemNmBidsItem(WBModel):
-    bid_kopecks: Any | None = _field(default=None)
+    bid_kopecks: int | None = _field(default=None)
     """Ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
-    nm_id: Any | None = _field(default=None)
+    nm_id: int | None = _field(default=None)
     """Артикул WB"""
-    placement: Any | None = _field(default=None)
+    placement: str | None = _field(default=None)
     """Место размещения:   - `search` — в поиске   - `recommendations`— в рекомендациях"""
 
 
@@ -621,7 +771,7 @@ class UpdateAuctionNmsBodyNmsItemNms(WBModel):
 
     add: Any | None = _field(default=None)
     """Карточки товаров, которые необходимо добавить"""
-    delete: Any | None = _field(default=None)
+    delete: list[int] | None = _field(default=None)
     """Карточки товаров, которые необходимо удалить"""
 
 
@@ -656,9 +806,9 @@ class UpdateAuctionNmsResponseNmsItem(WBModel):
 class UpdateAuctionNmsResponseNmsItemNms(WBModel):
     """Карточки товаров"""
 
-    added: Any | None = _field(default=None)
+    added: list[int] | None = _field(default=None)
     """Добавленные карточки товаров"""
-    deleted: Any | None = _field(default=None)
+    deleted: list[int] | None = _field(default=None)
     """Удалённые карточки товаров"""
 
 
@@ -677,9 +827,9 @@ class UpdateAuctionPlacementBodyPlacementsItem(WBModel):
 class UpdateAuctionPlacementBodyPlacementsItemPlacements(WBModel):
     """Места размещения"""
 
-    recommendations: Any | None = _field(default=None)
+    recommendations: bool | None = _field(default=None)
     """Размещение в рекомендациях:   - `false` — отключено   - `true` — включено"""
-    search: Any | None = _field(default=None)
+    search: bool | None = _field(default=None)
     """Размещение в поиске:   - `false` — отключено   - `true` — включено"""
 
 
@@ -712,21 +862,21 @@ class V0BidRecommendationBase(WBModel):
 class V0BidRecommendationBaseBidCompetitiveBid(WBModel):
     """Конкурентная ставка — расчётная средняя ставка других продавцов, продающих аналогичные т"""
 
-    bid_kopecks: Any | None = _field(default=None, name="bidKopecks")
+    bid_kopecks: int | None = _field(default=None, name="bidKopecks")
     """Рекомендуемая ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
 
 
 class V0BidRecommendationBaseBidLeadersBid(WBModel):
     """Лидерская ставка — средняя ставка с которой товары занимают лидирующие позиции в вашей к"""
 
-    bid_kopecks: Any | None = _field(default=None, name="bidKopecks")
+    bid_kopecks: int | None = _field(default=None, name="bidKopecks")
     """Рекомендуемая ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
 
 
 class V0BidRecommendationBaseBidTop2(WBModel):
     """Топ-ставка"""
 
-    bid_kopecks: Any | None = _field(default=None, name="bidKopecks")
+    bid_kopecks: int | None = _field(default=None, name="bidKopecks")
     """Рекомендуемая ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца. Если
     `0`, для данного предмета топ-ставка не используется
     """
@@ -743,27 +893,27 @@ class V0BidRecommendationNormQuery(WBModel):
 class V0BidRecommendationReachMax(WBModel):
     """Максимальный охват: 76-100%"""
 
-    bid_kopecks: Any | None = _field(default=None, name="bidKopecks")
+    bid_kopecks: int | None = _field(default=None, name="bidKopecks")
     """Рекомендуемая ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца."""
-    bid_kopecks_min: Any | None = _field(default=None, name="bidKopecksMin")
+    bid_kopecks_min: int | None = _field(default=None, name="bidKopecksMin")
     """Минимальная ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца."""
 
 
 class V0BidRecommendationReachMedium(WBModel):
     """Средний охват: 61-75%"""
 
-    bid_kopecks: Any | None = _field(default=None, name="bidKopecks")
+    bid_kopecks: int | None = _field(default=None, name="bidKopecks")
     """Рекомендуемая ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
-    bid_kopecks_min: Any | None = _field(default=None, name="bidKopecksMin")
+    bid_kopecks_min: int | None = _field(default=None, name="bidKopecksMin")
     """Минимальная ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
 
 
 class V0BidRecommendationReachMin(WBModel):
     """Минимальный охват: 50-60%"""
 
-    bid_kopecks: Any | None = _field(default=None, name="bidKopecks")
+    bid_kopecks: int | None = _field(default=None, name="bidKopecks")
     """Рекомендуемая ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
-    bid_kopecks_min: Any | None = _field(default=None, name="bidKopecksMin")
+    bid_kopecks_min: int | None = _field(default=None, name="bidKopecksMin")
     """Минимальная ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
 
 
@@ -850,11 +1000,11 @@ class V0GetNormQueryListResponseItem(WBModel):
 class V0GetNormQueryListResponseItemNormQueries(WBModel):
     """Поисковые кластеры"""
 
-    active: Any | None = _field(default=None)
+    active: list[str] | None = _field(default=None)
     """Активные поисковые кластеры"""
-    archived: Any | None = _field(default=None)
+    archived: list[str] | None = _field(default=None)
     """Архивные поисковые кластеры"""
-    excluded: Any | None = _field(default=None)
+    excluded: list[str] | None = _field(default=None)
     """Неактивные поисковые кластеры"""
 
 
@@ -891,33 +1041,33 @@ class V0GetNormQueryStatsItem(WBModel):
 
 
 class V0GetNormQueryStatsItemStat(WBModel):
-    atbs: Any | None = _field(default=None)
+    atbs: int | None = _field(default=None)
     """Количество добавлений товаров в корзину"""
-    avg_pos: Any | None = _field(default=None)
+    avg_pos: float | None = _field(default=None)
     """Средняя позиция товара на страницах поисковой выдачи"""
-    clicks: Any | None = _field(default=None)
+    clicks: int | None = _field(default=None)
     """Количество кликов"""
-    cpc: Any | None = _field(default=None)
+    cpc: float | None = _field(default=None)
     """Стоимость одного клика в базовых единицах валюты аккаунта продавца"""
-    cpm: Any | None = _field(default=None)
+    cpm: float | None = _field(default=None)
     """Средняя стоимость за тысячу показов в базовых единицах валюты аккаунта продавца.  Для
     кампаний с типом оплаты `cpc` — за клики — значение будет `null`
     """
-    ctr: Any | None = _field(default=None)
+    ctr: float | None = _field(default=None)
     """Кликабельность — отношение числа кликов к количеству показов, %.  Для кампаний с типом
     оплаты `cpc` — за клики — значение будет `null`
     """
-    currency: Any | None = _field(default=None)
+    currency: str | None = _field(default=None)
     """Валюта аккаунта продавца"""
-    norm_query: Any | None = _field(default=None)
+    norm_query: str | None = _field(default=None)
     """Поисковый кластер"""
-    orders: Any | None = _field(default=None)
+    orders: int | None = _field(default=None)
     """Количество заказов"""
-    shks: Any | None = _field(default=None)
+    shks: int | None = _field(default=None)
     """Количество заказанных товаров, шт."""
-    spend: Any | None = _field(default=None)
+    spend: float | None = _field(default=None)
     """Затраты на продвижение товаров в конкретном поисковом кластере кампании"""
-    views: Any | None = _field(default=None)
+    views: int | None = _field(default=None)
     """Количество просмотров.  Для кампаний с типом оплаты `cpc` — за клики — значение будет `null`
     """
 
@@ -997,9 +1147,39 @@ class V1GetNormQueryStatsResponseItem(WBModel):
 
 
 class V1GetNormQueryStatsResponseItemDailyStat(WBModel):
-    date: Any | None = _field(default=None)
+    date: str | None = _field(default=None)
     """Дата"""
-    stat: Any | None = _field(default=None)
+    stat: V1GetNormQueryStatsResponseItemStat | None = _field(default=None)
+
+
+class V1GetNormQueryStatsResponseItemStat(WBModel):
+    atbs: int | None = _field(default=None)
+    """Количество добавлений товаров в корзину"""
+    avg_pos: float | None = _field(default=None, name="avgPos")
+    """Средняя позиция товара на страницах поисковой выдачи"""
+    clicks: int | None = _field(default=None)
+    """Количество кликов"""
+    cpc: float | None = _field(default=None)
+    """Средняя стоимость клика в базовых единицах валюты аккаунта продавца"""
+    cpm: float | None = _field(default=None)
+    """Средняя стоимость за тысячу показов в базовых единицах валюты аккаунта продавца.  Для
+    кампаний с типом оплаты `cpc` — за клики — значение будет `null`
+    """
+    ctr: float | None = _field(default=None)
+    """CTR (click-through rate) — отношение числа кликов к количеству показов в процентах.  Для
+    кампаний с типом оплаты `cpc` — за клики — значение будет `null`
+    """
+    norm_query: str | None = _field(default=None, name="normQuery")
+    """Поисковый кластер"""
+    orders: int | None = _field(default=None)
+    """Количество заказов"""
+    shks: int | None = _field(default=None)
+    """Количество заказанных товаров, шт."""
+    spend: float | None = _field(default=None)
+    """Затраты на продвижение товаров в конкретном поисковом кластере кампании"""
+    views: int | None = _field(default=None)
+    """Количество просмотров.  Для кампаний с типом оплаты `cpc` — за клики — значение будет `null`
+    """
 
 
 class V1SetNormQueryBidsRequest(WBModel):

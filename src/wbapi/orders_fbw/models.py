@@ -95,22 +95,22 @@ class ModelsOptionsResultModelResultItem(WBModel):
 class ModelsOptionsResultModelResultItemError(WBModel):
     """Данные ошибки. При наличии"""
 
-    detail: Any | None = _field(default=None)
+    detail: str | None = _field(default=None)
     """Описание ошибки"""
-    title: Any | None = _field(default=None)
+    title: str | None = _field(default=None)
     """ID ошибки"""
 
 
 class ModelsOptionsResultModelResultItemWarehousesItem(WBModel):
-    can_box: Any | None = _field(default=None, name="canBox")
+    can_box: bool | None = _field(default=None, name="canBox")
     """Тип упаковки **Короб**:   - `true` — доступен   - `false` — недоступен"""
-    can_monopallet: Any | None = _field(default=None, name="canMonopallet")
+    can_monopallet: bool | None = _field(default=None, name="canMonopallet")
     """Тип упаковки **Монопаллета**:   - `true` — доступен   - `false` — недоступен"""
-    can_supersafe: Any | None = _field(default=None, name="canSupersafe")
+    can_supersafe: bool | None = _field(default=None, name="canSupersafe")
     """Тип упаковки **Суперсейф**:   - `true` — доступен   - `false` — недоступен"""
-    is_box_on_pallet: Any | None = _field(default=None, name="isBoxOnPallet")
+    is_box_on_pallet: bool | None = _field(default=None, name="isBoxOnPallet")
     """Тип поставки **Поштучная палета**:   - `true` — доступен   - `false` — недоступен"""
-    warehouse_id: Any | None = _field(default=None, name="warehouseID")
+    warehouse_id: int | None = _field(default=None, name="warehouseID")
     """ID склада. По нему можно получить информацию о складе"""
 
 

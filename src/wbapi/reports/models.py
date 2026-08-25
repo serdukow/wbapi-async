@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from msgspec import field as _field
 
 from ..client.model import WBModel
@@ -216,41 +214,41 @@ class MeasurementPenaltiesData(WBModel):
 
 
 class MeasurementPenaltiesDataReportsItem(WBModel):
-    dim_id: Any | None = _field(default=None, name="dimId")
+    dim_id: int | None = _field(default=None, name="dimId")
     """ID замера"""
-    dt_bonus: Any | None = _field(default=None, name="dtBonus")
+    dt_bonus: str | None = _field(default=None, name="dtBonus")
     """Дата штрафа"""
-    height: Any | None = _field(default=None)
+    height: int | None = _field(default=None)
     """Высота, см (фактические габариты по замеру на складе)"""
-    height_sup: Any | None = _field(default=None, name="heightSup")
+    height_sup: int | None = _field(default=None, name="heightSup")
     """Высота, см (габариты карточки товара)"""
-    is_valid: Any | None = _field(default=None, name="isValid")
+    is_valid: bool | None = _field(default=None, name="isValid")
     """Статус обмера:   - `false` — отменён   - `true` — подтверждён"""
-    is_valid_dt: Any | None = _field(default=None, name="isValidDt")
+    is_valid_dt: str | None = _field(default=None, name="isValidDt")
     """Дата и время подтверждения или отмены обмера"""
-    length: Any | None = _field(default=None)
+    length: int | None = _field(default=None)
     """Длина, см (фактические габариты по замеру на складе)"""
-    length_sup: Any | None = _field(default=None, name="lengthSup")
+    length_sup: int | None = _field(default=None, name="lengthSup")
     """Длина, см (габариты карточки товара)"""
-    nm_id: Any | None = _field(default=None, name="nmId")
+    nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
-    penalty_amount: Any | None = _field(default=None, name="penaltyAmount")
+    penalty_amount: float | None = _field(default=None, name="penaltyAmount")
     """Сумма штрафа"""
-    photo_urls: Any | None = _field(default=None, name="photoUrls")
+    photo_urls: list[str] | None = _field(default=None, name="photoUrls")
     """Фото замеров"""
-    prc_over: Any | None = _field(default=None, name="prcOver")
+    prc_over: float | None = _field(default=None, name="prcOver")
     """Разница в габаритах, %"""
-    reversal_amount: Any | None = _field(default=None, name="reversalAmount")
+    reversal_amount: float | None = _field(default=None, name="reversalAmount")
     """Сумма сторно"""
-    subject_name: Any | None = _field(default=None, name="subjectName")
+    subject_name: str | None = _field(default=None, name="subjectName")
     """Предмет"""
-    volume: Any | None = _field(default=None)
+    volume: float | None = _field(default=None)
     """Объём, л (фактические габариты по замеру на складе)"""
-    volume_sup: Any | None = _field(default=None, name="volumeSup")
+    volume_sup: float | None = _field(default=None, name="volumeSup")
     """Объём, л (габариты карточки товара)"""
-    width: Any | None = _field(default=None)
+    width: int | None = _field(default=None)
     """Ширина, см (фактические габариты по замеру на складе)"""
-    width_sup: Any | None = _field(default=None, name="widthSup")
+    width_sup: int | None = _field(default=None, name="widthSup")
     """Ширина, см (габариты карточки товара)"""
 
 
@@ -259,29 +257,29 @@ class ModelsExciseReportResponse(WBModel):
 
 
 class ModelsExciseReportResponseDataItem(WBModel):
-    barcode: Any | None = _field(default=None)
+    barcode: str | None = _field(default=None)
     """Баркод"""
-    currency_name_short: Any | None = _field(default=None)
+    currency_name_short: str | None = _field(default=None)
     """Валюта"""
-    excise_short: Any | None = _field(default=None)
+    excise_short: str | None = _field(default=None)
     """Код маркировки"""
-    fiscal_doc_number: Any | None = _field(default=None)
+    fiscal_doc_number: int | None = _field(default=None)
     """Номер фискального документа (чека полного расчёта), если есть"""
-    fiscal_drive_number: Any | None = _field(default=None)
+    fiscal_drive_number: str | None = _field(default=None)
     """Номер фискального накопителя, если есть"""
-    fiscal_dt: Any | None = _field(default=None)
+    fiscal_dt: str | None = _field(default=None)
     """Дата фискализации (дата в чеке), если есть, `ГГГГ-ММ-ДД`"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Страна покупателя"""
-    nm_id: Any | None = _field(default=None)
+    nm_id: int | None = _field(default=None)
     """Артикул WB"""
-    operation_type_id: Any | None = _field(default=None)
+    operation_type_id: int | None = _field(default=None)
     """Тип операции, если есть:    * `1` — вывод из оборота   * `2` — возврат в оборот"""
-    price: Any | None = _field(default=None)
+    price: float | None = _field(default=None)
     """Цена товара, с НДС"""
-    rid: Any | None = _field(default=None)
+    rid: int | None = _field(default=None)
     """`Rid`"""
-    srid: Any | None = _field(default=None)
+    srid: str | None = _field(default=None)
     """`Srid`"""
 
 
@@ -438,21 +436,21 @@ class WHMData(WBModel):
 
 
 class WHMDataReportsItem(WBModel):
-    dim_id: Any | None = _field(default=None, name="dimId")
+    dim_id: int | None = _field(default=None, name="dimId")
     """ID замера"""
-    dt: Any | None = _field(default=None)
+    dt: str | None = _field(default=None)
     """Дата и время"""
-    height: Any | None = _field(default=None)
+    height: int | None = _field(default=None)
     """Высота, см"""
-    length: Any | None = _field(default=None)
+    length: int | None = _field(default=None)
     """Длина, см"""
-    nm_id: Any | None = _field(default=None, name="nmId")
+    nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
-    photo_urls: Any | None = _field(default=None, name="photoUrls")
+    photo_urls: list[str] | None = _field(default=None, name="photoUrls")
     """Фото замеров"""
-    subject_name: Any | None = _field(default=None, name="subjectName")
+    subject_name: str | None = _field(default=None, name="subjectName")
     """Предмет"""
-    volume: Any | None = _field(default=None)
+    volume: float | None = _field(default=None)
     """Объём, л"""
-    width: Any | None = _field(default=None)
+    width: int | None = _field(default=None)
     """Ширина, см"""

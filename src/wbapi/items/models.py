@@ -88,7 +88,7 @@ class CreateCardsUploadAddBodyCardsToAddItem(WBModel):
 
 
 class CreateCardsUploadAddBodyCardsToAddItemCharacteristicsItem(WBModel):
-    id: Any | None = _field(default=None)
+    id: int | None = _field(default=None)
     """ID характеристики"""
     value: Any | None = _field(default=None)
     """Значения характеристики.  Тип данных — массив строк или число — зависит от типа
@@ -99,33 +99,33 @@ class CreateCardsUploadAddBodyCardsToAddItemCharacteristicsItem(WBModel):
 class CreateCardsUploadAddBodyCardsToAddItemDimensions(WBModel):
     """Габариты и вес товара **c упаковкой**.<br>"""
 
-    height: Any | None = _field(default=None)
+    height: int | None = _field(default=None)
     """Высота, см"""
-    length: Any | None = _field(default=None)
+    length: int | None = _field(default=None)
     """Длина, см"""
-    weight_brutto: Any | None = _field(default=None, name="weightBrutto")
+    weight_brutto: float | None = _field(default=None, name="weightBrutto")
     """Вес, кгКоличество знаков после запятой <=3"""
-    width: Any | None = _field(default=None)
+    width: int | None = _field(default=None)
     """Ширина, см"""
 
 
 class CreateCardsUploadAddBodyCardsToAddItemSizesItem(WBModel):
-    price: Any | None = _field(default=None)
+    price: int | None = _field(default=None)
     """Цена товара"""
-    skus: Any | None = _field(default=None)
+    skus: list[str] | None = _field(default=None)
     """Баркод. Если не указать, сгенерируется автоматически"""
-    tech_size: Any | None = _field(default=None, name="techSize")
+    tech_size: str | None = _field(default=None, name="techSize")
     """Размер товара (например, XL, 45)"""
-    wb_size: Any | None = _field(default=None, name="wbSize")
+    wb_size: str | None = _field(default=None, name="wbSize")
     """Российский размер товара"""
 
 
 class CreateCardsUploadAddBodyCardsToAddItemWholesale(WBModel):
     """Оптовая продажа"""
 
-    enabled: Any | None = _field(default=None)
+    enabled: bool | None = _field(default=None)
     """Предназначена ли карточка товара для оптовой продажи"""
-    quantum: Any | None = _field(default=None)
+    quantum: float | None = _field(default=None)
     """Количество единиц товара в упаковке"""
 
 
@@ -181,7 +181,7 @@ class CreateCardsUploadAddCardsToAddItemDimensions(WBModel):
 class CreateCardsUploadAddCardsToAddItemSizesItem(WBModel):
     price: int | None = _field(default=None)
     """Цена товара"""
-    skus: list[Any] | None = _field(default=None)
+    skus: list[str] | None = _field(default=None)
     """Баркод. Если не указать, сгенерируется автоматически"""
     tech_size: str | None = _field(default=None, name="techSize")
     """Размер товара (например, XL, 45)"""
@@ -209,7 +209,9 @@ class CreateCardsUploadBodyItem(WBModel):
 class CreateCardsUploadBodyItemVariantsItem(WBModel):
     brand: str | None = _field(default=None)
     """Бренд"""
-    characteristics: list[Any] | None = _field(default=None)
+    characteristics: list[CreateCardsUploadBodyItemVariantsItemCharacteristicsItem] | None = _field(
+        default=None
+    )
     """Характеристики товара.  Можно получить методом Характеристики предмета"""
     description: str | None = _field(default=None)
     """Описание товара. Максимальное количество символов зависит от категории товара Стандарт —
@@ -221,7 +223,7 @@ class CreateCardsUploadBodyItemVariantsItem(WBModel):
     """
     kiz_marked: bool | None = _field(default=None, name="kizMarked")
     """Подтверждение, что на товар нанесён обязательный код маркировки Честного знака: …"""
-    sizes: list[Any] | None = _field(default=None)
+    sizes: list[CreateCardsUploadBodyItemVariantsItemSizesItem] | None = _field(default=None)
     """Массив размеров. Если не указать для размерного товара (обувь, одежда и др.), сгенерируется
     автоматически с `techSize` = "A", `wbSize` = "1" и баркодом
     """
@@ -233,25 +235,45 @@ class CreateCardsUploadBodyItemVariantsItem(WBModel):
     """Оптовая продажа"""
 
 
+class CreateCardsUploadBodyItemVariantsItemCharacteristicsItem(WBModel):
+    id: int | None = _field(default=None)
+    """ID характеристики"""
+    value: Any | None = _field(default=None)
+    """Значения характеристики.  Тип данных — массив строк или число — зависит от типа
+    характеристики, см. описание поля `charcType` в методе Характеристики предмета. …
+    """
+
+
 class CreateCardsUploadBodyItemVariantsItemDimensions(WBModel):
     """Габариты и вес товара **c упаковкой**.<br>"""
 
-    height: Any | None = _field(default=None)
+    height: int | None = _field(default=None)
     """Высота, см"""
-    length: Any | None = _field(default=None)
+    length: int | None = _field(default=None)
     """Длина, см"""
-    weight_brutto: Any | None = _field(default=None, name="weightBrutto")
+    weight_brutto: float | None = _field(default=None, name="weightBrutto")
     """Вес, кгКоличество знаков после запятой <=3"""
-    width: Any | None = _field(default=None)
+    width: int | None = _field(default=None)
     """Ширина, см"""
+
+
+class CreateCardsUploadBodyItemVariantsItemSizesItem(WBModel):
+    price: int | None = _field(default=None)
+    """Цена товара"""
+    skus: list[str] | None = _field(default=None)
+    """Массив баркодов для размера. Если не указать, сгенерируется автоматически. …"""
+    tech_size: str | None = _field(default=None, name="techSize")
+    """Размер товара (например, XL, 45)"""
+    wb_size: str | None = _field(default=None, name="wbSize")
+    """Российский размер товара"""
 
 
 class CreateCardsUploadBodyItemVariantsItemWholesale(WBModel):
     """Оптовая продажа"""
 
-    enabled: Any | None = _field(default=None)
+    enabled: bool | None = _field(default=None)
     """Предназначена ли карточка товара для оптовой продажи"""
-    quantum: Any | None = _field(default=None)
+    quantum: float | None = _field(default=None)
     """Количество единиц товара в упаковке"""
 
 
@@ -341,13 +363,13 @@ class GetCardsListBodySettingsFilter(WBModel):
     """Фильтр по категории:   - `true` — только разрешённые   - `false` — все    Не используется
     в песочнице
     """
-    brands: list[Any] | None = _field(default=None)
+    brands: list[str] | None = _field(default=None)
     """Поиск по брендам"""
     imt_id: int | None = _field(default=None, name="imtID")
     """Поиск по ID для объединённых карточек товаров"""
-    object_ids: list[Any] | None = _field(default=None, name="objectIDs")
+    object_ids: list[int] | None = _field(default=None, name="objectIDs")
     """Поиск по ID предметов"""
-    tag_ids: list[Any] | None = _field(default=None, name="tagIDs")
+    tag_ids: list[int] | None = _field(default=None, name="tagIDs")
     """Поиск по ID ярлыков"""
     text_search: str | None = _field(default=None, name="textSearch")
     """Поиск по артикулу продавца, артикулу WB, баркоду"""
@@ -422,9 +444,9 @@ class GetCardsListResponseCardsItem(WBModel):
 
 
 class GetCardsListResponseCardsItemCharacteristicsItem(WBModel):
-    id: Any | None = _field(default=None)
+    id: int | None = _field(default=None)
     """ID характеристики"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название характеристики"""
     value: Any | None = _field(default=None)
     """Значение характеристики. Тип значения зависит от типа характеристики"""
@@ -433,59 +455,59 @@ class GetCardsListResponseCardsItemCharacteristicsItem(WBModel):
 class GetCardsListResponseCardsItemDimensions(WBModel):
     """Габариты и вес товара c упаковкой, см и кг"""
 
-    height: Any | None = _field(default=None)
+    height: int | None = _field(default=None)
     """Высота, см"""
-    is_valid: Any | None = _field(default=None, name="isValid")
+    is_valid: bool | None = _field(default=None, name="isValid")
     """Потенциальная некорректность габаритов товара: …"""
-    length: Any | None = _field(default=None)
+    length: int | None = _field(default=None)
     """Длина, см"""
-    weight_brutto: Any | None = _field(default=None, name="weightBrutto")
+    weight_brutto: float | None = _field(default=None, name="weightBrutto")
     """Вес, кгКоличество знаков после запятой <=3"""
-    width: Any | None = _field(default=None)
+    width: int | None = _field(default=None)
     """Ширина, см"""
 
 
 class GetCardsListResponseCardsItemPhotosItem(WBModel):
-    big: Any | None = _field(default=None)
+    big: str | None = _field(default=None)
     """URL фото `900x1200`"""
-    c246x328: Any | None = _field(default=None)
+    c246x328: str | None = _field(default=None)
     """URL фото `248x328`"""
-    c516x688: Any | None = _field(default=None)
+    c516x688: str | None = _field(default=None)
     """URL фото `516x688`"""
-    square: Any | None = _field(default=None)
+    square: str | None = _field(default=None)
     """URL фото `600x600`"""
-    tm: Any | None = _field(default=None)
+    tm: str | None = _field(default=None)
     """URL фото `75x100`"""
 
 
 class GetCardsListResponseCardsItemSizesItem(WBModel):
-    chrt_id: Any | None = _field(default=None, name="chrtID")
+    chrt_id: int | None = _field(default=None, name="chrtID")
     """Числовой ID размера для данного артикула WB"""
-    skus: Any | None = _field(default=None)
+    skus: list[str] | None = _field(default=None)
     """Баркод товара"""
-    tech_size: Any | None = _field(default=None, name="techSize")
+    tech_size: str | None = _field(default=None, name="techSize")
     """Размер товара (А, XXL, 57 и др.)"""
-    wb_size: Any | None = _field(default=None, name="wbSize")
+    wb_size: str | None = _field(default=None, name="wbSize")
     """Российский размер товара"""
 
 
 class GetCardsListResponseCardsItemTagsItem(WBModel):
-    color: Any | None = _field(default=None)
+    color: str | None = _field(default=None)
     """Цвет ярлыка. Доступные цвета: - `D1CFD7` — серый - `FEE0E0` — красный - `ECDAFF` —
     фиолетовый - `E4EAFF` — синий - `DEF1DD` — зеленый - `FFECC7` — желтый
     """
-    id: Any | None = _field(default=None)
+    id: int | None = _field(default=None)
     """ID ярлыка"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название ярлыка"""
 
 
 class GetCardsListResponseCardsItemWholesale(WBModel):
     """Оптовая продажа"""
 
-    enabled: Any | None = _field(default=None)
+    enabled: bool | None = _field(default=None)
     """Предназначена ли карточка товара для оптовой продажи"""
-    quantum: Any | None = _field(default=None)
+    quantum: float | None = _field(default=None)
     """Количество единиц товара в упаковке"""
 
 
@@ -633,9 +655,9 @@ class GetCardsTrashResponseCardsItem(WBModel):
 
 
 class GetCardsTrashResponseCardsItemCharacteristicsItem(WBModel):
-    id: Any | None = _field(default=None)
+    id: int | None = _field(default=None)
     """ID характеристики"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название характеристики"""
     value: Any | None = _field(default=None)
     """Значение характеристики. Тип значения зависит от типа характеристики"""
@@ -644,48 +666,48 @@ class GetCardsTrashResponseCardsItemCharacteristicsItem(WBModel):
 class GetCardsTrashResponseCardsItemDimensions(WBModel):
     """Габариты и вес товара c упаковкой, см и кг"""
 
-    height: Any | None = _field(default=None)
+    height: int | None = _field(default=None)
     """Высота, см"""
-    is_valid: Any | None = _field(default=None, name="isValid")
+    is_valid: bool | None = _field(default=None, name="isValid")
     """Потенциальная некорректность габаритов товара: …"""
-    length: Any | None = _field(default=None)
+    length: int | None = _field(default=None)
     """Длина, см"""
-    weight_brutto: Any | None = _field(default=None, name="weightBrutto")
+    weight_brutto: float | None = _field(default=None, name="weightBrutto")
     """Вес, кгКоличество знаков после запятой <=3"""
-    width: Any | None = _field(default=None)
+    width: int | None = _field(default=None)
     """Ширина, см"""
 
 
 class GetCardsTrashResponseCardsItemPhotosItem(WBModel):
-    big: Any | None = _field(default=None)
+    big: str | None = _field(default=None)
     """URL фото `900x1200`"""
-    c246x328: Any | None = _field(default=None)
+    c246x328: str | None = _field(default=None)
     """URL фото `248x328`"""
-    c516x688: Any | None = _field(default=None)
+    c516x688: str | None = _field(default=None)
     """URL фото `516x688`"""
-    square: Any | None = _field(default=None)
+    square: str | None = _field(default=None)
     """URL фото `600x600`"""
-    tm: Any | None = _field(default=None)
+    tm: str | None = _field(default=None)
     """URL фото `75x100`"""
 
 
 class GetCardsTrashResponseCardsItemSizesItem(WBModel):
-    chrt_id: Any | None = _field(default=None, name="chrtID")
+    chrt_id: int | None = _field(default=None, name="chrtID")
     """ID размера"""
-    skus: Any | None = _field(default=None)
+    skus: list[str] | None = _field(default=None)
     """Массив баркодов"""
-    tech_size: Any | None = _field(default=None, name="techSize")
+    tech_size: str | None = _field(default=None, name="techSize")
     """Размер товара"""
-    wb_size: Any | None = _field(default=None, name="wbSize")
+    wb_size: str | None = _field(default=None, name="wbSize")
     """Российский размер товара"""
 
 
 class GetCardsTrashResponseCardsItemWholesale(WBModel):
     """Оптовая продажа"""
 
-    enabled: Any | None = _field(default=None)
+    enabled: bool | None = _field(default=None)
     """Предназначена ли карточка товара для оптовой продажи"""
-    quantum: Any | None = _field(default=None)
+    quantum: float | None = _field(default=None)
     """Количество единиц товара в упаковке"""
 
 
@@ -1000,17 +1022,17 @@ class ModelsErrorTableListPublicRespV2(WBModel):
 
 
 class ModelsErrorTableListPublicRespV2Item(WBModel):
-    batch_uuid: Any | None = _field(default=None, name="batchUUID")
+    batch_uuid: str | None = _field(default=None, name="batchUUID")
     """ID пакета"""
-    brands: Any | None = _field(default=None)
+    brands: dict[str, Any] | None = _field(default=None)
     """Бренды. Разбивка по `vendorCodes`"""
-    errors: Any | None = _field(default=None)
+    errors: dict[str, Any] | None = _field(default=None)
     """Ошибки. Разбивка по `vendorCodes`"""
-    subjects: Any | None = _field(default=None)
+    subjects: dict[str, Any] | None = _field(default=None)
     """Предметы. Разбивка по `vendorCodes`"""
-    updated_at: Any | None = _field(default=None, name="updatedAt")
+    updated_at: str | None = _field(default=None, name="updatedAt")
     """Дата и время создания или редактирования пакета"""
-    vendor_codes: Any | None = _field(default=None, name="vendorCodes")
+    vendor_codes: list[str] | None = _field(default=None, name="vendorCodes")
     """Артикулы продавца"""
 
 
@@ -1114,9 +1136,9 @@ class SetRecomReqRecListItem(WBModel):
 
 
 class SetRecomReqRecListItemRecommendationsItem(WBModel):
-    recom_nm: Any | None = _field(default=None, name="recomNm")
+    recom_nm: int | None = _field(default=None, name="recomNm")
     """Артикул WB рекомендуемого товара"""
-    sort: Any | None = _field(default=None)
+    sort: int | None = _field(default=None)
     """Позиция товара в списке рекомендаций.   Допустимые значения:  - `1`–`20` — фиксированная
     позиция: …
     """
@@ -1248,7 +1270,7 @@ class UpdateCardBodyItemSizesItem(WBModel):
     """
     price: int | None = _field(default=None)
     """Цена товара, ₽ Указывается при добавлении размера"""
-    skus: list[Any] | None = _field(default=None)
+    skus: list[str] | None = _field(default=None)
     """Баркоды"""
     tech_size: str | None = _field(default=None, name="techSize")
     """Размер товара (например, XL, S, 45)"""

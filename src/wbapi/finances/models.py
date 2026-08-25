@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from msgspec import field as _field
 
 from ..client.model import WBModel
@@ -143,9 +141,9 @@ class GetCategoriesData(WBModel):
 
 
 class GetCategoriesDataCategoriesItem(WBModel):
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """ID категории документа из параметра запроса `category`"""
-    title: Any | None = _field(default=None)
+    title: str | None = _field(default=None)
     """Название категории документа из поля ответа `category`"""
 
 
@@ -192,17 +190,17 @@ class GetListData(WBModel):
 
 
 class GetListDataDocumentsItem(WBModel):
-    category: Any | None = _field(default=None)
+    category: str | None = _field(default=None)
     """Название категории документов из поля ответа `title`"""
-    creation_time: Any | None = _field(default=None, name="creationTime")
+    creation_time: str | None = _field(default=None, name="creationTime")
     """Дата и время создания документа"""
-    extensions: Any | None = _field(default=None)
+    extensions: list[str] | None = _field(default=None)
     """Форматы документа"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название документа"""
-    service_name: Any | None = _field(default=None, name="serviceName")
+    service_name: str | None = _field(default=None, name="serviceName")
     """Уникальный ID документа"""
-    viewed: Any | None = _field(default=None)
+    viewed: bool | None = _field(default=None)
     """Выгружен ли документ в личном кабинете"""
 
 

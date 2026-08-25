@@ -83,46 +83,113 @@ class CommonSizeFilters(WBModel):
 
 
 class DistributionTableItem(WBModel):
-    brand_name: Any | None = _field(default=None, name="brandName")
+    brand_name: str | None = _field(default=None, name="brandName")
     """Бренд"""
-    disqualified: Any | None = _field(default=None)
+    disqualified: int | None = _field(default=None)
     """Отзывы, исключённые из рейтинга"""
-    feedback_count: Any | None = _field(default=None, name="feedbackCount")
+    feedback_count: DistributionTableItemFeedbackCount | None = _field(default=None, name="feedbackCount")
     """Все отзывы за период"""
-    feedback_rating: Any | None = _field(default=None, name="feedbackRating")
+    feedback_rating: DistributionTableItemFeedbackRating | None = _field(default=None, name="feedbackRating")
     """Рейтинг товара по отзывам"""
-    five_star: Any | None = _field(default=None, name="fiveStar")
+    five_star: DistributionTableItemFiveStar | None = _field(default=None, name="fiveStar")
     """Отзывы 5 звёзд"""
-    four_star: Any | None = _field(default=None, name="fourStar")
+    four_star: DistributionTableItemFourStar | None = _field(default=None, name="fourStar")
     """Отзывы 4 звезды"""
-    is_shadowed: Any | None = _field(default=None, name="isShadowed")
+    is_shadowed: bool | None = _field(default=None, name="isShadowed")
     """Является ли товар скрытым из каталога:   - `true` — товар скрыт из каталога   - `false` —
     товар не скрыт из каталога
     """
-    nm_id: Any | None = _field(default=None, name="nmId")
+    nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
-    one_star: Any | None = _field(default=None, name="oneStar")
+    one_star: DistributionTableItemOneStar | None = _field(default=None, name="oneStar")
     """Отзывы 1 звезда"""
-    pinned_feedback: Any | None = _field(default=None, name="pinnedFeedback")
+    pinned_feedback: bool | None = _field(default=None, name="pinnedFeedback")
     """Отзыв закреплён"""
-    rating: Any | None = _field(default=None)
+    rating: float | None = _field(default=None)
     """Рейтинг карточки товара"""
-    subject_id: Any | None = _field(default=None, name="subjectId")
+    subject_id: int | None = _field(default=None, name="subjectId")
     """ID предмета"""
-    subject_name: Any | None = _field(default=None, name="subjectName")
+    subject_name: str | None = _field(default=None, name="subjectName")
     """Название предмета"""
-    tag_id: Any | None = _field(default=None, name="tagId")
+    tag_id: int | None = _field(default=None, name="tagId")
     """ID ярлыка"""
-    tag_name: Any | None = _field(default=None, name="tagName")
+    tag_name: str | None = _field(default=None, name="tagName")
     """Название ярлыка"""
-    three_star: Any | None = _field(default=None, name="threeStar")
+    three_star: DistributionTableItemThreeStar | None = _field(default=None, name="threeStar")
     """Отзывы 3 звезды"""
-    title: Any | None = _field(default=None)
+    title: str | None = _field(default=None)
     """Название товара"""
-    two_star: Any | None = _field(default=None, name="twoStar")
+    two_star: DistributionTableItemTwoStar | None = _field(default=None, name="twoStar")
     """Отзывы 2 звезды"""
-    vendor_code: Any | None = _field(default=None, name="vendorCode")
+    vendor_code: str | None = _field(default=None, name="vendorCode")
     """Артикул продавца"""
+
+
+class DistributionTableItemFeedbackCount(WBModel):
+    """Все отзывы за период"""
+
+    current: int | None = _field(default=None)
+    """Прирост оценок за период"""
+    dynamics: int | None = _field(default=None)
+    """Динамика по сравнению с предыдущим периодом, %"""
+
+
+class DistributionTableItemFeedbackRating(WBModel):
+    """Рейтинг товара по отзывам"""
+
+    current: float | None = _field(default=None)
+    """Текущий рейтинг"""
+    dynamics: float | None = _field(default=None)
+    """Динамика по сравнению с предыдущим периодом, %"""
+    percentile: float | None = _field(default=None)
+    """Сколько процентов товаров этого предмета у других продавцов имеют рейтинг ниже, чем у этого
+    товара
+    """
+
+
+class DistributionTableItemFiveStar(WBModel):
+    """Отзывы 5 звёзд"""
+
+    current: int | None = _field(default=None)
+    """Прирост оценок за период"""
+    dynamics: int | None = _field(default=None)
+    """Динамика по сравнению с предыдущим периодом, %"""
+
+
+class DistributionTableItemFourStar(WBModel):
+    """Отзывы 4 звезды"""
+
+    current: int | None = _field(default=None)
+    """Прирост оценок за период"""
+    dynamics: int | None = _field(default=None)
+    """Динамика по сравнению с предыдущим периодом, %"""
+
+
+class DistributionTableItemOneStar(WBModel):
+    """Отзывы 1 звезда"""
+
+    current: int | None = _field(default=None)
+    """Прирост оценок за период"""
+    dynamics: int | None = _field(default=None)
+    """Динамика по сравнению с предыдущим периодом, %"""
+
+
+class DistributionTableItemThreeStar(WBModel):
+    """Отзывы 3 звезды"""
+
+    current: int | None = _field(default=None)
+    """Прирост оценок за период"""
+    dynamics: int | None = _field(default=None)
+    """Динамика по сравнению с предыдущим периодом, %"""
+
+
+class DistributionTableItemTwoStar(WBModel):
+    """Отзывы 2 звезды"""
+
+    current: int | None = _field(default=None)
+    """Прирост оценок за период"""
+    dynamics: int | None = _field(default=None)
+    """Динамика по сравнению с предыдущим периодом, %"""
 
 
 class FeedbacksIncreaseItem(WBModel):
@@ -149,56 +216,67 @@ class FeedbacksIncreaseItem(WBModel):
 class FeedbacksIncreaseItemFiveStar(WBModel):
     """Отзывы 5 звёзд"""
 
-    current: Any | None = _field(default=None)
+    current: int | None = _field(default=None)
     """Прирост оценок за период"""
-    dynamics: Any | None = _field(default=None)
+    dynamics: int | None = _field(default=None)
     """Динамика по сравнению с предыдущим периодом, %"""
-    total: Any | None = _field(default=None)
+    total: int | None = _field(default=None)
     """Всего оценок"""
 
 
 class FeedbacksIncreaseItemFourStar(WBModel):
     """Отзывы 4 звезды"""
 
-    current: Any | None = _field(default=None)
+    current: int | None = _field(default=None)
     """Прирост оценок за период"""
-    dynamics: Any | None = _field(default=None)
+    dynamics: int | None = _field(default=None)
     """Динамика по сравнению с предыдущим периодом, %"""
-    total: Any | None = _field(default=None)
+    total: int | None = _field(default=None)
     """Всего оценок"""
 
 
 class FeedbacksIncreaseItemOneStar(WBModel):
     """Отзывы 1 звезда"""
 
-    current: Any | None = _field(default=None)
+    current: int | None = _field(default=None)
     """Прирост оценок за период"""
-    dynamics: Any | None = _field(default=None)
+    dynamics: int | None = _field(default=None)
     """Динамика по сравнению с предыдущим периодом, %"""
-    total: Any | None = _field(default=None)
+    total: int | None = _field(default=None)
     """Всего оценок"""
 
 
 class FeedbacksIncreaseItemThreeStar(WBModel):
     """Отзывы 3 звезды"""
 
-    current: Any | None = _field(default=None)
+    current: int | None = _field(default=None)
     """Прирост оценок за период"""
-    dynamics: Any | None = _field(default=None)
+    dynamics: int | None = _field(default=None)
     """Динамика по сравнению с предыдущим периодом, %"""
-    total: Any | None = _field(default=None)
+    total: int | None = _field(default=None)
     """Всего оценок"""
 
 
 class FeedbacksIncreaseItemTwoStar(WBModel):
     """Отзывы 2 звезды"""
 
-    current: Any | None = _field(default=None)
+    current: int | None = _field(default=None)
     """Прирост оценок за период"""
-    dynamics: Any | None = _field(default=None)
+    dynamics: int | None = _field(default=None)
     """Динамика по сравнению с предыдущим периодом, %"""
-    total: Any | None = _field(default=None)
+    total: int | None = _field(default=None)
     """Всего оценок"""
+
+
+class FloatGraphByPeriodItem(WBModel):
+    """Среднее количество заказов за месяц"""
+
+    end: str | None = _field(default=None)
+    """Конец месяца"""
+    start: str | None = _field(default=None)
+    """Начало месяца"""
+    value: float | None = _field(default=None)
+    """Среднее количество заказов"""
 
 
 class GetItemRatingResponse(WBModel):
@@ -236,10 +314,10 @@ class GetSalesFunnelGroupedHistoryResponse(WBModel):
 
 
 class GetSalesFunnelGroupedHistoryResponseDataItem(WBModel):
-    currency: Any | None = _field(default=None)
-    history: list[Any] | None = _field(default=None)
+    currency: str | None = _field(default=None)
+    history: list[History] | None = _field(default=None)
     """Статистика за период"""
-    product: Any | None = _field(default=None)
+    product: dict[str, Any] | None = _field(default=None)
 
 
 class GetSalesFunnelProductsHistoryResponseItem(WBModel):
@@ -287,30 +365,30 @@ class GroupedHistoryRequest(WBModel):
 
 
 class History(WBModel):
-    add_to_cart_conversion: Any | None = _field(default=None, name="addToCartConversion")
+    add_to_cart_conversion: int | None = _field(default=None, name="addToCartConversion")
     """Конверсия в корзину. Какой процент посетителей, открывших карточку товара, добавили товар в
     корзину, %
     """
-    add_to_wishlist_count: Any | None = _field(default=None, name="addToWishlistCount")
+    add_to_wishlist_count: int | None = _field(default=None, name="addToWishlistCount")
     """Количество добавлений товара в **Отложенные**"""
-    buyout_count: Any | None = _field(default=None, name="buyoutCount")
+    buyout_count: int | None = _field(default=None, name="buyoutCount")
     """Выкупили товаров, шт."""
-    buyout_percent: Any | None = _field(default=None, name="buyoutPercent")
+    buyout_percent: int | None = _field(default=None, name="buyoutPercent")
     """Процент выкупа"""
-    buyout_sum: Any | None = _field(default=None, name="buyoutSum")
+    buyout_sum: int | None = _field(default=None, name="buyoutSum")
     """Выкупили на сумму"""
-    cart_count: Any | None = _field(default=None, name="cartCount")
+    cart_count: int | None = _field(default=None, name="cartCount")
     """Положили в корзину, шт."""
-    cart_to_order_conversion: Any | None = _field(default=None, name="cartToOrderConversion")
+    cart_to_order_conversion: int | None = _field(default=None, name="cartToOrderConversion")
     """Конверсия в заказ. Какой процент посетителей, добавивших товар в корзину, сделали заказ
     """
-    date: Any | None = _field(default=None)
+    date: str | None = _field(default=None)
     """Дата сбора статистики"""
-    open_count: Any | None = _field(default=None, name="openCount")
+    open_count: int | None = _field(default=None, name="openCount")
     """Количество переходов в карточку товара"""
-    order_count: Any | None = _field(default=None, name="orderCount")
+    order_count: int | None = _field(default=None, name="orderCount")
     """Заказали товаров, шт."""
-    order_sum: Any | None = _field(default=None, name="orderSum")
+    order_sum: int | None = _field(default=None, name="orderSum")
     """Заказали на сумму"""
 
 
@@ -335,21 +413,21 @@ class InventoryWbResponse(WBModel):
 
 
 class InventoryWbResponseItemsItem(WBModel):
-    chrt_id: Any | None = _field(default=None, name="chrtId")
+    chrt_id: int | None = _field(default=None, name="chrtId")
     """ID размера"""
-    in_way_from_client: Any | None = _field(default=None, name="inWayFromClient")
+    in_way_from_client: int | None = _field(default=None, name="inWayFromClient")
     """В пути от клиента"""
-    in_way_to_client: Any | None = _field(default=None, name="inWayToClient")
+    in_way_to_client: int | None = _field(default=None, name="inWayToClient")
     """В пути к клиенту"""
-    nm_id: Any | None = _field(default=None, name="nmId")
+    nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
-    quantity: Any | None = _field(default=None)
+    quantity: int | None = _field(default=None)
     """Количество товара на складе, доступное клиентам для добавления в корзину"""
-    region_name: Any | None = _field(default=None, name="regionName")
+    region_name: str | None = _field(default=None, name="regionName")
     """Регион отгрузки. На данный момент может быть только `Склад WB`"""
-    warehouse_id: Any | None = _field(default=None, name="warehouseId")
+    warehouse_id: int | None = _field(default=None, name="warehouseId")
     """ID склада. На данный момент может быть только `-999999`"""
-    warehouse_name: Any | None = _field(default=None, name="warehouseName")
+    warehouse_name: str | None = _field(default=None, name="warehouseName")
     """Название склада. На данный момент может быть только `Склад WB`"""
 
 
@@ -514,41 +592,41 @@ class NmReportRetryReportResponse(WBModel):
 class Order(WBModel):
     """Заказ"""
 
-    cancel_type: Any | None = _field(default=None, name="cancelType")
+    cancel_type: str | None = _field(default=None, name="cancelType")
     """Тип отмены (при `"status":"cancel"`):   - `app` — отказ до получения   - `receipt` — отказ
     при получении   - `expire` — истёк срок получения …
     """
-    chrt_id: Any | None = _field(default=None, name="chrtId")
+    chrt_id: int | None = _field(default=None, name="chrtId")
     """ID размера"""
-    created_at: Any | None = _field(default=None, name="createdAt")
+    created_at: str | None = _field(default=None, name="createdAt")
     """Дата и время оформления заказа"""
-    destination_city: Any | None = _field(default=None, name="destinationCity")
+    destination_city: str | None = _field(default=None, name="destinationCity")
     """Населённый пункт доставки"""
-    destination_district: Any | None = _field(default=None, name="destinationDistrict")
+    destination_district: str | None = _field(default=None, name="destinationDistrict")
     """Федеральный округ доставки. Если доставка не по России, возвращается страна"""
-    is_b2b: Any | None = _field(default=None, name="isB2b")
+    is_b2b: bool | None = _field(default=None, name="isB2b")
     """Тип продажи:   - `true` — B2B   - `false` — B2C"""
-    is_mp: Any | None = _field(default=None, name="isMp")
+    is_mp: bool | None = _field(default=None, name="isMp")
     """Тип склада:   - `true` — склад продавца   - `false` — склад WB"""
-    nm_id: Any | None = _field(default=None, name="nmId")
+    nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
-    seller_price: Any | None = _field(default=None, name="sellerPrice")
+    seller_price: float | None = _field(default=None, name="sellerPrice")
     """Цена продавца со скидкой продавца (без учёта скидки WB Клуба и оптовой скидки для
     B2B-продаж)
     """
-    srid: Any | None = _field(default=None)
+    srid: str | None = _field(default=None)
     """ID заказа"""
-    status: Any | None = _field(default=None)
+    status: str | None = _field(default=None)
     """Статус заказа:   - `created` — оформлен   - `buyout` — продан   - `cancel` — отменён   -
     `return` — возвращён   - `returnDefective` — возвращён по причине брака
     """
-    updated_at: Any | None = _field(default=None, name="updatedAt")
+    updated_at: str | None = _field(default=None, name="updatedAt")
     """Дата и время текущего статуса. При `"status":"created"` возвращается значение поля
     `createdAt`
     """
-    warehouse_name: Any | None = _field(default=None, name="warehouseName")
+    warehouse_name: str | None = _field(default=None, name="warehouseName")
     """Название склада. На данный момент для складов WB может быть только `Склад WB`"""
-    warehouse_region: Any | None = _field(default=None, name="warehouseRegion")
+    warehouse_region: str | None = _field(default=None, name="warehouseRegion")
     """Федеральный округ склада. Если склад не в России, возвращается страна. На данный момент для
     складов WB может быть только `""`
     """
@@ -741,6 +819,92 @@ class SalesFunnelItemReqParams(WBModel):
     """Временная зона по формату IANA"""
 
 
+class TableCommonMetrics(WBModel):
+    """Метрики"""
+
+    avg_orders: float | None = _field(default=None, name="avgOrders")
+    """Среднее количество заказов в день"""
+    avg_orders_by_month: list[FloatGraphByPeriodItem] | None = _field(default=None, name="avgOrdersByMonth")
+    """Среднее количество заказов по месяцам"""
+    avg_stock_turnover: TableCommonMetricsAvgStockTurnover | None = _field(
+        default=None, name="avgStockTurnover"
+    )
+    """Оборачиваемость средних остатков. Особые случаи:   1. `"hours":-1` — бесконечная
+    длительность   2. `"hours":-2` — нулевая длительность …
+    """
+    buyout_count: int | None = _field(default=None, name="buyoutCount")
+    """Выкупы, шт."""
+    buyout_percent: int | None = _field(default=None, name="buyoutPercent")
+    """Процент выкупа"""
+    buyout_sum: int | None = _field(default=None, name="buyoutSum")
+    """Выкупы, сумма"""
+    from_client_count: int | None = _field(default=None, name="fromClientCount")
+    """В пути от клиента, шт."""
+    lost_buyouts_count: float | None = _field(default=None, name="lostBuyoutsCount")
+    """Упущенные выкупы, шт. Особые случаи:   1. Значение меньше `0` и не равно `-2` — значение не
+    рассчитано   2. Значение `-2` — нулевое значение
+    """
+    lost_buyouts_sum: float | None = _field(default=None, name="lostBuyoutsSum")
+    """Упущенные выкупы, сумма. Особые случаи:   1. Значение меньше `0` и не равно `-2` — значение
+    не рассчитано   2. Значение `-2` — нулевое значение
+    """
+    lost_orders_count: float | None = _field(default=None, name="lostOrdersCount")
+    """Упущенные заказы, шт. Особые случаи:   1. Значение меньше `0` и не равно `-2` — значение не
+    рассчитано   2. Значение `-2` — нулевое значение
+    """
+    lost_orders_sum: float | None = _field(default=None, name="lostOrdersSum")
+    """Упущенные заказы, сумма. Особые случаи:   1. Значение меньше `0` и не равно `-2` — значение
+    не рассчитано   2. Значение `-2` — нулевое значение
+    """
+    office_missing_time: TableCommonMetricsOfficeMissingTime | None = _field(
+        default=None, name="officeMissingTime"
+    )
+    """Время отсутствия товара на складе. Особые случаи:   1. `"hours":-1` — бесконечная
+    длительность   2. `"hours":-2` — нулевая длительность …
+    """
+    orders_count: int | None = _field(default=None, name="ordersCount")
+    """Заказы, шт."""
+    orders_sum: int | None = _field(default=None, name="ordersSum")
+    """Заказы, сумма"""
+    sale_rate: TableCommonMetricsSaleRate | None = _field(default=None, name="saleRate")
+    """Оборачиваемость текущих остатков. Особые случаи:   1. `"hours":-1` — бесконечная
+    длительность   2. `"hours":-2` — нулевая длительность …
+    """
+    stock_count: int | None = _field(default=None, name="stockCount")
+    """Остатки на текущий день, шт."""
+    stock_sum: int | None = _field(default=None, name="stockSum")
+    """Стоимость остатков на текущий день"""
+    to_client_count: int | None = _field(default=None, name="toClientCount")
+    """В пути к клиенту, шт."""
+
+
+class TableCommonMetricsAvgStockTurnover(WBModel):
+    """Оборачиваемость средних остатков. Особые случаи:"""
+
+    days: int | None = _field(default=None)
+    """Количество дней"""
+    hours: int | None = _field(default=None)
+    """Количество часов"""
+
+
+class TableCommonMetricsOfficeMissingTime(WBModel):
+    """Время отсутствия товара на складе. Особые случаи:"""
+
+    days: int | None = _field(default=None)
+    """Количество дней"""
+    hours: int | None = _field(default=None)
+    """Количество часов"""
+
+
+class TableCommonMetricsSaleRate(WBModel):
+    """Оборачиваемость текущих остатков. Особые случаи:"""
+
+    days: int | None = _field(default=None)
+    """Количество дней"""
+    hours: int | None = _field(default=None)
+    """Количество часов"""
+
+
 class TableDetailsRequest(WBModel):
     """Параметры запроса для пагинации по товарам в группе:"""
 
@@ -772,19 +936,19 @@ class TableDetailsRequest(WBModel):
 class TableGroupItemSt(WBModel):
     """Данные по группе"""
 
-    brand_name: Any | None = _field(default=None, name="brandName")
+    brand_name: str | None = _field(default=None, name="brandName")
     """Бренд"""
-    items: Any | None = _field(default=None)
+    items: list[TableItemItemSt] | None = _field(default=None)
     """Товары группы"""
-    metrics: Any | None = _field(default=None)
+    metrics: TableCommonMetrics | None = _field(default=None)
     """Метрики группы"""
-    subject_id: Any | None = _field(default=None, name="subjectID")
+    subject_id: int | None = _field(default=None, name="subjectID")
     """ID предмета"""
-    subject_name: Any | None = _field(default=None, name="subjectName")
+    subject_name: str | None = _field(default=None, name="subjectName")
     """Название предмета"""
-    tag_id: Any | None = _field(default=None, name="tagID")
+    tag_id: int | None = _field(default=None, name="tagID")
     """ID ярлыка"""
-    tag_name: Any | None = _field(default=None, name="tagName")
+    tag_name: str | None = _field(default=None, name="tagName")
     """Название ярлыка"""
 
 
@@ -830,24 +994,24 @@ class TableItemFloat(WBModel):
 class TableItemItemSt(WBModel):
     """Данные по товару"""
 
-    brand_name: Any | None = _field(default=None, name="brandName")
+    brand_name: str | None = _field(default=None, name="brandName")
     """Бренд"""
-    has_sizes: Any | None = _field(default=None, name="hasSizes")
+    has_sizes: bool | None = _field(default=None, name="hasSizes")
     """Является ли товар размерным. Неразмерный товар имеет единственный размер, с `"techSize":"0"`
     """
-    is_deleted: Any | None = _field(default=None, name="isDeleted")
+    is_deleted: bool | None = _field(default=None, name="isDeleted")
     """Является ли товар удалённым"""
-    main_photo: Any | None = _field(default=None, name="mainPhoto")
+    main_photo: str | None = _field(default=None, name="mainPhoto")
     """Ссылка на главное фото"""
-    metrics: Any | None = _field(default=None)
+    metrics: TableCommonMetrics | None = _field(default=None)
     """Метрики товара"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название товара"""
-    nm_id: Any | None = _field(default=None, name="nmID")
+    nm_id: int | None = _field(default=None, name="nmID")
     """Артикул WB"""
-    subject_name: Any | None = _field(default=None, name="subjectName")
+    subject_name: str | None = _field(default=None, name="subjectName")
     """Название предмета"""
-    vendor_code: Any | None = _field(default=None, name="vendorCode")
+    vendor_code: str | None = _field(default=None, name="vendorCode")
     """Артикул продавца"""
 
 
@@ -860,32 +1024,67 @@ class TableItemResponse(WBModel):
 class TableOfficeItem(WBModel):
     """Данные по складу"""
 
-    metrics: Any | None = _field(default=None)
+    metrics: TableCommonMetrics | None = _field(default=None)
     """Метрики склада"""
-    office_id: Any | None = _field(default=None, name="officeID")
+    office_id: int | None = _field(default=None, name="officeID")
     """ID склада. На данный момент для складов WB может быть только `-999999`"""
-    office_name: Any | None = _field(default=None, name="officeName")
+    office_name: str | None = _field(default=None, name="officeName")
     """Название склада. На данный момент для складов WB может быть только `""`"""
-    region_name: Any | None = _field(default=None, name="regionName")
+    region_name: str | None = _field(default=None, name="regionName")
     """Регион отгрузки. На данный момент для складов WB может быть только `Склад WB`"""
 
 
 class TableOrderBy(WBModel):
     """Вид сортировки данных"""
 
-    field: Any | None = _field(default=None)
-    mode: Any | None = _field(default=None)
+    field: str | None = _field(default=None)
+    mode: str | None = _field(default=None)
 
 
 class TableShippingOfficeItem(WBModel):
     """Данные по региону отгрузки"""
 
-    metrics: Any | None = _field(default=None)
+    metrics: TableShippingOfficeMetrics | None = _field(default=None)
     """Метрики по региону"""
-    offices: Any | None = _field(default=None)
+    offices: list[TableShippingOfficeItemOfficesItem] | None = _field(default=None)
     """Данные по складам. На данный момент может быть только `[]`"""
-    region_name: Any | None = _field(default=None, name="regionName")
+    region_name: str | None = _field(default=None, name="regionName")
     """Регион отгрузки. На данный момент для складов WB может быть только `Склад WB`"""
+
+
+class TableShippingOfficeItemOfficesItem(WBModel):
+    metrics: TableShippingOfficeMetrics | None = _field(default=None)
+    """Метрики по складу"""
+    office_id: int | None = _field(default=None, name="officeID")
+    """ID склада"""
+    office_name: str | None = _field(default=None, name="officeName")
+    """Название склада"""
+
+
+class TableShippingOfficeMetrics(WBModel):
+    """Общие метрики по регионам/складам отгрузки"""
+
+    from_client_count: int | None = _field(default=None, name="fromClientCount")
+    """В пути от клиента, шт."""
+    sale_rate: TableShippingOfficeMetricsSaleRate | None = _field(default=None, name="saleRate")
+    """Оборачиваемость текущих остатков. Особые случаи:   1. `"hours":-1` — бесконечная
+    длительность   2. `"hours":-2` — нулевая длительность …
+    """
+    stock_count: int | None = _field(default=None, name="stockCount")
+    """Остатки на текущий день, шт."""
+    stock_sum: int | None = _field(default=None, name="stockSum")
+    """Остатки на текущий день, сумма"""
+    to_client_count: int | None = _field(default=None, name="toClientCount")
+    """В пути к клиенту, шт."""
+
+
+class TableShippingOfficeMetricsSaleRate(WBModel):
+    """Оборачиваемость текущих остатков. Особые случаи:"""
+
+    days: int | None = _field(default=None)
+    """Количество дней"""
+    hours: int | None = _field(default=None)
+    """Количество часов"""
 
 
 class TableShippingOfficeResponse(WBModel):
@@ -903,11 +1102,11 @@ class TableSizeResponse(WBModel):
 
 
 class TableSizeResponseSizesItem(WBModel):
-    chrt_id: Any | None = _field(default=None, name="chrtID")
+    chrt_id: int | None = _field(default=None, name="chrtID")
     """ID размера"""
-    metrics: Any | None = _field(default=None)
+    metrics: TableCommonMetrics | None = _field(default=None)
     """Метрики размера"""
-    name: Any | None = _field(default=None)
+    name: str | None = _field(default=None)
     """Название размера"""
-    offices: Any | None = _field(default=None)
+    offices: list[TableOfficeItem] | None = _field(default=None)
     """Склады"""
