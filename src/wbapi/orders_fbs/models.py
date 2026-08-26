@@ -82,6 +82,9 @@ class GetOrdersNewResponse(WBModel):
 
 class GetOrdersResponse(WBModel):
     next: int | None = _field(default=None)
+    """Параметр пагинации. Содержит значение, которое необходимо указать в запросе для получения
+    следующего пакета данных
+    """
     orders: list[Order] | None = _field(default=None)
 
 
@@ -256,6 +259,9 @@ class GetSuppliesOrdersReshipmentResponseOrdersItem(WBModel):
 
 class GetSuppliesResponse(WBModel):
     next: int | None = _field(default=None)
+    """Параметр пагинации. Содержит значение, которое необходимо указать в запросе для получения
+    следующего пакета данных
+    """
     supplies: list[Supply] | None = _field(default=None)
     """Список поставок"""
 
@@ -658,6 +664,7 @@ class V3ArchiveOrder(WBModel):
     остатком   - `true` — заказ сделан на товар с нулевым остатком
     """
     meta_details: list[V3ArchiveOrderMetaDetailsItem] | None = _field(default=None, name="metaDetails")
+    """Детали маркировки"""
     options: V3ArchiveOrderOptions | None = _field(default=None)
     """Опции заказа"""
     order_uid: str | None = _field(default=None, name="orderUid")
@@ -768,6 +775,7 @@ class V3OrderMetaAPI(WBModel):
     id: int | None = _field(default=None)
     """ID сборочного задания"""
     meta_details: list[V3OrderMetaAPIMetaDetailsItem] | None = _field(default=None, name="metaDetails")
+    """Детали маркировки"""
 
 
 class V3OrderMetaAPIMetaDetailsItem(WBModel):

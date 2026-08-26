@@ -96,6 +96,7 @@ class ContentList(WBModel):
     items: list[Content] | None = _field(default=None)
     """Список контента"""
     total: int | None = _field(default=None)
+    """Общее количество записей, соответствующих заданным критериям выборки.  Параметры: …"""
 
 
 class ContentMeta(WBModel):
@@ -217,6 +218,7 @@ class KeysRedeemedResponseList(WBModel):
     items: list[KeyRedeemedResponse] | None = _field(default=None)
     """Список проданных ключей"""
     total: int | None = _field(default=None)
+    """Общее количество записей, соответствующих заданным критериям выборки.  Параметры: …"""
 
 
 class KeysResponseList(WBModel):
@@ -289,6 +291,7 @@ class OfferCreateRequest(WBModel):
     (`section`): - **Ключи активации** — `3` …
     """
     meta: OfferMetaRequest | None = _field(default=None)
+    """Метаданные предложения"""
     price: int | None = _field(default=None)
     """Цена предложения, ₽"""
     section: int | None = _field(default=None)
@@ -377,6 +380,7 @@ class OfferResponseList(WBModel):
     items: list[OfferResponse] | None = _field(default=None)
     """Список предложений"""
     total: int | None = _field(default=None)
+    """Общее количество записей, соответствующих заданным критериям выборки.  Параметры: …"""
 
 
 class OfferStatusUpdateRequest(WBModel):
@@ -405,6 +409,7 @@ class OfferUpdateRequest(WBModel):
     медиафайлов.** …
     """
     meta: OfferMetaRequest | None = _field(default=None)
+    """Метаданные предложения"""
     price: int | None = _field(default=None)
     """Цена предложения, ₽"""
     status: int | None = _field(default=None)
@@ -465,6 +470,7 @@ class UploadInitRequest(WBModel):
     description: str | None = _field(default=None)
     """Описание контента.Максимальная длина — **1000 символов.**"""
     meta: ContentMeta | None = _field(default=None)
+    """Метаданные. Дополнительная информация о контенте"""
     parts: list[ChunkPart] | None = _field(default=None)
     """Для оптимальной скорости загрузки контента следует разбить файл на фреймы по 2 Мб. В массиве
     указываются индекс каждого фрейма и его размер

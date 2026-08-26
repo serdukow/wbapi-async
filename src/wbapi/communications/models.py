@@ -16,10 +16,18 @@ class Chat(WBModel):
     client_name: str | None = _field(default=None, name="clientName")
     """Имя покупателя"""
     good_card: Listing | None = _field(default=None, name="goodCard")
-    last_message: LastMessage | None = _field(default=None, name="lastMessage")
+    """Информация о заказе"""
+    last_message: ChatLastMessage | None = _field(default=None, name="lastMessage")
     """Последнее сообщение в чате"""
     reply_sign: str | None = _field(default=None, name="replySign")
     """Подпись чата. Требуется при отправке сообщения"""
+
+
+class ChatLastMessage(WBModel):
+    add_timestamp: int | None = _field(default=None, name="addTimestamp")
+    """Время сообщения"""
+    text: str | None = _field(default=None)
+    """Текст сообщения"""
 
 
 class ChatsResponse(WBModel):
@@ -50,6 +58,11 @@ class CreateFeedbacksOrderReturnsResponse(WBModel):
     """Описание ошибки"""
 
 
+class DeleteFeedbacksPinResponse(WBModel):
+    data: list[int] | None = _field(default=None)
+    """Список `pinId` — ID операций закрепления отзывов, которые были успешно откреплены"""
+
+
 class Event(WBModel):
     add_time: str | None = _field(default=None, name="addTime")
     """Время появления события на сервере в UTC"""
@@ -62,6 +75,7 @@ class Event(WBModel):
     event_id: str | None = _field(default=None, name="eventID")
     """ID события"""
     event_type: str | None = _field(default=None, name="eventType")
+    """Тип события: - `message` — сообщение"""
     is_new_chat: bool | None = _field(default=None, name="isNewChat")
     """Признак нового чата: - `false` — чат не новый - `true` — чат новый"""
     message: EventMessage | None = _field(default=None)
@@ -70,6 +84,7 @@ class Event(WBModel):
     """Подпись чата. Доступна только при `"isNewChat": true`. Требуется при отправке сообщения
     """
     sender: str | None = _field(default=None)
+    """Отправитель: - `client` — покупатель - `seller` — продавец - `wb` — Wildberries"""
     source: str | None = _field(default=None)
     """Источник отправки сообщения: - `seller-portal` — портал продавцов - `seller-public-api` —
     API Чата с покупателями - `rusite` — портал покупателей …
@@ -82,6 +97,7 @@ class EventAttachments(WBModel):
     files: list[File] | None = _field(default=None)
     """Файлы"""
     good_card: Listing | None = _field(default=None, name="goodCard")
+    """Информация о заказе"""
     images: list[Image] | None = _field(default=None)
     """Изображения"""
 
@@ -90,6 +106,7 @@ class EventMessage(WBModel):
     """Данные сообщения"""
 
     attachments: EventAttachments | None = _field(default=None)
+    """Вложения"""
     text: str | None = _field(default=None)
     """Текст сообщения"""
 
@@ -274,6 +291,7 @@ class GetFeedbacksArchiveResponse(WBModel):
 
 class GetFeedbacksArchiveResponseData(WBModel):
     feedbacks: list[GetFeedbacksArchiveResponseDataFeedbacksItem] | None = _field(default=None)
+    """Массив отзывов"""
 
 
 class GetFeedbacksArchiveResponseDataFeedbacksItem(WBModel):
@@ -431,6 +449,60 @@ class GetFeedbacksCountUnansweredResponseData(WBModel):
     """Количество необработанных отзывов за сегодня"""
 
 
+class GetFeedbacksPinsCountResponse(WBModel):
+    data: int | None = _field(default=None)
+    """Количество отзывов"""
+
+
+class GetFeedbacksPinsLimitsResponse(WBModel):
+    data: GetFeedbacksPinsLimitsResponseData | None = _field(default=None)
+
+
+class GetFeedbacksPinsLimitsResponseData(WBModel):
+    subscription: GetFeedbacksPinsLimitsResponseDataSubscription | None = _field(default=None)
+    """Лимиты по подписке"""
+    tariff: GetFeedbacksPinsLimitsResponseDataTariff | None = _field(default=None)
+    """Лимиты по тарифной опции"""
+
+
+class GetFeedbacksPinsLimitsResponseDataSubscription(WBModel):
+    per_unit_limit: int | None = _field(default=None, name="perUnitLimit")
+    """Максимальное количество закреплённых отзывов в одной карточке товара или в группе
+    объединённых карточек
+    """
+    remaining: int | None = _field(default=None)
+    """Сколько ещё отзывов можно закрепить"""
+    total_limit: int | None = _field(default=None, name="totalLimit")
+    """Общий лимит закреплений"""
+    unlimited: bool | None = _field(default=None)
+    """Количество закреплённых отзывов не ограничено:   - `true` — да   - `false` — нет"""
+    used: int | None = _field(default=None)
+    """Текущее количество закреплённых отзывов"""
+
+
+class GetFeedbacksPinsLimitsResponseDataTariff(WBModel):
+    per_unit_limit: int | None = _field(default=None, name="perUnitLimit")
+    """Максимальное количество закреплённых отзывов в одной карточке товара или в группе
+    объединённых карточек
+    """
+    remaining: int | None = _field(default=None)
+    """Сколько ещё отзывов можно закрепить"""
+    total_limit: int | None = _field(default=None, name="totalLimit")
+    """Общий лимит закреплений"""
+    unlimited: bool | None = _field(default=None)
+    """Количество закреплённых отзывов не ограничено:   - `true` — да   - `false` — нет"""
+    used: int | None = _field(default=None)
+    """Текущее количество закреплённых отзывов"""
+
+
+class GetFeedbacksPinsResponse(WBModel):
+    data: list[OpenapiPinnedReviewItemResult] | None = _field(default=None)
+    next: int | None = _field(default=None)
+    """Параметр пагинации. Укажите это значение в запросе, чтобы получить следующий пакет данных.
+    Если поле отсутствует, вы получили все данные
+    """
+
+
 class GetFeedbacksResponse(WBModel):
     additional_errors: list[str] | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
@@ -447,6 +519,7 @@ class GetFeedbacksResponseData(WBModel):
     count_unanswered: int | None = _field(default=None, name="countUnanswered")
     """Количество необработанных отзывов"""
     feedbacks: list[GetFeedbacksResponseDataFeedbacksItem] | None = _field(default=None)
+    """Массив отзывов"""
 
 
 class GetFeedbacksResponseDataFeedbacksItem(WBModel):
@@ -767,13 +840,6 @@ class Image(WBModel):
     """URL для получения изображения"""
 
 
-class LastMessage(WBModel):
-    add_timestamp: int | None = _field(default=None, name="addTimestamp")
-    """Время сообщения"""
-    text: str | None = _field(default=None)
-    """Текст сообщения"""
-
-
 class Listing(WBModel):
     """Информация о заказе"""
 
@@ -817,8 +883,63 @@ class OpenapiPinReviewItem(WBModel):
     """
 
 
-class RespondSuccessResponse(WBModel):
-    data: dict[str, Any] | None = _field(default=None)
+class OpenapiPinnedReviewItemResult(WBModel):
+    change_state_at: str | None = _field(default=None, name="changeStateAt")
+    """Дата и время закрепления или открепления"""
+    feedback_id: str | None = _field(default=None, name="feedbackId")
+    """ID отзыва"""
+    imt_id: int | None = _field(default=None, name="imtId")
+    """ID для объединённых карточек товаров"""
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    pin_id: int | None = _field(default=None, name="pinId")
+    """ID операции закрепления отзыва"""
+    pin_method: str | None = _field(default=None, name="pinMethod")
+    """Метод закрепления:   - `subscription` — подписка Джем   - `tariff` — тарифная опция"""
+    pin_on: str | None = _field(default=None, name="pinOn")
+    """Место закрепления отзыва:   - `nm` — карточка товара   - `imt` — группа объединённых
+    карточек товаров
+    """
+    state: str | None = _field(default=None)
+    """Закреплён ли отзыв:   - `pinned` — да   - `unpinned` — нет"""
+    unpinned_cause: str | None = _field(default=None, name="unpinnedCause")
+    """Причина открепления отзыва:   - `sysTariffUnpinned` — закончилась подписка или тарифная
+    опция   - `sysLimitReached` — закончился общий лимит по подписке …
+    """
+
+
+class OpenapiResultErr(WBModel):
+    detail: str | None = _field(default=None)
+    """Детали ошибки"""
+    origin: str | None = _field(default=None)
+    """ID внутреннего сервиса WB"""
+    request_id: str | None = _field(default=None, name="requestId")
+    """ID запроса"""
+    status: str | None = _field(default=None)
+    """Статус"""
+    title: str | None = _field(default=None)
+    """Заголовок ошибки"""
+
+
+class SetFeedbacksPinResponse(WBModel):
+    data: list[SetFeedbacksPinResponseDataItem] | None = _field(default=None)
+
+
+class SetFeedbacksPinResponseDataItem(WBModel):
+    errors: list[OpenapiResultErr] | None = _field(default=None)
+    """Детали ошибок"""
+    feedback_id: str | None = _field(default=None, name="feedbackId")
+    """ID отзыва"""
+    is_errors: bool | None = _field(default=None, name="isErrors")
+    """Есть ли ошибки"""
+    pin_id: int | None = _field(default=None, name="pinId")
+    """ID операции закрепления. Если поле отсутствует — закрепить отзыв не удалось"""
+    pin_method: str | None = _field(default=None, name="pinMethod")
+    """Метод закрепления:   - `subscription` — подписка Джем   - `tariff` — тарифная опция"""
+    pin_on: str | None = _field(default=None, name="pinOn")
+    """Место закрепления отзыва:   - `nm` — карточка товара   - `imt` — группа объединённых
+    карточек товаров
+    """
 
 
 class UpdateFeedbacksAnswerBody(WBModel):

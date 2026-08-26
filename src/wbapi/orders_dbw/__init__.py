@@ -25,11 +25,11 @@ from .methods import (
     UpdateOrdersStatusDeliver,
 )
 from .models import (
-    ApiMetaDeleteResponses,
     ApiOrdersMetaDetailsResponse,
     ApiSGTINs,
     ApiStatusSetResponses,
     ClientInfoResp,
+    DeleteOrdersMetaResponse,
     DeliveryDatesInfoResp,
     GetDbwOrdersResponse,
     GetOrdersNewResponse,
@@ -65,7 +65,7 @@ class OrdersDbw:
         """
         await CancelDbwOrder(order_id=order_id).emit(self._api)
 
-    async def delete_orders_meta(self, *, key: str, orders_ids: list[int]) -> ApiMetaDeleteResponses:
+    async def delete_orders_meta(self, *, key: str, orders_ids: list[int]) -> DeleteOrdersMetaResponse:
         """Удалить идентификаторы маркировки сборочных заданий
 
         :param key: Название идентификатора маркировки для удаления. Передаётся только одно значение

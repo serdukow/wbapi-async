@@ -36,6 +36,7 @@ class CreateInvite(WBMethod[CreateInviteResponse]):
 
     invite: CreateInviteInvite
     access: list[CreateInviteAccessItem] | None = None
+    """Настройки доступа к разделам профиля продавца"""
 
 
 class DeleteUser(WBMethod[None]):

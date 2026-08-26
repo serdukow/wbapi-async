@@ -8,21 +8,29 @@ from typing import Any
 from ..client.method import WBMethod
 from ..utils.token import Scope
 from .models import (
-    CommonItemFilters,
-    CommonReportFilters,
-    CommonResponseProperties,
-    CommonShippingOfficeFilters,
-    CommonSizeFilters,
     GetItemRatingResponse,
     GetOrderFeedPagination,
     GetOrderFeedResponse,
     GetOrderFeedSelectedPeriod,
     GetSalesFunnelGroupedHistoryResponse,
+    GetSalesFunnelGroupedHistorySelectedPeriod,
     GetSalesFunnelProductsHistoryResponseItem,
+    GetSalesFunnelProductsHistorySelectedPeriod,
+    GetSalesFunnelProductsPastPeriod,
     GetSalesFunnelProductsResponse,
+    GetSalesFunnelProductsSelectedPeriod,
+    GetSearchReportProductOrdersResponse,
+    GetSearchReportProductSearchTextsResponse,
+    GetSearchReportResponse,
+    GetSearchReportTableDetailsResponse,
+    GetSearchReportTableGroupsResponse,
+    GetStocksReportOfficesBody,
     GetStocksReportOfficesResponse,
+    GetStocksReportProductsBody,
+    GetStocksReportProductsGroupsBody,
     GetStocksReportProductsGroupsResponse,
     GetStocksReportProductsResponse,
+    GetStocksReportProductsSizesBody,
     GetStocksReportProductsSizesResponse,
     GetStocksReportWbWarehousesResponse,
     NmReportCreateReportResponse,
@@ -116,9 +124,11 @@ class GetItemRating(WBMethod[GetItemRatingResponse]):
     }
 
     current_period: PeriodItemRating
+    """Текущий период"""
     offset: int
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
     order_by: OrderByItemRating
+    """Параметры сортировки"""
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
     is_not_include_nms_without_sales: bool | None = False
@@ -134,6 +144,7 @@ class GetItemRating(WBMethod[GetItemRatingResponse]):
     из каталога товары …
     """
     past_period: PastPeriodItemRating | None = None
+    """Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`"""
     subject_ids: list[int] | None = None
     """Список ID предметов для фильтрации"""
     tag_ids: list[int] | None = None
@@ -255,8 +266,12 @@ class GetSalesFunnelGroupedHistory(WBMethod[GetSalesFunnelGroupedHistoryResponse
         "aggregation_level": "aggregationLevel",
     }
 
-    selected_period: dict[str, Any]
+    selected_period: GetSalesFunnelGroupedHistorySelectedPeriod
+    """Запрашиваемый период"""
     aggregation_level: str | None = None
+    """Тип агрегации. Если не указано, то по умолчанию используется агрегация по дням.  Доступные
+    уровни агрегации `day`, `week`
+    """
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
     skip_deleted_nm: bool | None = None
@@ -299,7 +314,8 @@ class GetSalesFunnelProducts(WBMethod[GetSalesFunnelProductsResponse]):
         "offset": "offset",
     }
 
-    selected_period: dict[str, Any]
+    selected_period: GetSalesFunnelProductsSelectedPeriod
+    """Запрашиваемый период"""
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
     limit: int | None = 50
@@ -311,7 +327,9 @@ class GetSalesFunnelProducts(WBMethod[GetSalesFunnelProductsResponse]):
     offset: int | None = 0
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
     order_by: OrderBy | None = None
-    past_period: dict[str, Any] | None = None
+    """Параметры сортировки"""
+    past_period: GetSalesFunnelProductsPastPeriod | None = None
+    """Период для сравнения"""
     skip_deleted_nm: bool | None = None
     """Скрыть удалённые товары"""
     subject_ids: list[int] | None = None
@@ -346,13 +364,17 @@ class GetSalesFunnelProductsHistory(WBMethod[list[GetSalesFunnelProductsHistoryR
 
     nm_ids: list[int]
     """Артикулы WB, по которым нужно составить отчёт"""
-    selected_period: dict[str, Any]
+    selected_period: GetSalesFunnelProductsHistorySelectedPeriod
+    """Запрашиваемый период"""
     aggregation_level: str | None = None
+    """Тип агрегации. Если не указано, то по умолчанию используется агрегация по дням.  Доступные
+    уровни агрегации `day`, `week`
+    """
     skip_deleted_nm: bool | None = None
     """Скрыть удалённые товары"""
 
 
-class GetSearchReport(WBMethod[CommonResponseProperties]):
+class GetSearchReport(WBMethod[GetSearchReportResponse]):
     """Основная страница
 
     POST /api/v2/search-report/report
@@ -360,7 +382,7 @@ class GetSearchReport(WBMethod[CommonResponseProperties]):
 
     __path__ = "/api/v2/search-report/report"
     __http_method__ = "POST"
-    __returns__ = CommonResponseProperties
+    __returns__ = GetSearchReportResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
@@ -386,12 +408,17 @@ class GetSearchReport(WBMethod[CommonResponseProperties]):
     }
 
     current_period: Period
+    """Текущий период"""
     limit: int
     """Количество групп товаров в ответе"""
     offset: int
     """После какого элемента выдавать данные"""
     order_by: OrderByMainAndDetails
+    """Параметры сортировки"""
     position_cluster: str
+    """Товары с какой средней позицией в поиске показывать в отчёте:   - `all` — все   -
+    `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
+    """
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
     include_search_texts: bool | None = True
@@ -401,13 +428,14 @@ class GetSearchReport(WBMethod[CommonResponseProperties]):
     nm_ids: list[int] | None = None
     """Список артикулов WB для фильтрации"""
     past_period: PastPeriod | None = None
+    """Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`"""
     subject_ids: list[int] | None = None
     """Список ID предметов для фильтрации"""
     tag_ids: list[int] | None = None
     """Список ID ярлыков для фильтрации"""
 
 
-class GetSearchReportProductOrders(WBMethod[CommonResponseProperties]):
+class GetSearchReportProductOrders(WBMethod[GetSearchReportProductOrdersResponse]):
     """Заказы и позиции по поисковым запросам товара
 
     POST /api/v2/search-report/product/orders
@@ -415,7 +443,7 @@ class GetSearchReportProductOrders(WBMethod[CommonResponseProperties]):
 
     __path__ = "/api/v2/search-report/product/orders"
     __http_method__ = "POST"
-    __returns__ = CommonResponseProperties
+    __returns__ = GetSearchReportProductOrdersResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
@@ -429,11 +457,12 @@ class GetSearchReportProductOrders(WBMethod[CommonResponseProperties]):
     nm_id: int
     """Артикул WB"""
     period: PeriodOrdersRequest
+    """Текущий период. Максимум 7 суток"""
     search_texts: list[str]
     """Поисковые запросы. Для тарифов Джема **Продвинутый** и **Премиальный** максимум — 100"""
 
 
-class GetSearchReportProductSearchTexts(WBMethod[CommonResponseProperties]):
+class GetSearchReportProductSearchTexts(WBMethod[GetSearchReportProductSearchTextsResponse]):
     """Поисковые запросы по товару
 
     POST /api/v2/search-report/product/search-texts
@@ -441,7 +470,7 @@ class GetSearchReportProductSearchTexts(WBMethod[CommonResponseProperties]):
 
     __path__ = "/api/v2/search-report/product/search-texts"
     __http_method__ = "POST"
-    __returns__ = CommonResponseProperties
+    __returns__ = GetSearchReportProductSearchTextsResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
@@ -462,10 +491,12 @@ class GetSearchReportProductSearchTexts(WBMethod[CommonResponseProperties]):
     }
 
     current_period: Period
+    """Текущий период"""
     limit: int
     nm_ids: list[int]
     """Список артикулов WB"""
     order_by: OrderByGrTe
+    """Параметры сортировки"""
     top_order_by: str
     """Фильтрация по поисковым запросам, по которым больше всего:   - `openCard` — перешли в
     карточку   - `addToCart` — добавили в корзину …
@@ -475,9 +506,10 @@ class GetSearchReportProductSearchTexts(WBMethod[CommonResponseProperties]):
     include_substituted_skus: bool | None = True
     """Показать данные по прямым запросам с подменным артикулом"""
     past_period: PastPeriod | None = None
+    """Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`"""
 
 
-class GetSearchReportTableDetails(WBMethod[CommonResponseProperties]):
+class GetSearchReportTableDetails(WBMethod[GetSearchReportTableDetailsResponse]):
     """Пагинация по товарам в группе
 
     POST /api/v2/search-report/table/details
@@ -485,7 +517,7 @@ class GetSearchReportTableDetails(WBMethod[CommonResponseProperties]):
 
     __path__ = "/api/v2/search-report/table/details"
     __http_method__ = "POST"
-    __returns__ = CommonResponseProperties
+    __returns__ = GetSearchReportTableDetailsResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
@@ -511,11 +543,13 @@ class GetSearchReportTableDetails(WBMethod[CommonResponseProperties]):
     }
 
     current_period: Period
+    """Текущий период"""
     limit: int
     """Количество товаров в ответе"""
     offset: int
     """После какого элемента выдавать данные"""
     order_by: OrderByMainAndDetails
+    """Параметры сортировки"""
     position_cluster: str
     """Товары с какой средней позицией в поиске показывать в отчёте:   - `all` — все   -
     `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
@@ -529,13 +563,14 @@ class GetSearchReportTableDetails(WBMethod[CommonResponseProperties]):
     nm_ids: list[int] | None = None
     """Список артикулов WB"""
     past_period: PastPeriod | None = None
+    """Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`"""
     subject_id: int | None = None
     """ID предмета"""
     tag_id: int | None = None
     """ID ярлыка"""
 
 
-class GetSearchReportTableGroups(WBMethod[CommonResponseProperties]):
+class GetSearchReportTableGroups(WBMethod[GetSearchReportTableGroupsResponse]):
     """Пагинация по группам
 
     POST /api/v2/search-report/table/groups
@@ -543,7 +578,7 @@ class GetSearchReportTableGroups(WBMethod[CommonResponseProperties]):
 
     __path__ = "/api/v2/search-report/table/groups"
     __http_method__ = "POST"
-    __returns__ = CommonResponseProperties
+    __returns__ = GetSearchReportTableGroupsResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
@@ -569,12 +604,17 @@ class GetSearchReportTableGroups(WBMethod[CommonResponseProperties]):
     }
 
     current_period: Period
+    """Текущий период"""
     limit: int
     """Количество групп товаров в ответе"""
     offset: int
     """После какого элемента выдавать данные"""
     order_by: OrderByGrTe
+    """Параметры сортировки"""
     position_cluster: str
+    """Товары с какой средней позицией в поиске показывать в отчёте:   - `all` — все   -
+    `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
+    """
     brand_names: list[str] | None = None
     """Список брендов для фильтрации"""
     include_search_texts: bool | None = True
@@ -584,6 +624,7 @@ class GetSearchReportTableGroups(WBMethod[CommonResponseProperties]):
     nm_ids: list[int] | None = None
     """Список артикулов WB для фильтрации"""
     past_period: PastPeriod | None = None
+    """Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`"""
     subject_ids: list[int] | None = None
     """Список ID предметов для фильтрации"""
     tag_ids: list[int] | None = None
@@ -609,7 +650,7 @@ class GetStocksReportOffices(WBMethod[GetStocksReportOfficesResponse]):
     }
     __items__ = "data"
 
-    body: CommonShippingOfficeFilters | list[Any] | dict[str, Any]
+    body: GetStocksReportOfficesBody | list[Any] | dict[str, Any]
 
 
 class GetStocksReportProducts(WBMethod[GetStocksReportProductsResponse]):
@@ -631,7 +672,7 @@ class GetStocksReportProducts(WBMethod[GetStocksReportProductsResponse]):
     }
     __items__ = "data"
 
-    body: CommonItemFilters | list[Any] | dict[str, Any]
+    body: GetStocksReportProductsBody | list[Any] | dict[str, Any]
 
 
 class GetStocksReportProductsGroups(WBMethod[GetStocksReportProductsGroupsResponse]):
@@ -653,7 +694,7 @@ class GetStocksReportProductsGroups(WBMethod[GetStocksReportProductsGroupsRespon
     }
     __items__ = "data"
 
-    body: CommonReportFilters | list[Any] | dict[str, Any]
+    body: GetStocksReportProductsGroupsBody | list[Any] | dict[str, Any]
 
 
 class GetStocksReportProductsSizes(WBMethod[GetStocksReportProductsSizesResponse]):
@@ -675,7 +716,7 @@ class GetStocksReportProductsSizes(WBMethod[GetStocksReportProductsSizesResponse
     }
     __items__ = "data"
 
-    body: CommonSizeFilters | list[Any] | dict[str, Any]
+    body: GetStocksReportProductsSizesBody | list[Any] | dict[str, Any]
 
 
 class GetStocksReportWbWarehouses(WBMethod[GetStocksReportWbWarehousesResponse]):

@@ -26,6 +26,7 @@ class CreateInviteInvite(WBModel):
 
 class CreateInviteRequest(WBModel):
     access: list[CreateInviteRequestAccessItem] | None = _field(default=None)
+    """Настройки доступа к разделам профиля продавца"""
     invite: CreateInviteRequestInvite | None = _field(default=None)
 
 
@@ -112,6 +113,7 @@ class GetUsersResponse(WBModel):
 
 class GetUsersResponseUsersItem(WBModel):
     access: list[GetUsersResponseUsersItemAccessItem] | None = _field(default=None)
+    """Настройки доступа к разделам профиля продавца"""
     email: str | None = _field(default=None)
     """Email пользователя"""
     first_name: str | None = _field(default=None, name="firstName")
@@ -179,13 +181,23 @@ class PlanBuilderOption(WBModel):
     """Название опции на языке из параметра `locale`"""
     period_duration: float | None = _field(default=None, name="periodDuration")
     """Минимальный срок действия опции в днях"""
-    promotion: PlanBuilderPromotion | None = _field(default=None)
+    promotion: PlanBuilderOptionPromotion | None = _field(default=None)
+    """Акция, по которой подключена опция. Не возвращается, если опция подключена без акции или
+    срок действия акции истёк
+    """
     slug: str | None = _field(default=None)
     """Код опции"""
     status: str | None = _field(default=None)
     """Статус опции:   - `active` — активна   - `pendingActivation` — подключена, начнёт работать с
     00:00 следующего дня …
     """
+
+
+class PlanBuilderOptionPromotion(WBModel):
+    commission_rate: float | None = _field(default=None, name="commissionRate")
+    """Стоимость подключения опции по акции, % от оборота"""
+    expires_at: str | None = _field(default=None, name="expiresAt")
+    """Дата окончания действия цены по акции"""
 
 
 class PlanBuilderOptionShort(WBModel):
@@ -234,13 +246,6 @@ class PlanBuilderPackage(WBModel):
     """
 
 
-class PlanBuilderPromotion(WBModel):
-    commission_rate: float | None = _field(default=None, name="commissionRate")
-    """Стоимость подключения опции по акции, % от оборота"""
-    expires_at: str | None = _field(default=None, name="expiresAt")
-    """Дата окончания действия цены по акции"""
-
-
 class SubscriptionsJamInfo(WBModel):
     """Информация о подписке Джем"""
 
@@ -273,6 +278,7 @@ class UpdateUserAccessRequest(WBModel):
 
 class UserAccess(WBModel):
     access: list[UserAccessAccessItem] | None = _field(default=None)
+    """Настройки доступа к разделам профиля продавца"""
     user_id: int | None = _field(default=None, name="userId")
     """ID пользователя"""
 

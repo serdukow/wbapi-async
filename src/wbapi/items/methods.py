@@ -365,11 +365,13 @@ class GetCardsErrorList(WBMethod[ResponsePublicViewerPublicErrorsTableListV2]):
     __body_fields__ = {"cursor": "cursor", "order": "order"}
 
     cursor: SwaggerPublicErrorsCursorInput | None = None
+    """Пагинатор"""
     locale: str | None = None
     """Язык названий предметов:   - `ru` — русский   - `en` — английский   - `zh` — китайский  Не
     используется в песочнице
     """
     order: SwaggerPublicErrorsOrderV2 | None = None
+    """Порядок выдачи пакетов"""
 
 
 class GetCardsLimits(WBMethod[GetCardsLimitsResponse]):

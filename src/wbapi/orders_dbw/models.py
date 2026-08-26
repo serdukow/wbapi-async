@@ -30,30 +30,6 @@ class ApiBatchErrorResponseMetaDetailsItem(WBModel):
     """Значение идентификатора маркировки"""
 
 
-class ApiMetaDeleteResponses(WBModel):
-    request_id: str | None = _field(default=None, name="requestId")
-    """Уникальный ID запроса. Отображается для ответов с ошибками"""
-    results: list[ApiMetaDeleteResponsesResultsItem] | None = _field(default=None)
-
-
-class ApiMetaDeleteResponsesResultsItem(WBModel):
-    errors: list[ApiMetaDeleteResponsesResultsItemErrorsItem] | None = _field(default=None)
-    """Детали ошибки"""
-    is_error: bool | None = _field(default=None, name="isError")
-    """Есть ли ошибки"""
-    order_id: int | None = _field(default=None, name="orderId")
-    """ID сборочного задания с успешно обновлёнными данными"""
-
-
-class ApiMetaDeleteResponsesResultsItemErrorsItem(WBModel):
-    code: int | None = _field(default=None)
-    """Код ошибки:   - `404`   - `409`"""
-    detail: str | None = _field(default=None)
-    """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
-    этого статуса сборочного задания - `ImeiIsNotFilled` — не заполнен IMEI
-    """
-
-
 class ApiOrdersMetaDetailsResponse(WBModel):
     orders: list[ApiOrdersMetaDetailsResponseOrdersItem] | None = _field(default=None)
     """Идентификаторы маркировки сборочных заданий и статусы их валидации"""
@@ -162,26 +138,28 @@ class ClientInfoResp(WBModel):
     """Информация о покупателях"""
 
 
-class CourierContactsResponse(WBModel):
-    car_number: str | None = _field(default=None, name="carNumber")
-    """Номер автомобиля"""
-    full_name: str | None = _field(default=None, name="fullName")
-    """ФИО курьера"""
-    p_time_from: str | None = _field(default=None, name="pTimeFrom")
-    """Дата и время, с которого прибудет курьер"""
-    p_time_to: str | None = _field(default=None, name="pTimeTo")
-    """Дата и время, до которого прибудет курьер"""
-    phone: str | None = _field(default=None)
-    """Номер телефона"""
+class DeleteOrdersMetaResponse(WBModel):
+    request_id: str | None = _field(default=None, name="requestId")
+    """Уникальный ID запроса. Отображается для ответов с ошибками"""
+    results: list[DeleteOrdersMetaResponseResultsItem] | None = _field(default=None)
 
 
-class CourierInfo(WBModel):
-    contacts: CourierContactsResponse | None = _field(default=None)
-    """Контактные данные курьера"""
-    must_be_assigned: bool | None = _field(default=None, name="mustBeAssigned")
-    """Должен ли быть назначен курьер к текущему моменту:   - `false` — нет   - `true` — да …"""
-    updated_at: str | None = _field(default=None, name="updatedAt")
-    """Дата и время обновления информации о курьере.  Если `null`, информация не обновлялась"""
+class DeleteOrdersMetaResponseResultsItem(WBModel):
+    errors: list[DeleteOrdersMetaResponseResultsItemErrorsItem] | None = _field(default=None)
+    """Детали ошибки"""
+    is_error: bool | None = _field(default=None, name="isError")
+    """Есть ли ошибки"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания с успешно обновлёнными данными"""
+
+
+class DeleteOrdersMetaResponseResultsItemErrorsItem(WBModel):
+    code: int | None = _field(default=None)
+    """Код ошибки:   - `404`   - `409`"""
+    detail: str | None = _field(default=None)
+    """- `NotFound` — сборочное задание не найдено - `StatusMismatch` — операция невозможна для
+    этого статуса сборочного задания - `ImeiIsNotFilled` — не заполнен IMEI
+    """
 
 
 class DeliveryDatesInfoResp(WBModel):
@@ -212,6 +190,9 @@ class DeliveryDatesRequest(WBModel):
 
 class GetDbwOrdersResponse(WBModel):
     next: int | None = _field(default=None)
+    """Параметр пагинации. Содержит значение, которое необходимо указать в запросе для получения
+    следующего пакета данных
+    """
     orders: list[Order] | None = _field(default=None)
 
 
@@ -329,10 +310,32 @@ class OrderAddress(WBModel):
 
 
 class OrderCourierInfo(WBModel):
-    courier_info: CourierInfo | None = _field(default=None, name="courierInfo")
+    courier_info: OrderCourierInfoCourierInfo | None = _field(default=None, name="courierInfo")
     """Информация о курьере"""
     order_id: int | None = _field(default=None, name="orderID")
     """ID сборочного задания"""
+
+
+class OrderCourierInfoCourierInfo(WBModel):
+    contacts: OrderCourierInfoCourierInfoContacts | None = _field(default=None)
+    """Контактные данные курьера"""
+    must_be_assigned: bool | None = _field(default=None, name="mustBeAssigned")
+    """Должен ли быть назначен курьер к текущему моменту:   - `false` — нет   - `true` — да …"""
+    updated_at: str | None = _field(default=None, name="updatedAt")
+    """Дата и время обновления информации о курьере.  Если `null`, информация не обновлялась"""
+
+
+class OrderCourierInfoCourierInfoContacts(WBModel):
+    car_number: str | None = _field(default=None, name="carNumber")
+    """Номер автомобиля"""
+    full_name: str | None = _field(default=None, name="fullName")
+    """ФИО курьера"""
+    p_time_from: str | None = _field(default=None, name="pTimeFrom")
+    """Дата и время, с которого прибудет курьер"""
+    p_time_to: str | None = _field(default=None, name="pTimeTo")
+    """Дата и время, до которого прибудет курьер"""
+    phone: str | None = _field(default=None)
+    """Номер телефона"""
 
 
 class OrderCourierInfoResp(WBModel):

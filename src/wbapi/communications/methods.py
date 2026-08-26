@@ -10,11 +10,15 @@ from ..utils.token import Scope
 from .models import (
     ChatsResponse,
     CreateFeedbacksOrderReturnsResponse,
+    DeleteFeedbacksPinResponse,
     EventsResponse,
     GetFeedbackResponse,
     GetFeedbacksArchiveResponse,
     GetFeedbacksCountResponse,
     GetFeedbacksCountUnansweredResponse,
+    GetFeedbacksPinsCountResponse,
+    GetFeedbacksPinsLimitsResponse,
+    GetFeedbacksPinsResponse,
     GetFeedbacksResponse,
     GetNewFeedbacksQuestionsResponse,
     GetQuestionResponse,
@@ -23,7 +27,7 @@ from .models import (
     GetQuestionsResponse,
     MessageResponse,
     OpenapiPinReviewItem,
-    RespondSuccessResponse,
+    SetFeedbacksPinResponse,
     UpdateQuestionBody,
     UpdateQuestionResponse,
 )
@@ -100,7 +104,7 @@ class CreateSellerMessage(WBMethod[MessageResponse]):
     __items__ = "result"
 
 
-class DeleteFeedbacksPin(WBMethod[RespondSuccessResponse]):
+class DeleteFeedbacksPin(WBMethod[DeleteFeedbacksPinResponse]):
     """Открепить отзывы
 
     DELETE /api/feedbacks/v1/pins
@@ -108,7 +112,7 @@ class DeleteFeedbacksPin(WBMethod[RespondSuccessResponse]):
 
     __path__ = "/api/feedbacks/v1/pins"
     __http_method__ = "DELETE"
-    __returns__ = RespondSuccessResponse
+    __returns__ = DeleteFeedbacksPinResponse
     __scope__ = Scope.FEEDBACKS
     __host__ = "https://feedbacks-api.wildberries.ru"
     __rate_limits__ = {
@@ -312,7 +316,7 @@ class GetFeedbacksCountUnanswered(WBMethod[GetFeedbacksCountUnansweredResponse])
     __items__ = "data"
 
 
-class GetFeedbacksPins(WBMethod[RespondSuccessResponse]):
+class GetFeedbacksPins(WBMethod[GetFeedbacksPinsResponse]):
     """Список закреплённых и откреплённых отзывов
 
     GET /api/feedbacks/v1/pins
@@ -320,7 +324,7 @@ class GetFeedbacksPins(WBMethod[RespondSuccessResponse]):
 
     __path__ = "/api/feedbacks/v1/pins"
     __http_method__ = "GET"
-    __returns__ = RespondSuccessResponse
+    __returns__ = GetFeedbacksPinsResponse
     __query_params__ = {
         "state": "state",
         "pin_on": "pinOn",
@@ -366,7 +370,7 @@ class GetFeedbacksPins(WBMethod[RespondSuccessResponse]):
     """Закреплён ли отзыв:   - `pinned` — да   - `unpinned` — нет"""
 
 
-class GetFeedbacksPinsCount(WBMethod[RespondSuccessResponse]):
+class GetFeedbacksPinsCount(WBMethod[GetFeedbacksPinsCountResponse]):
     """Количество закреплённых и откреплённых отзывов
 
     GET /api/feedbacks/v1/pins/count
@@ -374,7 +378,7 @@ class GetFeedbacksPinsCount(WBMethod[RespondSuccessResponse]):
 
     __path__ = "/api/feedbacks/v1/pins/count"
     __http_method__ = "GET"
-    __returns__ = RespondSuccessResponse
+    __returns__ = GetFeedbacksPinsCountResponse
     __query_params__ = {
         "state": "state",
         "pin_on": "pinOn",
@@ -413,7 +417,7 @@ class GetFeedbacksPinsCount(WBMethod[RespondSuccessResponse]):
     """Закреплён ли отзыв:   - `pinned` — да   - `unpinned` — нет"""
 
 
-class GetFeedbacksPinsLimits(WBMethod[RespondSuccessResponse]):
+class GetFeedbacksPinsLimits(WBMethod[GetFeedbacksPinsLimitsResponse]):
     """Лимиты закреплённых отзывов
 
     GET /api/feedbacks/v1/pins/limits
@@ -421,7 +425,7 @@ class GetFeedbacksPinsLimits(WBMethod[RespondSuccessResponse]):
 
     __path__ = "/api/feedbacks/v1/pins/limits"
     __http_method__ = "GET"
-    __returns__ = RespondSuccessResponse
+    __returns__ = GetFeedbacksPinsLimitsResponse
     __scope__ = Scope.FEEDBACKS
     __host__ = "https://feedbacks-api.wildberries.ru"
     __rate_limits__ = {
@@ -646,7 +650,7 @@ class GetSellerEvents(WBMethod[EventsResponse]):
     """
 
 
-class SetFeedbacksPin(WBMethod[RespondSuccessResponse]):
+class SetFeedbacksPin(WBMethod[SetFeedbacksPinResponse]):
     """Закрепить отзывы
 
     POST /api/feedbacks/v1/pins
@@ -654,7 +658,7 @@ class SetFeedbacksPin(WBMethod[RespondSuccessResponse]):
 
     __path__ = "/api/feedbacks/v1/pins"
     __http_method__ = "POST"
-    __returns__ = RespondSuccessResponse
+    __returns__ = SetFeedbacksPinResponse
     __scope__ = Scope.FEEDBACKS
     __host__ = "https://feedbacks-api.wildberries.ru"
     __rate_limits__ = {

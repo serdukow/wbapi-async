@@ -23,6 +23,7 @@ class ApiB2bClientInfo(WBModel):
 
 class ApiB2bClientInfoResponse(WBModel):
     data: ApiB2bClientInfo | None = _field(default=None)
+    """Данные покупателя B2B"""
     errors: list[ApiB2bClientInfoResponseErrorsItem] | None = _field(default=None)
     """Детали ошибки"""
     is_error: bool | None = _field(default=None, name="isError")
@@ -391,6 +392,9 @@ class GetDbsGroupsResponseItem(WBModel):
 
 class GetDbsOrdersResponse(WBModel):
     next: int | None = _field(default=None)
+    """Параметр пагинации. Содержит значение, которое необходимо указать в запросе для получения
+    следующего пакета данных
+    """
     orders: list[OrderDBS] | None = _field(default=None)
 
 

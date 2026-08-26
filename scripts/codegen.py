@@ -529,6 +529,32 @@ class Generator:
             node = node.get(part, {})
         return node
 
+    def _merge_all_of(self, branches: list, depth: int) -> dict | None:
+        """Fold the branches of an allOf into one schema.
+
+        A branch carrying only a description contributes nothing; one that
+        resolves to an array or a scalar cannot be merged and wins outright.
+        """
+        if depth > MAX_SCHEMA_DEPTH:
+            return None
+        properties: dict = {}
+        required: list = []
+        for branch in branches:
+            if not isinstance(branch, dict):
+                continue
+            resolved = self._resolve(branch["$ref"]) if "$ref" in branch else branch
+            if not isinstance(resolved, dict):
+                continue
+            if resolved.get("type") == "array" or "items" in resolved:
+                return resolved
+            props = resolved.get("properties")
+            if props:
+                properties.update(props)
+                required += [r for r in (resolved.get("required") or []) if r not in required]
+        if not properties:
+            return None
+        return {"type": "object", "properties": properties, "required": required}
+
     def type_of(self, sch: dict | None, hint: str, depth: int = 0) -> str:
         if not isinstance(sch, dict) or depth > MAX_SCHEMA_DEPTH:
             return "Any"
@@ -544,7 +570,14 @@ class Generator:
             if name not in self.structs:
                 self.emit_struct(name, target, depth + 1)
             return name
-        for combo in ("allOf", "oneOf", "anyOf"):
+        if isinstance(sch.get("allOf"), list) and sch["allOf"]:
+            # allOf is an intersection, not a choice: WB writes the real schema
+            # in the second branch and a bare description in the first, so
+            # taking sch["allOf"][0] produced dict[str, Any].
+            merged = self._merge_all_of(sch["allOf"], depth)
+            if merged is not None:
+                return self.type_of(merged, hint, depth + 1)
+        for combo in ("oneOf", "anyOf"):
             if combo in sch and isinstance(sch[combo], list) and sch[combo]:
                 return self.type_of(sch[combo][0], hint, depth + 1)
         if sch.get("type") == "array":
@@ -557,6 +590,29 @@ class Generator:
                 self.emit_struct(name, sch, depth + 1)
             return name
         return SCALARS.get(sch.get("type", ""), "Any")
+
+    def _description_of(self, sch: object) -> str:
+        """A field's description, following a $ref that carries it.
+
+        WB writes `field: {$ref: Component}` and puts the prose — and often the
+        list of allowed values — on the component, so reading the field alone
+        left the docstring empty.
+        """
+        if not isinstance(sch, dict):
+            return ""
+        described = sch.get("description")
+        if described:
+            return str(described)
+        if "$ref" in sch:
+            target = self._resolve(sch["$ref"])
+            if isinstance(target, dict):
+                return str(target.get("description") or "")
+        if isinstance(sch.get("allOf"), list):
+            for branch in sch["allOf"]:
+                found = self._description_of(branch)
+                if found:
+                    return found
+        return ""
 
     def emit_struct(self, name: str, sch: dict, depth: int = 0) -> None:
         self.structs[name] = ""  # placeholder that stops the recursion
@@ -577,9 +633,7 @@ class Generator:
             pytype = self.type_of(ps, f"{name}{pascal(prop)}", depth + 1)
             rename = f', name="{prop}"' if field != prop else ""
             lines.append(f"    {field}: {pytype} | None = _field(default=None{rename})")
-            doc = (
-                clean_doc(ps.get("description") or "", 160).replace("\n", " ") if isinstance(ps, dict) else ""
-            )
+            doc = clean_doc(self._description_of(ps), 160).replace("\n", " ")
             lines.extend(wrap_doc(doc))
         self.structs[name] = "\n".join(lines) + "\n"
 
@@ -711,7 +765,7 @@ class Generator:
                         )
                     )
                     if isinstance(ps, dict):
-                        body_docs[prop] = clean_doc(ps.get("description") or "", 160).replace("\n", " ")
+                        body_docs[prop] = clean_doc(self._description_of(ps), 160).replace("\n", " ")
             else:
                 body_kind = "raw"
 

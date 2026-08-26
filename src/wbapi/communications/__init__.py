@@ -36,11 +36,15 @@ from .methods import (
 from .models import (
     ChatsResponse,
     CreateFeedbacksOrderReturnsResponse,
+    DeleteFeedbacksPinResponse,
     EventsResponse,
     GetFeedbackResponse,
     GetFeedbacksArchiveResponse,
     GetFeedbacksCountResponse,
     GetFeedbacksCountUnansweredResponse,
+    GetFeedbacksPinsCountResponse,
+    GetFeedbacksPinsLimitsResponse,
+    GetFeedbacksPinsResponse,
     GetFeedbacksResponse,
     GetNewFeedbacksQuestionsResponse,
     GetQuestionResponse,
@@ -48,7 +52,7 @@ from .models import (
     GetQuestionsCountUnansweredResponse,
     GetQuestionsResponse,
     MessageResponse,
-    RespondSuccessResponse,
+    SetFeedbacksPinResponse,
     UpdateQuestionResponse,
 )
 
@@ -101,7 +105,7 @@ class Communications:
         """Отправить сообщение"""
         return await CreateSellerMessage().emit(self._api)
 
-    async def delete_feedbacks_pin(self, *, body: Any) -> RespondSuccessResponse:
+    async def delete_feedbacks_pin(self, *, body: Any) -> DeleteFeedbacksPinResponse:
         """Открепить отзывы"""
         return await DeleteFeedbacksPin(body=body).emit(self._api)
 
@@ -290,7 +294,7 @@ class Communications:
         pin_on: str | None = None,
         state: str | None = None,
         auto_paginate: bool = False,
-    ) -> RespondSuccessResponse | list[Any]:
+    ) -> GetFeedbacksPinsResponse | list[Any]:
         """Список закреплённых и откреплённых отзывов
 
         :param date_from: Дата закрепления первого отзыва в списке
@@ -369,7 +373,7 @@ class Communications:
         nm_id: int | None = None,
         pin_on: str | None = None,
         state: str | None = None,
-    ) -> RespondSuccessResponse:
+    ) -> GetFeedbacksPinsCountResponse:
         """Количество закреплённых и откреплённых отзывов
 
         :param date_from: Дата закрепления первого отзыва в списке
@@ -392,7 +396,7 @@ class Communications:
             state=state,
         ).emit(self._api)
 
-    async def get_feedbacks_pins_limits(self) -> RespondSuccessResponse:
+    async def get_feedbacks_pins_limits(self) -> GetFeedbacksPinsLimitsResponse:
         """Лимиты закреплённых отзывов"""
         return await GetFeedbacksPinsLimits().emit(self._api)
 
@@ -526,7 +530,7 @@ class Communications:
         async for item in GetSellerEvents(next_=next_).stream(self._api):
             yield item
 
-    async def set_feedbacks_pin(self, *, body: Any) -> RespondSuccessResponse:
+    async def set_feedbacks_pin(self, *, body: Any) -> SetFeedbacksPinResponse:
         """Закрепить отзывы"""
         return await SetFeedbacksPin(body=body).emit(self._api)
 

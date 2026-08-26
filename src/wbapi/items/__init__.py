@@ -276,8 +276,10 @@ class Items:
     ) -> ResponsePublicViewerPublicErrorsTableListV2 | list[Any]:
         """Список несозданных карточек товаров с ошибками
 
+        :param cursor: Пагинатор
         :param locale: Язык названий предметов:   - `ru` — русский   - `en` — английский   - `zh` —
             китайский  Не используется в песочнице
+        :param order: Порядок выдачи пакетов
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetCardsErrorList(cursor=cursor, locale=locale, order=order)
@@ -292,8 +294,10 @@ class Items:
     ) -> AsyncIterator[Any]:
         """Список несозданных карточек товаров с ошибками — постранично, по одной записи.
 
+        :param cursor: Пагинатор
         :param locale: Язык названий предметов:   - `ru` — русский   - `en` — английский   - `zh` —
             китайский  Не используется в песочнице
+        :param order: Порядок выдачи пакетов
         """
         async for item in GetCardsErrorList(cursor=cursor, locale=locale, order=order).stream(self._api):
             yield item

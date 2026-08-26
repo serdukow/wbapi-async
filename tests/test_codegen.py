@@ -453,3 +453,51 @@ def test_few_fields_fall_back_to_any() -> None:
             untyped += len(re.findall(r": Any\b", models.read_text()))
 
     assert untyped < 60, f"{untyped} fields are untyped; the schema walk may be stopping short"
+
+
+def test_every_documented_field_keeps_its_description() -> None:
+    """A description on the spec must reach the generated field.
+
+    WB writes `field: {$ref: Component}` and puts the prose on the component,
+    so reading the field alone left the docstring empty — and with it the list
+    of values a field like availabilityFilters accepts.
+    """
+    import ast
+
+    import yaml
+
+    missing: list[str] = []
+    for spec_name, package in gen.SECTIONS.items():
+        spec_file = gen.SPECS_DIR / spec_name
+        models = gen.PACKAGE / package / "models.py"
+        if not spec_file.exists() or not models.exists():
+            continue
+        spec = yaml.safe_load(spec_file.read_text())
+        generator = gen.Generator(spec, package)
+
+        documented: dict[str, set[str]] = {}
+        for node in ast.parse(models.read_text()).body:
+            if not isinstance(node, ast.ClassDef):
+                continue
+            fields = set()
+            for index, statement in enumerate(node.body):
+                if not isinstance(statement, ast.AnnAssign) or not isinstance(statement.target, ast.Name):
+                    continue
+                following = node.body[index + 1] if index + 1 < len(node.body) else None
+                if (
+                    isinstance(following, ast.Expr)
+                    and isinstance(following.value, ast.Constant)
+                    and isinstance(following.value.value, str)
+                ):
+                    fields.add(statement.target.id)
+            documented[node.name] = fields
+
+        for name, schema in (spec.get("components", {}).get("schemas") or {}).items():
+            cls = gen.pascal(name)
+            if cls not in documented:
+                continue
+            for prop, prop_schema in ((schema or {}).get("properties") or {}).items():
+                if generator._description_of(prop_schema) and gen.snake(prop) not in documented[cls]:
+                    missing.append(f"{package}.{cls}.{prop}")
+
+    assert not missing, missing[:5]

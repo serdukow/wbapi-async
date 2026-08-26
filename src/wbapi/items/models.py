@@ -1017,6 +1017,7 @@ class ModelsErrorTableListPublicRespV2(WBModel):
     """Данные ответа"""
 
     cursor: ViewerContractPublicErrorsCursorOutput | None = _field(default=None)
+    """Пагинатор"""
     items: list[ModelsErrorTableListPublicRespV2Item] | None = _field(default=None)
     """Пакеты данных"""
 
@@ -1076,7 +1077,9 @@ class RequestMoveNmsImtConn(WBModel):
 
 class RequestPublicViewerPublicErrorsTableListV2(WBModel):
     cursor: SwaggerPublicErrorsCursorInput | None = _field(default=None)
+    """Пагинатор"""
     order: SwaggerPublicErrorsOrderV2 | None = _field(default=None)
+    """Порядок выдачи пакетов"""
 
 
 class ResponseContentError(WBModel):
@@ -1109,6 +1112,7 @@ class ResponsePublicViewerPublicErrorsTableListV2(WBModel):
     additional_errors: dict[str, Any] | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: ModelsErrorTableListPublicRespV2 | None = _field(default=None)
+    """Данные ответа"""
     error: bool | None = _field(default=None)
     """Флаг ошибки"""
     error_text: str | None = _field(default=None, name="errorText")

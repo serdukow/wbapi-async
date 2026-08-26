@@ -21,9 +21,11 @@ class AdvertBidsKopecks(WBModel):
 
 class AdvertNMsSettings(WBModel):
     bids_kopecks: AdvertBidsKopecks | None = _field(default=None)
+    """Ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
     nm_id: int | None = _field(default=None)
     """Артикул WB"""
     subject: AdvertSubcategory | None = _field(default=None)
+    """Предмет"""
 
 
 class AdvertSettings(WBModel):
@@ -84,6 +86,9 @@ class CreateAdvertBidsMinResponseBidsItemBidsItem(WBModel):
     currency: str | None = _field(default=None)
     """Валюта аккаунта продавца"""
     type: str | None = _field(default=None)
+    """Места размещения:   - `search` — поиск   - `recommendation` — рекомендации   - `combined` —
+    поиск и рекомендации
+    """
     value: int | None = _field(default=None)
     """Минимальная ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
 
@@ -148,6 +153,7 @@ class FullStatsItem(WBModel):
     atbs: int | None = _field(default=None)
     """Количество добавлений товаров в корзину"""
     booster_stats: list[FullStatsItemBoosterStatsItem] | None = _field(default=None, name="boosterStats")
+    """Статистика по средней позиции товара (для кампаний с единой ставкой)"""
     canceled: int | None = _field(default=None)
     """Отмены, шт."""
     clicks: int | None = _field(default=None)
@@ -161,6 +167,7 @@ class FullStatsItem(WBModel):
     currency: str | None = _field(default=None)
     """Валюта аккаунта продавца"""
     days: list[FullStatsItemDaysItem] | None = _field(default=None)
+    """Статистка по дням"""
     orders: int | None = _field(default=None)
     """Количество заказов"""
     shks: int | None = _field(default=None)
@@ -389,11 +396,13 @@ class GetAdvertsAdvertsItem(WBModel):
     restrictions: GetAdvertsAdvertsItemRestrictions | None = _field(default=None)
     """Ограничения кампании"""
     settings: AdvertSettings | None = _field(default=None)
+    """Настройки кампании"""
     status: int | None = _field(default=None)
     """Статус кампании: - `-1` — удалена, процесс удаления будет завершён в течение 10 минут - `4`
     — готова к запуску - `7` — завершена - `8` — отменена …
     """
     timestamps: Timestamps | None = _field(default=None)
+    """Временные отметки"""
 
 
 class GetAdvertsAdvertsItemRestrictions(WBModel):
@@ -855,8 +864,15 @@ class V0BidRecommendationBase(WBModel):
     competitive_bid: V0BidRecommendationBaseBidCompetitiveBid | None = _field(
         default=None, name="competitiveBid"
     )
+    """Конкурентная ставка — расчётная средняя ставка других продавцов, продающих аналогичные
+    товары по похожей цене. …
+    """
     leaders_bid: V0BidRecommendationBaseBidLeadersBid | None = _field(default=None, name="leadersBid")
+    """Лидерская ставка — средняя ставка с которой товары занимают лидирующие позиции в вашей
+    категории товаров
+    """
     top2: V0BidRecommendationBaseBidTop2 | None = _field(default=None)
+    """Топ-ставка"""
 
 
 class V0BidRecommendationBaseBidCompetitiveBid(WBModel):
@@ -886,8 +902,11 @@ class V0BidRecommendationNormQuery(WBModel):
     norm_query: str | None = _field(default=None, name="normQuery")
     """Поисковый кластер"""
     reach_max: V0BidRecommendationReachMax | None = _field(default=None, name="reachMax")
+    """Максимальный охват: 76-100%"""
     reach_medium: V0BidRecommendationReachMedium | None = _field(default=None, name="reachMedium")
+    """Средний охват: 61-75%"""
     reach_min: V0BidRecommendationReachMin | None = _field(default=None, name="reachMin")
+    """Минимальный охват: 50-60%"""
 
 
 class V0BidRecommendationReachMax(WBModel):
@@ -921,6 +940,7 @@ class V0BidsRecommendationsCpmResponse(WBModel):
     advert_id: int | None = _field(default=None, name="advertId")
     """ID кампании"""
     base: V0BidRecommendationBase | None = _field(default=None)
+    """Рекомендуемые ставки для карточек товаров"""
     nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
     norm_queries: list[V0BidRecommendationNormQuery] | None = _field(default=None, name="normQueries")
@@ -995,6 +1015,7 @@ class V0GetNormQueryListResponseItem(WBModel):
     nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
     norm_queries: V0GetNormQueryListResponseItemNormQueries | None = _field(default=None, name="normQueries")
+    """Поисковые кластеры"""
 
 
 class V0GetNormQueryListResponseItemNormQueries(WBModel):
