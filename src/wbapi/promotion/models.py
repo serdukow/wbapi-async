@@ -110,6 +110,20 @@ class CreateBudgetDepositBody(WBModel):
     """Тип источника пополнения: - `0` — Счёт - `1` — Баланс - `3` — Бонусы"""
 
 
+class CreateCalendarPromotionsUploadResponse(WBModel):
+    data: CreateCalendarPromotionsUploadResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class CreateCalendarPromotionsUploadResponseData(WBModel):
+    """Данные ответа"""
+
+    already_exists: bool | None = _field(default=None, name="alreadyExists")
+    """Загрузка с такими данными уже существует"""
+    upload_id: int | None = _field(default=None, name="uploadID")
+    """ID загрузки"""
+
+
 class CreateRenameBody(WBModel):
     advert_id: int | None = _field(default=None, name="advertId")
     """ID кампании, в которой меняется название"""
@@ -471,6 +485,101 @@ class GetBudgetResponse(WBModel):
     """Бюджет кампании в базовых единицах валюты аккаунта продавца"""
 
 
+class GetCalendarPromotionsDetailsResponse(WBModel):
+    data: GetCalendarPromotionsDetailsResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class GetCalendarPromotionsDetailsResponseData(WBModel):
+    """Данные ответа"""
+
+    promotions: list[GetCalendarPromotionsDetailsResponseDataPromotionsItem] | None = _field(default=None)
+    """Список акций"""
+
+
+class GetCalendarPromotionsDetailsResponseDataPromotionsItem(WBModel):
+    advantages: list[str] | None = _field(default=None)
+    """Преимущества акции"""
+    description: str | None = _field(default=None)
+    """Описание акции"""
+    end_date_time: str | None = _field(default=None, name="endDateTime")
+    """Конец акции"""
+    exception_products_count: int | None = _field(default=None, name="exceptionProductsCount")
+    """Количество товаров, исключенных из автоакции до её старта. Только при `"type": "auto"`. В
+    момент старта акции эти товары автоматически будут без скидки
+    """
+    id: int | None = _field(default=None)
+    """ID акции"""
+    in_promo_action_leftovers: int | None = _field(default=None, name="inPromoActionLeftovers")
+    """Количество товаров с остатками, участвующих в акции"""
+    in_promo_action_total: int | None = _field(default=None, name="inPromoActionTotal")
+    """Общее количество товаров, участвующих в акции"""
+    name: str | None = _field(default=None)
+    """Название акции"""
+    not_in_promo_action_leftovers: int | None = _field(default=None, name="notInPromoActionLeftovers")
+    """Количество товаров с остатками, не участвующих в акции"""
+    not_in_promo_action_total: int | None = _field(default=None, name="notInPromoActionTotal")
+    """Общее количество товаров, не участвующих в акции"""
+    participation_percentage: int | None = _field(default=None, name="participationPercentage")
+    """Уже участвующие в акции товары, %. Рассчитывается по товарам в акции и с остатком"""
+    ranging: list[GetCalendarPromotionsDetailsResponseDataPromotionsItemRangingItem] | None = _field(
+        default=None
+    )
+    """Ранжирование (если подключено)"""
+    start_date_time: str | None = _field(default=None, name="startDateTime")
+    """Начало акции"""
+    type: str | None = _field(default=None)
+    """Тип акции:   - `regular` — акция   - `auto` — автоакция"""
+
+
+class GetCalendarPromotionsDetailsResponseDataPromotionsItemRangingItem(WBModel):
+    boost: int | None = _field(default=None)
+    """Текущий уровень поднятия в поиске, %"""
+    condition: str | None = _field(default=None)
+    """Тип ранжирования:   - `productsInPromotion` — продвижение получат товары продавца,
+    участвующие в акции …
+    """
+    participation_rate: int | None = _field(default=None, name="participationRate")
+    """Количество товаров продавца для перехода на следующий уровень ранжирования, %"""
+
+
+class GetCalendarPromotionsNomenclaturesResponse(WBModel):
+    data: GetCalendarPromotionsNomenclaturesResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class GetCalendarPromotionsNomenclaturesResponseData(WBModel):
+    """Данные ответа"""
+
+    nomenclatures: list[PromoItemsList] | None = _field(default=None)
+    """Список товаров"""
+
+
+class GetCalendarPromotionsResponse(WBModel):
+    data: GetCalendarPromotionsResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class GetCalendarPromotionsResponseData(WBModel):
+    """Данные ответа"""
+
+    promotions: list[GetCalendarPromotionsResponseDataPromotionsItem] | None = _field(default=None)
+    """Список акций"""
+
+
+class GetCalendarPromotionsResponseDataPromotionsItem(WBModel):
+    end_date_time: str | None = _field(default=None, name="endDateTime")
+    """Конец акции"""
+    id: int | None = _field(default=None)
+    """ID акции"""
+    name: str | None = _field(default=None)
+    """Название акции"""
+    start_date_time: str | None = _field(default=None, name="startDateTime")
+    """Начало акции"""
+    type: str | None = _field(default=None)
+    """Тип акции:   - `regular` — акция   - `auto` — автоакция"""
+
+
 class GetCountResponse(WBModel):
     adverts: GetCountResponseAdverts | None = _field(default=None)
     all: int | None = _field(default=None)
@@ -580,6 +689,23 @@ class NormQueryBidFailResponseItem(WBModel):
     """
     reason: str | None = _field(default=None)
     """Описание причины ошибки"""
+
+
+class PromoItemsList(WBModel):
+    currency_code: str | None = _field(default=None, name="currencyCode")
+    """Валюта в формате ISO 4217"""
+    discount: int | None = _field(default=None)
+    """Текущая скидка"""
+    id: int | None = _field(default=None)
+    """Артикул WB"""
+    in_action: bool | None = _field(default=None, name="inAction")
+    """Участвует в акции:   - `true` — да   - `false` — нет"""
+    plan_discount: int | None = _field(default=None, name="planDiscount")
+    """Рекомендуемая скидка для участия в акции"""
+    plan_price: float | None = _field(default=None, name="planPrice")
+    """Плановая цена (цена во время акции)"""
+    price: float | None = _field(default=None)
+    """Текущая розничная цена"""
 
 
 class RequestWithDate(WBModel):

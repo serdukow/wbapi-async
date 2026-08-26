@@ -38,6 +38,7 @@ from .models import (
     CreateFeedbacksOrderReturnsResponse,
     DeleteFeedbacksPinResponse,
     EventsResponse,
+    GetClaimsResponse,
     GetFeedbackResponse,
     GetFeedbacksArchiveResponse,
     GetFeedbacksCountResponse,
@@ -118,7 +119,7 @@ class Communications:
         nm_id: int | None = None,
         offset: int | None = 0,
         auto_paginate: bool = False,
-    ) -> None | list[Any]:
+    ) -> GetClaimsResponse | list[Any]:
         """Заявки покупателей на возврат
 
         :param is_archive: Состояние заявки:   * `false` — на рассмотрении   * `true` — в архиве
@@ -129,10 +130,7 @@ class Communications:
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetClaims(is_archive=is_archive, id_=id_, limit=limit, nm_id=nm_id, offset=offset)
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_claims(
         self,
@@ -502,12 +500,12 @@ class Communications:
         """Список чатов"""
         return await GetSellerChats().emit(self._api)
 
-    async def get_seller_download(self, *, id_: str | int) -> None:
+    async def get_seller_download(self, *, id_: str | int) -> bytes:
         """Получить файл из сообщения
 
         :param id_: ID файла, см. значение поля `downloadID` в методе События чатов
         """
-        await GetSellerDownload(id_=id_).emit(self._api)
+        return await GetSellerDownload(id_=id_).emit(self._api)
 
     async def get_seller_events(
         self, *, next_: int | None = None, auto_paginate: bool = False

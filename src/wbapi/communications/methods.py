@@ -12,6 +12,7 @@ from .models import (
     CreateFeedbacksOrderReturnsResponse,
     DeleteFeedbacksPinResponse,
     EventsResponse,
+    GetClaimsResponse,
     GetFeedbackResponse,
     GetFeedbacksArchiveResponse,
     GetFeedbacksCountResponse,
@@ -125,7 +126,7 @@ class DeleteFeedbacksPin(WBMethod[DeleteFeedbacksPinResponse]):
     body: list[int] | list[Any] | dict[str, Any]
 
 
-class GetClaims(WBMethod[None]):
+class GetClaims(WBMethod[GetClaimsResponse]):
     """Заявки покупателей на возврат
 
     GET /api/v1/claims
@@ -133,7 +134,7 @@ class GetClaims(WBMethod[None]):
 
     __path__ = "/api/v1/claims"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetClaimsResponse
     __query_params__ = {
         "is_archive": "is_archive",
         "id_": "id",
@@ -600,7 +601,7 @@ class GetSellerChats(WBMethod[ChatsResponse]):
     __items__ = "result"
 
 
-class GetSellerDownload(WBMethod[None]):
+class GetSellerDownload(WBMethod[bytes]):
     """Получить файл из сообщения
 
     GET /api/v1/seller/download/{id}
@@ -608,7 +609,7 @@ class GetSellerDownload(WBMethod[None]):
 
     __path__ = "/api/v1/seller/download/{id}"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = bytes
     __path_params__ = ("id",)
     __scope__ = Scope.BUYER_CHAT
     __host__ = "https://buyer-chat-api.wildberries.ru"

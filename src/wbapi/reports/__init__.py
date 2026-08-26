@@ -36,8 +36,15 @@ from .models import (
     CreateTaskResponse,
     ExciseReportResponse,
     GetAcceptanceReportTasksDownloadResponseItem,
+    GetAnalyticsAntifraudDetailsResponse,
     GetAnalyticsBannedProductsBlockedResponse,
+    GetAnalyticsBrandShareBrandsResponse,
+    GetAnalyticsBrandShareParentSubjectsResponse,
+    GetAnalyticsBrandShareResponse,
+    GetAnalyticsDeductionsResponse,
+    GetAnalyticsGoodsLabelingResponse,
     GetAnalyticsGoodsReturnsResponse,
+    GetAnalyticsRegionSaleResponse,
     GetPaidStorageTasksDownloadResponseItem,
     GetTasksResponse,
     GetWarehouseRemainsTasksDownloadResponseItem,
@@ -147,13 +154,15 @@ class Reports:
         """
         return await GetAcceptanceReportTasksStatus(task_id=task_id).emit(self._api)
 
-    async def get_analytics_antifraud_details(self, *, date: str | None = None) -> None:
+    async def get_analytics_antifraud_details(
+        self, *, date: str | None = None
+    ) -> GetAnalyticsAntifraudDetailsResponse:
         """Самовыкупы
 
         :param date: Дата, которая входит в отчётный период, `ГГГГ-ММ-ДД`.  Чтобы получить данные за всё
             время с августа 2023,  не указывайте этот параметр
         """
-        await GetAnalyticsAntifraudDetails(date=date).emit(self._api)
+        return await GetAnalyticsAntifraudDetails(date=date).emit(self._api)
 
     async def get_analytics_banned_products_blocked(
         self, *, order: str, sort: str
@@ -169,7 +178,7 @@ class Reports:
 
     async def get_analytics_brand_share(
         self, *, brand: str, date_from: str, date_to: str, parent_id: int
-    ) -> None:
+    ) -> GetAnalyticsBrandShareResponse:
         """Получить отчёт
 
         :param brand: Бренд
@@ -177,17 +186,17 @@ class Reports:
         :param date_to: Конец отчётного периода, `ГГГГ-ММ-ДД`
         :param parent_id: ID родительской категории
         """
-        await GetAnalyticsBrandShare(
+        return await GetAnalyticsBrandShare(
             brand=brand, date_from=date_from, date_to=date_to, parent_id=parent_id
         ).emit(self._api)
 
-    async def get_analytics_brand_share_brands(self) -> None:
+    async def get_analytics_brand_share_brands(self) -> GetAnalyticsBrandShareBrandsResponse:
         """Бренды продавца"""
-        await GetAnalyticsBrandShareBrands().emit(self._api)
+        return await GetAnalyticsBrandShareBrands().emit(self._api)
 
     async def get_analytics_brand_share_parent_subjects(
         self, *, brand: str, date_from: str, date_to: str, locale: str | None = "ru"
-    ) -> None:
+    ) -> GetAnalyticsBrandShareParentSubjectsResponse:
         """Родительские категории бренда
 
         :param brand: Бренд
@@ -196,7 +205,7 @@ class Reports:
         :param locale: Язык поля ответа `parentName`:   - `ru` — русский   - `en` — английский   - `zh` —
             китайский
         """
-        await GetAnalyticsBrandShareParentSubjects(
+        return await GetAnalyticsBrandShareParentSubjects(
             brand=brand, date_from=date_from, date_to=date_to, locale=locale
         ).emit(self._api)
 
@@ -210,7 +219,7 @@ class Reports:
         order: str | None = "desc",
         sort: str | None = "dtBonus",
         auto_paginate: bool = False,
-    ) -> None | list[Any]:
+    ) -> GetAnalyticsDeductionsResponse | list[Any]:
         """Подмены и неверные вложения
 
         :param date_to: Конец отчётного периода
@@ -227,10 +236,7 @@ class Reports:
         call = GetAnalyticsDeductions(
             date_to=date_to, limit=limit, date_from=date_from, offset=offset, order=order, sort=sort
         )
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_analytics_deductions(
         self,
@@ -273,13 +279,15 @@ class Reports:
             self._api
         )
 
-    async def get_analytics_goods_labeling(self, *, date_from: str, date_to: str) -> None:
+    async def get_analytics_goods_labeling(
+        self, *, date_from: str, date_to: str
+    ) -> GetAnalyticsGoodsLabelingResponse:
         """Маркировка товара
 
         :param date_from: Начало отчётного периода, `ГГГГ-ММ-ДД`
         :param date_to: Конец отчётного периода, `ГГГГ-ММ-ДД`
         """
-        await GetAnalyticsGoodsLabeling(date_from=date_from, date_to=date_to).emit(self._api)
+        return await GetAnalyticsGoodsLabeling(date_from=date_from, date_to=date_to).emit(self._api)
 
     async def get_analytics_goods_returns(
         self, *, date_from: str, date_to: str
@@ -332,13 +340,15 @@ class Reports:
         ).stream(self._api):
             yield item
 
-    async def get_analytics_region_sale(self, *, date_from: str, date_to: str) -> None:
+    async def get_analytics_region_sale(
+        self, *, date_from: str, date_to: str
+    ) -> GetAnalyticsRegionSaleResponse:
         """Получить отчёт
 
         :param date_from: Начало отчётного периода, `ГГГГ-ММ-ДД`
         :param date_to: Конец отчётного периода, `ГГГГ-ММ-ДД`
         """
-        await GetAnalyticsRegionSale(date_from=date_from, date_to=date_to).emit(self._api)
+        return await GetAnalyticsRegionSale(date_from=date_from, date_to=date_to).emit(self._api)
 
     async def get_analytics_warehouse_measurements(
         self,

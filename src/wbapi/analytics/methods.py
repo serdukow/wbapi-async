@@ -175,7 +175,7 @@ class GetNmReportDownloads(WBMethod[NmReportGetReportsResponse]):
     """ID отчёта"""
 
 
-class GetNmReportDownloadsFile(WBMethod[None]):
+class GetNmReportDownloadsFile(WBMethod[bytes]):
     """Получить отчёт
 
     GET /api/v2/nm-report/downloads/file/{downloadId}
@@ -183,7 +183,7 @@ class GetNmReportDownloadsFile(WBMethod[None]):
 
     __path__ = "/api/v2/nm-report/downloads/file/{downloadId}"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = bytes
     __path_params__ = ("downloadId",)
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"

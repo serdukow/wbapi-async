@@ -13,6 +13,8 @@ from .models import (
     CreateCardsUploadAddCardsToAddItem,
     CreateCardsUploadBodyItem,
     CreateWarehouseResponse,
+    GetBufferGoodsTaskResponse,
+    GetBufferTasksResponse,
     GetCardsLimitsResponse,
     GetCardsListResponse,
     GetCardsListSettings,
@@ -25,9 +27,14 @@ from .models import (
     GetDirectorySeasonsResponse,
     GetDirectoryTnvedResponse,
     GetDirectoryVatResponse,
+    GetGoodsFilterResponse,
+    GetGoodsSizeNmResponse,
+    GetHistoryGoodsTaskResponse,
+    GetHistoryTasksResponse,
     GetObjectAllResponse,
     GetObjectCharcsResponse,
     GetObjectParentAllResponse,
+    GetQuarantineGoodsResponse,
     GetRecomRes,
     GetStocksResponse,
     GetTagsResponse,
@@ -36,10 +43,12 @@ from .models import (
     ResponseContentError,
     ResponseItemList,
     ResponsePublicViewerPublicErrorsTableListV2,
+    SetDiscountsPricesUploadTaskB2bWholesaleResponse,
     SetRecommendationRecListItem,
     SetRecomRes,
     SwaggerPublicErrorsCursorInput,
     SwaggerPublicErrorsOrderV2,
+    TaskCreated,
     UpdateCardBodyItem,
     UpdateCardsDeleteTrashResponse,
     UpdateCardsRecoverResponse,
@@ -293,7 +302,7 @@ class GetBrands(WBMethod[BrandsResponse]):
     """
 
 
-class GetBufferGoodsTask(WBMethod[None]):
+class GetBufferGoodsTask(WBMethod[GetBufferGoodsTaskResponse]):
     """Детализация необработанной загрузки
 
     GET /api/v2/buffer/goods/task
@@ -301,7 +310,7 @@ class GetBufferGoodsTask(WBMethod[None]):
 
     __path__ = "/api/v2/buffer/goods/task"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetBufferGoodsTaskResponse
     __query_params__ = {"limit": "limit", "offset": "offset", "upload_id": "uploadID"}
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
@@ -313,6 +322,7 @@ class GetBufferGoodsTask(WBMethod[None]):
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
+    __items__ = "data"
 
     limit: int
     """Сколько элементов вывести на одной странице (пагинация)"""
@@ -322,7 +332,7 @@ class GetBufferGoodsTask(WBMethod[None]):
     """Сколько элементов пропустить. Например, для значения `10` ответ начнется с 11 элемента"""
 
 
-class GetBufferTasks(WBMethod[None]):
+class GetBufferTasks(WBMethod[GetBufferTasksResponse]):
     """Состояние необработанной загрузки
 
     GET /api/v2/buffer/tasks
@@ -330,7 +340,7 @@ class GetBufferTasks(WBMethod[None]):
 
     __path__ = "/api/v2/buffer/tasks"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetBufferTasksResponse
     __query_params__ = {"upload_id": "uploadID"}
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
@@ -341,6 +351,7 @@ class GetBufferTasks(WBMethod[None]):
         "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
+    __items__ = "data"
 
     upload_id: int
     """ID загрузки"""
@@ -619,7 +630,7 @@ class GetDirectoryVat(WBMethod[GetDirectoryVatResponse]):
     """
 
 
-class GetGoodsFilterGet(WBMethod[None]):
+class GetGoodsFilterGet(WBMethod[GetGoodsFilterResponse]):
     """Получить товары с ценами
 
     GET /api/v2/list/goods/filter
@@ -627,7 +638,7 @@ class GetGoodsFilterGet(WBMethod[None]):
 
     __path__ = "/api/v2/list/goods/filter"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetGoodsFilterResponse
     __query_params__ = {"limit": "limit", "offset": "offset", "filter_nm_id": "filterNmID"}
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
@@ -639,6 +650,7 @@ class GetGoodsFilterGet(WBMethod[None]):
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
+    __items__ = "data"
 
     limit: int
     """Сколько элементов вывести на одной странице (пагинация)"""
@@ -648,7 +660,7 @@ class GetGoodsFilterGet(WBMethod[None]):
     """Сколько элементов пропустить. Например, для значения `10` ответ начнется с 11 элемента"""
 
 
-class GetGoodsFilterPost(WBMethod[None]):
+class GetGoodsFilterPost(WBMethod[GetGoodsFilterResponse]):
     """Получить товары с ценами по артикулам
 
     POST /api/v2/list/goods/filter
@@ -656,7 +668,7 @@ class GetGoodsFilterPost(WBMethod[None]):
 
     __path__ = "/api/v2/list/goods/filter"
     __http_method__ = "POST"
-    __returns__ = None
+    __returns__ = GetGoodsFilterResponse
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
@@ -666,9 +678,10 @@ class GetGoodsFilterPost(WBMethod[None]):
         "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
+    __items__ = "data"
 
 
-class GetGoodsSizeNm(WBMethod[None]):
+class GetGoodsSizeNm(WBMethod[GetGoodsSizeNmResponse]):
     """Получить размеры товара с ценами
 
     GET /api/v2/list/goods/size/nm
@@ -676,7 +689,7 @@ class GetGoodsSizeNm(WBMethod[None]):
 
     __path__ = "/api/v2/list/goods/size/nm"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetGoodsSizeNmResponse
     __query_params__ = {"limit": "limit", "offset": "offset", "nm_id": "nmID"}
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
@@ -688,6 +701,7 @@ class GetGoodsSizeNm(WBMethod[None]):
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
+    __items__ = "data"
 
     limit: int
     """Сколько элементов вывести на одной странице (пагинация)"""
@@ -697,7 +711,7 @@ class GetGoodsSizeNm(WBMethod[None]):
     """Сколько элементов пропустить. Например, для значения `10` ответ начнется с 11 элемента"""
 
 
-class GetHistoryGoodsTask(WBMethod[None]):
+class GetHistoryGoodsTask(WBMethod[GetHistoryGoodsTaskResponse]):
     """Детализация обработанной загрузки
 
     GET /api/v2/history/goods/task
@@ -705,7 +719,7 @@ class GetHistoryGoodsTask(WBMethod[None]):
 
     __path__ = "/api/v2/history/goods/task"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetHistoryGoodsTaskResponse
     __query_params__ = {"limit": "limit", "offset": "offset", "upload_id": "uploadID"}
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
@@ -717,6 +731,7 @@ class GetHistoryGoodsTask(WBMethod[None]):
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
+    __items__ = "data"
 
     limit: int
     """Сколько элементов вывести на одной странице (пагинация)"""
@@ -726,7 +741,7 @@ class GetHistoryGoodsTask(WBMethod[None]):
     """Сколько элементов пропустить. Например, для значения `10` ответ начнется с 11 элемента"""
 
 
-class GetHistoryTasks(WBMethod[None]):
+class GetHistoryTasks(WBMethod[GetHistoryTasksResponse]):
     """Состояние обработанной загрузки
 
     GET /api/v2/history/tasks
@@ -734,7 +749,7 @@ class GetHistoryTasks(WBMethod[None]):
 
     __path__ = "/api/v2/history/tasks"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetHistoryTasksResponse
     __query_params__ = {"upload_id": "uploadID"}
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
@@ -745,6 +760,7 @@ class GetHistoryTasks(WBMethod[None]):
         "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
+    __items__ = "data"
 
     upload_id: int
     """ID загрузки"""
@@ -848,7 +864,7 @@ class GetOffices(WBMethod[list[Office]]):
     __rate_limits__ = {"all": (4000, 20)}
 
 
-class GetQuarantineGoods(WBMethod[None]):
+class GetQuarantineGoods(WBMethod[GetQuarantineGoodsResponse]):
     """Получить товары в карантине
 
     GET /api/v2/quarantine/goods
@@ -856,7 +872,7 @@ class GetQuarantineGoods(WBMethod[None]):
 
     __path__ = "/api/v2/quarantine/goods"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetQuarantineGoodsResponse
     __query_params__ = {"limit": "limit", "offset": "offset"}
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
@@ -868,6 +884,7 @@ class GetQuarantineGoods(WBMethod[None]):
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
+    __items__ = "data"
 
     limit: int
     """Сколько элементов вывести на одной странице (пагинация)"""
@@ -969,7 +986,7 @@ class GetWarehouses(WBMethod[list[Warehouse]]):
     __rate_limits__ = {"all": (4000, 20)}
 
 
-class SetDiscountsPricesUploadTaskB2bWholesale(WBMethod[None]):
+class SetDiscountsPricesUploadTaskB2bWholesale(WBMethod[SetDiscountsPricesUploadTaskB2bWholesaleResponse]):
     """Установить оптовые скидки для B2B-продаж
 
     POST /api/discounts-prices/v1/upload/task/b2b/wholesale
@@ -977,7 +994,7 @@ class SetDiscountsPricesUploadTaskB2bWholesale(WBMethod[None]):
 
     __path__ = "/api/discounts-prices/v1/upload/task/b2b/wholesale"
     __http_method__ = "POST"
-    __returns__ = None
+    __returns__ = SetDiscountsPricesUploadTaskB2bWholesaleResponse
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __rate_limits__ = {"personal": (3000, 5), "service": (3000, 5)}
@@ -1005,7 +1022,7 @@ class SetRecommendation(WBMethod[SetRecomRes]):
     """
 
 
-class SetUploadTask(WBMethod[None]):
+class SetUploadTask(WBMethod[TaskCreated]):
     """Установить цены и скидки
 
     POST /api/v2/upload/task
@@ -1013,7 +1030,7 @@ class SetUploadTask(WBMethod[None]):
 
     __path__ = "/api/v2/upload/task"
     __http_method__ = "POST"
-    __returns__ = None
+    __returns__ = TaskCreated
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
@@ -1023,9 +1040,10 @@ class SetUploadTask(WBMethod[None]):
         "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
+    __items__ = "data"
 
 
-class SetUploadTaskClubDiscount(WBMethod[None]):
+class SetUploadTaskClubDiscount(WBMethod[TaskCreated]):
     """Установить скидки WB Клуба
 
     POST /api/v2/upload/task/club-discount
@@ -1033,7 +1051,7 @@ class SetUploadTaskClubDiscount(WBMethod[None]):
 
     __path__ = "/api/v2/upload/task/club-discount"
     __http_method__ = "POST"
-    __returns__ = None
+    __returns__ = TaskCreated
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
@@ -1043,9 +1061,10 @@ class SetUploadTaskClubDiscount(WBMethod[None]):
         "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
+    __items__ = "data"
 
 
-class SetUploadTaskSize(WBMethod[None]):
+class SetUploadTaskSize(WBMethod[TaskCreated]):
     """Установить цены для размеров
 
     POST /api/v2/upload/task/size
@@ -1053,7 +1072,7 @@ class SetUploadTaskSize(WBMethod[None]):
 
     __path__ = "/api/v2/upload/task/size"
     __http_method__ = "POST"
-    __returns__ = None
+    __returns__ = TaskCreated
     __scope__ = Scope.PRICES
     __host__ = "https://discounts-prices-api.wildberries.ru"
     __sandbox_host__ = "https://discounts-prices-api-sandbox.wildberries.ru"
@@ -1063,6 +1082,7 @@ class SetUploadTaskSize(WBMethod[None]):
         "basic_secret": (3000, 5),
         "basic": (900000, 1),
     }
+    __items__ = "data"
 
 
 class UpdateCard(WBMethod[ResponseItemList]):

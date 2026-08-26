@@ -49,9 +49,6 @@ def _limiter_for(path: str, rate: tuple[int, int] | None = None) -> AsyncLimiter
         _limiters[loop] = per_loop
 
     rate = rate or DEFAULT_RATE_LIMIT
-    # Wildberries meters each endpoint separately, so the path has to be part
-    # of the key: keyed on the rate alone, the 65 endpoints that happen to
-    # declare the same quota would throttle one another.
     key = (path, rate)
     limiter = per_loop.get(key)
     if limiter is None:
@@ -75,9 +72,10 @@ def _retry_after(response: httpx.Response, cap: float) -> float | None:
     return None
 
 
+_BINARY_TYPES = ("application/zip", "application/pdf", "image/", "application/octet-stream")
+
+
 class Session:
-    # The token is installed once as a client header: swapping it per request
-    # would let concurrent calls overwrite each other's credentials.
     __slots__ = (
         "_token",
         "_client",
@@ -211,6 +209,9 @@ class Session:
 
         if not response.content:
             return None
+
+        if response.headers.get("Content-Type", "").startswith(_BINARY_TYPES):
+            return response.content
 
         try:
             return response.json()

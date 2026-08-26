@@ -187,11 +187,6 @@ async def test_session_repr_masks_the_token() -> None:
 
 
 async def test_endpoints_sharing_a_quota_get_separate_limiters() -> None:
-    """Wildberries meters each endpoint separately.
-
-    Keyed on the rate alone, the 65 endpoints that declare {"all": (200, 20)}
-    shared a single token bucket and throttled one another.
-    """
     from wbapi.client.session import _limiter_for
 
     orders = _limiter_for("/api/v3/orders", (200, 20))
@@ -199,3 +194,12 @@ async def test_endpoints_sharing_a_quota_get_separate_limiters() -> None:
 
     assert orders is not supplies
     assert orders is _limiter_for("/api/v3/orders", (200, 20))
+
+
+async def test_a_file_download_comes_back_as_bytes(recorder: Recorder) -> None:
+    archive = b"PK\x03\x04 not json"
+    recorder.add_raw(httpx.Response(200, content=archive, headers={"Content-Type": "application/zip"}))
+    async with WBApi(token=make_token(scopes=ALL_SCOPES), transport=httpx.MockTransport(recorder)) as api:
+        result = await api.analytics.get_nm_report_downloads_file(download_id="x")
+
+    assert result == archive

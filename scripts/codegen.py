@@ -741,7 +741,12 @@ class Generator:
             (responses.get(k) for k in (200, "200", 201, "201") if isinstance(responses.get(k), dict)),
             None,
         )
-        rsch = ((ok or {}).get("content") or {}).get("application/json", {}).get("schema")
+        if isinstance(ok, dict) and "$ref" in ok:
+            resolved = self._resolve(ok["$ref"])
+            ok = resolved if isinstance(resolved, dict) else ok
+        content = (ok or {}).get("content") or {}
+        rsch = content.get("application/json", {}).get("schema")
+        binary = bool(content) and rsch is None
         if isinstance(rsch, dict):
             rsch = apply_spec_fixes(path, verb, rsch)
         # An object body becomes keyword arguments: trbx_ids=[...] rather
@@ -815,7 +820,9 @@ class Generator:
             body_kind=body_kind,
             body_fields=body_fields,
             body_type=self.type_of(body_sch, f"{pascal(name)}Body") if body_sch else None,
-            return_type=self.type_of(rsch, f"{pascal(name)}Response") if rsch else "None",
+            return_type=(
+                self.type_of(rsch, f"{pascal(name)}Response") if rsch else ("bytes" if binary else "None")
+            ),
         )
 
     # ---- rendering ------------------------------------------------------

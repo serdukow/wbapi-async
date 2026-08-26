@@ -207,12 +207,12 @@ class Analytics:
         """
         return await GetNmReportDownloads(filter_download_ids=filter_download_ids).emit(self._api)
 
-    async def get_nm_report_downloads_file(self, *, download_id: str | int) -> None:
+    async def get_nm_report_downloads_file(self, *, download_id: str | int) -> bytes:
         """Получить отчёт
 
         :param download_id: ID отчёта
         """
-        await GetNmReportDownloadsFile(download_id=download_id).emit(self._api)
+        return await GetNmReportDownloadsFile(download_id=download_id).emit(self._api)
 
     async def get_order_feed(
         self,

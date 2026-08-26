@@ -45,6 +45,23 @@ class GetAcceptanceReportTasksDownloadResponseItem(WBModel):
     """Суммарная стоимость приёмки, ₽ с копейками"""
 
 
+class GetAnalyticsAntifraudDetailsResponse(WBModel):
+    details: list[GetAnalyticsAntifraudDetailsResponseDetailsItem] | None = _field(default=None)
+
+
+class GetAnalyticsAntifraudDetailsResponseDetailsItem(WBModel):
+    currency: str | None = _field(default=None)
+    """Валюта заказа"""
+    date_from: str | None = _field(default=None, name="dateFrom")
+    """Начало отчётного периода"""
+    date_to: str | None = _field(default=None, name="dateTo")
+    """Конец отчётного периода"""
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    sum: int | None = _field(default=None)
+    """Сумма заказа"""
+
+
 class GetAnalyticsBannedProductsBlockedResponse(WBModel):
     report: list[GetAnalyticsBannedProductsBlockedResponseReportItem] | None = _field(default=None)
     """Отчёт"""
@@ -61,6 +78,107 @@ class GetAnalyticsBannedProductsBlockedResponseReportItem(WBModel):
     """Наименование товара"""
     vendor_code: str | None = _field(default=None, name="vendorCode")
     """Артикул продавца"""
+
+
+class GetAnalyticsBrandShareBrandsResponse(WBModel):
+    data: list[str] | None = _field(default=None)
+    """Список брендов"""
+
+
+class GetAnalyticsBrandShareParentSubjectsResponse(WBModel):
+    data: list[GetAnalyticsBrandShareParentSubjectsResponseDataItem] | None = _field(default=None)
+    """Категории бренда"""
+
+
+class GetAnalyticsBrandShareParentSubjectsResponseDataItem(WBModel):
+    parent_id: int | None = _field(default=None, name="parentId")
+    """ID родительской категории"""
+    parent_name: str | None = _field(default=None, name="parentName")
+    """Название родительской категории"""
+
+
+class GetAnalyticsBrandShareResponse(WBModel):
+    report: list[GetAnalyticsBrandShareResponseReportItem] | None = _field(default=None)
+    """Отчёт"""
+
+
+class GetAnalyticsBrandShareResponseReportItem(WBModel):
+    apply_date: str | None = _field(default=None, name="applyDate")
+    """Дата"""
+    brand_rating: int | None = _field(default=None, name="brandRating")
+    """Рейтинг бренда в родительской категории"""
+    price_percent: float | None = _field(default=None, name="pricePercent")
+    """Доля от продаж в родительской категории — цена, %"""
+    qty_percent: float | None = _field(default=None, name="qtyPercent")
+    """Доля от продаж в родительской категории — количество, %"""
+
+
+class GetAnalyticsDeductionsResponse(WBModel):
+    data: GetAnalyticsDeductionsResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class GetAnalyticsDeductionsResponseData(WBModel):
+    """Данные ответа"""
+
+    reports: list[GetAnalyticsDeductionsResponseDataReportsItem] | None = _field(default=None)
+    """Удержания"""
+    total: int | None = _field(default=None)
+    """Количество удержаний в отчёте. Без учёта `limit` и `offset`"""
+
+
+class GetAnalyticsDeductionsResponseDataReportsItem(WBModel):
+    bonus_summ: float | None = _field(default=None, name="bonusSumm")
+    """Сумма удержания"""
+    bonus_type: str | None = _field(default=None, name="bonusType")
+    """Причина удержания"""
+    dt_bonus: str | None = _field(default=None, name="dtBonus")
+    """Дата и время удержания"""
+    new_color: str | None = _field(default=None, name="newColor")
+    """Новый цвет"""
+    new_shk_id: int | None = _field(default=None, name="newShkId")
+    """Новый штрихкод"""
+    new_size: str | None = _field(default=None, name="newSize")
+    """Новый размер"""
+    new_sku: str | None = _field(default=None, name="newSku")
+    """Новый баркод"""
+    new_vendor_code: str | None = _field(default=None, name="newVendorCode")
+    """Новый артикул продавца"""
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    old_color: str | None = _field(default=None, name="oldColor")
+    """Старый цвет"""
+    old_shk_id: int | None = _field(default=None, name="oldShkId")
+    """Старый штрихкод"""
+    old_size: str | None = _field(default=None, name="oldSize")
+    """Старый размер"""
+    old_sku: str | None = _field(default=None, name="oldSku")
+    """Старый баркод"""
+    old_vendor_code: str | None = _field(default=None, name="oldVendorCode")
+    """Старый артикул продавца"""
+    photo_urls: list[str] | None = _field(default=None, name="photoUrls")
+    """Фото замеров"""
+
+
+class GetAnalyticsGoodsLabelingResponse(WBModel):
+    report: list[GetAnalyticsGoodsLabelingResponseReportItem] | None = _field(default=None)
+
+
+class GetAnalyticsGoodsLabelingResponseReportItem(WBModel):
+    amount: float | None = _field(default=None)
+    """Сумма штрафа, руб"""
+    date: str | None = _field(default=None)
+    """Дата"""
+    income_id: int | None = _field(default=None, name="incomeId")
+    """Номер поставки"""
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    photo_urls: list[str] | None = _field(default=None, name="photoUrls")
+    """URL фото товара"""
+    shk_id: int | None = _field(default=None, name="shkID")
+    """Штрихкод товара в WB"""
+    sku: str | None = _field(default=None)
+    """Баркод из карточки товара"""
 
 
 class GetAnalyticsGoodsReturnsResponse(WBModel):
@@ -107,6 +225,31 @@ class GetAnalyticsGoodsReturnsResponseReportItem(WBModel):
     """Предмет"""
     tech_size: str | None = _field(default=None, name="techSize")
     """Размер"""
+
+
+class GetAnalyticsRegionSaleResponse(WBModel):
+    report: list[GetAnalyticsRegionSaleResponseReportItem] | None = _field(default=None)
+
+
+class GetAnalyticsRegionSaleResponseReportItem(WBModel):
+    city_name: str | None = _field(default=None, name="cityName")
+    """Населённый пункт"""
+    country_name: str | None = _field(default=None, name="countryName")
+    """Страна"""
+    fo_name: str | None = _field(default=None, name="foName")
+    """Федеральный округ"""
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    region_name: str | None = _field(default=None, name="regionName")
+    """Регион"""
+    sa: str | None = _field(default=None)
+    """Артикул продавца"""
+    sale_invoice_cost_price: float | None = _field(default=None, name="saleInvoiceCostPrice")
+    """К перечислению за товар, ₽"""
+    sale_invoice_cost_price_perc: float | None = _field(default=None, name="saleInvoiceCostPricePerc")
+    """Доля, %"""
+    sale_item_invoice_qty: int | None = _field(default=None, name="saleItemInvoiceQty")
+    """Выкупили, шт."""
 
 
 class GetPaidStorageTasksDownloadResponseItem(WBModel):

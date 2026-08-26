@@ -9,6 +9,7 @@ from ..client.method import WBMethod
 from ..utils.token import Scope
 from .models import (
     CreateAdvertBidsMinResponse,
+    CreateCalendarPromotionsUploadResponse,
     CreateSupplierNmsResponseItem,
     FullStatsItem,
     GetAdvertResponse,
@@ -16,6 +17,9 @@ from .models import (
     GetAdvertsResponseItem,
     GetBalanceResponse,
     GetBudgetResponse,
+    GetCalendarPromotionsDetailsResponse,
+    GetCalendarPromotionsNomenclaturesResponse,
+    GetCalendarPromotionsResponse,
     GetCountResponse,
     GetNormqueryStatsItemsItem,
     GetPaymentsResponseItem,
@@ -128,7 +132,7 @@ class CreateBudgetDeposit(WBMethod[ResponseWithReturn]):
     """Тип источника пополнения: - `0` — Счёт - `1` — Баланс - `3` — Бонусы"""
 
 
-class CreateCalendarPromotionsUpload(WBMethod[None]):
+class CreateCalendarPromotionsUpload(WBMethod[CreateCalendarPromotionsUploadResponse]):
     """Добавить товар в акцию
 
     POST /api/v1/calendar/promotions/upload
@@ -136,7 +140,7 @@ class CreateCalendarPromotionsUpload(WBMethod[None]):
 
     __path__ = "/api/v1/calendar/promotions/upload"
     __http_method__ = "POST"
-    __returns__ = None
+    __returns__ = CreateCalendarPromotionsUploadResponse
     __scope__ = Scope.PRICES
     __host__ = "https://dp-calendar-api.wildberries.ru"
     __rate_limits__ = {
@@ -145,6 +149,7 @@ class CreateCalendarPromotionsUpload(WBMethod[None]):
         "basic_secret": (3000, 5),
         "basic": (3600000, 1),
     }
+    __items__ = "data"
 
 
 class CreateNormqueryList(WBMethod[V0GetNormQueryListResponse]):
@@ -515,7 +520,7 @@ class GetBudget(WBMethod[GetBudgetResponse]):
     """ID кампании"""
 
 
-class GetCalendarPromotions(WBMethod[None]):
+class GetCalendarPromotions(WBMethod[GetCalendarPromotionsResponse]):
     """Список акций
 
     GET /api/v1/calendar/promotions
@@ -523,7 +528,7 @@ class GetCalendarPromotions(WBMethod[None]):
 
     __path__ = "/api/v1/calendar/promotions"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetCalendarPromotionsResponse
     __query_params__ = {
         "start_date_time": "startDateTime",
         "end_date_time": "endDateTime",
@@ -540,6 +545,7 @@ class GetCalendarPromotions(WBMethod[None]):
         "basic": (3600000, 1),
     }
     __paginate__ = "offset_query"
+    __items__ = "data"
 
     all_promo: bool
     """Показать акции:   - `false` — доступные для участия   - `true` — все акции"""
@@ -553,7 +559,7 @@ class GetCalendarPromotions(WBMethod[None]):
     """После какого элемента выдавать данные"""
 
 
-class GetCalendarPromotionsDetails(WBMethod[None]):
+class GetCalendarPromotionsDetails(WBMethod[GetCalendarPromotionsDetailsResponse]):
     """Детальная информация об акциях
 
     GET /api/v1/calendar/promotions/details
@@ -561,7 +567,7 @@ class GetCalendarPromotionsDetails(WBMethod[None]):
 
     __path__ = "/api/v1/calendar/promotions/details"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetCalendarPromotionsDetailsResponse
     __query_params__ = {"promotion_ids": "promotionIDs"}
     __scope__ = Scope.PRICES
     __host__ = "https://dp-calendar-api.wildberries.ru"
@@ -571,12 +577,13 @@ class GetCalendarPromotionsDetails(WBMethod[None]):
         "basic_secret": (3000, 5),
         "basic": (3600000, 1),
     }
+    __items__ = "data"
 
     promotion_ids: list[int]
     """ID акций, по которым нужно вернуть информацию"""
 
 
-class GetCalendarPromotionsNomenclatures(WBMethod[None]):
+class GetCalendarPromotionsNomenclatures(WBMethod[GetCalendarPromotionsNomenclaturesResponse]):
     """Список товаров для участия в акции
 
     GET /api/v1/calendar/promotions/nomenclatures
@@ -584,7 +591,7 @@ class GetCalendarPromotionsNomenclatures(WBMethod[None]):
 
     __path__ = "/api/v1/calendar/promotions/nomenclatures"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetCalendarPromotionsNomenclaturesResponse
     __query_params__ = {
         "promotion_id": "promotionID",
         "in_action": "inAction",
@@ -595,6 +602,7 @@ class GetCalendarPromotionsNomenclatures(WBMethod[None]):
     __host__ = "https://dp-calendar-api.wildberries.ru"
     __rate_limits__ = {"all": (3000, 5)}
     __paginate__ = "offset_query"
+    __items__ = "data"
 
     in_action: bool
     """Участвует в акции:   - `true` — да   - `false` — нет"""

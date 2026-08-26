@@ -145,6 +145,63 @@ class File(WBModel):
     """URL для получения файла"""
 
 
+class GetClaimsResponse(WBModel):
+    claims: list[GetClaimsResponseClaimsItem] | None = _field(default=None)
+    """Заявки"""
+    total: int | None = _field(default=None)
+    """Количество заявок, соответствующих параметрам запроса. Без учёта `limit` и `offset`"""
+
+
+class GetClaimsResponseClaimsItem(WBModel):
+    actions: list[str] | None = _field(default=None)
+    """Варианты ответа продавца на заявку.Отклонённые заявки можно пересмотреть. Если массив пуст,
+    с заявкой работать нельзя. …
+    """
+    claim_type: int | None = _field(default=None)
+    """Источник заявки:   * `1` — портал покупателей   * `3` — чат"""
+    currency_code: str | None = _field(default=None)
+    """Код валюты цены"""
+    delivery_dt: str | None = _field(default=None)
+    """Дата и время получения заказа покупателем"""
+    dt: str | None = _field(default=None)
+    """Дата и время оформления заявки покупателем. UTC+3"""
+    dt_update: str | None = _field(default=None)
+    """Дата и время рассмотрения заявки. Для нерассмотренной заявки — дата и время оформления.
+    UTC+3
+    """
+    id: str | None = _field(default=None)
+    """ID заявки"""
+    imt_name: str | None = _field(default=None)
+    """Название товара"""
+    nm_id: int | None = _field(default=None)
+    """Артикул WB"""
+    order_dt: str | None = _field(default=None)
+    """Дата и время заказа"""
+    origin_id_info: str | None = _field(default=None)
+    """Результат сверки IMEI для возврата через ПВЗ Wildberries.Значение показывает, совпадает ли
+    IMEI, который был указан продавцом или отсканирован при приёмке на ск …
+    """
+    photos: list[str] | None = _field(default=None)
+    """Фотографии из заявки покупателя"""
+    price: float | None = _field(default=None)
+    """Фактическая цена с учетом всех скидок. Взимается с покупателя"""
+    srid: str | None = _field(default=None)
+    """Уникальный ID заказа, по товару которого создана заявка"""
+    status: int | None = _field(default=None)
+    """Решение по возврату покупателю:   * `0` — на рассмотрении   * `1` — отказ   * `2` — одобрено
+    """
+    status_ex: int | None = _field(default=None)
+    """Статус товара:   * `0` — заявка на рассмотрении   * `1` — товар остается у покупателя
+    (Заявка отклонена) …
+    """
+    user_comment: str | None = _field(default=None)
+    """Комментарий покупателя"""
+    video_paths: list[str] | None = _field(default=None)
+    """Видео из заявки покупателя"""
+    wb_comment: str | None = _field(default=None)
+    """Ответ покупателю"""
+
+
 class GetFeedbackResponse(WBModel):
     additional_errors: list[str] | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
