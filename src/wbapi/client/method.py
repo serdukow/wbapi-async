@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any, ClassVar, Generic, TypeVar
 import msgspec
 
 from ..exceptions import WBConfigurationError, WBDecodeError
+from .model import WBModel, collect_extras
 
 
 if TYPE_CHECKING:
@@ -100,12 +101,14 @@ class WBMethod(msgspec.Struct, Generic[T], omit_defaults=True, kw_only=True):
         try:
             # strict=False accepts harmless drift: numbers as strings, int for float.
             decoded: T = msgspec.convert(raw, returns, strict=False)
+            _keep_extras(raw, decoded)
             return decoded
         except msgspec.ValidationError as exc:
             relaxed = _relax_shape(raw, str(exc))
             if relaxed is not None:
                 try:
                     fallback: T = msgspec.convert(relaxed, returns, strict=False)
+                    _keep_extras(relaxed, fallback)
                     return fallback
                 except msgspec.ValidationError:
                     pass
@@ -225,6 +228,24 @@ class WBMethod(msgspec.Struct, Generic[T], omit_defaults=True, kw_only=True):
             if not rrd_id or rrd_id in seen:
                 return
             seen.add(rrd_id)
+
+
+def _keep_extras(raw: Any, decoded: Any) -> None:
+    try:
+        if isinstance(decoded, list):
+            if isinstance(raw, list):
+                for source, item in zip(raw, decoded, strict=False):
+                    _keep_extras(source, item)
+            return
+
+        if not isinstance(decoded, WBModel) or not isinstance(raw, dict):
+            return
+
+        found = collect_extras(raw, type(decoded))
+        if found:
+            decoded.extras = found
+    except Exception:
+        return
 
 
 def _relax_shape(raw: Any, message: str) -> Any:
