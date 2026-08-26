@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "wbapi-async"
-version = "1.0.1"
+version = "1.0.2"
 description = "Fast, lightweight async client for the Wildberries Seller API"
 
 authors = [
