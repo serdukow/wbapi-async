@@ -49,6 +49,7 @@ from .methods import (
 )
 from .models import (
     CreateAdvertBidsMinResponse,
+    CreateCalendarPromotionsUploadResponse,
     CreateSupplierNmsResponseItem,
     FullStatsItem,
     GetAdvertResponse,
@@ -56,6 +57,9 @@ from .models import (
     GetAdvertsResponseItem,
     GetBalanceResponse,
     GetBudgetResponse,
+    GetCalendarPromotionsDetailsResponse,
+    GetCalendarPromotionsNomenclaturesResponse,
+    GetCalendarPromotionsResponse,
     GetCountResponse,
     GetNormqueryStatsItemsItem,
     GetPaymentsResponseItem,
@@ -159,9 +163,9 @@ class Promotion:
             type_=type_,
         ).emit(self._api)
 
-    async def create_calendar_promotions_upload(self) -> None:
+    async def create_calendar_promotions_upload(self) -> CreateCalendarPromotionsUploadResponse:
         """Добавить товар в акцию"""
-        await CreateCalendarPromotionsUpload().emit(self._api)
+        return await CreateCalendarPromotionsUpload().emit(self._api)
 
     async def create_normquery_list(
         self, *, items: list[V0GetNormQueryListRequestItem]
@@ -337,7 +341,7 @@ class Promotion:
         limit: int | None = None,
         offset: int | None = None,
         auto_paginate: bool = False,
-    ) -> None | list[Any]:
+    ) -> GetCalendarPromotionsResponse | list[Any]:
         """Список акций
 
         :param all_promo: Показать акции:   - `false` — доступные для участия   - `true` — все акции
@@ -354,10 +358,7 @@ class Promotion:
             limit=limit,
             offset=offset,
         )
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_calendar_promotions(
         self,
@@ -385,12 +386,14 @@ class Promotion:
         ).stream(self._api):
             yield item
 
-    async def get_calendar_promotions_details(self, *, promotion_ids: list[int]) -> None:
+    async def get_calendar_promotions_details(
+        self, *, promotion_ids: list[int]
+    ) -> GetCalendarPromotionsDetailsResponse:
         """Детальная информация об акциях
 
         :param promotion_ids: ID акций, по которым нужно вернуть информацию
         """
-        await GetCalendarPromotionsDetails(promotion_ids=promotion_ids).emit(self._api)
+        return await GetCalendarPromotionsDetails(promotion_ids=promotion_ids).emit(self._api)
 
     async def get_calendar_promotions_nomenclatures(
         self,
@@ -400,7 +403,7 @@ class Promotion:
         limit: int | None = None,
         offset: int | None = None,
         auto_paginate: bool = False,
-    ) -> None | list[Any]:
+    ) -> GetCalendarPromotionsNomenclaturesResponse | list[Any]:
         """Список товаров для участия в акции
 
         :param in_action: Участвует в акции:   - `true` — да   - `false` — нет
@@ -412,10 +415,7 @@ class Promotion:
         call = GetCalendarPromotionsNomenclatures(
             in_action=in_action, promotion_id=promotion_id, limit=limit, offset=offset
         )
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_calendar_promotions_nomenclatures(
         self, *, in_action: bool, promotion_id: int, limit: int | None = None, offset: int | None = None

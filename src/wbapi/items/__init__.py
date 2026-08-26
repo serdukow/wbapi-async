@@ -65,6 +65,8 @@ from .models import (
     CreateBarcodeResponse,
     CreateCardsUploadAddCardsToAddItem,
     CreateWarehouseResponse,
+    GetBufferGoodsTaskResponse,
+    GetBufferTasksResponse,
     GetCardsLimitsResponse,
     GetCardsListResponse,
     GetCardsListSettings,
@@ -77,9 +79,14 @@ from .models import (
     GetDirectorySeasonsResponse,
     GetDirectoryTnvedResponse,
     GetDirectoryVatResponse,
+    GetGoodsFilterResponse,
+    GetGoodsSizeNmResponse,
+    GetHistoryGoodsTaskResponse,
+    GetHistoryTasksResponse,
     GetObjectAllResponse,
     GetObjectCharcsResponse,
     GetObjectParentAllResponse,
+    GetQuarantineGoodsResponse,
     GetRecomRes,
     GetStocksResponse,
     GetTagsResponse,
@@ -87,10 +94,12 @@ from .models import (
     ResponseContentError,
     ResponseItemList,
     ResponsePublicViewerPublicErrorsTableListV2,
+    SetDiscountsPricesUploadTaskB2bWholesaleResponse,
     SetRecommendationRecListItem,
     SetRecomRes,
     SwaggerPublicErrorsCursorInput,
     SwaggerPublicErrorsOrderV2,
+    TaskCreated,
     UpdateCardsDeleteTrashResponse,
     UpdateCardsRecoverResponse,
     UpdateDbwWarehousesContactContactsItem,
@@ -229,7 +238,7 @@ class Items:
 
     async def get_buffer_goods_task(
         self, *, limit: int, upload_id: int, offset: int | None = None, auto_paginate: bool = False
-    ) -> None | list[Any]:
+    ) -> GetBufferGoodsTaskResponse | list[Any]:
         """Детализация необработанной загрузки
 
         :param limit: Сколько элементов вывести на одной странице (пагинация)
@@ -239,10 +248,7 @@ class Items:
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetBufferGoodsTask(limit=limit, upload_id=upload_id, offset=offset)
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_buffer_goods_task(
         self, *, limit: int, upload_id: int, offset: int | None = None
@@ -259,12 +265,12 @@ class Items:
         ):
             yield item
 
-    async def get_buffer_tasks(self, *, upload_id: int) -> None:
+    async def get_buffer_tasks(self, *, upload_id: int) -> GetBufferTasksResponse:
         """Состояние необработанной загрузки
 
         :param upload_id: ID загрузки
         """
-        await GetBufferTasks(upload_id=upload_id).emit(self._api)
+        return await GetBufferTasks(upload_id=upload_id).emit(self._api)
 
     async def get_cards_error_list(
         self,
@@ -276,8 +282,10 @@ class Items:
     ) -> ResponsePublicViewerPublicErrorsTableListV2 | list[Any]:
         """Список несозданных карточек товаров с ошибками
 
+        :param cursor: Пагинатор
         :param locale: Язык названий предметов:   - `ru` — русский   - `en` — английский   - `zh` —
             китайский  Не используется в песочнице
+        :param order: Порядок выдачи пакетов
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetCardsErrorList(cursor=cursor, locale=locale, order=order)
@@ -292,8 +300,10 @@ class Items:
     ) -> AsyncIterator[Any]:
         """Список несозданных карточек товаров с ошибками — постранично, по одной записи.
 
+        :param cursor: Пагинатор
         :param locale: Язык названий предметов:   - `ru` — русский   - `en` — английский   - `zh` —
             китайский  Не используется в песочнице
+        :param order: Порядок выдачи пакетов
         """
         async for item in GetCardsErrorList(cursor=cursor, locale=locale, order=order).stream(self._api):
             yield item
@@ -427,7 +437,7 @@ class Items:
         filter_nm_id: int | None = None,
         offset: int | None = None,
         auto_paginate: bool = False,
-    ) -> None | list[Any]:
+    ) -> GetGoodsFilterResponse | list[Any]:
         """Получить товары с ценами
 
         :param limit: Сколько элементов вывести на одной странице (пагинация)
@@ -437,10 +447,7 @@ class Items:
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetGoodsFilterGet(limit=limit, filter_nm_id=filter_nm_id, offset=offset)
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_goods_filter_get(
         self, *, limit: int, filter_nm_id: int | None = None, offset: int | None = None
@@ -457,13 +464,13 @@ class Items:
         ):
             yield item
 
-    async def get_goods_filter_post(self) -> None:
+    async def get_goods_filter_post(self) -> GetGoodsFilterResponse:
         """Получить товары с ценами по артикулам"""
-        await GetGoodsFilterPost().emit(self._api)
+        return await GetGoodsFilterPost().emit(self._api)
 
     async def get_goods_size_nm(
         self, *, limit: int, nm_id: int, offset: int | None = None, auto_paginate: bool = False
-    ) -> None | list[Any]:
+    ) -> GetGoodsSizeNmResponse | list[Any]:
         """Получить размеры товара с ценами
 
         :param limit: Сколько элементов вывести на одной странице (пагинация)
@@ -473,10 +480,7 @@ class Items:
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetGoodsSizeNm(limit=limit, nm_id=nm_id, offset=offset)
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_goods_size_nm(
         self, *, limit: int, nm_id: int, offset: int | None = None
@@ -493,7 +497,7 @@ class Items:
 
     async def get_history_goods_task(
         self, *, limit: int, upload_id: int, offset: int | None = None, auto_paginate: bool = False
-    ) -> None | list[Any]:
+    ) -> GetHistoryGoodsTaskResponse | list[Any]:
         """Детализация обработанной загрузки
 
         :param limit: Сколько элементов вывести на одной странице (пагинация)
@@ -503,10 +507,7 @@ class Items:
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetHistoryGoodsTask(limit=limit, upload_id=upload_id, offset=offset)
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_history_goods_task(
         self, *, limit: int, upload_id: int, offset: int | None = None
@@ -523,12 +524,12 @@ class Items:
         ):
             yield item
 
-    async def get_history_tasks(self, *, upload_id: int) -> None:
+    async def get_history_tasks(self, *, upload_id: int) -> GetHistoryTasksResponse:
         """Состояние обработанной загрузки
 
         :param upload_id: ID загрузки
         """
-        await GetHistoryTasks(upload_id=upload_id).emit(self._api)
+        return await GetHistoryTasks(upload_id=upload_id).emit(self._api)
 
     async def get_object_all(
         self,
@@ -603,7 +604,7 @@ class Items:
 
     async def get_quarantine_goods(
         self, *, limit: int, offset: int | None = None, auto_paginate: bool = False
-    ) -> None | list[Any]:
+    ) -> GetQuarantineGoodsResponse | list[Any]:
         """Получить товары в карантине
 
         :param limit: Сколько элементов вывести на одной странице (пагинация)
@@ -612,10 +613,7 @@ class Items:
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetQuarantineGoods(limit=limit, offset=offset)
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_quarantine_goods(self, *, limit: int, offset: int | None = None) -> AsyncIterator[Any]:
         """Получить товары в карантине — постранично, по одной записи.
@@ -691,9 +689,11 @@ class Items:
         """Получить список складов продавца"""
         return await GetWarehouses().emit(self._api)
 
-    async def set_discounts_prices_upload_task_b2b_wholesale(self) -> None:
+    async def set_discounts_prices_upload_task_b2b_wholesale(
+        self,
+    ) -> SetDiscountsPricesUploadTaskB2bWholesaleResponse:
         """Установить оптовые скидки для B2B-продаж"""
-        await SetDiscountsPricesUploadTaskB2bWholesale().emit(self._api)
+        return await SetDiscountsPricesUploadTaskB2bWholesale().emit(self._api)
 
     async def set_recommendation(
         self, *, rec_list: list[SetRecommendationRecListItem], replace: bool | None = False
@@ -706,17 +706,17 @@ class Items:
         """
         return await SetRecommendation(rec_list=rec_list, replace=replace).emit(self._api)
 
-    async def set_upload_task(self) -> None:
+    async def set_upload_task(self) -> TaskCreated:
         """Установить цены и скидки"""
-        await SetUploadTask().emit(self._api)
+        return await SetUploadTask().emit(self._api)
 
-    async def set_upload_task_club_discount(self) -> None:
+    async def set_upload_task_club_discount(self) -> TaskCreated:
         """Установить скидки WB Клуба"""
-        await SetUploadTaskClubDiscount().emit(self._api)
+        return await SetUploadTaskClubDiscount().emit(self._api)
 
-    async def set_upload_task_size(self) -> None:
+    async def set_upload_task_size(self) -> TaskCreated:
         """Установить цены для размеров"""
-        await SetUploadTaskSize().emit(self._api)
+        return await SetUploadTaskSize().emit(self._api)
 
     async def update_card(self, *, body: Any) -> ResponseItemList:
         """Редактирование карточек товаров"""

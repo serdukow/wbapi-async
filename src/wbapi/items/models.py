@@ -312,6 +312,33 @@ class DeleteStockBody(WBModel):
     """Массив ID размеров товаров"""
 
 
+class GetBufferGoodsTaskResponse(WBModel):
+    data: GetBufferGoodsTaskResponseData | None = _field(default=None)
+    """Данные ответа"""
+    error: bool | None = _field(default=None)
+    """Флаг ошибки"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки"""
+
+
+class GetBufferGoodsTaskResponseData(WBModel):
+    """Данные ответа"""
+
+    buffer_goods: list[GoodBufferHistory] | None = _field(default=None, name="bufferGoods")
+    """Информация о товарах в загрузке"""
+    upload_id: int | None = _field(default=None, name="uploadID")
+    """ID загрузки"""
+
+
+class GetBufferTasksResponse(WBModel):
+    data: SellerTaskMetadataBuffer | None = _field(default=None)
+    """Данные ответа"""
+    error: bool | None = _field(default=None)
+    """Флаг ошибки"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки"""
+
+
 class GetCardsLimitsResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
@@ -843,6 +870,61 @@ class GetDirectoryVatResponse(WBModel):
     """Текст ошибки"""
 
 
+class GetGoodsFilterResponse(WBModel):
+    data: GetGoodsFilterResponseData | None = _field(default=None)
+    """Данные ответа"""
+    error: bool | None = _field(default=None)
+    """Флаг ошибки"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки"""
+
+
+class GetGoodsFilterResponseData(WBModel):
+    """Данные ответа"""
+
+    list_goods: list[ItemsList] | None = _field(default=None, name="listGoods")
+    """Информация о товарах"""
+
+
+class GetGoodsSizeNmResponse(WBModel):
+    data: GetGoodsSizeNmResponseData | None = _field(default=None)
+    """Данные ответа"""
+    error: bool | None = _field(default=None)
+    """Флаг ошибки"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки"""
+
+
+class GetGoodsSizeNmResponseData(WBModel):
+    """Данные ответа"""
+
+    list_goods: list[SizeGood] | None = _field(default=None, name="listGoods")
+    """Размеры товара"""
+
+
+class GetHistoryGoodsTaskResponse(WBModel):
+    data: GetHistoryGoodsTaskResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class GetHistoryGoodsTaskResponseData(WBModel):
+    """Данные ответа"""
+
+    history_goods: list[GoodHistory] | None = _field(default=None, name="historyGoods")
+    """Информация о товарах в загрузке"""
+    upload_id: int | None = _field(default=None, name="uploadID")
+    """ID загрузки"""
+
+
+class GetHistoryTasksResponse(WBModel):
+    data: SellerTaskMetadata | None = _field(default=None)
+    """Данные ответа"""
+    error: bool | None = _field(default=None)
+    """Флаг ошибки"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки"""
+
+
 class GetObjectAllResponse(WBModel):
     additional_errors: str | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
@@ -923,6 +1005,22 @@ class GetObjectParentAllResponse(WBModel):
     """Флаг наличия ошибки"""
     error_text: str | None = _field(default=None, name="errorText")
     """Описание ошибки"""
+
+
+class GetQuarantineGoodsResponse(WBModel):
+    data: GetQuarantineGoodsResponseData | None = _field(default=None)
+    """Данные ответа"""
+    error: bool | None = _field(default=None)
+    """Флаг ошибки"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки"""
+
+
+class GetQuarantineGoodsResponseData(WBModel):
+    """Данные ответа"""
+
+    quarantine_goods: list[QuarantineItems] | None = _field(default=None, name="quarantineGoods")
+    """Информация о товарах в карантине"""
 
 
 class GetRecomReq(WBModel):
@@ -1013,10 +1111,101 @@ class GetTagsResponseDataItem(WBModel):
     """Имя ярлыка"""
 
 
+class GoodBufferHistory(WBModel):
+    club_discount: int | None = _field(default=None, name="clubDiscount")
+    """Скидка WB Клуба, %"""
+    currency_iso_code4217: str | None = _field(default=None, name="currencyIsoCode4217")
+    """Валюта, по стандарту ISO 4217"""
+    discount: int | None = _field(default=None)
+    """Скидка, %"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки"""
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    price: int | None = _field(default=None)
+    """Цена"""
+    size_id: int | None = _field(default=None, name="sizeID")
+    """ID размера. В методах Контента это поле `chrtID`"""
+    status: int | None = _field(default=None)
+    """Статус товара: `1` — в обработке"""
+    tech_size_name: str | None = _field(default=None, name="techSizeName")
+    """Размер"""
+    vendor_code: str | None = _field(default=None, name="vendorCode")
+    """Артикул продавца"""
+
+
+class GoodHistory(WBModel):
+    club_discount: int | None = _field(default=None, name="clubDiscount")
+    """Скидка WB Клуба, %"""
+    currency_iso_code4217: str | None = _field(default=None, name="currencyIsoCode4217")
+    """Валюта, по стандарту ISO 4217"""
+    discount: int | None = _field(default=None)
+    """Скидка, %"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки. Например: …"""
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    price: int | None = _field(default=None)
+    """Цена"""
+    size_id: int | None = _field(default=None, name="sizeID")
+    """ID размера. В методах Контента это поле `chrtID`"""
+    status: int | None = _field(default=None)
+    """Статус товара:   * `2` — товар без ошибок, цена и/или скидка обновилась   * `3` — есть
+    ошибки, данные не обновились
+    """
+    tech_size_name: str | None = _field(default=None, name="techSizeName")
+    """Размер"""
+    vendor_code: str | None = _field(default=None, name="vendorCode")
+    """Артикул продавца"""
+
+
+class ItemsList(WBModel):
+    """Размеры товара"""
+
+    club_discount: int | None = _field(default=None, name="clubDiscount")
+    """Скидка WB Клуба, %"""
+    currency_iso_code4217: str | None = _field(default=None, name="currencyIsoCode4217")
+    """Валюта, по стандарту ISO 4217"""
+    discount: int | None = _field(default=None)
+    """Скидка, %"""
+    editable_size_price: bool | None = _field(default=None, name="editableSizePrice")
+    """Можно ли устанавливать цены отдельно для разных размеров (зависит от категории товара):   -
+    `true` — можно   - `false` — нельзя
+    """
+    is_bad_turnover: bool | None = _field(default=None, name="isBadTurnover")
+    """Признак неликвидного товара:   - `true` — неликвидный товар с низким индексом остатка   -
+    Поле отсутствует — ликвидный товар
+    """
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    sizes: list[ItemsListSizesItem] | None = _field(default=None)
+    """Размер"""
+    vendor_code: str | None = _field(default=None, name="vendorCode")
+    """Артикул продавца"""
+    wholesale_discount_threshold: list[WholesaleDiscountThresholdRes] | None = _field(
+        default=None, name="wholesaleDiscountThreshold"
+    )
+    """Оптовые скидки разных уровней для B2B"""
+
+
+class ItemsListSizesItem(WBModel):
+    club_discounted_price: float | None = _field(default=None, name="clubDiscountedPrice")
+    """Цена со скидкой, включая скидку WB Клуба"""
+    discounted_price: float | None = _field(default=None, name="discountedPrice")
+    """Цена со скидкой"""
+    price: int | None = _field(default=None)
+    """Цена"""
+    size_id: int | None = _field(default=None, name="sizeID")
+    """ID размера. В методах Контента это поле `chrtID`"""
+    tech_size_name: str | None = _field(default=None, name="techSizeName")
+    """Размер товара"""
+
+
 class ModelsErrorTableListPublicRespV2(WBModel):
     """Данные ответа"""
 
     cursor: ViewerContractPublicErrorsCursorOutput | None = _field(default=None)
+    """Пагинатор"""
     items: list[ModelsErrorTableListPublicRespV2Item] | None = _field(default=None)
     """Пакеты данных"""
 
@@ -1067,6 +1256,28 @@ class Office(WBModel):
     """Признак того, что склад уже выбран продавцом"""
 
 
+class QuarantineItems(WBModel):
+    currency_iso_code4217: str | None = _field(default=None, name="currencyIsoCode4217")
+    """Валюта по стандарту ISO 4217"""
+    new_discount: int | None = _field(default=None, name="newDiscount")
+    """Новая скидка продавца, %"""
+    new_price: float | None = _field(default=None, name="newPrice")
+    """Новая цена продавца до скидки"""
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    old_discount: int | None = _field(default=None, name="oldDiscount")
+    """Текущая скидка продавца, %"""
+    old_price: float | None = _field(default=None, name="oldPrice")
+    """Текущая цена продавца до скидки"""
+    price_diff: float | None = _field(default=None, name="priceDiff")
+    """Разница: `newPrice` * (1 - `newDiscount` / 100) - `oldPrice` * (1 - `oldDiscount` / 100)
+    """
+    size_id: int | None = _field(default=None, name="sizeID")
+    """Не используется"""
+    tech_size_name: str | None = _field(default=None, name="techSizeName")
+    """Не используется"""
+
+
 class RequestMoveNmsImtConn(WBModel):
     nm_ids: list[int] | None = _field(default=None, name="nmIDs")
     """`nmID`, которые необходимо объединить"""
@@ -1076,7 +1287,9 @@ class RequestMoveNmsImtConn(WBModel):
 
 class RequestPublicViewerPublicErrorsTableListV2(WBModel):
     cursor: SwaggerPublicErrorsCursorInput | None = _field(default=None)
+    """Пагинатор"""
     order: SwaggerPublicErrorsOrderV2 | None = _field(default=None)
+    """Порядок выдачи пакетов"""
 
 
 class ResponseContentError(WBModel):
@@ -1109,10 +1322,76 @@ class ResponsePublicViewerPublicErrorsTableListV2(WBModel):
     additional_errors: dict[str, Any] | None = _field(default=None, name="additionalErrors")
     """Дополнительные ошибки"""
     data: ModelsErrorTableListPublicRespV2 | None = _field(default=None)
+    """Данные ответа"""
     error: bool | None = _field(default=None)
     """Флаг ошибки"""
     error_text: str | None = _field(default=None, name="errorText")
     """Описание ошибки"""
+
+
+class SellerTaskMetadata(WBModel):
+    """Данные ответа"""
+
+    activation_date: str | None = _field(default=None, name="activationDate")
+    """Дата и время, когда загрузка отправляется в обработку"""
+    over_all_goods_number: int | None = _field(default=None, name="overAllGoodsNumber")
+    """Всего товаров"""
+    status: int | None = _field(default=None)
+    """Статус загрузки:   * `3` — обработана, в товарах нет ошибок, цены и скидки обновились   *
+    `4` — отменена …
+    """
+    success_goods_number: int | None = _field(default=None, name="successGoodsNumber")
+    """Товаров без ошибок"""
+    upload_date: str | None = _field(default=None, name="uploadDate")
+    """Дата и время, когда загрузка создана"""
+    upload_id: int | None = _field(default=None, name="uploadID")
+    """ID загрузки"""
+
+
+class SellerTaskMetadataBuffer(WBModel):
+    """Данные ответа"""
+
+    activation_date: str | None = _field(default=None, name="activationDate")
+    """Дата и время, когда загрузка отправляется в обработку"""
+    over_all_goods_number: int | None = _field(default=None, name="overAllGoodsNumber")
+    """Всего товаров"""
+    status: int | None = _field(default=None)
+    """Статус загрузки: `1` — в обработке"""
+    success_goods_number: int | None = _field(default=None, name="successGoodsNumber")
+    """Товаров без ошибок (0, потому что загрузка в обработке)"""
+    upload_date: str | None = _field(default=None, name="uploadDate")
+    """Дата и время, когда загрузка создана"""
+    upload_id: int | None = _field(default=None, name="uploadID")
+    """ID загрузки"""
+
+
+class SetDiscountsPricesUploadTaskB2bWholesaleResponse(WBModel):
+    already_exists: bool | None = _field(default=None, name="alreadyExists")
+    """Дублирование загрузки: `true` — такая загрузка уже есть"""
+    id: int | None = _field(default=None)
+    """ID загрузки"""
+    results: list[SetDiscountsPricesUploadTaskB2bWholesaleResponseResultsItem] | None = _field(default=None)
+    """Результаты обработки запроса"""
+
+
+class SetDiscountsPricesUploadTaskB2bWholesaleResponseResultsItem(WBModel):
+    error: SetDiscountsPricesUploadTaskB2bWholesaleResponseResultsItemError | None = _field(default=None)
+    """Ошибка. При `"success":false`"""
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    success: bool | None = _field(default=None)
+    """Успешна ли установка скидки на товар:   - `false` — неуспешна   - `true` — успешна"""
+
+
+class SetDiscountsPricesUploadTaskB2bWholesaleResponseResultsItemError(WBModel):
+    """Ошибка. При `"success":false`"""
+
+    detail: str | None = _field(default=None)
+    """Детали ошибки"""
+    status: int | None = _field(default=None)
+    """HTTP статус-код"""
+    title: str | None = _field(default=None)
+    """Заголовок ошибки"""
 
 
 class SetRecomReq(WBModel):
@@ -1181,6 +1460,41 @@ class SetRecommendationRecListItemRecommendationsItem(WBModel):
     """
 
 
+class SizeGood(WBModel):
+    """Информация о размере"""
+
+    club_discount: int | None = _field(default=None, name="clubDiscount")
+    """Скидка WB Клуба, %"""
+    club_discounted_price: float | None = _field(default=None, name="clubDiscountedPrice")
+    """Цена со скидкой, включая скидку WB Клуба"""
+    currency_iso_code4217: str | None = _field(default=None, name="currencyIsoCode4217")
+    """Валюта, по стандарту ISO 4217"""
+    discount: int | None = _field(default=None)
+    """Скидка, %"""
+    discounted_price: float | None = _field(default=None, name="discountedPrice")
+    """Цена со скидкой"""
+    editable_size_price: bool | None = _field(default=None, name="editableSizePrice")
+    """Можно ли устанавливать цены отдельно для разных размеров (зависит от категории товара):   -
+    `true` — можно   - `false` — нельзя
+    """
+    is_bad_turnover: bool | None = _field(default=None, name="isBadTurnover")
+    """Признак неликвидного товара:   - `true` — неликвидный товар с низким индексом остатка   -
+    Поле отсутствует — ликвидный товар
+    """
+    nm_id: int | None = _field(default=None, name="nmID")
+    """Артикул WB"""
+    price: int | None = _field(default=None)
+    """Цена"""
+    size_id: int | None = _field(default=None, name="sizeID")
+    """ID размера. Можно получить с помощью метода Получение списка товаров по артикулам, поле
+    `sizeID`. В методах Контента это поле `chrtID`
+    """
+    tech_size_name: str | None = _field(default=None, name="techSizeName")
+    """Размер товара"""
+    vendor_code: str | None = _field(default=None, name="vendorCode")
+    """Артикул продавца"""
+
+
 class StoreContactRequestBody(WBModel):
     """Контакты склада продавца"""
 
@@ -1212,6 +1526,24 @@ class SwaggerPublicErrorsOrderV2(WBModel):
 
     ascending: bool | None = _field(default=None)
     """- `false` — сортировка по убыванию - `true` — сортировка по возрастанию"""
+
+
+class TaskCreated(WBModel):
+    data: TaskCreatedData | None = _field(default=None)
+    """Данные ответа"""
+    error: bool | None = _field(default=None)
+    """Флаг ошибки"""
+    error_text: str | None = _field(default=None, name="errorText")
+    """Текст ошибки"""
+
+
+class TaskCreatedData(WBModel):
+    """Данные ответа"""
+
+    already_exists: bool | None = _field(default=None, name="alreadyExists")
+    """Флаг дублирования загрузки: `true` — такая загрузка уже есть"""
+    id: int | None = _field(default=None)
+    """ID загрузки"""
 
 
 class UpdateCardBodyItem(WBModel):
@@ -1416,3 +1748,12 @@ class Warehouse(WBModel):
     """Название склада продавца"""
     office_id: int | None = _field(default=None, name="officeId")
     """ID склада WB"""
+
+
+class WholesaleDiscountThresholdRes(WBModel):
+    level: int | None = _field(default=None)
+    """Уровень скидки"""
+    min_quantity: int | None = _field(default=None, name="minQuantity")
+    """Минимальное количество единиц товара для скидки"""
+    wholesale_discount: int | None = _field(default=None, name="wholesaleDiscount")
+    """Скидка, %"""

@@ -63,7 +63,10 @@ class General:
     async def create_invite(
         self, *, invite: CreateInviteInvite, access: list[CreateInviteAccessItem] | None = None
     ) -> CreateInviteResponse:
-        """Создать приглашение для нового пользователя"""
+        """Создать приглашение для нового пользователя
+
+        :param access: Настройки доступа к разделам профиля продавца
+        """
         return await CreateInvite(invite=invite, access=access).emit(self._api)
 
     async def delete_user(self, *, deleted_user_id: int) -> None:

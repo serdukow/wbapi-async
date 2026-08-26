@@ -10,8 +10,15 @@ from .models import (
     CreateTaskResponse,
     ExciseReportResponse,
     GetAcceptanceReportTasksDownloadResponseItem,
+    GetAnalyticsAntifraudDetailsResponse,
     GetAnalyticsBannedProductsBlockedResponse,
+    GetAnalyticsBrandShareBrandsResponse,
+    GetAnalyticsBrandShareParentSubjectsResponse,
+    GetAnalyticsBrandShareResponse,
+    GetAnalyticsDeductionsResponse,
+    GetAnalyticsGoodsLabelingResponse,
     GetAnalyticsGoodsReturnsResponse,
+    GetAnalyticsRegionSaleResponse,
     GetPaidStorageTasksDownloadResponseItem,
     GetTasksResponse,
     GetWarehouseRemainsTasksDownloadResponseItem,
@@ -178,7 +185,7 @@ class GetAcceptanceReportTasksStatus(WBMethod[GetTasksResponse]):
     """ID задания на генерацию"""
 
 
-class GetAnalyticsAntifraudDetails(WBMethod[None]):
+class GetAnalyticsAntifraudDetails(WBMethod[GetAnalyticsAntifraudDetailsResponse]):
     """Самовыкупы
 
     GET /api/v1/analytics/antifraud-details
@@ -186,7 +193,7 @@ class GetAnalyticsAntifraudDetails(WBMethod[None]):
 
     __path__ = "/api/v1/analytics/antifraud-details"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetAnalyticsAntifraudDetailsResponse
     __query_params__ = {"date": "date"}
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
@@ -232,7 +239,7 @@ class GetAnalyticsBannedProductsBlocked(WBMethod[GetAnalyticsBannedProductsBlock
     """
 
 
-class GetAnalyticsBrandShare(WBMethod[None]):
+class GetAnalyticsBrandShare(WBMethod[GetAnalyticsBrandShareResponse]):
     """Получить отчёт
 
     GET /api/v1/analytics/brand-share
@@ -240,7 +247,7 @@ class GetAnalyticsBrandShare(WBMethod[None]):
 
     __path__ = "/api/v1/analytics/brand-share"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetAnalyticsBrandShareResponse
     __query_params__ = {
         "parent_id": "parentId",
         "brand": "brand",
@@ -266,7 +273,7 @@ class GetAnalyticsBrandShare(WBMethod[None]):
     """ID родительской категории"""
 
 
-class GetAnalyticsBrandShareBrands(WBMethod[None]):
+class GetAnalyticsBrandShareBrands(WBMethod[GetAnalyticsBrandShareBrandsResponse]):
     """Бренды продавца
 
     GET /api/v1/analytics/brand-share/brands
@@ -274,7 +281,7 @@ class GetAnalyticsBrandShareBrands(WBMethod[None]):
 
     __path__ = "/api/v1/analytics/brand-share/brands"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetAnalyticsBrandShareBrandsResponse
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
@@ -283,9 +290,10 @@ class GetAnalyticsBrandShareBrands(WBMethod[None]):
         "basic_secret": (600000, 10),
         "basic": (3600000, 1),
     }
+    __items__ = "data"
 
 
-class GetAnalyticsBrandShareParentSubjects(WBMethod[None]):
+class GetAnalyticsBrandShareParentSubjects(WBMethod[GetAnalyticsBrandShareParentSubjectsResponse]):
     """Родительские категории бренда
 
     GET /api/v1/analytics/brand-share/parent-subjects
@@ -293,7 +301,7 @@ class GetAnalyticsBrandShareParentSubjects(WBMethod[None]):
 
     __path__ = "/api/v1/analytics/brand-share/parent-subjects"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetAnalyticsBrandShareParentSubjectsResponse
     __query_params__ = {"locale": "locale", "brand": "brand", "date_from": "dateFrom", "date_to": "dateTo"}
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
@@ -303,6 +311,7 @@ class GetAnalyticsBrandShareParentSubjects(WBMethod[None]):
         "basic_secret": (100000, 20),
         "basic": (3600000, 1),
     }
+    __items__ = "data"
 
     brand: str
     """Бренд"""
@@ -315,7 +324,7 @@ class GetAnalyticsBrandShareParentSubjects(WBMethod[None]):
     """
 
 
-class GetAnalyticsDeductions(WBMethod[None]):
+class GetAnalyticsDeductions(WBMethod[GetAnalyticsDeductionsResponse]):
     """Подмены и неверные вложения
 
     GET /api/analytics/v1/deductions
@@ -323,7 +332,7 @@ class GetAnalyticsDeductions(WBMethod[None]):
 
     __path__ = "/api/analytics/v1/deductions"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetAnalyticsDeductionsResponse
     __query_params__ = {
         "date_from": "dateFrom",
         "date_to": "dateTo",
@@ -341,6 +350,7 @@ class GetAnalyticsDeductions(WBMethod[None]):
         "basic": (900000, 1),
     }
     __paginate__ = "offset_query"
+    __items__ = "data"
 
     date_to: str
     """Конец отчётного периода"""
@@ -390,7 +400,7 @@ class GetAnalyticsExciseReport(WBMethod[ExciseReportResponse]):
     """
 
 
-class GetAnalyticsGoodsLabeling(WBMethod[None]):
+class GetAnalyticsGoodsLabeling(WBMethod[GetAnalyticsGoodsLabelingResponse]):
     """Маркировка товара
 
     GET /api/v1/analytics/goods-labeling
@@ -398,7 +408,7 @@ class GetAnalyticsGoodsLabeling(WBMethod[None]):
 
     __path__ = "/api/v1/analytics/goods-labeling"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetAnalyticsGoodsLabelingResponse
     __query_params__ = {"date_from": "dateFrom", "date_to": "dateTo"}
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
@@ -473,7 +483,7 @@ class GetAnalyticsMeasurementPenalties(WBMethod[MeasurementPenalties]):
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
 
 
-class GetAnalyticsRegionSale(WBMethod[None]):
+class GetAnalyticsRegionSale(WBMethod[GetAnalyticsRegionSaleResponse]):
     """Получить отчёт
 
     GET /api/v1/analytics/region-sale
@@ -481,7 +491,7 @@ class GetAnalyticsRegionSale(WBMethod[None]):
 
     __path__ = "/api/v1/analytics/region-sale"
     __http_method__ = "GET"
-    __returns__ = None
+    __returns__ = GetAnalyticsRegionSaleResponse
     __query_params__ = {"date_from": "dateFrom", "date_to": "dateTo"}
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"

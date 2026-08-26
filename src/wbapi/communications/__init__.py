@@ -36,11 +36,16 @@ from .methods import (
 from .models import (
     ChatsResponse,
     CreateFeedbacksOrderReturnsResponse,
+    DeleteFeedbacksPinResponse,
     EventsResponse,
+    GetClaimsResponse,
     GetFeedbackResponse,
     GetFeedbacksArchiveResponse,
     GetFeedbacksCountResponse,
     GetFeedbacksCountUnansweredResponse,
+    GetFeedbacksPinsCountResponse,
+    GetFeedbacksPinsLimitsResponse,
+    GetFeedbacksPinsResponse,
     GetFeedbacksResponse,
     GetNewFeedbacksQuestionsResponse,
     GetQuestionResponse,
@@ -48,7 +53,7 @@ from .models import (
     GetQuestionsCountUnansweredResponse,
     GetQuestionsResponse,
     MessageResponse,
-    RespondSuccessResponse,
+    SetFeedbacksPinResponse,
     UpdateQuestionResponse,
 )
 
@@ -101,7 +106,7 @@ class Communications:
         """Отправить сообщение"""
         return await CreateSellerMessage().emit(self._api)
 
-    async def delete_feedbacks_pin(self, *, body: Any) -> RespondSuccessResponse:
+    async def delete_feedbacks_pin(self, *, body: Any) -> DeleteFeedbacksPinResponse:
         """Открепить отзывы"""
         return await DeleteFeedbacksPin(body=body).emit(self._api)
 
@@ -114,7 +119,7 @@ class Communications:
         nm_id: int | None = None,
         offset: int | None = 0,
         auto_paginate: bool = False,
-    ) -> None | list[Any]:
+    ) -> GetClaimsResponse | list[Any]:
         """Заявки покупателей на возврат
 
         :param is_archive: Состояние заявки:   * `false` — на рассмотрении   * `true` — в архиве
@@ -125,10 +130,7 @@ class Communications:
         :param auto_paginate: автоматически собрать все страницы выборки
         """
         call = GetClaims(is_archive=is_archive, id_=id_, limit=limit, nm_id=nm_id, offset=offset)
-        if auto_paginate:
-            return await call.paginate(self._api)
-        await call.emit(self._api)
-        return None
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
 
     async def iter_get_claims(
         self,
@@ -290,7 +292,7 @@ class Communications:
         pin_on: str | None = None,
         state: str | None = None,
         auto_paginate: bool = False,
-    ) -> RespondSuccessResponse | list[Any]:
+    ) -> GetFeedbacksPinsResponse | list[Any]:
         """Список закреплённых и откреплённых отзывов
 
         :param date_from: Дата закрепления первого отзыва в списке
@@ -369,7 +371,7 @@ class Communications:
         nm_id: int | None = None,
         pin_on: str | None = None,
         state: str | None = None,
-    ) -> RespondSuccessResponse:
+    ) -> GetFeedbacksPinsCountResponse:
         """Количество закреплённых и откреплённых отзывов
 
         :param date_from: Дата закрепления первого отзыва в списке
@@ -392,7 +394,7 @@ class Communications:
             state=state,
         ).emit(self._api)
 
-    async def get_feedbacks_pins_limits(self) -> RespondSuccessResponse:
+    async def get_feedbacks_pins_limits(self) -> GetFeedbacksPinsLimitsResponse:
         """Лимиты закреплённых отзывов"""
         return await GetFeedbacksPinsLimits().emit(self._api)
 
@@ -498,12 +500,12 @@ class Communications:
         """Список чатов"""
         return await GetSellerChats().emit(self._api)
 
-    async def get_seller_download(self, *, id_: str | int) -> None:
+    async def get_seller_download(self, *, id_: str | int) -> bytes:
         """Получить файл из сообщения
 
         :param id_: ID файла, см. значение поля `downloadID` в методе События чатов
         """
-        await GetSellerDownload(id_=id_).emit(self._api)
+        return await GetSellerDownload(id_=id_).emit(self._api)
 
     async def get_seller_events(
         self, *, next_: int | None = None, auto_paginate: bool = False
@@ -526,7 +528,7 @@ class Communications:
         async for item in GetSellerEvents(next_=next_).stream(self._api):
             yield item
 
-    async def set_feedbacks_pin(self, *, body: Any) -> RespondSuccessResponse:
+    async def set_feedbacks_pin(self, *, body: Any) -> SetFeedbacksPinResponse:
         """Закрепить отзывы"""
         return await SetFeedbacksPin(body=body).emit(self._api)
 

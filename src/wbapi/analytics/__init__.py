@@ -28,14 +28,22 @@ from .methods import (
     GetStocksReportWbWarehouses,
 )
 from .models import (
-    CommonResponseProperties,
     GetItemRatingResponse,
     GetOrderFeedPagination,
     GetOrderFeedResponse,
     GetOrderFeedSelectedPeriod,
     GetSalesFunnelGroupedHistoryResponse,
+    GetSalesFunnelGroupedHistorySelectedPeriod,
     GetSalesFunnelProductsHistoryResponseItem,
+    GetSalesFunnelProductsHistorySelectedPeriod,
+    GetSalesFunnelProductsPastPeriod,
     GetSalesFunnelProductsResponse,
+    GetSalesFunnelProductsSelectedPeriod,
+    GetSearchReportProductOrdersResponse,
+    GetSearchReportProductSearchTextsResponse,
+    GetSearchReportResponse,
+    GetSearchReportTableDetailsResponse,
+    GetSearchReportTableGroupsResponse,
     GetStocksReportOfficesResponse,
     GetStocksReportProductsGroupsResponse,
     GetStocksReportProductsResponse,
@@ -110,8 +118,10 @@ class Analytics:
     ) -> GetItemRatingResponse | list[Any]:
         """Получить отчёт
 
+        :param current_period: Текущий период
         :param offset: Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11
             элемента
+        :param order_by: Параметры сортировки
         :param brand_names: Список брендов для фильтрации
         :param is_not_include_nms_without_sales: Не возвращать товары без продаж:   - `true` — да,
             возвращаются только товары с продажами за период, указанный
@@ -120,6 +130,7 @@ class Analytics:
         :param nm_ids: Список артикулов WB для фильтрации
         :param only_shadowed_nms: Возвращаются ли в ответе только скрытые товары:   - `true` — да,
             возвращаются только скрытые из каталога товары …
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         :param subject_ids: Список ID предметов для фильтрации
         :param tag_ids: Список ID ярлыков для фильтрации
         :param auto_paginate: автоматически собрать все страницы выборки
@@ -156,8 +167,10 @@ class Analytics:
     ) -> AsyncIterator[Any]:
         """Получить отчёт — постранично, по одной записи.
 
+        :param current_period: Текущий период
         :param offset: Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11
             элемента
+        :param order_by: Параметры сортировки
         :param brand_names: Список брендов для фильтрации
         :param is_not_include_nms_without_sales: Не возвращать товары без продаж:   - `true` — да,
             возвращаются только товары с продажами за период, указанный
@@ -166,6 +179,7 @@ class Analytics:
         :param nm_ids: Список артикулов WB для фильтрации
         :param only_shadowed_nms: Возвращаются ли в ответе только скрытые товары:   - `true` — да,
             возвращаются только скрытые из каталога товары …
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         :param subject_ids: Список ID предметов для фильтрации
         :param tag_ids: Список ID ярлыков для фильтрации
         """
@@ -193,12 +207,12 @@ class Analytics:
         """
         return await GetNmReportDownloads(filter_download_ids=filter_download_ids).emit(self._api)
 
-    async def get_nm_report_downloads_file(self, *, download_id: str | int) -> None:
+    async def get_nm_report_downloads_file(self, *, download_id: str | int) -> bytes:
         """Получить отчёт
 
         :param download_id: ID отчёта
         """
-        await GetNmReportDownloadsFile(download_id=download_id).emit(self._api)
+        return await GetNmReportDownloadsFile(download_id=download_id).emit(self._api)
 
     async def get_order_feed(
         self,
@@ -231,7 +245,7 @@ class Analytics:
     async def get_sales_funnel_grouped_history(
         self,
         *,
-        selected_period: dict[str, Any],
+        selected_period: GetSalesFunnelGroupedHistorySelectedPeriod,
         aggregation_level: str | None = None,
         brand_names: list[str] | None = None,
         skip_deleted_nm: bool | None = None,
@@ -240,6 +254,9 @@ class Analytics:
     ) -> GetSalesFunnelGroupedHistoryResponse:
         """Статистика групп карточек товаров по дням
 
+        :param selected_period: Запрашиваемый период
+        :param aggregation_level: Тип агрегации. Если не указано, то по умолчанию используется агрегация по
+            дням.  Доступные уровни агрегации `day`, `week`
         :param brand_names: Список брендов для фильтрации
         :param skip_deleted_nm: Скрыть удалённые товары
         :param subject_ids: Список ID предметов для фильтрации
@@ -257,13 +274,13 @@ class Analytics:
     async def get_sales_funnel_products(
         self,
         *,
-        selected_period: dict[str, Any],
+        selected_period: GetSalesFunnelProductsSelectedPeriod,
         brand_names: list[str] | None = None,
         limit: int | None = 50,
         nm_ids: list[int] | None = None,
         offset: int | None = 0,
         order_by: OrderBy | None = None,
-        past_period: dict[str, Any] | None = None,
+        past_period: GetSalesFunnelProductsPastPeriod | None = None,
         skip_deleted_nm: bool | None = None,
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
@@ -271,12 +288,15 @@ class Analytics:
     ) -> GetSalesFunnelProductsResponse | list[Any]:
         """Статистика карточек товаров за период
 
+        :param selected_period: Запрашиваемый период
         :param brand_names: Список брендов для фильтрации
         :param limit: Количество карточек товара в ответе
         :param nm_ids: Артикулы WB, по которым нужно составить отчёт. Оставьте пустым, чтобы получить отчёт
             обо всех товарах
         :param offset: Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11
             элемента
+        :param order_by: Параметры сортировки
+        :param past_period: Период для сравнения
         :param skip_deleted_nm: Скрыть удалённые товары
         :param subject_ids: Список ID предметов для фильтрации
         :param tag_ids: Список ID ярлыков для фильтрации
@@ -299,25 +319,28 @@ class Analytics:
     async def iter_get_sales_funnel_products(
         self,
         *,
-        selected_period: dict[str, Any],
+        selected_period: GetSalesFunnelProductsSelectedPeriod,
         brand_names: list[str] | None = None,
         limit: int | None = 50,
         nm_ids: list[int] | None = None,
         offset: int | None = 0,
         order_by: OrderBy | None = None,
-        past_period: dict[str, Any] | None = None,
+        past_period: GetSalesFunnelProductsPastPeriod | None = None,
         skip_deleted_nm: bool | None = None,
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
     ) -> AsyncIterator[Any]:
         """Статистика карточек товаров за период — постранично, по одной записи.
 
+        :param selected_period: Запрашиваемый период
         :param brand_names: Список брендов для фильтрации
         :param limit: Количество карточек товара в ответе
         :param nm_ids: Артикулы WB, по которым нужно составить отчёт. Оставьте пустым, чтобы получить отчёт
             обо всех товарах
         :param offset: Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11
             элемента
+        :param order_by: Параметры сортировки
+        :param past_period: Период для сравнения
         :param skip_deleted_nm: Скрыть удалённые товары
         :param subject_ids: Список ID предметов для фильтрации
         :param tag_ids: Список ID ярлыков для фильтрации
@@ -340,13 +363,16 @@ class Analytics:
         self,
         *,
         nm_ids: list[int],
-        selected_period: dict[str, Any],
+        selected_period: GetSalesFunnelProductsHistorySelectedPeriod,
         aggregation_level: str | None = None,
         skip_deleted_nm: bool | None = None,
     ) -> list[GetSalesFunnelProductsHistoryResponseItem]:
         """Статистика карточек товаров по дням
 
         :param nm_ids: Артикулы WB, по которым нужно составить отчёт
+        :param selected_period: Запрашиваемый период
+        :param aggregation_level: Тип агрегации. Если не указано, то по умолчанию используется агрегация по
+            дням.  Доступные уровни агрегации `day`, `week`
         :param skip_deleted_nm: Скрыть удалённые товары
         """
         return await GetSalesFunnelProductsHistory(
@@ -372,15 +398,20 @@ class Analytics:
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
         auto_paginate: bool = False,
-    ) -> CommonResponseProperties | list[Any]:
+    ) -> GetSearchReportResponse | list[Any]:
         """Основная страница
 
+        :param current_period: Текущий период
         :param limit: Количество групп товаров в ответе
         :param offset: После какого элемента выдавать данные
+        :param order_by: Параметры сортировки
+        :param position_cluster: Товары с какой средней позицией в поиске показывать в отчёте:   - `all` —
+            все   - `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
         :param brand_names: Список брендов для фильтрации
         :param include_search_texts: Показать данные по поисковым запросам без учёта подменного артикула
         :param include_substituted_skus: Показать данные по прямым запросам с подменным артикулом
         :param nm_ids: Список артикулов WB для фильтрации
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         :param subject_ids: Список ID предметов для фильтрации
         :param tag_ids: Список ID ярлыков для фильтрации
         :param auto_paginate: автоматически собрать все страницы выборки
@@ -419,12 +450,17 @@ class Analytics:
     ) -> AsyncIterator[Any]:
         """Основная страница — постранично, по одной записи.
 
+        :param current_period: Текущий период
         :param limit: Количество групп товаров в ответе
         :param offset: После какого элемента выдавать данные
+        :param order_by: Параметры сортировки
+        :param position_cluster: Товары с какой средней позицией в поиске показывать в отчёте:   - `all` —
+            все   - `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
         :param brand_names: Список брендов для фильтрации
         :param include_search_texts: Показать данные по поисковым запросам без учёта подменного артикула
         :param include_substituted_skus: Показать данные по прямым запросам с подменным артикулом
         :param nm_ids: Список артикулов WB для фильтрации
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         :param subject_ids: Список ID предметов для фильтрации
         :param tag_ids: Список ID ярлыков для фильтрации
         """
@@ -446,10 +482,11 @@ class Analytics:
 
     async def get_search_report_product_orders(
         self, *, nm_id: int, period: PeriodOrdersRequest, search_texts: list[str]
-    ) -> CommonResponseProperties:
+    ) -> GetSearchReportProductOrdersResponse:
         """Заказы и позиции по поисковым запросам товара
 
         :param nm_id: Артикул WB
+        :param period: Текущий период. Максимум 7 суток
         :param search_texts: Поисковые запросы. Для тарифов Джема **Продвинутый** и **Премиальный** максимум
             — 100
         """
@@ -468,14 +505,17 @@ class Analytics:
         include_search_texts: bool | None = True,
         include_substituted_skus: bool | None = True,
         past_period: PastPeriod | None = None,
-    ) -> CommonResponseProperties:
+    ) -> GetSearchReportProductSearchTextsResponse:
         """Поисковые запросы по товару
 
+        :param current_period: Текущий период
         :param nm_ids: Список артикулов WB
+        :param order_by: Параметры сортировки
         :param top_order_by: Фильтрация по поисковым запросам, по которым больше всего:   - `openCard` —
             перешли в карточку   - `addToCart` — добавили в корзину …
         :param include_search_texts: Показать данные по поисковым запросам без учёта подменного артикула
         :param include_substituted_skus: Показать данные по прямым запросам с подменным артикулом
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         """
         return await GetSearchReportProductSearchTexts(
             current_period=current_period,
@@ -504,17 +544,20 @@ class Analytics:
         subject_id: int | None = None,
         tag_id: int | None = None,
         auto_paginate: bool = False,
-    ) -> CommonResponseProperties | list[Any]:
+    ) -> GetSearchReportTableDetailsResponse | list[Any]:
         """Пагинация по товарам в группе
 
+        :param current_period: Текущий период
         :param limit: Количество товаров в ответе
         :param offset: После какого элемента выдавать данные
+        :param order_by: Параметры сортировки
         :param position_cluster: Товары с какой средней позицией в поиске показывать в отчёте:   - `all` —
             все   - `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
         :param brand_name: Название товара
         :param include_search_texts: Показать данные по поисковым запросам без учёта подменного артикула
         :param include_substituted_skus: Показать данные по прямым запросам с подменным артикулом
         :param nm_ids: Список артикулов WB
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         :param subject_id: ID предмета
         :param tag_id: ID ярлыка
         :param auto_paginate: автоматически собрать все страницы выборки
@@ -553,14 +596,17 @@ class Analytics:
     ) -> AsyncIterator[Any]:
         """Пагинация по товарам в группе — постранично, по одной записи.
 
+        :param current_period: Текущий период
         :param limit: Количество товаров в ответе
         :param offset: После какого элемента выдавать данные
+        :param order_by: Параметры сортировки
         :param position_cluster: Товары с какой средней позицией в поиске показывать в отчёте:   - `all` —
             все   - `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
         :param brand_name: Название товара
         :param include_search_texts: Показать данные по поисковым запросам без учёта подменного артикула
         :param include_substituted_skus: Показать данные по прямым запросам с подменным артикулом
         :param nm_ids: Список артикулов WB
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         :param subject_id: ID предмета
         :param tag_id: ID ярлыка
         """
@@ -596,15 +642,20 @@ class Analytics:
         subject_ids: list[int] | None = None,
         tag_ids: list[int] | None = None,
         auto_paginate: bool = False,
-    ) -> CommonResponseProperties | list[Any]:
+    ) -> GetSearchReportTableGroupsResponse | list[Any]:
         """Пагинация по группам
 
+        :param current_period: Текущий период
         :param limit: Количество групп товаров в ответе
         :param offset: После какого элемента выдавать данные
+        :param order_by: Параметры сортировки
+        :param position_cluster: Товары с какой средней позицией в поиске показывать в отчёте:   - `all` —
+            все   - `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
         :param brand_names: Список брендов для фильтрации
         :param include_search_texts: Показать данные по поисковым запросам без учёта подменного артикула
         :param include_substituted_skus: Показать данные по прямым запросам с подменным артикулом
         :param nm_ids: Список артикулов WB для фильтрации
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         :param subject_ids: Список ID предметов для фильтрации
         :param tag_ids: Список ID ярлыков для фильтрации
         :param auto_paginate: автоматически собрать все страницы выборки
@@ -643,12 +694,17 @@ class Analytics:
     ) -> AsyncIterator[Any]:
         """Пагинация по группам — постранично, по одной записи.
 
+        :param current_period: Текущий период
         :param limit: Количество групп товаров в ответе
         :param offset: После какого элемента выдавать данные
+        :param order_by: Параметры сортировки
+        :param position_cluster: Товары с какой средней позицией в поиске показывать в отчёте:   - `all` —
+            все   - `firstHundred` — от 1 до 100   - `secondHundred` — от 101 до 200 …
         :param brand_names: Список брендов для фильтрации
         :param include_search_texts: Показать данные по поисковым запросам без учёта подменного артикула
         :param include_substituted_skus: Показать данные по прямым запросам с подменным артикулом
         :param nm_ids: Список артикулов WB для фильтрации
+        :param past_period: Прошлый период для сравнения. Количество дней — меньше или равно `currentPeriod`
         :param subject_ids: Список ID предметов для фильтрации
         :param tag_ids: Список ID ярлыков для фильтрации
         """

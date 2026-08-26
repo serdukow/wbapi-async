@@ -6,11 +6,11 @@ from __future__ import annotations
 from ..client.method import WBMethod
 from ..utils.token import Scope
 from .models import (
-    ApiMetaDeleteResponses,
     ApiOrdersMetaDetailsResponse,
     ApiSGTINs,
     ApiStatusSetResponses,
     ClientInfoResp,
+    DeleteOrdersMetaResponse,
     DeliveryDatesInfoResp,
     GetDbwOrdersResponse,
     GetOrdersNewResponse,
@@ -43,7 +43,7 @@ class CancelDbwOrder(WBMethod[None]):
     """ID сборочного задания"""
 
 
-class DeleteOrdersMeta(WBMethod[ApiMetaDeleteResponses]):
+class DeleteOrdersMeta(WBMethod[DeleteOrdersMetaResponse]):
     """Удалить идентификаторы маркировки сборочных заданий
 
     POST /api/marketplace/v3/dbw/orders/meta/delete
@@ -51,7 +51,7 @@ class DeleteOrdersMeta(WBMethod[ApiMetaDeleteResponses]):
 
     __path__ = "/api/marketplace/v3/dbw/orders/meta/delete"
     __http_method__ = "POST"
-    __returns__ = ApiMetaDeleteResponses
+    __returns__ = DeleteOrdersMetaResponse
     __scope__ = Scope.MARKETPLACE
     __host__ = "https://marketplace-api.wildberries.ru"
     __rate_limits__ = {"all": (4000, 20)}

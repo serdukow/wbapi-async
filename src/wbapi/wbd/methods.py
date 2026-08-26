@@ -101,6 +101,7 @@ class CreateUploadInit(WBMethod[UploadInitResponse]):
     description: str
     """Описание контента.Максимальная длина — **1000 символов.**"""
     meta: ContentMeta
+    """Метаданные. Дополнительная информация о контенте"""
     parts: list[ChunkPart]
     """Для оптимальной скорости загрузки контента следует разбить файл на фреймы по 2 Мб. В массиве
     указываются индекс каждого фрейма и его размер
@@ -442,6 +443,7 @@ class UpdateOffer(WBMethod[None]):
     медиафайлов.** …
     """
     meta: OfferMetaRequest | None = None
+    """Метаданные предложения"""
     price: int | None = None
     """Цена предложения, ₽"""
     status: int | None = None

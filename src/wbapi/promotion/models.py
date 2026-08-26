@@ -21,9 +21,11 @@ class AdvertBidsKopecks(WBModel):
 
 class AdvertNMsSettings(WBModel):
     bids_kopecks: AdvertBidsKopecks | None = _field(default=None)
+    """Ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
     nm_id: int | None = _field(default=None)
     """Артикул WB"""
     subject: AdvertSubcategory | None = _field(default=None)
+    """Предмет"""
 
 
 class AdvertSettings(WBModel):
@@ -84,6 +86,9 @@ class CreateAdvertBidsMinResponseBidsItemBidsItem(WBModel):
     currency: str | None = _field(default=None)
     """Валюта аккаунта продавца"""
     type: str | None = _field(default=None)
+    """Места размещения:   - `search` — поиск   - `recommendation` — рекомендации   - `combined` —
+    поиск и рекомендации
+    """
     value: int | None = _field(default=None)
     """Минимальная ставка в разменных единицах — 0,01 от базовой валюты аккаунта продавца"""
 
@@ -103,6 +108,20 @@ class CreateBudgetDepositBody(WBModel):
     """Общая сумма пополнения бюджета в базовых единицах валюты аккаунта продавца"""
     type: int | None = _field(default=None)
     """Тип источника пополнения: - `0` — Счёт - `1` — Баланс - `3` — Бонусы"""
+
+
+class CreateCalendarPromotionsUploadResponse(WBModel):
+    data: CreateCalendarPromotionsUploadResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class CreateCalendarPromotionsUploadResponseData(WBModel):
+    """Данные ответа"""
+
+    already_exists: bool | None = _field(default=None, name="alreadyExists")
+    """Загрузка с такими данными уже существует"""
+    upload_id: int | None = _field(default=None, name="uploadID")
+    """ID загрузки"""
 
 
 class CreateRenameBody(WBModel):
@@ -148,6 +167,7 @@ class FullStatsItem(WBModel):
     atbs: int | None = _field(default=None)
     """Количество добавлений товаров в корзину"""
     booster_stats: list[FullStatsItemBoosterStatsItem] | None = _field(default=None, name="boosterStats")
+    """Статистика по средней позиции товара (для кампаний с единой ставкой)"""
     canceled: int | None = _field(default=None)
     """Отмены, шт."""
     clicks: int | None = _field(default=None)
@@ -161,6 +181,7 @@ class FullStatsItem(WBModel):
     currency: str | None = _field(default=None)
     """Валюта аккаунта продавца"""
     days: list[FullStatsItemDaysItem] | None = _field(default=None)
+    """Статистка по дням"""
     orders: int | None = _field(default=None)
     """Количество заказов"""
     shks: int | None = _field(default=None)
@@ -389,11 +410,13 @@ class GetAdvertsAdvertsItem(WBModel):
     restrictions: GetAdvertsAdvertsItemRestrictions | None = _field(default=None)
     """Ограничения кампании"""
     settings: AdvertSettings | None = _field(default=None)
+    """Настройки кампании"""
     status: int | None = _field(default=None)
     """Статус кампании: - `-1` — удалена, процесс удаления будет завершён в течение 10 минут - `4`
     — готова к запуску - `7` — завершена - `8` — отменена …
     """
     timestamps: Timestamps | None = _field(default=None)
+    """Временные отметки"""
 
 
 class GetAdvertsAdvertsItemRestrictions(WBModel):
@@ -460,6 +483,101 @@ class GetBudgetResponse(WBModel):
     """Поле не используется. Значение всегда 0."""
     total: int | None = _field(default=None)
     """Бюджет кампании в базовых единицах валюты аккаунта продавца"""
+
+
+class GetCalendarPromotionsDetailsResponse(WBModel):
+    data: GetCalendarPromotionsDetailsResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class GetCalendarPromotionsDetailsResponseData(WBModel):
+    """Данные ответа"""
+
+    promotions: list[GetCalendarPromotionsDetailsResponseDataPromotionsItem] | None = _field(default=None)
+    """Список акций"""
+
+
+class GetCalendarPromotionsDetailsResponseDataPromotionsItem(WBModel):
+    advantages: list[str] | None = _field(default=None)
+    """Преимущества акции"""
+    description: str | None = _field(default=None)
+    """Описание акции"""
+    end_date_time: str | None = _field(default=None, name="endDateTime")
+    """Конец акции"""
+    exception_products_count: int | None = _field(default=None, name="exceptionProductsCount")
+    """Количество товаров, исключенных из автоакции до её старта. Только при `"type": "auto"`. В
+    момент старта акции эти товары автоматически будут без скидки
+    """
+    id: int | None = _field(default=None)
+    """ID акции"""
+    in_promo_action_leftovers: int | None = _field(default=None, name="inPromoActionLeftovers")
+    """Количество товаров с остатками, участвующих в акции"""
+    in_promo_action_total: int | None = _field(default=None, name="inPromoActionTotal")
+    """Общее количество товаров, участвующих в акции"""
+    name: str | None = _field(default=None)
+    """Название акции"""
+    not_in_promo_action_leftovers: int | None = _field(default=None, name="notInPromoActionLeftovers")
+    """Количество товаров с остатками, не участвующих в акции"""
+    not_in_promo_action_total: int | None = _field(default=None, name="notInPromoActionTotal")
+    """Общее количество товаров, не участвующих в акции"""
+    participation_percentage: int | None = _field(default=None, name="participationPercentage")
+    """Уже участвующие в акции товары, %. Рассчитывается по товарам в акции и с остатком"""
+    ranging: list[GetCalendarPromotionsDetailsResponseDataPromotionsItemRangingItem] | None = _field(
+        default=None
+    )
+    """Ранжирование (если подключено)"""
+    start_date_time: str | None = _field(default=None, name="startDateTime")
+    """Начало акции"""
+    type: str | None = _field(default=None)
+    """Тип акции:   - `regular` — акция   - `auto` — автоакция"""
+
+
+class GetCalendarPromotionsDetailsResponseDataPromotionsItemRangingItem(WBModel):
+    boost: int | None = _field(default=None)
+    """Текущий уровень поднятия в поиске, %"""
+    condition: str | None = _field(default=None)
+    """Тип ранжирования:   - `productsInPromotion` — продвижение получат товары продавца,
+    участвующие в акции …
+    """
+    participation_rate: int | None = _field(default=None, name="participationRate")
+    """Количество товаров продавца для перехода на следующий уровень ранжирования, %"""
+
+
+class GetCalendarPromotionsNomenclaturesResponse(WBModel):
+    data: GetCalendarPromotionsNomenclaturesResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class GetCalendarPromotionsNomenclaturesResponseData(WBModel):
+    """Данные ответа"""
+
+    nomenclatures: list[PromoItemsList] | None = _field(default=None)
+    """Список товаров"""
+
+
+class GetCalendarPromotionsResponse(WBModel):
+    data: GetCalendarPromotionsResponseData | None = _field(default=None)
+    """Данные ответа"""
+
+
+class GetCalendarPromotionsResponseData(WBModel):
+    """Данные ответа"""
+
+    promotions: list[GetCalendarPromotionsResponseDataPromotionsItem] | None = _field(default=None)
+    """Список акций"""
+
+
+class GetCalendarPromotionsResponseDataPromotionsItem(WBModel):
+    end_date_time: str | None = _field(default=None, name="endDateTime")
+    """Конец акции"""
+    id: int | None = _field(default=None)
+    """ID акции"""
+    name: str | None = _field(default=None)
+    """Название акции"""
+    start_date_time: str | None = _field(default=None, name="startDateTime")
+    """Начало акции"""
+    type: str | None = _field(default=None)
+    """Тип акции:   - `regular` — акция   - `auto` — автоакция"""
 
 
 class GetCountResponse(WBModel):
@@ -571,6 +689,23 @@ class NormQueryBidFailResponseItem(WBModel):
     """
     reason: str | None = _field(default=None)
     """Описание причины ошибки"""
+
+
+class PromoItemsList(WBModel):
+    currency_code: str | None = _field(default=None, name="currencyCode")
+    """Валюта в формате ISO 4217"""
+    discount: int | None = _field(default=None)
+    """Текущая скидка"""
+    id: int | None = _field(default=None)
+    """Артикул WB"""
+    in_action: bool | None = _field(default=None, name="inAction")
+    """Участвует в акции:   - `true` — да   - `false` — нет"""
+    plan_discount: int | None = _field(default=None, name="planDiscount")
+    """Рекомендуемая скидка для участия в акции"""
+    plan_price: float | None = _field(default=None, name="planPrice")
+    """Плановая цена (цена во время акции)"""
+    price: float | None = _field(default=None)
+    """Текущая розничная цена"""
 
 
 class RequestWithDate(WBModel):
@@ -855,8 +990,15 @@ class V0BidRecommendationBase(WBModel):
     competitive_bid: V0BidRecommendationBaseBidCompetitiveBid | None = _field(
         default=None, name="competitiveBid"
     )
+    """Конкурентная ставка — расчётная средняя ставка других продавцов, продающих аналогичные
+    товары по похожей цене. …
+    """
     leaders_bid: V0BidRecommendationBaseBidLeadersBid | None = _field(default=None, name="leadersBid")
+    """Лидерская ставка — средняя ставка с которой товары занимают лидирующие позиции в вашей
+    категории товаров
+    """
     top2: V0BidRecommendationBaseBidTop2 | None = _field(default=None)
+    """Топ-ставка"""
 
 
 class V0BidRecommendationBaseBidCompetitiveBid(WBModel):
@@ -886,8 +1028,11 @@ class V0BidRecommendationNormQuery(WBModel):
     norm_query: str | None = _field(default=None, name="normQuery")
     """Поисковый кластер"""
     reach_max: V0BidRecommendationReachMax | None = _field(default=None, name="reachMax")
+    """Максимальный охват: 76-100%"""
     reach_medium: V0BidRecommendationReachMedium | None = _field(default=None, name="reachMedium")
+    """Средний охват: 61-75%"""
     reach_min: V0BidRecommendationReachMin | None = _field(default=None, name="reachMin")
+    """Минимальный охват: 50-60%"""
 
 
 class V0BidRecommendationReachMax(WBModel):
@@ -921,6 +1066,7 @@ class V0BidsRecommendationsCpmResponse(WBModel):
     advert_id: int | None = _field(default=None, name="advertId")
     """ID кампании"""
     base: V0BidRecommendationBase | None = _field(default=None)
+    """Рекомендуемые ставки для карточек товаров"""
     nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
     norm_queries: list[V0BidRecommendationNormQuery] | None = _field(default=None, name="normQueries")
@@ -995,6 +1141,7 @@ class V0GetNormQueryListResponseItem(WBModel):
     nm_id: int | None = _field(default=None, name="nmId")
     """Артикул WB"""
     norm_queries: V0GetNormQueryListResponseItemNormQueries | None = _field(default=None, name="normQueries")
+    """Поисковые кластеры"""
 
 
 class V0GetNormQueryListResponseItemNormQueries(WBModel):
