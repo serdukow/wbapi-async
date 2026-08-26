@@ -67,7 +67,9 @@ jobs:
       - name: Measure coverage
         run: |
           uv run pytest --cov --cov-report=json
-          echo "total=$(python -c 'import json;print(round(json.load(open("coverage.json"))["totals"]["percent_covered"]))')" >> "$GITHUB_ENV"
+          # One decimal, not round(): anything above 99.5 was displayed as a
+          # flat 100%, so the badge never moved.
+          echo "total=$(python -c 'import json;p=json.load(open("coverage.json"))["totals"]["percent_covered"];print(f"{p:.1f}".rstrip("0").rstrip("."))')" >> "$GITHUB_ENV"
 
       - name: Update badge
         uses: schneegans/dynamic-badges-action@v1.9.0

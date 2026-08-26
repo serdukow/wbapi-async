@@ -59,8 +59,10 @@ from .models import (
     PastPeriod,
     PastPeriodItemRating,
     Period,
+    PeriodInv,
     PeriodItemRating,
     PeriodOrdersRequest,
+    TableOrderBy,
 )
 
 
@@ -724,21 +726,255 @@ class Analytics:
         ).stream(self._api):
             yield item
 
-    async def get_stocks_report_offices(self, *, body: Any) -> GetStocksReportOfficesResponse:
-        """Данные по складам"""
-        return await GetStocksReportOffices(body=body).emit(self._api)
+    async def get_stocks_report_offices(
+        self,
+        *,
+        current_period: PeriodInv,
+        skip_deleted_nm: bool,
+        stock_type: str,
+        brand_names: list[str] | None = None,
+        nm_ids: list[int] | None = None,
+        subject_ids: list[int] | None = None,
+        tag_ids: list[int] | None = None,
+    ) -> GetStocksReportOfficesResponse:
+        """Данные по складам
 
-    async def get_stocks_report_products(self, *, body: Any) -> GetStocksReportProductsResponse:
-        """Данные по товарам"""
-        return await GetStocksReportProducts(body=body).emit(self._api)
+        :param current_period: Период
+        :param skip_deleted_nm: Скрыть удалённые товары
+        :param stock_type: Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` —
+            склады продавца
+        :param brand_names: Список брендов для фильтрации
+        :param nm_ids: Список артикулов WB для фильтрации
+        :param subject_ids: Список ID предметов для фильтрации
+        :param tag_ids: Список ID ярлыков для фильтрации
+        """
+        return await GetStocksReportOffices(
+            current_period=current_period,
+            skip_deleted_nm=skip_deleted_nm,
+            stock_type=stock_type,
+            brand_names=brand_names,
+            nm_ids=nm_ids,
+            subject_ids=subject_ids,
+            tag_ids=tag_ids,
+        ).emit(self._api)
 
-    async def get_stocks_report_products_groups(self, *, body: Any) -> GetStocksReportProductsGroupsResponse:
-        """Данные по группам"""
-        return await GetStocksReportProductsGroups(body=body).emit(self._api)
+    async def get_stocks_report_products(
+        self,
+        *,
+        availability_filters: list[str],
+        current_period: PeriodInv,
+        offset: int,
+        order_by: TableOrderBy,
+        skip_deleted_nm: bool,
+        stock_type: str,
+        brand_name: str | None = None,
+        limit: int | None = 100,
+        nm_ids: list[int] | None = None,
+        subject_id: int | None = None,
+        tag_id: int | None = None,
+        auto_paginate: bool = False,
+    ) -> GetStocksReportProductsResponse | list[Any]:
+        """Данные по товарам
 
-    async def get_stocks_report_products_sizes(self, *, body: Any) -> GetStocksReportProductsSizesResponse:
-        """Данные по размерам"""
-        return await GetStocksReportProductsSizes(body=body).emit(self._api)
+        :param availability_filters: Доступность товара:   - `deficient` — Дефицит   - `actual` — Актуальный
+            - `balanced` — Баланс   - `nonActual` — Неактуальный   - `nonLiquid` —
+            Неликвид …
+        :param current_period: Период
+        :param offset: После какого элемента выдавать данные
+        :param order_by: Вид сортировки данных
+        :param skip_deleted_nm: Скрыть удалённые товары
+        :param stock_type: Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` —
+            склады продавца
+        :param brand_name: Бренд
+        :param limit: Количество товаров в ответе
+        :param nm_ids: Список артикулов WB для фильтрации
+        :param subject_id: ID предмета
+        :param tag_id: ID ярлыка
+        :param auto_paginate: автоматически собрать все страницы выборки
+        """
+        call = GetStocksReportProducts(
+            availability_filters=availability_filters,
+            current_period=current_period,
+            offset=offset,
+            order_by=order_by,
+            skip_deleted_nm=skip_deleted_nm,
+            stock_type=stock_type,
+            brand_name=brand_name,
+            limit=limit,
+            nm_ids=nm_ids,
+            subject_id=subject_id,
+            tag_id=tag_id,
+        )
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
+
+    async def iter_get_stocks_report_products(
+        self,
+        *,
+        availability_filters: list[str],
+        current_period: PeriodInv,
+        offset: int,
+        order_by: TableOrderBy,
+        skip_deleted_nm: bool,
+        stock_type: str,
+        brand_name: str | None = None,
+        limit: int | None = 100,
+        nm_ids: list[int] | None = None,
+        subject_id: int | None = None,
+        tag_id: int | None = None,
+    ) -> AsyncIterator[Any]:
+        """Данные по товарам — постранично, по одной записи.
+
+        :param availability_filters: Доступность товара:   - `deficient` — Дефицит   - `actual` — Актуальный
+            - `balanced` — Баланс   - `nonActual` — Неактуальный   - `nonLiquid` —
+            Неликвид …
+        :param current_period: Период
+        :param offset: После какого элемента выдавать данные
+        :param order_by: Вид сортировки данных
+        :param skip_deleted_nm: Скрыть удалённые товары
+        :param stock_type: Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` —
+            склады продавца
+        :param brand_name: Бренд
+        :param limit: Количество товаров в ответе
+        :param nm_ids: Список артикулов WB для фильтрации
+        :param subject_id: ID предмета
+        :param tag_id: ID ярлыка
+        """
+        async for item in GetStocksReportProducts(
+            availability_filters=availability_filters,
+            current_period=current_period,
+            offset=offset,
+            order_by=order_by,
+            skip_deleted_nm=skip_deleted_nm,
+            stock_type=stock_type,
+            brand_name=brand_name,
+            limit=limit,
+            nm_ids=nm_ids,
+            subject_id=subject_id,
+            tag_id=tag_id,
+        ).stream(self._api):
+            yield item
+
+    async def get_stocks_report_products_groups(
+        self,
+        *,
+        availability_filters: list[str],
+        current_period: PeriodInv,
+        offset: int,
+        order_by: TableOrderBy,
+        skip_deleted_nm: bool,
+        stock_type: str,
+        brand_names: list[str] | None = None,
+        limit: int | None = 100,
+        nm_ids: list[int] | None = None,
+        subject_ids: list[int] | None = None,
+        tag_ids: list[int] | None = None,
+        auto_paginate: bool = False,
+    ) -> GetStocksReportProductsGroupsResponse | list[Any]:
+        """Данные по группам
+
+        :param availability_filters: Доступность товара:   - `deficient` — Дефицит   - `actual` — Актуальный
+            - `balanced` — Баланс   - `nonActual` — Неактуальный   - `nonLiquid` —
+            Неликвид …
+        :param current_period: Период
+        :param offset: После какого элемента выдавать данные
+        :param order_by: Вид сортировки данных
+        :param skip_deleted_nm: Скрыть удалённые товары
+        :param stock_type: Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` —
+            склады продавца
+        :param brand_names: Список брендов для фильтрации
+        :param limit: Количество групп в ответе
+        :param nm_ids: Список артикулов WB для фильтрации
+        :param subject_ids: Список ID предметов для фильтрации
+        :param tag_ids: Список ID ярлыков для фильтрации
+        :param auto_paginate: автоматически собрать все страницы выборки
+        """
+        call = GetStocksReportProductsGroups(
+            availability_filters=availability_filters,
+            current_period=current_period,
+            offset=offset,
+            order_by=order_by,
+            skip_deleted_nm=skip_deleted_nm,
+            stock_type=stock_type,
+            brand_names=brand_names,
+            limit=limit,
+            nm_ids=nm_ids,
+            subject_ids=subject_ids,
+            tag_ids=tag_ids,
+        )
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
+
+    async def iter_get_stocks_report_products_groups(
+        self,
+        *,
+        availability_filters: list[str],
+        current_period: PeriodInv,
+        offset: int,
+        order_by: TableOrderBy,
+        skip_deleted_nm: bool,
+        stock_type: str,
+        brand_names: list[str] | None = None,
+        limit: int | None = 100,
+        nm_ids: list[int] | None = None,
+        subject_ids: list[int] | None = None,
+        tag_ids: list[int] | None = None,
+    ) -> AsyncIterator[Any]:
+        """Данные по группам — постранично, по одной записи.
+
+        :param availability_filters: Доступность товара:   - `deficient` — Дефицит   - `actual` — Актуальный
+            - `balanced` — Баланс   - `nonActual` — Неактуальный   - `nonLiquid` —
+            Неликвид …
+        :param current_period: Период
+        :param offset: После какого элемента выдавать данные
+        :param order_by: Вид сортировки данных
+        :param skip_deleted_nm: Скрыть удалённые товары
+        :param stock_type: Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` —
+            склады продавца
+        :param brand_names: Список брендов для фильтрации
+        :param limit: Количество групп в ответе
+        :param nm_ids: Список артикулов WB для фильтрации
+        :param subject_ids: Список ID предметов для фильтрации
+        :param tag_ids: Список ID ярлыков для фильтрации
+        """
+        async for item in GetStocksReportProductsGroups(
+            availability_filters=availability_filters,
+            current_period=current_period,
+            offset=offset,
+            order_by=order_by,
+            skip_deleted_nm=skip_deleted_nm,
+            stock_type=stock_type,
+            brand_names=brand_names,
+            limit=limit,
+            nm_ids=nm_ids,
+            subject_ids=subject_ids,
+            tag_ids=tag_ids,
+        ).stream(self._api):
+            yield item
+
+    async def get_stocks_report_products_sizes(
+        self,
+        *,
+        current_period: PeriodInv,
+        include_office: bool,
+        nm_id: int,
+        order_by: TableOrderBy,
+        stock_type: str,
+    ) -> GetStocksReportProductsSizesResponse:
+        """Данные по размерам
+
+        :param current_period: Период
+        :param include_office: Включить детализацию по складам
+        :param nm_id: Артикул WB
+        :param order_by: Вид сортировки данных
+        :param stock_type: Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` —
+            склады продавца
+        """
+        return await GetStocksReportProductsSizes(
+            current_period=current_period,
+            include_office=include_office,
+            nm_id=nm_id,
+            order_by=order_by,
+            stock_type=stock_type,
+        ).emit(self._api)
 
     async def get_stocks_report_wb_warehouses(
         self,
