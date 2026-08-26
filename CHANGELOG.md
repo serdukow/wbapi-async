@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/serdukow/wbapi-async/compare/v1.0.1...v1.0.2) (2026-08-26)
+
+
+### Bug Fixes
+
+* **codegen:** merge allOf branches and follow refs for descriptions ([099cb7c](https://github.com/serdukow/wbapi-async/commit/099cb7c178054814dff76469a8bd66c231233c6f))
+* **codegen:** resolve response refs and type file downloads ([65e8b8e](https://github.com/serdukow/wbapi-async/commit/65e8b8ed82a78f986e1ce93aced8cc001ff4c024))
+
 ## [1.0.1](https://github.com/serdukow/wbapi-async/compare/v1.0.0...v1.0.1) (2026-08-25)
 
 
