@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/serdukow/wbapi-async/compare/v1.0.2...v1.0.3) (2026-08-26)
+
+
+### Bug Fixes
+
+* detect pagination behind allOf and stop rounding the coverage badge ([8971b97](https://github.com/serdukow/wbapi-async/commit/8971b97de2602e44555362ac21b5c6bd779402c9))
+
 ## [1.0.2](https://github.com/serdukow/wbapi-async/compare/v1.0.1...v1.0.2) (2026-08-26)
 
 
