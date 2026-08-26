@@ -756,6 +756,12 @@ class Generator:
         body_kind = None
         if isinstance(body_sch, dict):
             resolved = self._resolve(body_sch["$ref"]) if "$ref" in body_sch else body_sch
+            # The properties can sit inside an allOf: reading them straight off
+            # left body_props empty, and with it the offset that tells the
+            # pagination detector this endpoint pages through a body.
+            if isinstance(resolved, dict) and "allOf" in resolved and not resolved.get("properties"):
+                merged = self._merge_all_of(resolved["allOf"], 0)
+                resolved = merged if merged else resolved
             props = resolved.get("properties") if isinstance(resolved, dict) else None
             if props and len(props) <= 12:
                 required = set(resolved.get("required") or [])

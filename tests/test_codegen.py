@@ -501,3 +501,60 @@ def test_every_documented_field_keeps_its_description() -> None:
                     missing.append(f"{package}.{cls}.{prop}")
 
     assert not missing, missing[:5]
+
+
+def test_every_pageable_endpoint_is_detected() -> None:
+    """An endpoint that takes offset or a cursor must be walkable.
+
+    The body properties can sit inside an allOf, and reading them straight off
+    the schema left the detector blind: stocks-report/products takes limit and
+    offset in its body but generated no __paginate__.
+    """
+    import yaml
+
+    missed: list[str] = []
+    for spec_name, package in gen.SECTIONS.items():
+        spec_file = gen.SPECS_DIR / spec_name
+        methods = gen.PACKAGE / package / "methods.py"
+        if not spec_file.exists() or not methods.exists():
+            continue
+        spec = yaml.safe_load(spec_file.read_text())
+        generator = gen.Generator(spec, package)
+        source = methods.read_text()
+
+        for path, item in (spec.get("paths") or {}).items():
+            if not isinstance(item, dict):
+                continue
+            for verb, operation in item.items():
+                if verb not in {"get", "post", "put", "patch", "delete"}:
+                    continue
+                if not isinstance(operation, dict):
+                    continue
+                pattern = (
+                    rf'__path__ = "{re.escape(path)}"\n'
+                    rf'\s+__http_method__ = "{verb.upper()}"(.*?)(?=\nclass |\Z)'
+                )
+                block = re.search(pattern, source, re.S)
+                if not block or "__paginate__" in block.group(1):
+                    continue
+
+                query = {
+                    p.get("name")
+                    for p in (operation.get("parameters") or [])
+                    if isinstance(p, dict) and p.get("in") == "query"
+                }
+                body = ((operation.get("requestBody") or {}).get("content") or {}).get(
+                    "application/json", {}
+                ).get("schema") or {}
+                if "$ref" in body:
+                    body = generator._resolve(body["$ref"]) or {}
+                if "allOf" in body and not body.get("properties"):
+                    body = generator._merge_all_of(body["allOf"], 0) or body
+
+                marks = {"offset", "cursor", "next", "skip", "take", "rrdId"} & (
+                    query | set((body.get("properties") or {}).keys())
+                )
+                if marks:
+                    missed.append(f"{verb.upper()} {path} takes {sorted(marks)}")
+
+    assert not missed, missed[:5]

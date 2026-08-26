@@ -24,13 +24,9 @@ from .models import (
     GetSearchReportResponse,
     GetSearchReportTableDetailsResponse,
     GetSearchReportTableGroupsResponse,
-    GetStocksReportOfficesBody,
     GetStocksReportOfficesResponse,
-    GetStocksReportProductsBody,
-    GetStocksReportProductsGroupsBody,
     GetStocksReportProductsGroupsResponse,
     GetStocksReportProductsResponse,
-    GetStocksReportProductsSizesBody,
     GetStocksReportProductsSizesResponse,
     GetStocksReportWbWarehousesResponse,
     NmReportCreateReportResponse,
@@ -43,9 +39,11 @@ from .models import (
     PastPeriod,
     PastPeriodItemRating,
     Period,
+    PeriodInv,
     PeriodItemRating,
     PeriodOrdersRequest,
     SalesFunnelItemReq,
+    TableOrderBy,
 )
 
 
@@ -649,8 +647,31 @@ class GetStocksReportOffices(WBMethod[GetStocksReportOfficesResponse]):
         "basic": (1800000, 1),
     }
     __items__ = "data"
+    __body_fields__ = {
+        "nm_ids": "nmIDs",
+        "subject_ids": "subjectIDs",
+        "brand_names": "brandNames",
+        "tag_ids": "tagIDs",
+        "current_period": "currentPeriod",
+        "stock_type": "stockType",
+        "skip_deleted_nm": "skipDeletedNm",
+    }
 
-    body: GetStocksReportOfficesBody | list[Any] | dict[str, Any]
+    current_period: PeriodInv
+    """Период"""
+    skip_deleted_nm: bool
+    """Скрыть удалённые товары"""
+    stock_type: str
+    """Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` — склады продавца
+    """
+    brand_names: list[str] | None = None
+    """Список брендов для фильтрации"""
+    nm_ids: list[int] | None = None
+    """Список артикулов WB для фильтрации"""
+    subject_ids: list[int] | None = None
+    """Список ID предметов для фильтрации"""
+    tag_ids: list[int] | None = None
+    """Список ID ярлыков для фильтрации"""
 
 
 class GetStocksReportProducts(WBMethod[GetStocksReportProductsResponse]):
@@ -670,9 +691,47 @@ class GetStocksReportProducts(WBMethod[GetStocksReportProductsResponse]):
         "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
+    __paginate__ = "offset_body"
     __items__ = "data"
+    __body_fields__ = {
+        "nm_ids": "nmIDs",
+        "subject_id": "subjectID",
+        "brand_name": "brandName",
+        "tag_id": "tagID",
+        "current_period": "currentPeriod",
+        "stock_type": "stockType",
+        "skip_deleted_nm": "skipDeletedNm",
+        "order_by": "orderBy",
+        "availability_filters": "availabilityFilters",
+        "limit": "limit",
+        "offset": "offset",
+    }
 
-    body: GetStocksReportProductsBody | list[Any] | dict[str, Any]
+    availability_filters: list[str]
+    """Доступность товара:   - `deficient` — Дефицит   - `actual` — Актуальный   - `balanced` —
+    Баланс   - `nonActual` — Неактуальный   - `nonLiquid` — Неликвид …
+    """
+    current_period: PeriodInv
+    """Период"""
+    offset: int
+    """После какого элемента выдавать данные"""
+    order_by: TableOrderBy
+    """Вид сортировки данных"""
+    skip_deleted_nm: bool
+    """Скрыть удалённые товары"""
+    stock_type: str
+    """Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` — склады продавца
+    """
+    brand_name: str | None = None
+    """Бренд"""
+    limit: int | None = 100
+    """Количество товаров в ответе"""
+    nm_ids: list[int] | None = None
+    """Список артикулов WB для фильтрации"""
+    subject_id: int | None = None
+    """ID предмета"""
+    tag_id: int | None = None
+    """ID ярлыка"""
 
 
 class GetStocksReportProductsGroups(WBMethod[GetStocksReportProductsGroupsResponse]):
@@ -692,9 +751,47 @@ class GetStocksReportProductsGroups(WBMethod[GetStocksReportProductsGroupsRespon
         "basic_secret": (60000, 3),
         "basic": (1800000, 1),
     }
+    __paginate__ = "offset_body"
     __items__ = "data"
+    __body_fields__ = {
+        "nm_ids": "nmIDs",
+        "subject_ids": "subjectIDs",
+        "brand_names": "brandNames",
+        "tag_ids": "tagIDs",
+        "current_period": "currentPeriod",
+        "stock_type": "stockType",
+        "skip_deleted_nm": "skipDeletedNm",
+        "availability_filters": "availabilityFilters",
+        "order_by": "orderBy",
+        "limit": "limit",
+        "offset": "offset",
+    }
 
-    body: GetStocksReportProductsGroupsBody | list[Any] | dict[str, Any]
+    availability_filters: list[str]
+    """Доступность товара:   - `deficient` — Дефицит   - `actual` — Актуальный   - `balanced` —
+    Баланс   - `nonActual` — Неактуальный   - `nonLiquid` — Неликвид …
+    """
+    current_period: PeriodInv
+    """Период"""
+    offset: int
+    """После какого элемента выдавать данные"""
+    order_by: TableOrderBy
+    """Вид сортировки данных"""
+    skip_deleted_nm: bool
+    """Скрыть удалённые товары"""
+    stock_type: str
+    """Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` — склады продавца
+    """
+    brand_names: list[str] | None = None
+    """Список брендов для фильтрации"""
+    limit: int | None = 100
+    """Количество групп в ответе"""
+    nm_ids: list[int] | None = None
+    """Список артикулов WB для фильтрации"""
+    subject_ids: list[int] | None = None
+    """Список ID предметов для фильтрации"""
+    tag_ids: list[int] | None = None
+    """Список ID ярлыков для фильтрации"""
 
 
 class GetStocksReportProductsSizes(WBMethod[GetStocksReportProductsSizesResponse]):
@@ -715,8 +812,25 @@ class GetStocksReportProductsSizes(WBMethod[GetStocksReportProductsSizesResponse
         "basic": (1800000, 1),
     }
     __items__ = "data"
+    __body_fields__ = {
+        "nm_id": "nmID",
+        "current_period": "currentPeriod",
+        "stock_type": "stockType",
+        "order_by": "orderBy",
+        "include_office": "includeOffice",
+    }
 
-    body: GetStocksReportProductsSizesBody | list[Any] | dict[str, Any]
+    current_period: PeriodInv
+    """Период"""
+    include_office: bool
+    """Включить детализацию по складам"""
+    nm_id: int
+    """Артикул WB"""
+    order_by: TableOrderBy
+    """Вид сортировки данных"""
+    stock_type: str
+    """Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` — склады продавца
+    """
 
 
 class GetStocksReportWbWarehouses(WBMethod[GetStocksReportWbWarehousesResponse]):

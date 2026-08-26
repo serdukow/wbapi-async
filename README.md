@@ -18,16 +18,6 @@
 
 </div>
 
-308 сгенерированных методов с автоматической пагинацией и понятными
-именами:
-
-| OpenAPI Generator                       | wbapi                             |
-| --------------------------------------- | --------------------------------- |
-| `api_v3_supplies_post()`                | `api.orders_fbs.create_supply()`  |
-| `api_v3_orders_new_get()`               | `api.orders_fbs.get_orders_new()` |
-| `api_v3_orders_order_id_cancel_patch()` | `api.orders_fbs.cancel_order()`   |
-| `content_v2_get_cards_list_post()`      | `api.items.get_cards_list()`      |
-
 ## Установка
 
 Требуется Python 3.10+.
@@ -57,7 +47,7 @@ async def main():
 asyncio.run(main())
 ```
 
-### End-to-end поставка FBS
+### Поставка FBS
 
 ```python
 import asyncio
@@ -77,7 +67,7 @@ async def main():
         print(f"Добавлено {len(order_ids)} новых сборочных заданий")
 
         await api.orders_fbs.update_supplies_deliver(supply_id=supply.id)
-        print(f"Передана {supply.id} в доставку")
+        print(f"Поставка {supply.id} передана в доставку")
 
 
 asyncio.run(main())
@@ -105,7 +95,7 @@ async def main():
 asyncio.run(main())
 ```
 
-На больших выборках лучше `iter_*` методы:
+На больших выборках используйте `iter_*` методы:
 
 ```python
 import asyncio
@@ -147,7 +137,7 @@ async def main():
         except WBRateLimitError as error:
             print(f"Превышен лимит, повтор через {error.retry_after} с")
         except WBAPIError as error:
-            print(f"WB вернул {error.status_code}: {error}")
+            print(f"{error.status_code}: {error}")
 
 
 asyncio.run(main())
