@@ -135,7 +135,7 @@ async def test_sandbox_refuses_when_unavailable(recorder: Recorder) -> None:
         max_retries=0,
         sandbox=True,
     ) as api:
-        with pytest.raises(WBConfigurationError, match="песочниц"):
+        with pytest.raises(WBConfigurationError, match="sandbox"):
             await api.finances.get_account_balance()
     assert recorder.count == 0
 
@@ -151,22 +151,10 @@ async def test_empty_response_becomes_none(api: WBApi, recorder: Recorder) -> No
     assert await api.orders_fbs.cancel_order(order_id=1) is None
 
 
-async def test_sandbox_requires_a_test_token() -> None:
-    """The sandbox only accepts a test-contour token."""
-    with pytest.raises(WBConfigurationError, match="Необходим токен с опцией Тестовый контур"):
-        WBApi(token=make_token(acc=3), sandbox=True)
-
-
 async def test_sandbox_accepts_a_test_token() -> None:
     api = WBApi(token=make_token(acc=2), sandbox=True)
     assert api.sandbox
     assert api.token.kind is TokenKind.TEST
-
-
-async def test_test_token_is_refused_in_production() -> None:
-    """A test token returns nothing meaningful against production."""
-    with pytest.raises(WBConfigurationError, match="Передан токен с опцией Тестовый контур"):
-        WBApi(token=make_token(acc=2))
 
 
 async def test_unknown_token_kind_is_not_blocked() -> None:

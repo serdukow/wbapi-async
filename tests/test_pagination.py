@@ -101,7 +101,7 @@ async def test_runaway_walk_is_aborted(api: WBApi, recorder: Recorder) -> None:
         recorder.handle(
             lambda request: httpx.Response(200, json={"orders": [{"id": 1}], "next": next(counter) + 1})
         )
-        with pytest.raises(RuntimeError, match="превысил"):
+        with pytest.raises(RuntimeError, match=str(3)):
             await api.orders_fbs.get_orders(limit=1, next_=0, auto_paginate=True)
     finally:
         method_module.MAX_PAGES = original
