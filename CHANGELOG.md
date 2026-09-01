@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/serdukow/wbapi-async/compare/v1.0.3...v1.1.0) (2026-08-26)
+
+
+### Features
+
+* preserve unknown API fields as extras on WBModel ([38ee9d8](https://github.com/serdukow/wbapi-async/commit/38ee9d8724b74e074ce8afdcb752f8bb2b41e641))
+* preserve unknown API fields as extras on WBModel ([f898f45](https://github.com/serdukow/wbapi-async/commit/f898f4549cd7991651d7d53e8b1ce4056a37d537))
+
 ## [1.0.3](https://github.com/serdukow/wbapi-async/compare/v1.0.2...v1.0.3) (2026-08-26)
 
 
