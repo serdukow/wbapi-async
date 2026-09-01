@@ -101,6 +101,46 @@ def test_snake_case(source: str, expected: str) -> None:
     assert gen.snake(source) == expected
 
 
+@pytest.mark.parametrize(
+    ("source", "expected"),
+    [
+        ("nmIDs", "nm_i_ds"),
+        ("tagIDs", "tag_i_ds"),
+        ("APIKey", "api_key"),
+        ("XMLData", "xml_data"),
+        ("includeSubstitutedSKUs", "include_substituted_sk_us"),
+        ("nmID", "nm_id"),
+        ("isB2B", "is_b2_b"),
+        ("trailing_", "trailingx"),
+        ("plus+sign", "plusxsign"),
+        ("at@sign", "atasign"),
+        ("pipe|char", "pipelchar"),
+        ("field-with-dash", "field_with_dash"),
+        ("__x__y__", "_x_yxx"),
+    ],
+)
+def test_response_fields_follow_dlt(source: str, expected: str) -> None:
+    """A response field becomes a column, and the loader renames it its own way.
+
+    Where the rules disagree — dlt reads `nmIDs` as `nm_i_ds` — a described
+    field and the same field arriving as an extra land in two columns.
+    """
+    assert gen.DltSnakeCase.normalize(source) == expected
+
+
+def test_request_fields_keep_readable_names() -> None:
+    """Nothing sends a request body to a warehouse, so `nm_i_ds` buys nothing."""
+    schema = {"type": "object", "properties": {"nmIDs": {"type": "array", "items": {"type": "integer"}}}}
+    generator = gen.Generator.__new__(gen.Generator)
+    generator.structs = {}
+
+    generator.emit_struct("Body", schema, response=False)
+    generator.emit_struct("Response", schema, response=True)
+
+    assert "nm_ids:" in generator.structs["Body"]
+    assert "nm_i_ds:" in generator.structs["Response"]
+
+
 @pytest.mark.parametrize("name", ["type", "filter", "next", "id"])
 def test_argument_names_avoid_builtins(name: str) -> None:
     assert gen.arg(name).endswith("_")

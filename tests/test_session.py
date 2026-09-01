@@ -112,8 +112,8 @@ async def test_user_agent_names_the_library(api: WBApi, recorder: Recorder) -> N
     assert recorder.last.headers["user-agent"].startswith("wbapi/")
 
 
-async def test_shape_mismatch_is_relaxed(api: WBApi, recorder: Recorder) -> None:
-    """An array where the spec promised an object must not crash the client."""
+async def test_a_spec_fix_reaches_the_model(api: WBApi, recorder: Recorder) -> None:
+    """Tags answer with an array where the spec describes an object."""
     recorder.add({"data": [{"id": 1, "color": "красный", "name": "Хит"}], "error": False})
     result = await api.items.get_tags()
     assert result.data[0].name == "Хит"
@@ -203,3 +203,24 @@ async def test_a_file_download_comes_back_as_bytes(recorder: Recorder) -> None:
         result = await api.analytics.get_nm_report_downloads_file(download_id="x")
 
     assert result == archive
+
+
+async def test_a_number_in_a_string_field_does_not_fail_the_call(recorder: Recorder) -> None:
+    """The finance report answers with sellerPromo as a number, not a string.
+
+    msgspec turns "42" into 42 on its own but never the other way, so this
+    drift used to abort the whole extraction.
+    """
+    recorder.add([{"rrd_id": 1, "sellerPromo": 0}, {"rrd_id": 2, "sellerPromo": 5}])
+    async with WBApi(token=make_token(scopes=ALL_SCOPES), transport=httpx.MockTransport(recorder)) as api:
+        rows = await api.finances.get_sales_reports_detailed(date_from="2026-01-01", date_to="2026-01-02")
+
+    assert [row.seller_promo for row in rows] == ["0", "5"]
+
+
+async def test_drift_it_cannot_reshape_still_raises(recorder: Recorder) -> None:
+    """Reshaping must not paper over a response that is genuinely wrong."""
+    recorder.add({"orders": [{"id": {"вложенный": "объект"}}]})
+    async with WBApi(token=make_token(scopes=ALL_SCOPES), transport=httpx.MockTransport(recorder)) as api:
+        with pytest.raises(WBDecodeError):
+            await api.orders_fbs.get_orders_new()

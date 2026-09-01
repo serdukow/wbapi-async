@@ -8,7 +8,7 @@ import pytest
 
 from tests.conftest import Recorder
 from wbapi import WBApi
-from wbapi.client.method import WBMethod, _relax_shape, _rows
+from wbapi.client.method import WBMethod, _relax, _rows
 from wbapi.exceptions import WBConfigurationError
 
 
@@ -66,45 +66,8 @@ async def test_method_without_pagination_yields_nothing_extra(api: WBApi, record
 
 
 async def test_sandbox_url_is_refused_without_a_sandbox_host() -> None:
-    with pytest.raises(WBConfigurationError, match="песочниц"):
+    with pytest.raises(WBConfigurationError, match="sandbox"):
         Plain().url(sandbox=True)
-
-
-@pytest.mark.parametrize(
-    ("raw", "message"),
-    [
-        ({"a": 1}, "no shape mismatch here"),
-        ("not a dict", "Expected `object | null`, got `array` - at `$.data`"),
-        ({"other": 1}, "Expected `object | null`, got `array` - at `$.data`"),
-        ({"data": "text"}, "Expected `object | null`, got `array` - at `$.data`"),
-        ({"a": {"b": 1}}, "Expected `object | null`, got `array` - at `$.a.missing`"),
-    ],
-)
-def test_relax_shape_declines_what_it_cannot_fix(raw: Any, message: str) -> None:
-    assert _relax_shape(raw, message) is None
-
-
-def test_relax_shape_unwraps_a_single_item_array() -> None:
-    patched = _relax_shape({"data": [{"id": 1}]}, "Expected `object | null`, got `array` - at `$.data`")
-    assert patched == {"data": {"id": 1}}
-
-
-def test_relax_shape_wraps_an_object_into_an_array() -> None:
-    patched = _relax_shape({"data": {"id": 1}}, "Expected `array | null`, got `object` - at `$.data`")
-    assert patched == {"data": [{"id": 1}]}
-
-
-def test_relax_shape_handles_an_empty_array() -> None:
-    patched = _relax_shape({"data": []}, "Expected `object | null`, got `array` - at `$.data`")
-    assert patched == {"data": None}
-
-
-def test_relax_shape_reaches_a_nested_field() -> None:
-    patched = _relax_shape(
-        {"outer": {"data": [{"id": 1}]}},
-        "Expected `object | null`, got `array` - at `$.outer.data`",
-    )
-    assert patched == {"outer": {"data": {"id": 1}}}
 
 
 @pytest.mark.parametrize(
@@ -134,3 +97,93 @@ def test_rate_limit_falls_back_to_any_category() -> None:
 
     assert Limited().rate_limit("personal") == (60_000, 1)
     assert Limited().rate_limit(None) == (60_000, 1)
+
+
+@pytest.mark.parametrize(
+    ("raw", "message", "expected"),
+    [
+        (
+            [{"sellerPromo": 0}, {"sellerPromo": 5}],
+            "Expected `str | null`, got `int` - at `$[0].sellerPromo`",
+            [{"sellerPromo": "0"}, {"sellerPromo": "5"}],
+        ),
+        (
+            [{"rate": 1.5}],
+            "Expected `str | null`, got `float` - at `$[0].rate`",
+            [{"rate": "1.5"}],
+        ),
+        (
+            {"data": [{"id": 1}]},
+            "Expected `object | null`, got `array` - at `$.data`",
+            {"data": {"id": 1}},
+        ),
+        (
+            {"data": {"id": 1}},
+            "Expected `array | null`, got `object` - at `$.data`",
+            {"data": [{"id": 1}]},
+        ),
+        (
+            {"data": []},
+            "Expected `object | null`, got `array` - at `$.data`",
+            {"data": None},
+        ),
+        (
+            {"outer": {"data": [{"id": 1}]}},
+            "Expected `object | null`, got `array` - at `$.outer.data`",
+            {"outer": {"data": {"id": 1}}},
+        ),
+    ],
+)
+def test_a_drifting_response_is_reshaped(raw: Any, message: str, expected: Any) -> None:
+    assert _relax(raw, message) == expected
+
+
+@pytest.mark.parametrize(
+    ("raw", "message"),
+    [
+        ({"a": 1}, "Object missing required field `p`"),
+        ({"a": 1}, "Expected `str`, got `int` - at `$.absent`"),
+        ([{"flag": True}], "Expected `str | null`, got `bool` - at `$[0].flag`"),
+        ({"data": "text"}, "Expected `object | null`, got `array` - at `$.data`"),
+        ({"a": {"b": 1}}, "Expected `object`, got `array` - at `$.a.missing`"),
+    ],
+)
+def test_a_mismatch_it_cannot_reshape_is_declined(raw: Any, message: str) -> None:
+    assert _relax(raw, message) is None
+
+
+def test_every_row_is_reshaped_not_just_the_reported_one() -> None:
+    raw = [{"n": 1}, {"n": 2}, {"n": 3}]
+
+    assert _relax(raw, "Expected `str | null`, got `int` - at `$[0].n`") == [
+        {"n": "1"},
+        {"n": "2"},
+        {"n": "3"},
+    ]
+
+
+def test_a_row_without_the_field_is_left_alone() -> None:
+    raw = [{"n": 1}, {"other": 2}]
+
+    assert _relax(raw, "Expected `str | null`, got `int` - at `$[0].n`") == [
+        {"n": "1"},
+        {"other": 2},
+    ]
+
+
+def test_a_required_body_is_sent_even_when_empty() -> None:
+    """WB answers 400 IncorrectRequestBody when a required body is absent.
+
+    create_supply takes only an optional name, so calling it without one used
+    to send no body at all.
+    """
+    from wbapi.orders_fbs.methods import CreateSupply
+
+    assert CreateSupply()._body() == {}
+    assert CreateSupply(name="Июнь")._body() == {"name": "Июнь"}
+
+
+def test_a_method_without_a_body_sends_none() -> None:
+    from wbapi.orders_fbs.methods import GetOrdersNew
+
+    assert GetOrdersNew()._body() is None
