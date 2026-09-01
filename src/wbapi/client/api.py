@@ -19,7 +19,7 @@ from ..orders_fbw import OrdersFbw
 from ..promotion import Promotion
 from ..rates import Rates
 from ..reports import Reports
-from ..utils.token import TokenKind, decode_token
+from ..utils.token import decode_token
 from ..wbd import Wbd
 from .method import WBMethod
 from .session import DEFAULT_TIMEOUT, Session
@@ -77,20 +77,7 @@ class WBApi:
                 "Некорректный токен авторизации. "
                 "См. https://dev.wildberries.ru/docs/openapi/api-information#tag/authorization/Kategorii-tokenov"
             )
-
         self.token = decode_token(token.strip())
-        is_test_token = self.token.kind is TokenKind.TEST
-        if sandbox and self.token.kind is not None and not is_test_token:
-            raise WBConfigurationError(
-                "Некорректный токен авторизации. "
-                "Необходим токен с опцией Тестовый контур. "
-                "См. https://dev.wildberries.ru/ru/openapi/api-information#tag/authorization/Kak-sozdat-personalnyj-bazovyj-ili-testovyj-token"
-            )
-        if is_test_token and not sandbox:
-            raise WBConfigurationError(
-                "Некорректный токен авторизации. Передан токен с опцией Тестовый контур."
-                "См. https://dev.wildberries.ru/docs/openapi/api-information#tag/authorization/Kategorii-tokenov"
-            )
         self.sandbox = sandbox
         self._session = Session(token.strip(), timeout=timeout, **kwargs)
         self.analytics = Analytics(self)
