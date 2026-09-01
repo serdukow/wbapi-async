@@ -15,8 +15,8 @@ if TYPE_CHECKING:
     from .api import WBApi
 
 _UNSAFE = re.compile(r"[/?#%\\\s]|\.\.")
-_SHAPE_MISMATCH = re.compile(r"Expected `(?P<want>[\w| ]+)`, got `(?P<got>\w+)` - at `\$\.(?P<path>[\w.]+)`")
-
+_MISMATCH = re.compile(r"Expected `(?P<want>[^`]+)`, got `(?P<got>[^`]+)` - at `\$(?P<path>[^`]*)`")
+_STEP = re.compile(r"\[(\d+)\]|\.?([^.\[\]]+)")
 MAX_PAGES = 10_000
 
 T = TypeVar("T")
@@ -30,6 +30,7 @@ class WBMethod(msgspec.Struct, Generic[T], omit_defaults=True, kw_only=True):
         __path_params__: ClassVar[tuple[str, ...]]
         __query_params__: ClassVar[dict[str, str]]
         __body_fields__: ClassVar[dict[str, str]]
+        __body_required__: ClassVar[bool]
         __paginate__: ClassVar[str | None]
         __items__: ClassVar[str | None]
         __host__: ClassVar[str]
@@ -43,7 +44,7 @@ class WBMethod(msgspec.Struct, Generic[T], omit_defaults=True, kw_only=True):
         host = getattr(self, "__sandbox_host__", "")
         if not host:
             raise WBConfigurationError(
-                f"{self.__http_method__} {self.__path__}: у метода нет песочницы. "
+                f"{self.__http_method__} {self.__path__}: метод не имеет sandbox. "
                 f"См. https://dev.wildberries.ru/sandbox"
             )
         return f"{host}{self._path()}"
@@ -81,7 +82,9 @@ class WBMethod(msgspec.Struct, Generic[T], omit_defaults=True, kw_only=True):
             if (value := getattr(self, attr, None)) is not None
         }
         body.update(extra or {})
-        return body or None
+        if body:
+            return body
+        return {} if getattr(self, "__body_required__", False) else None
 
     def rate_limit(self, kind: str | None) -> tuple[int, int] | None:
         limits: dict[str, tuple[int, int]] = getattr(self, "__rate_limits__", {})
@@ -104,18 +107,16 @@ class WBMethod(msgspec.Struct, Generic[T], omit_defaults=True, kw_only=True):
             _keep_extras(raw, decoded)
             return decoded
         except msgspec.ValidationError as exc:
-            relaxed = _relax_shape(raw, str(exc))
+            relaxed = _relax(raw, str(exc))
             if relaxed is not None:
                 try:
-                    fallback: T = msgspec.convert(relaxed, returns, strict=False)
-                    _keep_extras(relaxed, fallback)
-                    return fallback
+                    retried: T = msgspec.convert(relaxed, returns, strict=False)
+                    _keep_extras(relaxed, retried)
+                    return retried
                 except msgspec.ValidationError:
                     pass
             raise WBDecodeError(
-                f"{self.__http_method__} {self.__path__}: ответ не совпал с описанием "
-                f"в спецификации — {exc}. Обновите спецификации "
-                f"(uv run python scripts/update_specs.py) и перегенерируйте клиент.",
+                f"{self.__http_method__} {self.__path__}: {exc}",
                 path=self.__path__,
                 payload=raw,
             ) from exc
@@ -138,7 +139,7 @@ class WBMethod(msgspec.Struct, Generic[T], omit_defaults=True, kw_only=True):
         async for raw in walk(api):
             pages += 1
             if pages > MAX_PAGES:
-                raise RuntimeError(f"Обход превысил {MAX_PAGES} страниц; прерываю")
+                raise RuntimeError(f"{MAX_PAGES}")
             for item in _rows(self._decode(raw), items):
                 yield item
 
@@ -248,35 +249,54 @@ def _keep_extras(raw: Any, decoded: Any) -> None:
         return
 
 
-def _relax_shape(raw: Any, message: str) -> Any:
-    match = _SHAPE_MISMATCH.search(message)
-    if not match or not isinstance(raw, dict):
+def _locate(message: str) -> tuple[list[str | int], str, str] | None:
+    match = _MISMATCH.search(message)
+    if not match:
         return None
+    path: list[str | int] = [int(index) if index else key for index, key in _STEP.findall(match["path"])]
+    return (path, match["want"], match["got"]) if path else None
 
-    parts = match["path"].split(".")
-    node: Any = raw
-    for part in parts[:-1]:
-        if not isinstance(node, dict) or part not in node:
-            return None
-        node = node[part]
-    key = parts[-1]
-    if not isinstance(node, dict) or key not in node:
-        return None
 
-    value = node[key]
-    want, got = match["want"], match["got"]
+def _reshape(value: Any, want: str, got: str) -> Any:
     if got == "array" and "object" in want and isinstance(value, list):
-        replacement = value[0] if value else None
-    elif got == "object" and "array" in want and isinstance(value, dict):
-        replacement = [value]
-    else:
+        return value[0] if value else None
+    if got == "object" and "array" in want and isinstance(value, dict):
+        return [value]
+    if "str" in want and isinstance(value, int | float) and not isinstance(value, bool):
+        return str(value)
+    raise LookupError(want)
+
+
+def _patch(node: Any, path: list[str | int], want: str, got: str) -> None:
+    for step in path[:-1]:
+        node = node[step]
+    node[path[-1]] = _reshape(node[path[-1]], want, got)
+
+
+def _relax(raw: Any, message: str) -> Any:
+    located = _locate(message)
+    if located is None:
         return None
+    path, want, got = located
 
     patched = copy.deepcopy(raw)
-    node = patched
-    for part in parts[:-1]:
-        node = node[part]
-    node[key] = replacement
+    try:
+        _patch(patched, path, want, got)
+    except (LookupError, TypeError, IndexError):
+        return None
+
+    rows = next((i for i, step in enumerate(path) if isinstance(step, int)), None)
+    if rows is not None and rows == len(path) - 2:
+        container = patched
+        for step in path[:rows]:
+            container = container[step]
+        for index in range(len(container)):
+            if index == path[rows]:
+                continue
+            try:
+                _patch(container, [index, *path[rows + 1 :]], want, got)
+            except (LookupError, TypeError, IndexError):
+                continue
     return patched
 
 
