@@ -27,6 +27,7 @@ from .methods import (
     GetSettingsAutoreturns,
     GetSettingsAutoreturnsItems,
     GetSettingsAutoreturnsSubcategoriesRestricted,
+    GetShippingPoints,
     GetStatusHistory,
     GetStickersCrossBorder,
     GetSupplies,
@@ -42,6 +43,8 @@ from .methods import (
     SetMetaImei,
     SetMetaSgtin,
     SetMetaUin,
+    SetSuppliesShippingMethod,
+    SetSuppliesWaybill,
     UpdatePasses,
     UpdateSettingsAutoreturn,
     UpdateSettingsAutoreturnsItem,
@@ -69,8 +72,12 @@ from .models import (
     GetSuppliesTrbxStickersResponse,
     Pass,
     PassOffice,
+    ShippingPointsResponse,
     Supply,
     UpdateSettingsAutoreturnsItemResponse,
+    UpdateSuppliesResponse,
+    UpdateSupplyShippingMethod,
+    UpdateSupplyWaybill,
     V3ArchiveOrders,
     V3OrdersMetaAPI,
     V3SupplyOrderIDsAPI,
@@ -330,6 +337,16 @@ class OrdersFbs:
         ):
             yield item
 
+    async def get_shipping_points(self, *, cargo_type: int, city: str) -> ShippingPointsResponse:
+        """Получить список пунктов отгрузки поставок
+
+        :param cargo_type: Тип товара, который принимает пункт отгрузки:   - `1` — малогабаритный товар
+            (МГТ)   - `2` — сверхгабаритный товар (СГТ)   - `3` — крупногабаритный товар
+            (КГТ+)
+        :param city: Населённый пункт отгрузки поставки, кириллица
+        """
+        return await GetShippingPoints(cargo_type=cargo_type, city=city).emit(self._api)
+
     async def get_status_history(self, *, orders: list[int] | None = None) -> GetStatusHistoryResponse:
         """История статусов для сборочных заданий трансграничных поставок
 
@@ -465,6 +482,22 @@ class OrdersFbs:
         :param uin: УИН
         """
         await SetMetaUin(order_id=order_id, uin=uin).emit(self._api)
+
+    async def set_supplies_shipping_method(
+        self, *, data: list[UpdateSupplyShippingMethod]
+    ) -> UpdateSuppliesResponse:
+        """Установить параметры отгрузки поставок
+
+        :param data: Не более 100 элементов, не менее 1 элемент
+        """
+        return await SetSuppliesShippingMethod(data=data).emit(self._api)
+
+    async def set_supplies_waybill(self, *, data: list[UpdateSupplyWaybill]) -> UpdateSuppliesResponse:
+        """Установить ID ЭТрН поставок
+
+        :param data: Не более 100 элементов, не менее 1 элемент
+        """
+        return await SetSuppliesWaybill(data=data).emit(self._api)
 
     async def update_passes(
         self,

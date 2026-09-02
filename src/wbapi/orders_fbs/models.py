@@ -519,6 +519,15 @@ class PassOffice(WBModel):
     """Название"""
 
 
+class ReplyBatchError(WBModel):
+    """Детали ошибки"""
+
+    code: int | None = _field(default=None)
+    """Код ошибки"""
+    detail: str | None = _field(default=None)
+    """Дополнительная информация об ошибке"""
+
+
 class SetMetaCustomsDeclarationBody(WBModel):
     customs_declaration: str | None = _field(default=None, name="customsDeclaration")
     """Номер ДТ"""
@@ -551,6 +560,48 @@ class SetMetaUinBody(WBModel):
     """УИН"""
 
 
+class SetSuppliesShippingMethodBody(WBModel):
+    data: list[UpdateSupplyShippingMethod] | None = _field(default=None)
+    """Не более 100 элементов, не менее 1 элемент"""
+
+
+class SetSuppliesWaybillBody(WBModel):
+    data: list[UpdateSupplyWaybill] | None = _field(default=None)
+    """Не более 100 элементов, не менее 1 элемент"""
+
+
+class ShippingPoint(WBModel):
+    """Данные пункта отгрузки"""
+
+    address: str | None = _field(default=None)
+    """Адрес"""
+    cargo_types: list[int] | None = _field(default=None, name="cargoTypes")
+    """Типы товаров, которые принимает пункт отгрузки:   - `1` — малогабаритный товар (МГТ)   - `2`
+    — сверхгабаритный товар (СГТ) …
+    """
+    city: str | None = _field(default=None)
+    """Населённый пункт"""
+    fulfillment: bool | None = _field(default=None)
+    """Услуга **Фулфилмент в СЦ** для поставки по модели FBS:   - `true` — доступна   - `false` —
+    недоступна
+    """
+    id: int | None = _field(default=None)
+    """ID пункта отгрузки"""
+    latitude: float | None = _field(default=None)
+    """Широта"""
+    longitude: float | None = _field(default=None)
+    """Долгота"""
+    name: str | None = _field(default=None)
+    """Название"""
+    office_type: str | None = _field(default=None, name="officeType")
+    """Тип пункта отгрузки:   - `sc` — сортировочный центр   - `sw` — склад   - `pp` — ПВЗ"""
+
+
+class ShippingPointsResponse(WBModel):
+    shipping_points: list[ShippingPoint] | None = _field(default=None, name="shippingPoints")
+    """Список пунктов отгрузки"""
+
+
 class Supply(WBModel):
     cargo_type: int | None = _field(default=None, name="cargoType")
     """Тип товара:   - `1` — малогабаритный товар (МГТ)   - `2` — сверхгабаритный товар (СГТ)   -
@@ -565,7 +616,7 @@ class Supply(WBModel):
     значение отсутствует
     """
     destination_office_id: int | None = _field(default=None, name="destinationOfficeId")
-    """ID склада назначения поставки. Если `null`, склад назначения не указан"""
+    """ID склада хранения сборочных заданий в поставке. Если `null`, склад не указан"""
     done: bool | None = _field(default=None)
     """Флаг закрытия поставки:   - `true` — закрыта   - `false` — открыта"""
     id: str | None = _field(default=None)
@@ -582,6 +633,16 @@ class Supply(WBModel):
     """ID рекомендуемого склада для приёмки поставки для Москвы и МО. …"""
     scan_dt: str | None = _field(default=None, name="scanDt")
     """Дата сканирования поставки или первого заказа (RFC3339)"""
+    shipping_dt: str | None = _field(default=None, name="shippingDt")
+    """Планируемая дата отгрузки поставки, формат `YYYY-MM-DD`"""
+    shipping_point_id: int | None = _field(default=None, name="shippingPointId")
+    """ID пункта отгрузки. Можно получить в методе получения пунктов отгрузки поставок"""
+    shipping_type: str | None = _field(default=None, name="shippingType")
+    """Способ доставки до пункта отгрузки:   - `selfShipping` — доставка силами продавца …"""
+    waybill_uuid: str | None = _field(default=None, name="waybillUuid")
+    """ID ЭТрН — электронной транспортной накладной. Обязателен при
+    `"shippingType":"transportCompany"`
+    """
 
 
 class SupplyTrbx(WBModel):
@@ -639,6 +700,39 @@ class UpdateSettingsAutoreturnsItemResponseResultsItem(WBModel):
 class UpdateSuppliesOrderBody(WBModel):
     orders: list[int] | None = _field(default=None)
     """ID сборочных заданий"""
+
+
+class UpdateSuppliesResponse(WBModel):
+    results: list[UpdatedSupplies] | None = _field(default=None)
+
+
+class UpdateSupplyShippingMethod(WBModel):
+    shipping_dt: str | None = _field(default=None, name="shippingDt")
+    """Планируемая дата отгрузки поставки, формат `YYYY-MM-DD`"""
+    shipping_point_id: int | None = _field(default=None, name="shippingPointId")
+    """ID пункта отгрузки. Можно получить с помощью отдельного метода"""
+    shipping_type: str | None = _field(default=None, name="shippingType")
+    """Способ доставки до пункта отгрузки:   - `selfShipping` — доставка силами продавца …"""
+    supply_id: str | None = _field(default=None, name="supplyId")
+    """ID поставки"""
+
+
+class UpdateSupplyWaybill(WBModel):
+    supply_id: str | None = _field(default=None, name="supplyId")
+    """ID поставки"""
+    waybill_uuid: str | None = _field(default=None, name="waybillUuid")
+    """ID ЭТрН"""
+
+
+class UpdatedSupplies(WBModel):
+    """Результат обработки запроса для одной поставки"""
+
+    error: ReplyBatchError | None = _field(default=None)
+    """Детали ошибки"""
+    success: bool | None = _field(default=None)
+    """Успешна ли обработка запроса для данной поставки. Может быть только `true`"""
+    supply_id: str | None = _field(default=None, name="supplyId")
+    """ID поставки"""
 
 
 class V3ArchiveOrder(WBModel):

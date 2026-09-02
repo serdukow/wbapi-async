@@ -811,6 +811,11 @@ class GetStocksReportProductsSizesResponse(WBModel):
     data: TableSizeResponse | None = _field(default=None)
 
 
+class GetStocksReportSellerWarehousesResponse(WBModel):
+    data: InventorySellerResponse | None = _field(default=None)
+    """Текущие остатки товаров на складах продавца"""
+
+
 class GetStocksReportWbWarehousesResponse(WBModel):
     data: InventoryWbResponse | None = _field(default=None)
     """Текущие остатки товаров на складах WB"""
@@ -879,6 +884,28 @@ class InventoryRequest(WBModel):
     """Артикулы WB"""
     offset: int | None = _field(default=None)
     """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
+
+
+class InventorySellerResponse(WBModel):
+    """Текущие остатки товаров на складах продавца"""
+
+    items: list[InventorySellerResponseItemsItem] | None = _field(default=None)
+    """Остатки товаров на складах продавца по размерам"""
+
+
+class InventorySellerResponseItemsItem(WBModel):
+    chrt_id: int | None = _field(default=None, name="chrtId")
+    """ID размера"""
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    quantity: int | None = _field(default=None)
+    """Количество товара на складе, доступное клиентам для добавления в корзину"""
+    region_name: str | None = _field(default=None, name="regionName")
+    """Регион отгрузки"""
+    warehouse_id: int | None = _field(default=None, name="warehouseId")
+    """ID склада"""
+    warehouse_name: str | None = _field(default=None, name="warehouseName")
+    """Название склада"""
 
 
 class InventoryWbResponse(WBModel):
