@@ -128,6 +128,7 @@ markers = [
     "unit: unit tests",
     "integration: integration tests",
     "slow: slow running tests",
+    "regenerated: compares the specs against the client on disk; run after codegen",
 ]
 
 [tool.mypy]

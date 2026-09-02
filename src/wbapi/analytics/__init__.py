@@ -25,6 +25,7 @@ from .methods import (
     GetStocksReportProducts,
     GetStocksReportProductsGroups,
     GetStocksReportProductsSizes,
+    GetStocksReportSellerWarehouses,
     GetStocksReportWbWarehouses,
 )
 from .models import (
@@ -48,6 +49,7 @@ from .models import (
     GetStocksReportProductsGroupsResponse,
     GetStocksReportProductsResponse,
     GetStocksReportProductsSizesResponse,
+    GetStocksReportSellerWarehousesResponse,
     GetStocksReportWbWarehousesResponse,
     NmReportCreateReportResponse,
     NmReportGetReportsResponse,
@@ -975,6 +977,48 @@ class Analytics:
             order_by=order_by,
             stock_type=stock_type,
         ).emit(self._api)
+
+    async def get_stocks_report_seller_warehouses(
+        self,
+        *,
+        chrt_ids: list[int] | None = None,
+        limit: int | None = 250000,
+        nm_ids: list[int] | None = None,
+        offset: int | None = 0,
+        auto_paginate: bool = False,
+    ) -> GetStocksReportSellerWarehousesResponse | list[Any]:
+        """Остатки на складах продавца
+
+        :param chrt_ids: ID размеров. Используется только для указанных в массиве `nmIds` артикулов
+        :param limit: Количество строк в ответе
+        :param nm_ids: Артикулы WB
+        :param offset: Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11
+            элемента
+        :param auto_paginate: автоматически собрать все страницы выборки
+        """
+        call = GetStocksReportSellerWarehouses(chrt_ids=chrt_ids, limit=limit, nm_ids=nm_ids, offset=offset)
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
+
+    async def iter_get_stocks_report_seller_warehouses(
+        self,
+        *,
+        chrt_ids: list[int] | None = None,
+        limit: int | None = 250000,
+        nm_ids: list[int] | None = None,
+        offset: int | None = 0,
+    ) -> AsyncIterator[Any]:
+        """Остатки на складах продавца — постранично, по одной записи.
+
+        :param chrt_ids: ID размеров. Используется только для указанных в массиве `nmIds` артикулов
+        :param limit: Количество строк в ответе
+        :param nm_ids: Артикулы WB
+        :param offset: Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11
+            элемента
+        """
+        async for item in GetStocksReportSellerWarehouses(
+            chrt_ids=chrt_ids, limit=limit, nm_ids=nm_ids, offset=offset
+        ).stream(self._api):
+            yield item
 
     async def get_stocks_report_wb_warehouses(
         self,

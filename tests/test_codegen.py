@@ -172,6 +172,7 @@ def test_the_sustained_rate_comes_from_the_period_columns() -> None:
     assert burst / (interval_ms / 1000) == pytest.approx(1 / 60)
 
 
+@pytest.mark.regenerated
 def test_no_generated_limit_outruns_its_spec_row() -> None:
     """No endpoint may be configured faster than the table permits."""
     import yaml
@@ -347,6 +348,7 @@ def test_a_keyword_segment_still_yields_a_usable_name(segment: str) -> None:
     assert not re.search(r"(.)\1\1", name)
 
 
+@pytest.mark.regenerated
 def test_generated_names_are_well_formed() -> None:
     """Every name the specs produce must survive the rules we fixed one by one.
 
@@ -451,6 +453,7 @@ def test_scalar_defaults_are_carried_into_the_signature(schema: Any, expected: s
     assert gen.literal_default(schema) == expected
 
 
+@pytest.mark.regenerated
 def test_a_spec_default_reaches_the_generated_method() -> None:
     """The sales report page size defaults to 100000 in the spec.
 
@@ -482,6 +485,7 @@ def test_an_allof_ref_resolves_to_its_item_type() -> None:
     assert generator.type_of(schema, "MetaDetails", depth=5).startswith("list[")
 
 
+@pytest.mark.regenerated
 def test_few_fields_fall_back_to_any() -> None:
     """A field is Any only when the spec itself gives it no type."""
     import re
@@ -495,6 +499,7 @@ def test_few_fields_fall_back_to_any() -> None:
     assert untyped < 60, f"{untyped} fields are untyped; the schema walk may be stopping short"
 
 
+@pytest.mark.regenerated
 def test_every_documented_field_keeps_its_description() -> None:
     """A description on the spec must reach the generated field.
 
@@ -543,6 +548,7 @@ def test_every_documented_field_keeps_its_description() -> None:
     assert not missing, missing[:5]
 
 
+@pytest.mark.regenerated
 def test_every_pageable_endpoint_is_detected() -> None:
     """An endpoint that takes offset or a cursor must be walkable.
 

@@ -28,6 +28,7 @@ from .models import (
     GetStocksReportProductsGroupsResponse,
     GetStocksReportProductsResponse,
     GetStocksReportProductsSizesResponse,
+    GetStocksReportSellerWarehousesResponse,
     GetStocksReportWbWarehousesResponse,
     NmReportCreateReportResponse,
     NmReportGetReportsResponse,
@@ -845,6 +846,33 @@ class GetStocksReportProductsSizes(WBMethod[GetStocksReportProductsSizesResponse
     stock_type: str
     """Тип складов хранения товаров:   - `""` — все   - `wb` — склады WB   - `mp` — склады продавца
     """
+
+
+class GetStocksReportSellerWarehouses(WBMethod[GetStocksReportSellerWarehousesResponse]):
+    """Остатки на складах продавца
+
+    POST /api/analytics/v1/stocks-report/seller-warehouses
+    """
+
+    __path__ = "/api/analytics/v1/stocks-report/seller-warehouses"
+    __http_method__ = "POST"
+    __returns__ = GetStocksReportSellerWarehousesResponse
+    __scope__ = Scope.ANALYTICS
+    __host__ = "https://seller-analytics-api.wildberries.ru"
+    __rate_limits__ = {"all": (20000, 1)}
+    __paginate__ = "offset_body"
+    __items__ = "data"
+    __body_fields__ = {"nm_ids": "nmIds", "chrt_ids": "chrtIds", "limit": "limit", "offset": "offset"}
+    __body_required__ = True
+
+    chrt_ids: list[int] | None = None
+    """ID размеров. Используется только для указанных в массиве `nmIds` артикулов"""
+    limit: int | None = 250000
+    """Количество строк в ответе"""
+    nm_ids: list[int] | None = None
+    """Артикулы WB"""
+    offset: int | None = 0
+    """Сколько элементов пропустить. Например, для значения `10` ответ начнётся с 11 элемента"""
 
 
 class GetStocksReportWbWarehouses(WBMethod[GetStocksReportWbWarehousesResponse]):

@@ -26,8 +26,12 @@ from .models import (
     GetSuppliesTrbxStickersResponse,
     Pass,
     PassOffice,
+    ShippingPointsResponse,
     Supply,
     UpdateSettingsAutoreturnsItemResponse,
+    UpdateSuppliesResponse,
+    UpdateSupplyShippingMethod,
+    UpdateSupplyWaybill,
     V3ArchiveOrders,
     V3OrdersMetaAPI,
     V3SupplyOrderIDsAPI,
@@ -461,6 +465,28 @@ class GetSettingsAutoreturnsSubcategoriesRestricted(
     """
 
 
+class GetShippingPoints(WBMethod[ShippingPointsResponse]):
+    """Получить список пунктов отгрузки поставок
+
+    GET /api/marketplace/v3/fbs/shipping-points
+    """
+
+    __path__ = "/api/marketplace/v3/fbs/shipping-points"
+    __http_method__ = "GET"
+    __returns__ = ShippingPointsResponse
+    __query_params__ = {"city": "city", "cargo_type": "cargoType"}
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+
+    cargo_type: int
+    """Тип товара, который принимает пункт отгрузки:   - `1` — малогабаритный товар (МГТ)   - `2` —
+    сверхгабаритный товар (СГТ)   - `3` — крупногабаритный товар (КГТ+)
+    """
+    city: str
+    """Населённый пункт отгрузки поставки, кириллица"""
+
+
 class GetStatusHistory(WBMethod[GetStatusHistoryResponse]):
     """История статусов для сборочных заданий трансграничных поставок
 
@@ -782,6 +808,44 @@ class SetMetaUin(WBMethod[None]):
     """ID сборочного задания"""
     uin: str
     """УИН"""
+
+
+class SetSuppliesShippingMethod(WBMethod[UpdateSuppliesResponse]):
+    """Установить параметры отгрузки поставок
+
+    PATCH /api/marketplace/v3/fbs/supplies/shipping-method
+    """
+
+    __path__ = "/api/marketplace/v3/fbs/supplies/shipping-method"
+    __http_method__ = "PATCH"
+    __returns__ = UpdateSuppliesResponse
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __body_fields__ = {"data": "data"}
+    __body_required__ = True
+
+    data: list[UpdateSupplyShippingMethod]
+    """Не более 100 элементов, не менее 1 элемент"""
+
+
+class SetSuppliesWaybill(WBMethod[UpdateSuppliesResponse]):
+    """Установить ID ЭТрН поставок
+
+    PATCH /api/marketplace/v3/fbs/supplies/waybill
+    """
+
+    __path__ = "/api/marketplace/v3/fbs/supplies/waybill"
+    __http_method__ = "PATCH"
+    __returns__ = UpdateSuppliesResponse
+    __scope__ = Scope.MARKETPLACE
+    __host__ = "https://marketplace-api.wildberries.ru"
+    __rate_limits__ = {"all": (4000, 20)}
+    __body_fields__ = {"data": "data"}
+    __body_required__ = True
+
+    data: list[UpdateSupplyWaybill]
+    """Не более 100 элементов, не менее 1 элемент"""
 
 
 class UpdatePasses(WBMethod[None]):
