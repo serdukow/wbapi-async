@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/serdukow/wbapi-async/compare/v1.1.1...v1.2.0) (2026-09-02)
+
+
+### Features
+
+* add the FBS shipping point and waybill methods ([8f67e7c](https://github.com/serdukow/wbapi-async/commit/8f67e7c3b8beea9e0f84fec55facb50427f89422))
+* add the FBS shipping point and waybill methods ([#104](https://github.com/serdukow/wbapi-async/issues/104)) ([885d6a2](https://github.com/serdukow/wbapi-async/commit/885d6a2c37ebe2bfda49e9a5b39da115faf26e53))
+
+
+### Bug Fixes
+
+* **scripts:** run the spec-comparing tests after codegen, not before ([1741767](https://github.com/serdukow/wbapi-async/commit/17417677c64399c0c68448276a0f66e1f827ee05))
+
 ## [1.1.1](https://github.com/serdukow/wbapi-async/compare/v1.1.0...v1.1.1) (2026-09-01)
 
 
