@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.1](https://github.com/serdukow/wbapi-async/compare/v1.1.0...v1.1.1) (2026-09-01)
+
+
+### Bug Fixes
+
+* **client:** drop the token category checks ([02fc4ce](https://github.com/serdukow/wbapi-async/commit/02fc4ce9b1ebcdb13fcfec7defe439e16504e3bd))
+* **client:** send a required body even when it is empty ([f8197ba](https://github.com/serdukow/wbapi-async/commit/f8197baa9751d4cddcb71d1cd2c33445324d40df))
+* **codegen:** document the limits WB leaves undescribed ([2bfd0e5](https://github.com/serdukow/wbapi-async/commit/2bfd0e5ea73d65973970ed0e06915d18df87ee97))
+* send a required body, reshape drifting responses, document limits ([#102](https://github.com/serdukow/wbapi-async/issues/102)) ([7884c73](https://github.com/serdukow/wbapi-async/commit/7884c73baf46a8c0d388d121342f825aceca8141))
+
 ## [1.1.0](https://github.com/serdukow/wbapi-async/compare/v1.0.3...v1.1.0) (2026-08-26)
 
 
