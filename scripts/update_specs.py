@@ -167,7 +167,9 @@ def open_pull_request(added: list[str]) -> int:
 def generator_is_sound() -> bool:
     """Check the generator before it writes anything over the client."""
     result = subprocess.run(
-        ["uv", "run", "pytest", "tests/test_codegen.py", "-q"],
+        # Not the regenerated ones: they read the client on disk, which is
+        # still built from the previous specs at this point.
+        ["uv", "run", "pytest", "tests/test_codegen.py", "-q", "-m", "not regenerated"],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -230,6 +232,17 @@ async def main() -> int:
         return 1
 
     if not regenerate():
+        return 1
+
+    checked = subprocess.run(
+        ["uv", "run", "pytest", "tests/test_codegen.py", "-q", "-m", "regenerated"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if checked.returncode != 0:
+        print(checked.stdout.strip(), file=sys.stderr)
+        print("The regenerated client does not match the specs.", file=sys.stderr)
         return 1
 
     if not args.pr:
