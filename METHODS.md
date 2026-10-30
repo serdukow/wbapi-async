@@ -373,7 +373,7 @@
 | `get_analytics_deductions()` | GET | `/api/analytics/v1/deductions` | Подмены и неверные вложения |
 | `get_analytics_excise_report()` | POST | `/api/v1/analytics/excise-report` | Получить отчёт |
 | `get_analytics_goods_labeling()` | GET | `/api/v1/analytics/goods-labeling` | Маркировка товара |
-| `get_analytics_goods_returns()` | GET | `/api/v1/analytics/goods-return` | Получить отчёт |
+| `get_analytics_item_returns()` | GET | `/api/analytics/v1/item-returns` | Получить отчёт |
 | `get_analytics_measurement_penalties()` | GET | `/api/analytics/v1/measurement-penalties` | Удержания за занижение габаритов упаковки |
 | `get_analytics_region_sale()` | GET | `/api/v1/analytics/region-sale` | Получить отчёт |
 | `get_analytics_warehouse_measurements()` | GET | `/api/analytics/v1/warehouse-measurements` | Замеры склада |

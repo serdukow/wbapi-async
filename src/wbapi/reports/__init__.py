@@ -20,7 +20,7 @@ from .methods import (
     GetAnalyticsDeductions,
     GetAnalyticsExciseReport,
     GetAnalyticsGoodsLabeling,
-    GetAnalyticsGoodsReturns,
+    GetAnalyticsItemReturns,
     GetAnalyticsMeasurementPenalties,
     GetAnalyticsRegionSale,
     GetAnalyticsWarehouseMeasurements,
@@ -43,11 +43,11 @@ from .models import (
     GetAnalyticsBrandShareResponse,
     GetAnalyticsDeductionsResponse,
     GetAnalyticsGoodsLabelingResponse,
-    GetAnalyticsGoodsReturnsResponse,
     GetAnalyticsRegionSaleResponse,
     GetPaidStorageTasksDownloadResponseItem,
     GetTasksResponse,
     GetWarehouseRemainsTasksDownloadResponseItem,
+    ItemReturns200Response,
     MeasurementPenalties,
     OrdersItem,
     SalesItem,
@@ -289,15 +289,51 @@ class Reports:
         """
         return await GetAnalyticsGoodsLabeling(date_from=date_from, date_to=date_to).emit(self._api)
 
-    async def get_analytics_goods_returns(
-        self, *, date_from: str, date_to: str
-    ) -> GetAnalyticsGoodsReturnsResponse:
+    async def get_analytics_item_returns(
+        self,
+        *,
+        date_from: str,
+        date_to: str,
+        limit: int | None = None,
+        offset: int | None = None,
+        status: str | None = None,
+        auto_paginate: bool = False,
+    ) -> ItemReturns200Response | list[Any]:
         """Получить отчёт
 
         :param date_from: Дата начала отчётного периода
         :param date_to: Дата окончания отчётного периода
+        :param limit: Количество возвратов в ответе
+        :param offset: Сколько элементов пропустить. Например, для значения 10 ответ начнется с 11 элемента
+        :param status: Статус возврата:   - `archive` — архивный   - `active` — активный
+        :param auto_paginate: автоматически собрать все страницы выборки
         """
-        return await GetAnalyticsGoodsReturns(date_from=date_from, date_to=date_to).emit(self._api)
+        call = GetAnalyticsItemReturns(
+            date_from=date_from, date_to=date_to, limit=limit, offset=offset, status=status
+        )
+        return await call.paginate(self._api) if auto_paginate else await call.emit(self._api)
+
+    async def iter_get_analytics_item_returns(
+        self,
+        *,
+        date_from: str,
+        date_to: str,
+        limit: int | None = None,
+        offset: int | None = None,
+        status: str | None = None,
+    ) -> AsyncIterator[Any]:
+        """Получить отчёт — постранично, по одной записи.
+
+        :param date_from: Дата начала отчётного периода
+        :param date_to: Дата окончания отчётного периода
+        :param limit: Количество возвратов в ответе
+        :param offset: Сколько элементов пропустить. Например, для значения 10 ответ начнется с 11 элемента
+        :param status: Статус возврата:   - `archive` — архивный   - `active` — активный
+        """
+        async for item in GetAnalyticsItemReturns(
+            date_from=date_from, date_to=date_to, limit=limit, offset=offset, status=status
+        ).stream(self._api):
+            yield item
 
     async def get_analytics_measurement_penalties(
         self,

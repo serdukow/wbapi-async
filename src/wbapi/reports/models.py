@@ -181,52 +181,6 @@ class GetAnalyticsGoodsLabelingResponseReportItem(WBModel):
     """Баркод из карточки товара"""
 
 
-class GetAnalyticsGoodsReturnsResponse(WBModel):
-    report: list[GetAnalyticsGoodsReturnsResponseReportItem] | None = _field(default=None)
-    """Отчёт"""
-
-
-class GetAnalyticsGoodsReturnsResponseReportItem(WBModel):
-    barcode: str | None = _field(default=None)
-    """Баркод"""
-    brand: str | None = _field(default=None)
-    """Бренд"""
-    completed_dt: str | None = _field(default=None, name="completedDt")
-    """Дата и время выдачи возврата продавцу"""
-    dst_office_address: str | None = _field(default=None, name="dstOfficeAddress")
-    """Адрес ПВЗ выдачи возврата"""
-    dst_office_id: int | None = _field(default=None, name="dstOfficeId")
-    """ID ПВЗ выдачи возврата"""
-    expired_dt: str | None = _field(default=None, name="expiredDt")
-    """Дата и время истечения срока хранения возврата"""
-    is_status_active: int | None = _field(default=None, name="isStatusActive")
-    """Тип статуса возврата:    * `0` — архивный   * `1` — активный"""
-    nm_id: int | None = _field(default=None, name="nmId")
-    """Артикул WB"""
-    order_dt: str | None = _field(default=None, name="orderDt")
-    """Дата заказа на возврат"""
-    order_id: int | None = _field(default=None, name="orderId")
-    """Номер сборочного задания"""
-    ready_to_return_dt: str | None = _field(default=None, name="readyToReturnDt")
-    """Дата и время готовности возврата к выдаче"""
-    reason: str | None = _field(default=None)
-    """Причина возврата"""
-    return_type: str | None = _field(default=None, name="returnType")
-    """Тип возврата"""
-    shk_id: int | None = _field(default=None, name="shkId")
-    """Штрихкод"""
-    srid: str | None = _field(default=None)
-    """Уникальный ID заказа на возврат"""
-    status: str | None = _field(default=None)
-    """Статус возврата"""
-    sticker_id: str | None = _field(default=None, name="stickerId")
-    """Стикер заказа на возврат"""
-    subject_name: str | None = _field(default=None, name="subjectName")
-    """Предмет"""
-    tech_size: str | None = _field(default=None, name="techSize")
-    """Размер"""
-
-
 class GetAnalyticsRegionSaleResponse(WBModel):
     report: list[GetAnalyticsRegionSaleResponseReportItem] | None = _field(default=None)
 
@@ -340,6 +294,55 @@ class GetWarehouseRemainsTasksDownloadResponseItemWarehousesItem(WBModel):
     """Количество, шт."""
     warehouse_name: str | None = _field(default=None, name="warehouseName")
     """Название склада"""
+
+
+class ItemReturns200Response(WBModel):
+    count: int | None = _field(default=None)
+    """Общее количество возвратов за запрашиваемый период"""
+    report: list[ItemReturns200ResponseReportItem] | None = _field(default=None)
+    """Отчёт"""
+
+
+class ItemReturns200ResponseReportItem(WBModel):
+    brand: str | None = _field(default=None)
+    """Бренд"""
+    completed_dt: str | None = _field(default=None, name="completedDt")
+    """Дата и время выдачи возврата продавцу"""
+    dst_office_address: str | None = _field(default=None, name="dstOfficeAddress")
+    """Адрес ПВЗ для выдачи возврата продавцу"""
+    dst_office_id: int | None = _field(default=None, name="dstOfficeId")
+    """ID ПВЗ для выдачи возврата продавцу"""
+    expired_dt: str | None = _field(default=None, name="expiredDt")
+    """Дата и время истечения срока хранения возврата"""
+    kiz: str | None = _field(default=None)
+    """Код маркировки Честного знака"""
+    nm_id: int | None = _field(default=None, name="nmId")
+    """Артикул WB"""
+    order_dt: str | None = _field(default=None, name="orderDt")
+    """Дата заказа на возврат"""
+    order_id: int | None = _field(default=None, name="orderId")
+    """ID сборочного задания"""
+    ready_to_return_dt: str | None = _field(default=None, name="readyToReturnDt")
+    """Дата и время готовности возврата к выдаче"""
+    return_reason: str | None = _field(default=None, name="returnReason")
+    """Причина возврата. Поле возвращается только при `"returnType":"Возврат неопознанного товара"`
+    """
+    return_status: str | None = _field(default=None, name="returnStatus")
+    """Статус возврата"""
+    return_type: str | None = _field(default=None, name="returnType")
+    """Тип возврата"""
+    shk_id: int | None = _field(default=None, name="shkId")
+    """Штрихкод"""
+    sku: str | None = _field(default=None)
+    """Баркод"""
+    srid: str | None = _field(default=None)
+    """ID заказа на возврат"""
+    sticker_id: str | None = _field(default=None, name="stickerId")
+    """Стикер заказа на возврат"""
+    subject_name: str | None = _field(default=None, name="subjectName")
+    """Предмет"""
+    tech_size: str | None = _field(default=None, name="techSize")
+    """Размер"""
 
 
 class MeasurementPenalties(WBModel):
