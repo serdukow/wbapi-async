@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/serdukow/wbapi-async/compare/v1.2.0...v1.2.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* **reports:** replace the removed goods-return method with item-returns ([edbbeaf](https://github.com/serdukow/wbapi-async/commit/edbbeaf356ac5baef67be207c75fd1900c0724a1))
+
 ## [1.2.0](https://github.com/serdukow/wbapi-async/compare/v1.1.1...v1.2.0) (2026-09-02)
 
 
