@@ -17,11 +17,11 @@ from .models import (
     GetAnalyticsBrandShareResponse,
     GetAnalyticsDeductionsResponse,
     GetAnalyticsGoodsLabelingResponse,
-    GetAnalyticsGoodsReturnsResponse,
     GetAnalyticsRegionSaleResponse,
     GetPaidStorageTasksDownloadResponseItem,
     GetTasksResponse,
     GetWarehouseRemainsTasksDownloadResponseItem,
+    ItemReturns200Response,
     MeasurementPenalties,
     OrdersItem,
     SalesItem,
@@ -425,16 +425,22 @@ class GetAnalyticsGoodsLabeling(WBMethod[GetAnalyticsGoodsLabelingResponse]):
     """Конец отчётного периода, `ГГГГ-ММ-ДД`"""
 
 
-class GetAnalyticsGoodsReturns(WBMethod[GetAnalyticsGoodsReturnsResponse]):
+class GetAnalyticsItemReturns(WBMethod[ItemReturns200Response]):
     """Получить отчёт
 
-    GET /api/v1/analytics/goods-return
+    GET /api/analytics/v1/item-returns
     """
 
-    __path__ = "/api/v1/analytics/goods-return"
+    __path__ = "/api/analytics/v1/item-returns"
     __http_method__ = "GET"
-    __returns__ = GetAnalyticsGoodsReturnsResponse
-    __query_params__ = {"date_from": "dateFrom", "date_to": "dateTo"}
+    __returns__ = ItemReturns200Response
+    __query_params__ = {
+        "date_from": "dateFrom",
+        "date_to": "dateTo",
+        "status": "status",
+        "limit": "limit",
+        "offset": "offset",
+    }
     __scope__ = Scope.ANALYTICS
     __host__ = "https://seller-analytics-api.wildberries.ru"
     __rate_limits__ = {
@@ -443,11 +449,18 @@ class GetAnalyticsGoodsReturns(WBMethod[GetAnalyticsGoodsReturnsResponse]):
         "basic_secret": (600000, 10),
         "basic": (1800000, 1),
     }
+    __paginate__ = "offset_query"
 
     date_from: str
     """Дата начала отчётного периода"""
     date_to: str
     """Дата окончания отчётного периода"""
+    limit: int | None = None
+    """Количество возвратов в ответе"""
+    offset: int | None = None
+    """Сколько элементов пропустить. Например, для значения 10 ответ начнется с 11 элемента"""
+    status: str | None = None
+    """Статус возврата:   - `archive` — архивный   - `active` — активный"""
 
 
 class GetAnalyticsMeasurementPenalties(WBMethod[MeasurementPenalties]):

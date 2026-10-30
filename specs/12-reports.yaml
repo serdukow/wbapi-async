@@ -1972,11 +1972,11 @@ paths:
           $ref: '#/components/responses/402'
         '429':
           $ref: '#/components/responses/429'
-  /api/v1/analytics/goods-return:
+  /api/analytics/v1/item-returns:
     servers:
       - url: https://seller-analytics-api.wildberries.ru
     get:
-      operationId: getV1AnalyticsGoodsReturn
+      operationId: getV1ItemReturns
       x-readonly-method: true
       x-category: contentanalytics
       security:
@@ -1985,12 +1985,10 @@ paths:
         - Отчёт о возвратах и перемещении товаров
       summary: Получить отчёт
       description: |
-        Метод возвращает отчёт о [возвратах товаров продавцу](https://seller.wildberries.ru/analytics-reports/goods-return). <br><br>
-
-        Можно получить отчёт максимум за 31 день.
+        Метод возвращает отчёт о [возвратах товаров продавцу](https://seller.wildberries.ru/return-transfer-reports).
 
         <div class="description_limit">
-        <a href="/openapi/api-information#tag/introduction/Limity-zaprosov">Лимит запросов</a> на один аккаунт продавца:
+        <a href="/openapi/api-information#tag/introduction/Limity-zaprosov">Лимит запросов</a> на один профиль продавца:
 
 
         | Тип | Период | Лимит | Интервал | Всплеск |
@@ -2017,113 +2015,52 @@ paths:
             format: date
             example: '2024-08-27'
           description: Дата окончания отчётного периода
+        - name: status
+          in: query
+          schema:
+            type: string
+            example: active
+            enum:
+              - active
+              - archive
+          description: |
+            Статус возврата:
+              - `archive` — архивный
+              - `active` — активный
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            maximum: 1000
+            minimum: 0
+            format: date
+            example: 10
+          description: Количество возвратов в ответе
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: date
+            example: 3
+          description: Сколько элементов пропустить. Например, для значения 10 ответ начнется с 11 элемента
       responses:
         '200':
           description: Успешно
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  report:
-                    description: Отчёт
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        barcode:
-                          type: string
-                          example: '1680063403480'
-                          description: Баркод
-                        brand:
-                          type: string
-                          example: dub
-                          description: Бренд
-                        completedDt:
-                          type: string
-                          nullable: true
-                          example: '2025-03-31T11:33:53'
-                          description: Дата и время выдачи возврата продавцу
-                        dstOfficeAddress:
-                          type: string
-                          example: Жуковский Улица Маяковского 19
-                          description: Адрес ПВЗ выдачи возврата
-                        dstOfficeId:
-                          type: integer
-                          example: 310105
-                          description: ID ПВЗ выдачи возврата
-                        expiredDt:
-                          type: string
-                          nullable: true
-                          example: '2025-03-31T11:33:53'
-                          description: Дата и время истечения срока хранения возврата
-                        isStatusActive:
-                          type: integer
-                          example: 0
-                          description: |
-                            Тип статуса возврата:
-
-                              * `0` — архивный
-                              * `1` — активный
-                          enum:
-                            - 0
-                            - 1
-                        nmId:
-                          type: integer
-                          example: 12862181
-                          description: Артикул WB
-                        orderDt:
-                          type: string
-                          format: date
-                          example: '2024-08-26'
-                          description: Дата заказа на возврат
-                        orderId:
-                          type: integer
-                          example: 2034240826
-                          description: Номер сборочного задания
-                        readyToReturnDt:
-                          type: string
-                          nullable: true
-                          example: '2025-01-31T08:33:50'
-                          description: Дата и время готовности возврата к выдаче
-                        reason:
-                          type: string
-                          example: Цвет
-                          description: Причина возврата
-                        returnType:
-                          type: string
-                          example: Возврат заблокированного товара
-                          description: Тип возврата
-                        shkId:
-                          type: integer
-                          example: 23411783472
-                          description: Штрихкод
-                        srid:
-                          type: string
-                          example: ad3817664d3046c5a8d55054d8be96d6
-                          description: Уникальный ID заказа на возврат
-                        status:
-                          type: string
-                          example: В пути в пвз
-                          description: Статус возврата
-                        stickerId:
-                          type: string
-                          example: '33811984302'
-                          description: Стикер заказа на возврат
-                        subjectName:
-                          type: string
-                          example: Багажные бирки
-                          description: Предмет
-                        techSize:
-                          type: string
-                          example: '0'
-                          description: Размер
+                $ref: '#/components/schemas/ItemReturns200Response'
+              examples:
+                ReportExample:
+                  $ref: '#/components/examples/ReportExample'
+        '204':
+          description: Нет данных
         '400':
           description: Неправильный запрос
           content:
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/4xxResponse'
+                $ref: '#/components/schemas/4XXResponse'
               examples:
                 MissingDateTimeFrom:
                   $ref: '#/components/examples/MissingDateTimeFrom'
@@ -2139,10 +2076,9 @@ paths:
                   $ref: '#/components/examples/DateRanges'
         '401':
           $ref: '#/components/responses/401'
-        '402':
-          $ref: '#/components/responses/402'
         '429':
           $ref: '#/components/responses/429'
+      x-tagKey: returnsAndItemMovementReport
 components:
   schemas:
     OrdersItem:
@@ -2811,6 +2747,136 @@ components:
         title:
           type: string
           description: Заголовок ошибки
+    4XXResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Детали ошибки
+        origin:
+          type: string
+          description: ID внутреннего сервиса WB
+        requestId:
+          type: string
+          description: Уникальный ID запроса
+        title:
+          type: string
+          description: Заголовок ошибки
+    ItemReturns200Response:
+      type: object
+      required:
+        - count
+        - report
+      properties:
+        count:
+          type: integer
+          description: Общее количество возвратов за запрашиваемый период
+        report:
+          description: Отчёт
+          type: array
+          items:
+            required:
+              - sku
+              - brand
+              - completedDt
+              - dstOfficeAddress
+              - dstOfficeId
+              - expiredDt
+              - kiz
+              - nmId
+              - orderDt
+              - orderId
+              - readyToReturnDt
+              - returnType
+              - shkId
+              - srid
+              - returnStatus
+              - stickerId
+              - subjectName
+              - techSize
+            type: object
+            properties:
+              sku:
+                type: string
+                example: '1680063403480'
+                description: Баркод
+              brand:
+                type: string
+                example: dub
+                description: Бренд
+              completedDt:
+                type: string
+                nullable: true
+                example: '2025-03-31T11:33:53'
+                description: Дата и время выдачи возврата продавцу
+              dstOfficeAddress:
+                type: string
+                example: Жуковский Улица Маяковского 19
+                description: Адрес ПВЗ для выдачи возврата продавцу
+              kiz:
+                nullable: true
+                type: string
+                example: "0102900000376311210G2CIS?ehge)S\x1D91002A\x1D92F9Qof4FDo/31Icm14kmtuVYQzLypxm3HWkC1vQ/+pVVjm1dNAth1laFMoAGn7yEMWlTjxIe7lQnJqZ7TRZhlHQ=="
+                description: Код маркировки [Честного знака](https://честныйзнак.рф/)
+              dstOfficeId:
+                type: integer
+                example: 310105
+                description: ID ПВЗ для выдачи возврата продавцу
+              expiredDt:
+                type: string
+                nullable: true
+                example: '2025-03-31T11:33:53'
+                description: Дата и время истечения срока хранения возврата
+              nmId:
+                type: integer
+                example: 12862181
+                description: Артикул WB
+              orderDt:
+                type: string
+                format: date
+                example: '2024-08-26'
+                description: Дата заказа на возврат
+              orderId:
+                type: integer
+                example: 2034240826
+                description: ID сборочного задания
+              readyToReturnDt:
+                type: string
+                nullable: true
+                example: '2025-01-31T08:33:50'
+                description: Дата и время готовности возврата к выдаче
+              returnReason:
+                type: string
+                example: Цвет
+                description: Причина возврата.<br> Поле возвращается только при `"returnType":"Возврат неопознанного товара"`
+              returnType:
+                type: string
+                example: Возврат заблокированного товара
+                description: Тип возврата
+              shkId:
+                type: integer
+                example: 23411783472
+                description: Штрихкод
+              srid:
+                type: string
+                example: mp.123130940efa4d67af77f901594c7d2c.r
+                description: ID заказа на возврат
+              returnStatus:
+                type: string
+                example: В пути в пвз
+                description: Статус возврата
+              stickerId:
+                type: string
+                example: '33811984302'
+                description: Стикер заказа на возврат
+              subjectName:
+                type: string
+                example: Багажные бирки
+                description: Предмет
+              techSize:
+                type: string
+                example: '0'
+                description: Размер
   parameters:
     flag:
       in: query
@@ -3084,6 +3150,29 @@ components:
                 - https://static-basket-03.wb.ru/vol54/handheld-goods-measurements-photo/8906416_ff93b7c4-19d6-e0a2-4dba-7c2f09f06b3.jpg
               dt: '2025-04-01T00:06:00Z'
           total: 2
+    ReportExample:
+      description: Успешно
+      value:
+        count: 87
+        report:
+          - sku: '1234567890'
+            brand: ''
+            completedDt: null
+            dstOfficeAddress: г. Клин (Московская область), улица Ленина, д. 8
+            dstOfficeId: 33
+            expiredDt: null
+            kiz: null
+            nmId: 987654321
+            orderDt: '2026-08-24'
+            orderId: 6789054321
+            readyToReturnDt: null
+            returnType: Возврат товара, который приехал по МП, продавцу
+            shkId: 987612345
+            srid: mp.1b4fc35bfe3f4b799cf01f8e11ffd2cb.r
+            returnStatus: В пути в пвз
+            stickerId: '918273645'
+            subjectName: Вода питьевая
+            techSize: '0'
   responses:
     '401':
       description: Не авторизован
